@@ -5,7 +5,7 @@ The component is a modal containing a file upload (dropzone) area and some snazz
 
 ## Installation
 ```sh
-npm install material-ui-dropzone
+npm install --save material-ui-dropzone
 ```
 
 ## Screenshots
@@ -13,12 +13,12 @@ This is the component:
 ![dropzone modal](./pics/demo_pic.jpg)  
 
 When you drag a file onto the dropzone, you get a neat effect.
-![dropzone modal](./pics/demo_pic2.jpg)  
+![dropzone modal effects](./pics/demo_pic2.jpg)  
 
-![dropzone modal](./pics/demo_pic5.jpg)
+![dropzone modal with preview](./pics/demo_pic5.jpg)
 
 And if you drop in a wrong type of file, you'll get yelled at.
-![dropzone modal](./pics/demo_pic4.jpg)
+![dropzone modal reject](./pics/demo_pic4.jpg)
 
 ## Usage
 ```jsx
