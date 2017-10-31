@@ -25,7 +25,7 @@ And if you drop in a wrong type of file, you'll get yelled at:
 
 ## Usage
 ```jsx
-import DropZoneModal from '../../src';
+import DropZoneModal from 'material-ui-dropzone';
 import React, {Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {MuiThemeProvider} from 'material-ui';
