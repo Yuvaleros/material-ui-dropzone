@@ -10,15 +10,17 @@ npm install --save material-ui-dropzone
 
 ## Screenshots
 This is the component:
-![dropzone modal](./pics/demo_pic.jpg) <!-- .element height="50%" width="50%" --> 
+<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic.jpg" width=250 height=250 /> 
 
-When you drag a file onto the dropzone, you get a neat effect.
-![dropzone modal effects](./pics/demo_pic2.JPG) <!-- .element height="50%" width="50%" -->  
+When you drag a file onto the dropzone, you get a neat effect:
 
-![dropzone modal with preview](./pics/demo_pic5.JPG) <!-- .element height="50%" width="50%" -->
+<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic2.JPG" width=250 height=250 />  
+
+<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic5.JPG" width=250 height=250 />
 
 And if you drop in a wrong type of file, you'll get yelled at.
-![dropzone modal reject](./pics/demo_pic4.jpg =250x250)
+
+<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic4.JPG" width=250 height=250 />
 
 ## Usage
 ```jsx
