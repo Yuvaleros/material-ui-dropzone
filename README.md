@@ -1,7 +1,7 @@
 # material-ui-dropzone
-Material-UI-dropzone is a React component and is based on the excellent [react-dropzone](https://github.com/react-dropzone/react-dropzone) library.
+Material-UI-dropzone is a [React](https://github.com/facebook/react) component using [Material-UI](https://github.com/callemall/material-ui) and is based on the excellent [react-dropzone](https://github.com/react-dropzone/react-dropzone) library.
 
-The component is a Modal containing a file dropzone and some snazzy "File Allowed/Not Allowed" effects.
+The component is a modal containing a file upload (dropzone) area and some snazzy "File Allowed/Not Allowed" effects.
 
 ##Installation
 ```sh
