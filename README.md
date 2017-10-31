@@ -13,12 +13,12 @@ This is the component:
 ![dropzone modal](./pics/demo_pic.jpg)  
 
 When you drag a file onto the dropzone, you get a neat effect.
-![dropzone modal effects](./pics/demo_pic2.JPG)  
+![dropzone modal effects](./pics/demo_pic2.JPG =250x250)  
 
-![dropzone modal with preview](./pics/demo_pic5.JPG)
+![dropzone modal with preview](./pics/demo_pic5.JPG =250x250)
 
 And if you drop in a wrong type of file, you'll get yelled at.
-![dropzone modal reject](./pics/demo_pic4.jpg)
+![dropzone modal reject](./pics/demo_pic4.jpg =250x250)
 
 ## Usage
 ```jsx
