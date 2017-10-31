@@ -1,7 +1,8 @@
 {
   "name": "material-ui-dropzone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./src/index.js",
+  "description": "A Material-UI file-upload dropzone",
   "scripts": {
     "start": "gulp",
     "test": "gulp test",
