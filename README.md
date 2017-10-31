@@ -11,17 +11,17 @@ npm install --save material-ui-dropzone
 ## Screenshots
 This is the component:
 <br />
-<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic.jpg" width=400 height=300 /> 
+<img src="https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic.jpg" width=400 height=300 /> 
 
 When you drag a file onto the dropzone, you get a neat effect:
 <br />
-<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic2.JPG" width=400 height=300 />  
+<img src="https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic2.JPG" width=400 height=300 />  
 <br />
-<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic5.JPG" width=400 height=300 />
+<img src="https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic5.JPG" width=400 height=300 />
 
 And if you drop in a wrong type of file, you'll get yelled at:
 <br />
-<img src="https://github.com/Yuvaleros/material-ui-dropzone/blob/master/pics/demo_pic4.JPG" width=400 height=300 />
+<img src="https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic4.JPG" width=400 height=300 />
 
 ## Usage
 ```jsx
