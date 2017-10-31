@@ -1,0 +1,157 @@
+.dropzoneTextStyle {
+    text-align: center;
+    top: 25%;
+    position: relative;
+}
+
+.uploadIconSize {
+    width: 51px !important;
+    height: 51px !important;
+    color: #909090 !important;
+}
+
+.dropzoneParagraph {
+    font-size: 24px
+}
+
+.dropZone {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-color: #F0F0F0;
+    border: dashed;
+    border-color: #C8C8C8;
+    cursor: pointer;
+}
+
+.stripes {
+    width: 100%;
+    height: 250px;
+    cursor: pointer;
+    border: solid;
+    border-color: #C8C8C8;
+    background-image: repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px);
+    -webkit-animation: progress 2s linear infinite !important;
+    -moz-animation: progress 2s linear infinite !important;
+    animation: progress 2s linear infinite !important;
+    background-size: 150% 100%;
+}
+
+.rejectStripes {
+    width: 100%;
+    height: 250px;
+    cursor: pointer;
+    border: solid;
+    border-color: #C8C8C8;
+    background-image: repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px);
+    -webkit-animation: progress 2s linear infinite !important;
+    -moz-animation: progress 2s linear infinite !important;
+    animation: progress 2s linear infinite !important;
+    background-size: 150% 100%;
+}
+
+.fileIconImg {
+    color: #909090 !important;
+}
+
+.smallPreviewImg {
+    height: 100px !important;
+    width: initial !important;
+    max-width: 100%;
+    margin-top: 5px;
+    margin-right: 10px;
+    color: rgba(0, 0, 0, 0.87);
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms !important;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px !important;
+    border-radius: 2px;
+    z-index: 5;
+}
+
+@-webkit-keyframes progress {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -75px 0;
+    }
+}
+
+@-moz-keyframes progress {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -75px 0;
+    }
+}
+
+@-ms-keyframes progress {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -75px 0;
+    }
+}
+
+@keyframes progress {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -70px 0;
+    }
+}
+
+.imageContainer {
+    position: relative;
+    z-index: 10;
+}
+
+.imageContainer:hover .smallPreviewImg {
+    opacity: 0.3;
+}
+
+.imageContainer:hover .middle {
+    opacity: 1;
+}
+
+.imageContainer:hover .middleBigPic {
+    opacity: 1;
+}
+
+.removeBtn {
+    color: white;
+    margin-left: 5px;
+    z-index: 3;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%)
+}
+
+.row {
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex: 0 1 auto;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}

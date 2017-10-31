@@ -1,0 +1,81 @@
+{
+  "name": "material-ui-dropzone",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "gulp test",
+    "test:coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "lint": "gulp eslint",
+    "clean:build": "gulp clean:build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yuvaleros/material-ui-dropzone.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "material design",
+    "material-ui",
+    "dropzone",
+    "upload",
+    "react upload"
+  ],
+  "license": "MIT",
+  "author": "Yuval",
+  "peerDependencies": {
+    "react": "^16.0.0"
+  },
+  "dependencies": {
+    "react-dropzone": "^4.2.0",
+    "material-ui": "^0.19.4"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-eslint": "^8.0.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.18.13",
+    "browserify": "^14.4.0",
+    "browserify-css": "^0.12.0",
+    "chai": "^4.1.2",
+    "copy": "^0.3.1",
+    "del": "^3.0.0",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-react": "^7.4.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-copy": "^1.0.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-mocha": "^4.3.1",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^11.3.0",
+    "mocha": "^4.0.1",
+    "react-dom": "^16.0.0",
+    "react-tap-event-plugin": "^3.0.2",
+    "react-tooltip": "^3.4.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015",
+            "react",
+            "stage-1"
+          ]
+        }
+      ]
+    ]
+  }
+}
