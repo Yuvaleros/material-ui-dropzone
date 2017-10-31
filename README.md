@@ -3,12 +3,12 @@ Material-UI-dropzone is a [React](https://github.com/facebook/react) component u
 
 The component is a modal containing a file upload (dropzone) area and some snazzy "File Allowed/Not Allowed" effects.
 
-##Installation
+## Installation
 ```sh
 npm install material-ui-dropzone
 ```
 
-##Screenshots
+## Screenshots
 This is the component:
 ![dropzone modal](./pics/demo_pic.jpg)  
 
@@ -20,7 +20,7 @@ When you drag a file onto the dropzone, you get a neat effect.
 And if you drop in a wrong type of file, you'll get yelled at.
 ![dropzone modal](./pics/demo_pic4.jpg)
 
-##Usage
+## Usage
 ```jsx
 import DropZoneModal from '../../src';
 import React, {Component} from 'react';
@@ -88,8 +88,8 @@ export default class Main extends Component {
 
 
 
-##TODO
+## TODO
 * Add some more tests
 
-##License
+## License
 MIT
