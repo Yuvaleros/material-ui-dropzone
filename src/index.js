@@ -127,20 +127,15 @@ export default class MaterialDropZone extends React.Component {
                 }
 
                 return (<div>
-                    <div className="row">
-                        {this.state.files.length ? <span>Preview:</span> : ''}
-                    </div>
-                    <div className="row">
-                        <div className={'imageContainer col fileIconImg'} key={i}>
-                            {img}
-                            <div className="middle">
-                                <IconButton touch={true}>
-                                    <ActionDelete
-                                        className="removeBtn"
-                                        onTouchTap={this.handleRemove.bind(this, file, i)}
-                                    />
-                                </IconButton>
-                            </div>
+                    <div className={'imageContainer col fileIconImg'} key={i}>
+                        {img}
+                        <div className="middle">
+                            <IconButton touch={true}>
+                                <ActionDelete
+                                    className="removeBtn"
+                                    onTouchTap={this.handleRemove.bind(this, file, i)}
+                                />
+                            </IconButton>
                         </div>
                     </div>
                 </div>);
@@ -186,7 +181,12 @@ export default class MaterialDropZone extends React.Component {
                         </div>
                     </Dropzone>
                     <br/>
-                    {previews}
+                    <div className="row">
+                        {this.state.files.length ? <span>Preview:</span> : ''}
+                    </div>
+                    <div className="row">
+                        {previews}
+                    </div>
                 </Dialog>
                 <Snackbar
                     open={this.state.openSnackBar}
