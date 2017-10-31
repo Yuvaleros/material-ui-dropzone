@@ -51,7 +51,7 @@ export default class Main extends Component {
                         deleteFile={this.deleteFile.bind(this)}
                         acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
                         files={files}
-                        showPreviews={false}
+                        showPreviews={true}
                         maxSize={5000000}
                         closeDialog={this.closeDialog.bind(this)}
                     />
