@@ -943,8 +943,7 @@ var MaterialDropZone = function (_React$Component) {
             openSnackBar: false,
             errorMessage: '',
             files: _this.props.files || [],
-            disabled: true,
-            acceptedFiles: _this.props.acceptedFiles || ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+            disabled: true
         };
         return _this;
     }
@@ -968,13 +967,12 @@ var MaterialDropZone = function (_React$Component) {
         key: 'onDrop',
         value: function onDrop(files) {
             var oldFiles = this.state.files;
-            var filesLimit = this.props.filesLimit || '3';
 
             oldFiles = oldFiles.concat(files);
-            if (oldFiles.length > filesLimit) {
+            if (oldFiles.length > this.props.filesLimit) {
                 this.setState({
                     openSnackBar: true,
-                    errorMessage: 'Cannot upload more then ' + filesLimit + ' items.'
+                    errorMessage: 'Cannot upload more then ' + this.props.filesLimit + ' items.'
                 });
             } else {
                 this.setState({
@@ -1012,9 +1010,7 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'saveFiles',
         value: function saveFiles() {
-            var filesLimit = this.props.filesLimit || '3';
-
-            if (this.state.files.length > filesLimit) {
+            if (this.state.files.length > this.props.filesLimit) {
                 this.setState({
                     openSnackBar: true,
                     errorMessage: 'Cannot upload more then ' + filesLimit + ' items.'
@@ -1040,7 +1036,6 @@ var MaterialDropZone = function (_React$Component) {
 
             var img = void 0;
             var previews = '';
-            var fileSizeLimit = this.props.maxSize || 3000000;
 
             if (this.props.showPreviews === true) {
                 previews = this.state.files.map(function (file, i) {
@@ -1069,7 +1064,7 @@ var MaterialDropZone = function (_React$Component) {
                                     { touch: true },
                                     React__default.createElement(DeleteIcon, {
                                         className: 'removeBtn',
-                                        onTouchTap: _this2.handleRemove.bind(_this2, file, i)
+                                        onClick: _this2.handleRemove.bind(_this2, file, i)
                                     })
                                 )
                             )
@@ -1081,12 +1076,12 @@ var MaterialDropZone = function (_React$Component) {
             var actions = [React__default.createElement(Button, {
                 label: 'Cancel',
                 primary: true,
-                onTouchTap: this.handleClose.bind(this)
+                onClick: this.handleClose.bind(this)
             }), React__default.createElement(Button, {
                 label: 'Submit',
                 primary: true,
                 disabled: this.state.disabled,
-                onTouchTap: this.saveFiles.bind(this)
+                onClick: this.saveFiles.bind(this)
             })];
 
             return React__default.createElement(
@@ -1103,13 +1098,13 @@ var MaterialDropZone = function (_React$Component) {
                     React__default.createElement(
                         Dropzone,
                         {
-                            accept: this.state.acceptedFiles.join(','),
+                            accept: this.props.acceptedFiles.join(','),
                             onDrop: this.onDrop.bind(this),
                             className: classes.dropZone,
                             acceptClassName: classes.stripes,
                             rejectClassName: classes.rejectStripes,
                             onDropRejected: this.onDropRejected.bind(this),
-                            maxSize: fileSizeLimit
+                            maxSize: this.props.maxFileSize
                         },
                         React__default.createElement(
                             'div',
@@ -1150,6 +1145,17 @@ var MaterialDropZone = function (_React$Component) {
     }]);
     return MaterialDropZone;
 }(React__default.Component);
+
+MaterialDropZone.defaultProps = {
+    acceptedFiles: ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+    filesLimit: 3,
+    maxFileSize: 3000000
+};
+MaterialDropZone.propTypes = {
+    acceptedFiles: PropTypes.array,
+    filesLimit: ProptTypes.number,
+    maxFileSize: PropTypes.number
+};
 
 var index = styles.withStyles(styles$2)(MaterialDropZone);
 

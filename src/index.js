@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Grid from '@material-ui/core/Grid';
-
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar'; 
 import {isImage} from './helpers/helpers.js'; 
@@ -105,12 +105,6 @@ class MaterialDropZone extends React.Component {
             errorMessage: '',
             files: this.props.files || [],
             disabled: true,
-            acceptedFiles: this.props.acceptedFiles ||
-            ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'application/vnd.ms-powerpoint',
-                'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-                'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
         };
     }
     componentDidUpdate(prevProps){
@@ -128,13 +122,12 @@ class MaterialDropZone extends React.Component {
 
     onDrop(files) {
         let oldFiles = this.state.files;
-        const filesLimit = this.props.filesLimit || '3';
 
         oldFiles = oldFiles.concat(files);
-        if (oldFiles.length > filesLimit) {
+        if (oldFiles.length > this.props.filesLimit) {
             this.setState({
                 openSnackBar: true,
-                errorMessage: 'Cannot upload more then ' + filesLimit + ' items.',
+                errorMessage: 'Cannot upload more then ' + this.props.filesLimit + ' items.',
             });
         } else {
             this.setState({
@@ -169,9 +162,7 @@ class MaterialDropZone extends React.Component {
     }
 
     saveFiles() {
-        const filesLimit = this.props.filesLimit || '3';
-
-        if (this.state.files.length > filesLimit) {
+        if (this.state.files.length > this.props.filesLimit) {
             this.setState({
                 openSnackBar: true,
                 errorMessage: 'Cannot upload more then ' + filesLimit + ' items.',
@@ -198,7 +189,6 @@ class MaterialDropZone extends React.Component {
         const {classes} = this.props; 
         let img;
         let previews = '';
-        const fileSizeLimit = this.props.maxSize || 3000000;
 
         if (this.props.showPreviews === true) {
             previews = this.state.files.map((file, i) => {
@@ -219,7 +209,7 @@ class MaterialDropZone extends React.Component {
                             <IconButton touch={true}>
                                 <DeleteIcon
                                     className="removeBtn"
-                                    onTouchTap={this.handleRemove.bind(this, file, i)}
+                                    onClick={this.handleRemove.bind(this, file, i)}
                                 />
                             </IconButton>
                         </div>
@@ -232,13 +222,13 @@ class MaterialDropZone extends React.Component {
             <Button
                 label={'Cancel'}
                 primary={true}
-                onTouchTap={this.handleClose.bind(this)}
+                onClick={this.handleClose.bind(this)}
             />,
             <Button
                 label={'Submit'}
                 primary={true}
                 disabled={this.state.disabled}
-                onTouchTap={this.saveFiles.bind(this)}
+                onClick={this.saveFiles.bind(this)}
             />];
 
         return (
@@ -250,13 +240,13 @@ class MaterialDropZone extends React.Component {
                     onClose={this.handleClose.bind(this)}
                 >
                     <Dropzone
-                        accept={this.state.acceptedFiles.join(',')}
+                        accept={this.props.acceptedFiles.join(',')}
                         onDrop={this.onDrop.bind(this)}
                         className={classes.dropZone}
                         acceptClassName={classes.stripes}
                         rejectClassName={classes.rejectStripes}
                         onDropRejected={this.onDropRejected.bind(this)}
-                        maxSize={fileSizeLimit}
+                        maxSize={this.props.maxFileSize}
                     >
                         <div className={classes.dropzoneTextStyle}>
                             <p className={classes.dropzoneParagraph}>
@@ -284,4 +274,19 @@ class MaterialDropZone extends React.Component {
         );
     }
 }
+MaterialDropZone.defaultProps = {
+    acceptedFiles: ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+    filesLimit: 3,
+    maxFileSize: 3000000
+}
+MaterialDropZone.propTypes = {
+    acceptedFiles: PropTypes.array,
+    filesLimit: ProptTypes.number,
+    maxFileSize: PropTypes.number
+}
+
 export default withStyles(styles)(MaterialDropZone);
