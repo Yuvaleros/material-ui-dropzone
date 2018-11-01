@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import MaterialDropZone from 'material-ui-dropzone'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import Button from '@material-ui/core/Button';
 
 export default class App extends Component {
@@ -44,7 +43,7 @@ export default class App extends Component {
 
         return (
                 <div>
-                    <Button style={style.addFileBtn}>
+                    <Button style={style.addFileBtn} onClick={this.handleOpenUpload.bind(this)}>
                       Add Image
                     </Button>
                     <MaterialDropZone

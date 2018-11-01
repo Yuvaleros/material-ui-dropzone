@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 
@@ -944,12 +945,13 @@ var MaterialDropZone = function (_React$Component) {
     }
 
     createClass(MaterialDropZone, [{
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            this.setState({
-                open: nextProps.open,
-                files: nextProps.files
-            });
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (this.props.open !== prevProps.open) {
+                this.setState({
+                    open: this.props.open
+                });
+            }
         }
     }, {
         key: 'handleClose',
@@ -1029,6 +1031,8 @@ var MaterialDropZone = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
+            var classes = this.props.classes;
+
             var img = void 0;
             var previews = '';
             var fileSizeLimit = this.props.maxSize || 3000000;
@@ -1088,32 +1092,30 @@ var MaterialDropZone = function (_React$Component) {
                     {
                         title: 'Upload File',
                         actions: actions,
-                        modal: false,
                         open: this.state.open,
-                        onRequestClose: this.handleClose.bind(this),
-                        autoScrollBodyContent: true
+                        onClose: this.handleClose.bind(this)
                     },
                     React.createElement(
                         Dropzone,
                         {
                             accept: this.state.acceptedFiles.join(','),
                             onDrop: this.onDrop.bind(this),
-                            className: 'dropZone',
-                            acceptClassName: 'stripes',
-                            rejectClassName: 'rejectStripes',
+                            className: classes.dropZone,
+                            acceptClassName: classes.stripes,
+                            rejectClassName: classes.rejectStripes,
                             onDropRejected: this.onDropRejected.bind(this),
                             maxSize: fileSizeLimit
                         },
                         React.createElement(
                             'div',
-                            { className: 'dropzoneTextStyle' },
+                            { className: classes.dropzoneTextStyle },
                             React.createElement(
                                 'p',
-                                { className: 'dropzoneParagraph' },
+                                { className: classes.dropzoneParagraph },
                                 'Drag and drop an image file here or click'
                             ),
                             React.createElement('br', null),
-                            React.createElement(CloudUploadIcon, { className: 'uploadIconSize' })
+                            React.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
                         )
                     ),
                     React.createElement('br', null),

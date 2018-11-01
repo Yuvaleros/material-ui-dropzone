@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 import DeleteIcon from '@material-ui/icons/Delete'; 
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Grid from '@material-ui/core/Grid';
 
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar'; 
@@ -112,12 +113,12 @@ class MaterialDropZone extends React.Component {
                 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
         };
     }
-    componentDidUpdate(){
-        console.log('here')
-        this.setState({
-            open: this.props.open,
-            files: this.props.files
-        });
+    componentDidUpdate(prevProps){
+        if(this.props.open !== prevProps.open){
+            this.setState({
+                open: this.props.open
+            });
+        }
     }
 
     handleClose() {
@@ -194,6 +195,7 @@ class MaterialDropZone extends React.Component {
     };
 
     render() {
+        const {classes} = this.props; 
         let img;
         let previews = '';
         const fileSizeLimit = this.props.maxSize || 3000000;
@@ -244,24 +246,24 @@ class MaterialDropZone extends React.Component {
                 <Dialog
                     title={'Upload File'}
                     actions={actions}
-                    modal={false}
                     open={this.state.open}
-                    onRequestClose={this.handleClose.bind(this)}
-                    autoScrollBodyContent={true}
+                    onClose={this.handleClose.bind(this)}
                 >
                     <Dropzone
                         accept={this.state.acceptedFiles.join(',')}
                         onDrop={this.onDrop.bind(this)}
-                        className={'dropZone'}
-                        acceptClassName={'stripes'}
-                        rejectClassName={'rejectStripes'}
+                        className={classes.dropZone}
+                        acceptClassName={classes.stripes}
+                        rejectClassName={classes.rejectStripes}
                         onDropRejected={this.onDropRejected.bind(this)}
                         maxSize={fileSizeLimit}
                     >
-                        <div className={'dropzoneTextStyle'}>
-                            <p className={'dropzoneParagraph'}>{'Drag and drop an image file here or click'}</p>
+                        <div className={classes.dropzoneTextStyle}>
+                            <p className={classes.dropzoneParagraph}>
+                                Drag and drop an image file here or click
+                            </p>
                             <br/>
-                            <CloudUploadIcon className={'uploadIconSize'}/>
+                            <CloudUploadIcon className={classes.uploadIconSize}/>
                         </div>
                     </Dropzone>
                     <br/>
