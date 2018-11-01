@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Dropzone from 'react-dropzone';
@@ -156,7 +156,7 @@ export default class MaterialDropZone extends React.Component {
             />];
 
         return (
-            <div>
+            <Fragment>
                 <Dialog
                     title={'Upload File'}
                     actions={actions}
@@ -194,7 +194,7 @@ export default class MaterialDropZone extends React.Component {
                     autoHideDuration={4000}
                     onRequestClose={this.handleRequestCloseSnackBar}
                 />
-            </div>
+            </Fragment>
         );
     }
 }
