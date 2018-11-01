@@ -98,12 +98,11 @@ const styles = theme => ({
 class MaterialDropZone extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             open: false,
             openSnackBar: false,
             errorMessage: '',
-            files: this.props.files || [],
+            fileObjects: [],
             disabled: true,
         };
     }
@@ -121,33 +120,50 @@ class MaterialDropZone extends React.Component {
     }
 
     onDrop(files) {
-        let oldFiles = this.state.files;
-
-        oldFiles = oldFiles.concat(files);
-        if (oldFiles.length > this.props.filesLimit) {
+        //create the preview
+        const _this = this;
+        if(files.length + _this.state.fileObjects.length > _this.state.filesLimit){
             this.setState({
                 openSnackBar: true,
                 errorMessage: 'Cannot upload more then ' + this.props.filesLimit + ' items.',
             });
-        } else {
-            this.setState({
-                files: oldFiles,
-            }, this.changeButtonDisable);
+        }else{
+            // we cannot do this on render because it is asynchronous and will cause bugs in older browsers
+            files = files.forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    _this.setState({
+                        fileObjects: _this.state.fileObjects.concat({file: file, data: event.target.result})
+                    },() => {
+                        if(this.props.onChange){
+                            this.props.onChange(_this.state.fileObjects.map(fileObject => fileObject.file));    
+                        }
+                        this.setState({
+                            openSnackBar: true,
+                            errorMessage: 'File ' + file.name+ ' successfully uploaded'
+                        });
+                    });
+                };
+                reader.readAsDataURL(file);
+            })
         }
     }
 
-    handleRemove(file, fileIndex) {
-        const files = this.state.files;
-        // This is to prevent memory leaks.
-        window.URL.revokeObjectURL(file.preview);
-
-        files.splice(fileIndex, 1);
-        this.setState(files, this.changeButtonDisable);
-
-        if (file.path) {
-            this.props.deleteFile(file);
-        }
-    }
+    handleRemove = fileIndex => event => {
+        event.stopPropagation();
+        const {fileObjects} = this.state;
+        const file = fileObjects.filter((fileObject, i) => i === fileIndex)[0].file;
+        fileObjects.splice(fileIndex, 1);
+        this.setState(fileObjects,() => {
+          if(this.props.onSelect){
+            this.props.onSelect(this.state.fileObjects.map(fileObject => fileObject.file));    
+          }
+          this.props.enqueueSnackbar(
+            'File ' + file.name+ ' removed', 
+            { variant: 'warning' }
+          );
+        });
+      }
 
     changeButtonDisable() {
         if (this.state.files.length !== 0) {
@@ -189,27 +205,22 @@ class MaterialDropZone extends React.Component {
         const {classes} = this.props; 
         let img;
         let previews = '';
-
-        if (this.props.showPreviews === true) {
-            previews = this.state.files.map((file, i) => {
-                const path = file.preview || '/pic' + file.path;
-
-                if (isImage(file)) {
-                    //show image preview.
-                    img = <img className="smallPreviewImg" src={path}/>;
-                } else {
-                    //Show default file image in preview.
-                    img = <FileIcon className="smallPreviewImg"/>;
-                }
-
-                return (<div>
-                    <div className={'imageContainer col fileIconImg'} key={i}>
+        console.log(this.state)
+        if (this.props.showPreviews) {
+            previews = this.state.fileObjects.map((fileObject, i) => {
+                const img = (isImage(fileObject.file) ? 
+                    <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data}/>
+                    :
+                    <AttachFileIcon className={classes.smallPreviewImg}/>
+                )
+                return (<div key={i}>
+                    <div className={'imageContainer col fileIconImg'}>
                         {img}
                         <div className="middle">
-                            <IconButton touch={true}>
+                            <IconButton>
                                 <DeleteIcon
-                                    className="removeBtn"
-                                    onClick={this.handleRemove.bind(this, file, i)}
+                                    className={classes.removeBtn}
+                                    onClick={this.handleRemove.bind(i)}
                                 />
                             </IconButton>
                         </div>
@@ -258,7 +269,7 @@ class MaterialDropZone extends React.Component {
                     </Dropzone>
                     <br/>
                     <div className="row">
-                        {this.state.files.length ? <span>Preview:</span> : ''}
+                        {this.state.fileObjects.length ? <span>Preview:</span> : ''}
                     </div>
                     <div className="row">
                         {previews}
@@ -281,12 +292,15 @@ MaterialDropZone.defaultProps = {
                 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
                 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
     filesLimit: 3,
-    maxFileSize: 3000000
+    maxFileSize: 3000000,
+    showPreviews: true
 }
-MaterialDropZone.propTypes = {
+MaterialDropZone.PropTypes = {
     acceptedFiles: PropTypes.array,
-    filesLimit: ProptTypes.number,
-    maxFileSize: PropTypes.number
+    filesLimit: PropTypes.number,
+    maxFileSize: PropTypes.number,
+    onChange: PropTypes.function,
+    showPreviews: PropTypes.bool
 }
 
 export default withStyles(styles)(MaterialDropZone);
