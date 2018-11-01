@@ -1,5 +1,5 @@
 {
-  "name": "material-ui-dropzone2-example",
+  "name": "material-ui-dropzone-example",
   "homepage": "https://jackpilowsky.github.io/material-ui-dropzone2",
   "version": "0.0.0",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "^1.1.4",
-    "material-ui-dropzone2": "file:.."
+    "material-ui-dropzone": "file:.."
   },
   "scripts": {
     "start": "react-scripts start",
