@@ -1,15 +1,17 @@
 import React, {Fragment} from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog from '@material-ui/core/Dialog';
+import Button from '@material-ui/core/Button';
+import {withStyles} from '@material-ui/core/styles';
 import Dropzone from 'react-dropzone';
-import ActionDelete from 'material-ui/svg-icons/content/clear';
-import FileIcon from 'material-ui/svg-icons/editor/insert-drive-file';
-import CloudUploadIcon from 'material-ui/svg-icons/file/cloud-upload';
-import IconButton from 'material-ui/IconButton';
-import Snackbar from 'material-ui/Snackbar';
-import './index.css';
-import {isImage} from './helpers/helpers.js';
+import DeleteIcon from '@material-ui/icons/Delete'; 
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';  
+import {isImage} from './helpers/helpers.js'; 
+
+// what?
 
 const styles = theme => ({
   dropZone: {
@@ -92,7 +94,7 @@ const styles = theme => ({
   }
 })
 
-export default class MaterialDropZone extends React.Component {
+class MaterialDropZone extends React.Component {
     constructor(props) {
         super(props);
 
@@ -213,7 +215,7 @@ export default class MaterialDropZone extends React.Component {
                         {img}
                         <div className="middle">
                             <IconButton touch={true}>
-                                <ActionDelete
+                                <DeleteIcon
                                     className="removeBtn"
                                     onTouchTap={this.handleRemove.bind(this, file, i)}
                                 />
@@ -225,12 +227,12 @@ export default class MaterialDropZone extends React.Component {
         }
 
         const actions = [
-            <FlatButton
+            <Button
                 label={'Cancel'}
                 primary={true}
                 onTouchTap={this.handleClose.bind(this)}
             />,
-            <FlatButton
+            <Button
                 label={'Submit'}
                 primary={true}
                 disabled={this.state.disabled}
