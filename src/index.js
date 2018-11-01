@@ -8,7 +8,7 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';  
+import Snackbar from '@material-ui/core/Snackbar'; 
 import {isImage} from './helpers/helpers.js'; 
 
 // what?
@@ -112,11 +112,11 @@ class MaterialDropZone extends React.Component {
                 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
         };
     }
-
-    componentWillReceiveProps(nextProps) {
+    componentDidUpdate(){
+        console.log('here')
         this.setState({
-            open: nextProps.open,
-            files: nextProps.files,
+            open: this.props.open,
+            files: this.props.files
         });
     }
 
