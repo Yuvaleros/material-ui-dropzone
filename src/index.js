@@ -10,6 +10,88 @@ import Snackbar from 'material-ui/Snackbar';
 import './index.css';
 import {isImage} from './helpers/helpers.js';
 
+
+const styles = theme => ({
+  dropZone: {
+    position: 'relative',
+    width: '100%',
+    minHeight: 250,
+    height: '100%',
+    backgroundColor: '#F0F0F0',
+    border: 'dashed',
+    borderColor: '#C8C8C8',
+    cursor: 'pointer',
+    boxSizing: 'border-box',
+    padding: '0 20px'
+  },
+  stripes: {
+    width: '100%',
+    minHeight: 250,
+    height: '100%',
+    cursor: 'pointer',
+    border: 'solid',
+    borderColor: '#C8C8C8',
+    backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
+    animation: 'progress 2s linear infinite !important',
+    backgroundSize: '150% 100%'
+  },
+  rejectStripes: {
+    width: '100%',
+    minHeight: 250,
+    height: '100%',
+    cursor: 'pointer',
+    border: 'solid',
+    borderColor: '#C8C8C8',
+    backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
+    animation: 'progress 2s linear infinite !important',
+    backgroundSize: '150% 100%',
+  },
+  dropzoneTextStyle:{
+    textAlign: 'center'
+  },
+  removeBtn: {
+    transition: '.5s ease',
+    position: 'absolute',
+    opacity: 0,
+    top: -5,
+    right: -5,
+    width: 40,
+    height: 40
+  },
+  uploadIconSize: {
+    width: 51,
+    height: 51,
+    color: '#909090' 
+  },
+  dropzoneParagraph:{
+    fontSize: 24
+  },
+  smallPreviewImg: {
+    height: 100,
+    width: 'initial',
+    maxWidth: '100%',
+    marginTop: 5,
+    marginRight: 10,
+    color: 'rgba(0, 0, 0, 0.87)',
+    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+    boxSizing: 'border-box',
+    boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+    borderRadius: 2,
+    zIndex: 5,
+    opacity: 1
+  },
+  imageContainer: {
+    position: 'relative',
+    zIndex: 10,
+    '&:hover $smallPreviewImg': {
+      opacity: 0.3
+    },
+    '&:hover $removeBtn': {
+      opacity: 1
+    }
+  }
+})
+
 export default class MaterialDropZone extends React.Component {
     constructor(props) {
         super(props);
@@ -198,3 +280,4 @@ export default class MaterialDropZone extends React.Component {
         );
     }
 }
+export default withStyles(styles)(MaterialDropZone);
