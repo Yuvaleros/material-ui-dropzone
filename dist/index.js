@@ -5,15 +5,18 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 var PropTypes = _interopDefault(require('prop-types'));
+var styles = require('@material-ui/core/styles');
+var Grid = _interopDefault(require('@material-ui/core/Grid'));
+var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
+var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
 var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
 var Button = _interopDefault(require('@material-ui/core/Button'));
-var styles = require('@material-ui/core/styles');
-var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
-var AttachFileIcon = _interopDefault(require('@material-ui/icons/AttachFile'));
+require('@material-ui/icons/AttachFile');
 var CloudUploadIcon = _interopDefault(require('@material-ui/icons/CloudUpload'));
-require('@material-ui/core/Grid');
-var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
 var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
+var DialogContent = _interopDefault(require('@material-ui/core/DialogContent'));
+var DialogActions = _interopDefault(require('@material-ui/core/DialogActions'));
+var DialogTitle = _interopDefault(require('@material-ui/core/DialogTitle'));
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
@@ -791,6 +794,71 @@ function isImage(file) {
     }
 }
 
+var styles$2 = {
+    removeBtn: {
+        transition: '.5s ease',
+        position: 'absolute',
+        opacity: 0,
+        top: -5,
+        right: -5,
+        width: 40,
+        height: 40
+    },
+    smallPreviewImg: {
+        height: 100,
+        width: 'initial',
+        maxWidth: '100%',
+        marginTop: 5,
+        marginRight: 10,
+        color: 'rgba(0, 0, 0, 0.87)',
+        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        boxSizing: 'border-box',
+        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+        borderRadius: 2,
+        zIndex: 5,
+        opacity: 1
+    },
+    imageContainer: {
+        position: 'relative',
+        zIndex: 10,
+        '&:hover $smallPreviewImg': {
+            opacity: 0.3
+        },
+        '&:hover $removeBtn': {
+            opacity: 1
+        }
+    }
+};
+
+function PreviewList(props) {
+    var fileObjects = props.fileObjects,
+        handleRemove = props.handleRemove,
+        classes = props.classes;
+
+    return React__default.createElement(
+        Grid,
+        { container: true, spacing: 8 },
+        fileObjects.map(function (fileObject, i) {
+            var img = isImage(fileObject.file) ? React__default.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React__default.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
+            return React__default.createElement(
+                Grid,
+                { item: true, xs: 4, key: i, className: classes.imageContainer },
+                img,
+                React__default.createElement(
+                    IconButton,
+                    null,
+                    React__default.createElement(DeleteIcon, {
+                        className: classes.removeBtn,
+                        onClick: handleRemove(i)
+                    })
+                )
+            );
+        })
+    );
+}
+
+var PreviewList$1 = styles.withStyles(styles$2)(PreviewList);
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -839,9 +907,7 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-// what?
-
-var styles$2 = function styles$$1(theme) {
+var styles$3 = function styles$$1(theme) {
     return {
         dropZone: {
             position: 'relative',
@@ -880,15 +946,6 @@ var styles$2 = function styles$$1(theme) {
         dropzoneTextStyle: {
             textAlign: 'center'
         },
-        removeBtn: {
-            transition: '.5s ease',
-            position: 'absolute',
-            opacity: 0,
-            top: -5,
-            right: -5,
-            width: 40,
-            height: 40
-        },
         uploadIconSize: {
             width: 51,
             height: 51,
@@ -896,30 +953,6 @@ var styles$2 = function styles$$1(theme) {
         },
         dropzoneParagraph: {
             fontSize: 24
-        },
-        smallPreviewImg: {
-            height: 100,
-            width: 'initial',
-            maxWidth: '100%',
-            marginTop: 5,
-            marginRight: 10,
-            color: 'rgba(0, 0, 0, 0.87)',
-            transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-            boxSizing: 'border-box',
-            boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-            borderRadius: 2,
-            zIndex: 5,
-            opacity: 1
-        },
-        imageContainer: {
-            position: 'relative',
-            zIndex: 10,
-            '&:hover $smallPreviewImg': {
-                opacity: 0.3
-            },
-            '&:hover $removeBtn': {
-                opacity: 1
-            }
         }
     };
 };
@@ -970,7 +1003,7 @@ var MaterialDropZone = function (_React$Component) {
 
     createClass(MaterialDropZone, [{
         key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps) {
+        value: function componentDidUpdate(prevProps, prevState) {
             if (this.props.open !== prevProps.open) {
                 this.setState({
                     open: this.props.open
@@ -1021,7 +1054,7 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'changeButtonDisable',
         value: function changeButtonDisable() {
-            if (this.state.files.length !== 0) {
+            if (this.state.fileObjects.length !== 0) {
                 this.setState({
                     disabled: false
                 });
@@ -1046,6 +1079,7 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'onDropRejected',
         value: function onDropRejected() {
+
             this.setState({
                 openSnackBar: true,
                 errorMessage: 'File too big, max size is 3MB'
@@ -1054,48 +1088,7 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
-
             var classes = this.props.classes;
-            var previews = '';
-            console.log(this.state);
-            if (this.props.showPreviews) {
-                previews = this.state.fileObjects.map(function (fileObject, i) {
-                    var img = isImage(fileObject.file) ? React__default.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React__default.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
-                    return React__default.createElement(
-                        'div',
-                        { key: i },
-                        React__default.createElement(
-                            'div',
-                            { className: 'imageContainer col fileIconImg' },
-                            img,
-                            React__default.createElement(
-                                'div',
-                                { className: 'middle' },
-                                React__default.createElement(
-                                    IconButton,
-                                    null,
-                                    React__default.createElement(DeleteIcon, {
-                                        className: classes.removeBtn,
-                                        onClick: _this4.handleRemove.bind(i)
-                                    })
-                                )
-                            )
-                        )
-                    );
-                });
-            }
-
-            var actions = [React__default.createElement(Button, {
-                label: 'Cancel',
-                primary: true,
-                onClick: this.handleClose.bind(this)
-            }), React__default.createElement(Button, {
-                label: 'Submit',
-                primary: true,
-                disabled: this.state.disabled,
-                onClick: this.saveFiles.bind(this)
-            })];
 
             return React__default.createElement(
                 React.Fragment,
@@ -1103,48 +1096,73 @@ var MaterialDropZone = function (_React$Component) {
                 React__default.createElement(
                     Dialog,
                     {
-                        title: 'Upload File',
-                        actions: actions,
                         open: this.state.open,
                         onClose: this.handleClose.bind(this)
                     },
                     React__default.createElement(
-                        Dropzone,
-                        {
-                            accept: this.props.acceptedFiles.join(','),
-                            onDrop: this.onDrop.bind(this),
-                            className: classes.dropZone,
-                            acceptClassName: classes.stripes,
-                            rejectClassName: classes.rejectStripes,
-                            onDropRejected: this.onDropRejected.bind(this),
-                            maxSize: this.props.maxFileSize
-                        },
+                        DialogTitle,
+                        null,
+                        'Upload File'
+                    ),
+                    React__default.createElement(
+                        DialogContent,
+                        null,
                         React__default.createElement(
-                            'div',
-                            { className: classes.dropzoneTextStyle },
+                            Dropzone,
+                            {
+                                accept: this.props.acceptedFiles.join(','),
+                                onDrop: this.onDrop.bind(this),
+                                className: classes.dropZone,
+                                acceptClassName: classes.stripes,
+                                rejectClassName: classes.rejectStripes,
+                                onDropRejected: this.onDropRejected.bind(this),
+                                maxSize: this.props.maxFileSize
+                            },
                             React__default.createElement(
-                                'p',
-                                { className: classes.dropzoneParagraph },
-                                'Drag and drop an image file here or click'
-                            ),
-                            React__default.createElement('br', null),
-                            React__default.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
+                                'div',
+                                { className: classes.dropzoneTextStyle },
+                                React__default.createElement(
+                                    'p',
+                                    { className: classes.dropzoneParagraph },
+                                    'Drag and drop an image file here or click'
+                                ),
+                                React__default.createElement('br', null),
+                                React__default.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
+                            )
+                        ),
+                        React__default.createElement(
+                            Grid,
+                            { container: true },
+                            this.state.fileObjects.length ? React__default.createElement(
+                                'span',
+                                null,
+                                'Preview:'
+                            ) : ''
+                        ),
+                        React__default.createElement(PreviewList$1, {
+                            fileObjects: this.state.fileObjects,
+                            handleRemove: this.handleRemove.bind(this) })
+                    ),
+                    React__default.createElement(
+                        DialogActions,
+                        null,
+                        React__default.createElement(
+                            Button,
+                            {
+                                color: 'primary',
+                                onClick: this.handleClose.bind(this)
+                            },
+                            'Cancel'
+                        ),
+                        React__default.createElement(
+                            Button,
+                            {
+                                color: 'primary',
+                                disabled: this.state.disabled,
+                                onClick: this.saveFiles.bind(this)
+                            },
+                            'Submit'
                         )
-                    ),
-                    React__default.createElement('br', null),
-                    React__default.createElement(
-                        'div',
-                        { className: 'row' },
-                        this.state.fileObjects.length ? React__default.createElement(
-                            'span',
-                            null,
-                            'Preview:'
-                        ) : ''
-                    ),
-                    React__default.createElement(
-                        'div',
-                        { className: 'row' },
-                        previews
                     )
                 ),
                 React__default.createElement(Snackbar, {
@@ -1163,17 +1181,18 @@ MaterialDropZone.defaultProps = {
     acceptedFiles: ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
     filesLimit: 3,
     maxFileSize: 3000000,
-    showPreviews: true
+    showPreviews: true,
+    onChange: false
 };
-MaterialDropZone.PropTypes = {
+MaterialDropZone.propTypes = {
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
-    onChange: PropTypes.function,
-    showPreviews: PropTypes.bool
+    showPreviews: PropTypes.bool,
+    onChange: PropTypes.function
 };
 
-var index = styles.withStyles(styles$2)(MaterialDropZone);
+var index = styles.withStyles(styles$3)(MaterialDropZone);
 
 module.exports = index;
 //# sourceMappingURL=index.js.map

@@ -1,14 +1,17 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
@@ -786,6 +789,71 @@ function isImage(file) {
     }
 }
 
+var styles$1 = {
+    removeBtn: {
+        transition: '.5s ease',
+        position: 'absolute',
+        opacity: 0,
+        top: -5,
+        right: -5,
+        width: 40,
+        height: 40
+    },
+    smallPreviewImg: {
+        height: 100,
+        width: 'initial',
+        maxWidth: '100%',
+        marginTop: 5,
+        marginRight: 10,
+        color: 'rgba(0, 0, 0, 0.87)',
+        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        boxSizing: 'border-box',
+        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+        borderRadius: 2,
+        zIndex: 5,
+        opacity: 1
+    },
+    imageContainer: {
+        position: 'relative',
+        zIndex: 10,
+        '&:hover $smallPreviewImg': {
+            opacity: 0.3
+        },
+        '&:hover $removeBtn': {
+            opacity: 1
+        }
+    }
+};
+
+function PreviewList(props) {
+    var fileObjects = props.fileObjects,
+        handleRemove = props.handleRemove,
+        classes = props.classes;
+
+    return React.createElement(
+        Grid,
+        { container: true, spacing: 8 },
+        fileObjects.map(function (fileObject, i) {
+            var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
+            return React.createElement(
+                Grid,
+                { item: true, xs: 4, key: i, className: classes.imageContainer },
+                img,
+                React.createElement(
+                    IconButton,
+                    null,
+                    React.createElement(DeleteIcon, {
+                        className: classes.removeBtn,
+                        onClick: handleRemove(i)
+                    })
+                )
+            );
+        })
+    );
+}
+
+var PreviewList$1 = withStyles(styles$1)(PreviewList);
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -834,9 +902,7 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-// what?
-
-var styles$1 = function styles(theme) {
+var styles$2 = function styles(theme) {
     return {
         dropZone: {
             position: 'relative',
@@ -875,15 +941,6 @@ var styles$1 = function styles(theme) {
         dropzoneTextStyle: {
             textAlign: 'center'
         },
-        removeBtn: {
-            transition: '.5s ease',
-            position: 'absolute',
-            opacity: 0,
-            top: -5,
-            right: -5,
-            width: 40,
-            height: 40
-        },
         uploadIconSize: {
             width: 51,
             height: 51,
@@ -891,30 +948,6 @@ var styles$1 = function styles(theme) {
         },
         dropzoneParagraph: {
             fontSize: 24
-        },
-        smallPreviewImg: {
-            height: 100,
-            width: 'initial',
-            maxWidth: '100%',
-            marginTop: 5,
-            marginRight: 10,
-            color: 'rgba(0, 0, 0, 0.87)',
-            transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-            boxSizing: 'border-box',
-            boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-            borderRadius: 2,
-            zIndex: 5,
-            opacity: 1
-        },
-        imageContainer: {
-            position: 'relative',
-            zIndex: 10,
-            '&:hover $smallPreviewImg': {
-                opacity: 0.3
-            },
-            '&:hover $removeBtn': {
-                opacity: 1
-            }
         }
     };
 };
@@ -965,7 +998,7 @@ var MaterialDropZone = function (_React$Component) {
 
     createClass(MaterialDropZone, [{
         key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps) {
+        value: function componentDidUpdate(prevProps, prevState) {
             if (this.props.open !== prevProps.open) {
                 this.setState({
                     open: this.props.open
@@ -1016,7 +1049,7 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'changeButtonDisable',
         value: function changeButtonDisable() {
-            if (this.state.files.length !== 0) {
+            if (this.state.fileObjects.length !== 0) {
                 this.setState({
                     disabled: false
                 });
@@ -1041,6 +1074,7 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'onDropRejected',
         value: function onDropRejected() {
+
             this.setState({
                 openSnackBar: true,
                 errorMessage: 'File too big, max size is 3MB'
@@ -1049,48 +1083,7 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
-
             var classes = this.props.classes;
-            var previews = '';
-            console.log(this.state);
-            if (this.props.showPreviews) {
-                previews = this.state.fileObjects.map(function (fileObject, i) {
-                    var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
-                    return React.createElement(
-                        'div',
-                        { key: i },
-                        React.createElement(
-                            'div',
-                            { className: 'imageContainer col fileIconImg' },
-                            img,
-                            React.createElement(
-                                'div',
-                                { className: 'middle' },
-                                React.createElement(
-                                    IconButton,
-                                    null,
-                                    React.createElement(DeleteIcon, {
-                                        className: classes.removeBtn,
-                                        onClick: _this4.handleRemove.bind(i)
-                                    })
-                                )
-                            )
-                        )
-                    );
-                });
-            }
-
-            var actions = [React.createElement(Button, {
-                label: 'Cancel',
-                primary: true,
-                onClick: this.handleClose.bind(this)
-            }), React.createElement(Button, {
-                label: 'Submit',
-                primary: true,
-                disabled: this.state.disabled,
-                onClick: this.saveFiles.bind(this)
-            })];
 
             return React.createElement(
                 Fragment,
@@ -1098,48 +1091,73 @@ var MaterialDropZone = function (_React$Component) {
                 React.createElement(
                     Dialog,
                     {
-                        title: 'Upload File',
-                        actions: actions,
                         open: this.state.open,
                         onClose: this.handleClose.bind(this)
                     },
                     React.createElement(
-                        Dropzone,
-                        {
-                            accept: this.props.acceptedFiles.join(','),
-                            onDrop: this.onDrop.bind(this),
-                            className: classes.dropZone,
-                            acceptClassName: classes.stripes,
-                            rejectClassName: classes.rejectStripes,
-                            onDropRejected: this.onDropRejected.bind(this),
-                            maxSize: this.props.maxFileSize
-                        },
+                        DialogTitle,
+                        null,
+                        'Upload File'
+                    ),
+                    React.createElement(
+                        DialogContent,
+                        null,
                         React.createElement(
-                            'div',
-                            { className: classes.dropzoneTextStyle },
+                            Dropzone,
+                            {
+                                accept: this.props.acceptedFiles.join(','),
+                                onDrop: this.onDrop.bind(this),
+                                className: classes.dropZone,
+                                acceptClassName: classes.stripes,
+                                rejectClassName: classes.rejectStripes,
+                                onDropRejected: this.onDropRejected.bind(this),
+                                maxSize: this.props.maxFileSize
+                            },
                             React.createElement(
-                                'p',
-                                { className: classes.dropzoneParagraph },
-                                'Drag and drop an image file here or click'
-                            ),
-                            React.createElement('br', null),
-                            React.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
+                                'div',
+                                { className: classes.dropzoneTextStyle },
+                                React.createElement(
+                                    'p',
+                                    { className: classes.dropzoneParagraph },
+                                    'Drag and drop an image file here or click'
+                                ),
+                                React.createElement('br', null),
+                                React.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
+                            )
+                        ),
+                        React.createElement(
+                            Grid,
+                            { container: true },
+                            this.state.fileObjects.length ? React.createElement(
+                                'span',
+                                null,
+                                'Preview:'
+                            ) : ''
+                        ),
+                        React.createElement(PreviewList$1, {
+                            fileObjects: this.state.fileObjects,
+                            handleRemove: this.handleRemove.bind(this) })
+                    ),
+                    React.createElement(
+                        DialogActions,
+                        null,
+                        React.createElement(
+                            Button,
+                            {
+                                color: 'primary',
+                                onClick: this.handleClose.bind(this)
+                            },
+                            'Cancel'
+                        ),
+                        React.createElement(
+                            Button,
+                            {
+                                color: 'primary',
+                                disabled: this.state.disabled,
+                                onClick: this.saveFiles.bind(this)
+                            },
+                            'Submit'
                         )
-                    ),
-                    React.createElement('br', null),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        this.state.fileObjects.length ? React.createElement(
-                            'span',
-                            null,
-                            'Preview:'
-                        ) : ''
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'row' },
-                        previews
                     )
                 ),
                 React.createElement(Snackbar, {
@@ -1158,17 +1176,18 @@ MaterialDropZone.defaultProps = {
     acceptedFiles: ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
     filesLimit: 3,
     maxFileSize: 3000000,
-    showPreviews: true
+    showPreviews: true,
+    onChange: false
 };
-MaterialDropZone.PropTypes = {
+MaterialDropZone.propTypes = {
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
-    onChange: PropTypes.function,
-    showPreviews: PropTypes.bool
+    showPreviews: PropTypes.bool,
+    onChange: PropTypes.function
 };
 
-var index = withStyles(styles$1)(MaterialDropZone);
+var index = withStyles(styles$2)(MaterialDropZone);
 
 export default index;
 //# sourceMappingURL=index.es.js.map

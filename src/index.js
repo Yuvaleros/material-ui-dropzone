@@ -3,16 +3,15 @@ import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import {withStyles} from '@material-ui/core/styles';
 import Dropzone from 'react-dropzone';
-import DeleteIcon from '@material-ui/icons/Delete'; 
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar'; 
-import {isImage} from './helpers/helpers.js'; 
-
-// what?
+import Snackbar from '@material-ui/core/Snackbar';  
+import PreviewList from './PreviewList'
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 const styles = theme => ({
   dropZone: {
@@ -52,15 +51,6 @@ const styles = theme => ({
   dropzoneTextStyle:{
     textAlign: 'center'
   },
-  removeBtn: {
-    transition: '.5s ease',
-    position: 'absolute',
-    opacity: 0,
-    top: -5,
-    right: -5,
-    width: 40,
-    height: 40
-  },
   uploadIconSize: {
     width: 51,
     height: 51,
@@ -68,30 +58,6 @@ const styles = theme => ({
   },
   dropzoneParagraph:{
     fontSize: 24
-  },
-  smallPreviewImg: {
-    height: 100,
-    width: 'initial',
-    maxWidth: '100%',
-    marginTop: 5,
-    marginRight: 10,
-    color: 'rgba(0, 0, 0, 0.87)',
-    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-    boxSizing: 'border-box',
-    boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-    borderRadius: 2,
-    zIndex: 5,
-    opacity: 1
-  },
-  imageContainer: {
-    position: 'relative',
-    zIndex: 10,
-    '&:hover $smallPreviewImg': {
-      opacity: 0.3
-    },
-    '&:hover $removeBtn': {
-      opacity: 1
-    }
   }
 })
 
@@ -106,7 +72,7 @@ class MaterialDropZone extends React.Component {
             disabled: true,
         };
     }
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps, prevState){
         if(this.props.open !== prevProps.open){
             this.setState({
                 open: this.props.open
@@ -166,7 +132,7 @@ class MaterialDropZone extends React.Component {
       }
 
     changeButtonDisable() {
-        if (this.state.files.length !== 0) {
+        if (this.state.fileObjects.length !== 0) {
             this.setState({
                 disabled: false,
             });
@@ -189,6 +155,7 @@ class MaterialDropZone extends React.Component {
     }
 
     onDropRejected() {
+        
         this.setState({
             openSnackBar: true,
             errorMessage: 'File too big, max size is 3MB',
@@ -203,77 +170,53 @@ class MaterialDropZone extends React.Component {
 
     render() {
         const {classes} = this.props; 
-        let img;
-        let previews = '';
-        console.log(this.state)
-        if (this.props.showPreviews) {
-            previews = this.state.fileObjects.map((fileObject, i) => {
-                const img = (isImage(fileObject.file) ? 
-                    <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data}/>
-                    :
-                    <AttachFileIcon className={classes.smallPreviewImg}/>
-                )
-                return (<div key={i}>
-                    <div className={'imageContainer col fileIconImg'}>
-                        {img}
-                        <div className="middle">
-                            <IconButton>
-                                <DeleteIcon
-                                    className={classes.removeBtn}
-                                    onClick={this.handleRemove.bind(i)}
-                                />
-                            </IconButton>
-                        </div>
-                    </div>
-                </div>);
-            });
-        }
-
-        const actions = [
-            <Button
-                label={'Cancel'}
-                primary={true}
-                onClick={this.handleClose.bind(this)}
-            />,
-            <Button
-                label={'Submit'}
-                primary={true}
-                disabled={this.state.disabled}
-                onClick={this.saveFiles.bind(this)}
-            />];
-
         return (
             <Fragment>
                 <Dialog
-                    title={'Upload File'}
-                    actions={actions}
                     open={this.state.open}
                     onClose={this.handleClose.bind(this)}
                 >
-                    <Dropzone
-                        accept={this.props.acceptedFiles.join(',')}
-                        onDrop={this.onDrop.bind(this)}
-                        className={classes.dropZone}
-                        acceptClassName={classes.stripes}
-                        rejectClassName={classes.rejectStripes}
-                        onDropRejected={this.onDropRejected.bind(this)}
-                        maxSize={this.props.maxFileSize}
-                    >
-                        <div className={classes.dropzoneTextStyle}>
-                            <p className={classes.dropzoneParagraph}>
-                                Drag and drop an image file here or click
-                            </p>
-                            <br/>
-                            <CloudUploadIcon className={classes.uploadIconSize}/>
-                        </div>
-                    </Dropzone>
-                    <br/>
-                    <div className="row">
-                        {this.state.fileObjects.length ? <span>Preview:</span> : ''}
-                    </div>
-                    <div className="row">
-                        {previews}
-                    </div>
+                    <DialogTitle>Upload File</DialogTitle>
+                    <DialogContent>
+                        <Dropzone
+                            accept={this.props.acceptedFiles.join(',')}
+                            onDrop={this.onDrop.bind(this)}
+                            className={classes.dropZone}
+                            acceptClassName={classes.stripes}
+                            rejectClassName={classes.rejectStripes}
+                            onDropRejected={this.onDropRejected.bind(this)}
+                            maxSize={this.props.maxFileSize}
+                        >
+                            <div className={classes.dropzoneTextStyle}>
+                                <p className={classes.dropzoneParagraph}>
+                                    Drag and drop an image file here or click
+                                </p>
+                                <br/>
+                                <CloudUploadIcon className={classes.uploadIconSize}/>
+                            </div>
+                        </Dropzone>
+                        <Grid container>
+                            {this.state.fileObjects.length ? <span>Preview:</span> : ''}
+                        </Grid>
+                        <PreviewList 
+                            fileObjects={this.state.fileObjects} 
+                            handleRemove={this.handleRemove.bind(this)}/>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            color="primary"
+                            onClick={this.handleClose.bind(this)}
+                            >
+                            Cancel
+                        </Button>
+                        <Button
+                            color="primary"
+                            disabled={this.state.disabled}
+                            onClick={this.saveFiles.bind(this)}
+                            >
+                            Submit
+                        </Button>
+                    </DialogActions>
                 </Dialog>
                 <Snackbar
                     open={this.state.openSnackBar}
@@ -293,14 +236,15 @@ MaterialDropZone.defaultProps = {
                 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
     filesLimit: 3,
     maxFileSize: 3000000,
-    showPreviews: true
+    showPreviews: true,
+    onChange: false
 }
-MaterialDropZone.PropTypes = {
+MaterialDropZone.propTypes = {
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
-    onChange: PropTypes.function,
-    showPreviews: PropTypes.bool
+    showPreviews: PropTypes.bool, 
+    onChange: PropTypes.function
 }
 
 export default withStyles(styles)(MaterialDropZone);
