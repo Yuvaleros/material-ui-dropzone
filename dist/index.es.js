@@ -1,111 +1,25 @@
 import React, { Component, Fragment } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
+import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-function isImage(file) {
-  var fileName = file.name || file.path;
-  var suffix = fileName.substr(fileName.indexOf('.') + 1).toLowerCase();
-  if (suffix === 'jpg' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'png') {
-    return true;
-  }
-}
-function convertBytesToMbsOrKbs(filesize) {
-  var size = '';
-  // I know, not technically correct...
-  if (filesize >= 1000000) {
-    size = filesize / 1000000 + ' megabytes';
-  } else if (filesize >= 1000) {
-    size = filesize / 1000 + ' kilobytes';
-  } else {
-    size = filesize + ' bytes';
-  }
-  return size;
-}
-
-var styles = {
-    removeBtn: {
-        transition: '.5s ease',
-        position: 'absolute',
-        opacity: 0,
-        top: -5,
-        right: -5,
-        width: 40,
-        height: 40
-    },
-    smallPreviewImg: {
-        height: 100,
-        width: 'initial',
-        maxWidth: '100%',
-        marginTop: 5,
-        marginRight: 10,
-        color: 'rgba(0, 0, 0, 0.87)',
-        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-        boxSizing: 'border-box',
-        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-        borderRadius: 2,
-        zIndex: 5,
-        opacity: 1
-    },
-    imageContainer: {
-        position: 'relative',
-        zIndex: 10,
-        textAlign: 'center',
-        '&:hover $smallPreviewImg': {
-            opacity: 0.3
-        },
-        '&:hover $removeBtn': {
-            opacity: 1
-        }
-    }
-};
-
-function PreviewList(props) {
-    var fileObjects = props.fileObjects,
-        handleRemove = props.handleRemove,
-        classes = props.classes;
-
-    return React.createElement(
-        Grid,
-        { container: true, spacing: 8 },
-        fileObjects.map(function (fileObject, i) {
-            var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
-            return React.createElement(
-                Grid,
-                { item: true, xs: 4, key: i, className: classes.imageContainer },
-                img,
-                React.createElement(
-                    Button,
-                    { variant: 'fab',
-                        onClick: handleRemove(i),
-                        'aria-label': 'Delete',
-                        className: classes.removeBtn },
-                    React.createElement(DeleteIcon, null)
-                )
-            );
-        })
-    );
-}
-
-var PreviewList$1 = withStyles(styles)(PreviewList);
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
@@ -191,7 +105,7 @@ function isIeOrEdge() {
   return isIe(userAgent) || isEdge(userAgent);
 }
 
-var styles$1 = {
+var styles = {
   active: {
     borderStyle: 'solid',
     backgroundColor: '#eee'
@@ -625,11 +539,11 @@ var Dropzone = function (_React$Component) {
       }
 
       if (noStyles) {
-        style = styles$1.default;
-        activeStyle = styles$1.active;
-        acceptStyle = styles$1.accepted;
-        rejectStyle = styles$1.rejected;
-        disabledStyle = styles$1.disabled;
+        style = styles.default;
+        activeStyle = styles.active;
+        acceptStyle = styles.accepted;
+        rejectStyle = styles.rejected;
+        disabledStyle = styles.disabled;
       }
 
       var appliedStyle = _extends({ position: 'relative' }, style);
@@ -875,6 +789,26 @@ Dropzone.defaultProps = {
   getDataTransferItems: getDataTransferItems
 };
 
+function isImage(file) {
+  var fileName = file.name || file.path;
+  var suffix = fileName.substr(fileName.indexOf('.') + 1).toLowerCase();
+  if (suffix === 'jpg' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'png') {
+    return true;
+  }
+}
+function convertBytesToMbsOrKbs(filesize) {
+  var size = '';
+  // I know, not technically correct...
+  if (filesize >= 1000000) {
+    size = filesize / 1000000 + ' megabytes';
+  } else if (filesize >= 1000) {
+    size = filesize / 1000 + ' kilobytes';
+  } else {
+    size = filesize + ' bytes';
+  }
+  return size;
+}
+
 var classnames = createCommonjsModule(function (module) {
 /*!
   Copyright (c) 2017 Jed Watson.
@@ -1005,7 +939,7 @@ var variantIcon = {
   info: InfoIcon
 };
 
-var styles$2 = function styles(theme) {
+var styles$1 = function styles(theme) {
   return {
     success: {
       backgroundColor: green[600]
@@ -1074,7 +1008,73 @@ SnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
 };
 
-var SnackbarContentWrapper$1 = withStyles(styles$2)(SnackbarContentWrapper);
+var SnackbarContentWrapper$1 = withStyles(styles$1)(SnackbarContentWrapper);
+
+var styles$2 = {
+    removeBtn: {
+        transition: '.5s ease',
+        position: 'absolute',
+        opacity: 0,
+        top: -5,
+        right: -5,
+        width: 40,
+        height: 40
+    },
+    smallPreviewImg: {
+        height: 100,
+        width: 'initial',
+        maxWidth: '100%',
+        marginTop: 5,
+        marginRight: 10,
+        color: 'rgba(0, 0, 0, 0.87)',
+        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        boxSizing: 'border-box',
+        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+        borderRadius: 2,
+        zIndex: 5,
+        opacity: 1
+    },
+    imageContainer: {
+        position: 'relative',
+        zIndex: 10,
+        textAlign: 'center',
+        '&:hover $smallPreviewImg': {
+            opacity: 0.3
+        },
+        '&:hover $removeBtn': {
+            opacity: 1
+        }
+    }
+};
+
+function PreviewList(props) {
+    var fileObjects = props.fileObjects,
+        handleRemove = props.handleRemove,
+        classes = props.classes;
+
+    return React.createElement(
+        Grid,
+        { container: true, spacing: 8 },
+        fileObjects.map(function (fileObject, i) {
+            var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
+            return React.createElement(
+                Grid,
+                { item: true, xs: 4, key: i, className: classes.imageContainer },
+                img,
+                React.createElement(
+                    Button,
+                    { variant: 'fab',
+                        onClick: handleRemove(i),
+                        'aria-label': 'Delete',
+                        className: classes.removeBtn },
+                    React.createElement(DeleteIcon, null)
+                )
+            );
+        })
+    );
+}
+
+var PreviewList$1 = withStyles(styles$2)(PreviewList);
 
 var styles$3 = {
     dropZone: {
@@ -1178,31 +1178,44 @@ var DropzoneArea = function (_Component) {
             var _this3 = this;
 
             var _this = this;
-            files.forEach(function (file) {
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    console.log(_this.state.fileObjects);
-                    console.log(_this.state.fileObjects.concat({ file: file, data: event.target.result }));
-                    _this.setState({
-                        fileObjects: _this.state.fileObjects.concat({ file: file, data: event.target.result })
-                    }, function () {
-                        if (_this3.props.onChange) {
-                            _this3.props.onChange(_this.state.fileObjects.map(function (fileObject) {
-                                return fileObject.file;
-                            }));
-                        }
-                        if (_this3.props.onDrop) {
-                            _this3.props.onDrop(file);
-                        }
-                        _this3.setState({
-                            openSnackBar: true,
-                            snackbarMessage: 'File ' + file.name + ' successfully uploaded',
-                            snackbarVariant: 'success'
+            if (this.state.fileObjects + files.length > this.props.filesLimit) {
+                this.setState({
+                    openSnackBar: true,
+                    snackbarMessage: 'Maximum allowed number of files exceeded. Only ' + this.props.filesLimit + ' allowed',
+                    snackbarVariant: 'error'
+                });
+            } else {
+                var count = 0;
+                var message = '';
+                files.forEach(function (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        _this.setState({
+                            fileObjects: _this.state.fileObjects.concat({ file: file, data: event.target.result })
+                        }, function () {
+                            if (_this3.props.onChange) {
+                                _this3.props.onChange(_this.state.fileObjects.map(function (fileObject) {
+                                    return fileObject.file;
+                                }));
+                            }
+                            if (_this3.props.onDrop) {
+                                _this3.props.onDrop(file);
+                            }
+                            message += 'File ' + file.name + ' successfully uploaded. ';
+                            count++; // we cannot rely on the index because this is asynchronous
+                            if (count === files.length) {
+                                // display message when the last one fires
+                                _this3.setState({
+                                    openSnackBar: true,
+                                    snackbarMessage: message,
+                                    snackbarVariant: 'success'
+                                });
+                            }
                         });
-                    });
-                };
-                reader.readAsDataURL(file);
-            });
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
         }
     }, {
         key: 'handleDropRejected',
@@ -1211,12 +1224,12 @@ var DropzoneArea = function (_Component) {
 
             var message = '';
             rejectedFiles.forEach(function (rejectedFile) {
-                var message = 'File ' + rejectedFile.name + ' was rejected. ';
-                if (!_this4.state.acceptedFiles.includes(rejectedFile.type)) {
+                message = 'File ' + rejectedFile.name + ' was rejected. ';
+                if (!_this4.props.acceptedFiles.includes(rejectedFile.type)) {
                     message += 'File type not supported. ';
                 }
-                if (rejectedFile.size > _this4.state.fileSizeLimit) {
-                    message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(_this4.state.fileSizeLimit) + '. ';
+                if (rejectedFile.size > _this4.props.fileSizeLimit) {
+                    message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(_this4.props.fileSizeLimit) + '. ';
                 }
             });
             if (this.props.onDropRejected) {
@@ -1225,7 +1238,7 @@ var DropzoneArea = function (_Component) {
             this.setState({
                 openSnackBar: true,
                 snackbarMessage: message,
-                variant: 'error'
+                snackbarVariant: 'error'
             });
         }
     }, {
@@ -1309,7 +1322,12 @@ DropzoneArea.defaultProps = {
     filesLimit: 3,
     maxFileSize: 3000000,
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
-    showPreviewsInDropzone: true
+    showPreviewsInDropzone: true,
+    showAlerts: true,
+    onChange: function onChange() {},
+    onDrop: function onDrop() {},
+    onDropRejected: function onDropRejected() {},
+    onDelete: function onDelete() {}
 };
 DropzoneArea.propTypes = {
     acceptedFiles: PropTypes.array,
@@ -1318,20 +1336,20 @@ DropzoneArea.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showAlerts: PropTypes.bool,
-    onChange: PropTypes.function,
-    onDrop: PropTypes.function,
-    onDropRejected: PropTypes.function,
-    onDelete: PropTypes.function
+    onChange: PropTypes.func,
+    onDrop: PropTypes.func,
+    onDropRejected: PropTypes.func,
+    onDelete: PropTypes.func
 };
 var DropzoneArea$1 = withStyles(styles$3)(DropzoneArea);
 
-var MaterialDropZone = function (_React$Component) {
-    inherits(MaterialDropZone, _React$Component);
+var DropzoneDialog = function (_React$Component) {
+    inherits(DropzoneDialog, _React$Component);
 
-    function MaterialDropZone(props) {
-        classCallCheck(this, MaterialDropZone);
+    function DropzoneDialog(props) {
+        classCallCheck(this, DropzoneDialog);
 
-        var _this = possibleConstructorReturn(this, (MaterialDropZone.__proto__ || Object.getPrototypeOf(MaterialDropZone)).call(this, props));
+        var _this = possibleConstructorReturn(this, (DropzoneDialog.__proto__ || Object.getPrototypeOf(DropzoneDialog)).call(this, props));
 
         _this.state = {
             open: false,
@@ -1341,7 +1359,7 @@ var MaterialDropZone = function (_React$Component) {
         return _this;
     }
 
-    createClass(MaterialDropZone, [{
+    createClass(DropzoneDialog, [{
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
             if (this.props.open !== prevProps.open) {
@@ -1472,25 +1490,32 @@ var MaterialDropZone = function (_React$Component) {
             );
         }
     }]);
-    return MaterialDropZone;
+    return DropzoneDialog;
 }(React.Component);
 
-MaterialDropZone.defaultProps = {
+DropzoneDialog.defaultProps = {
     open: false,
     acceptedFiles: ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
     filesLimit: 3,
     maxFileSize: 3000000,
     showPreviews: true,
     showPreviewsInDropzone: false,
-    showAlerts: true
+    showAlerts: true,
+    onSave: function onSave() {},
+    onDelete: function onDelete() {},
+    onClose: function onClose() {},
+    onChange: function onChange() {},
+    onDrop: function onDrop() {},
+    onDropRejected: function onDropRejected() {}
 };
-MaterialDropZone.propTypes = {
+DropzoneDialog.propTypes = {
     open: PropTypes.bool,
-    onSave: PropTypes.function,
-    onDelete: PropTypes.function,
-    onClose: PropTypes.function,
-    onChange: PropTypes.function,
-    onDropRejected: PropTypes.function,
+    onSave: PropTypes.func,
+    onDelete: PropTypes.func,
+    onClose: PropTypes.func,
+    onChange: PropTypes.func,
+    onDrop: PropTypes.func,
+    onDropRejected: PropTypes.func,
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
@@ -1499,5 +1524,5 @@ MaterialDropZone.propTypes = {
     showAlerts: PropTypes.bool
 };
 
-export default MaterialDropZone;
+export { DropzoneArea$1 as DropzoneArea, DropzoneDialog };
 //# sourceMappingURL=index.es.js.map

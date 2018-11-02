@@ -70,29 +70,42 @@ class DropzoneArea extends Component{
     }
     onDrop(files){
         const _this = this;
-        files.forEach((file) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                console.log(_this.state.fileObjects)
-                console.log(_this.state.fileObjects.concat({file: file, data: event.target.result}))
-                _this.setState({
-                    fileObjects: _this.state.fileObjects.concat({file: file, data: event.target.result})
-                },() => {
-                    if(this.props.onChange){
-                        this.props.onChange(_this.state.fileObjects.map(fileObject => fileObject.file));    
-                    }
-                    if(this.props.onDrop){
-                        this.props.onDrop(file)
-                    }
-                    this.setState({
-                        openSnackBar: true,
-                        snackbarMessage: ('File ' + file.name+ ' successfully uploaded'), 
-                        snackbarVariant: 'success'
+        if(this.state.fileObjects + files.length > this.props.filesLimit){
+            this.setState({
+                openSnackBar: true,
+                snackbarMessage: `Maximum allowed number of files exceeded. Only ${this.props.filesLimit} allowed`, 
+                snackbarVariant: 'error'
+            });
+        }else{
+            var count = 0;
+            var message = '';
+            files.forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    _this.setState({
+                        fileObjects: _this.state.fileObjects.concat({file: file, data: event.target.result})
+                    },() => {
+                        if(this.props.onChange){
+                            this.props.onChange(_this.state.fileObjects.map(fileObject => fileObject.file));    
+                        }
+                        if(this.props.onDrop){
+                            this.props.onDrop(file)
+                        }
+                        message += `File ${file.name} successfully uploaded. `;
+                        count++; // we cannot rely on the index because this is asynchronous
+                        if(count === files.length){
+                            // display message when the last one fires
+                            this.setState({
+                                openSnackBar: true,
+                                snackbarMessage: message, 
+                                snackbarVariant: 'success'
+                            });
+                        }
                     });
-                });
-            };
-            reader.readAsDataURL(file);
-        })
+                };
+                reader.readAsDataURL(file);
+            })
+        }
     }
     handleRemove = fileIndex => event => {
         event.stopPropagation();
@@ -116,12 +129,12 @@ class DropzoneArea extends Component{
     handleDropRejected(rejectedFiles, evt) {
         var message = '';
         rejectedFiles.forEach((rejectedFile) => {
-            var message = `File ${rejectedFile.name} was rejected. `;
-            if(!this.state.acceptedFiles.includes(rejectedFile.type)){
+            message = `File ${rejectedFile.name} was rejected. `;
+            if(!this.props.acceptedFiles.includes(rejectedFile.type)){
                 message += 'File type not supported. '
             }
-            if(rejectedFile.size > this.state.fileSizeLimit){
-                message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(this.state.fileSizeLimit) + '. ';
+            if(rejectedFile.size > this.props.fileSizeLimit){
+                message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(this.props.fileSizeLimit) + '. ';
             }
         });
         if(this.props.onDropRejected){
@@ -130,7 +143,7 @@ class DropzoneArea extends Component{
         this.setState({
             openSnackBar: true,
             snackbarMessage: message,
-            variant: 'error'
+            snackbarVariant: 'error'
         });
     }
     onCloseSnackbar = () => {
@@ -208,7 +221,12 @@ DropzoneArea.defaultProps = {
     filesLimit: 3,
     maxFileSize: 3000000,
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
-    showPreviewsInDropzone: true
+    showPreviewsInDropzone: true,
+    showAlerts: true,
+    onChange: () => {},
+    onDrop: () => {},
+    onDropRejected: () => {},
+    onDelete: () => {}
 }
 DropzoneArea.propTypes = {
     acceptedFiles: PropTypes.array,
@@ -217,9 +235,9 @@ DropzoneArea.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showAlerts: PropTypes.bool,
-    onChange: PropTypes.function,
-    onDrop: PropTypes.function,
-    onDropRejected: PropTypes.function,
-    onDelete: PropTypes.function
+    onChange: PropTypes.func,
+    onDrop: PropTypes.func,
+    onDropRejected: PropTypes.func,
+    onDelete: PropTypes.func
 }
 export default withStyles(styles)(DropzoneArea)
