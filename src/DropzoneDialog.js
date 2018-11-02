@@ -35,9 +35,9 @@ class DropzoneDialog extends React.Component {
         }
     }
 
-    handleClose() {
+    handleClose(event) {
         if(this.props.onClose){
-            this.props.onClose();
+            this.props.onClose(event);
         }
         this.setState({open: false});
     }
@@ -137,7 +137,7 @@ DropzoneDialog.defaultProps = {
     onDropRejected: () => {},
 }
 DropzoneDialog.propTypes = {
-    open: PropTypes.bool, 
+    open: PropTypes.bool.isRequired, 
     onSave: PropTypes.func, 
     onDelete: PropTypes.func,
     onClose: PropTypes.func,
