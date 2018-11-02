@@ -7,10 +7,10 @@ var React__default = _interopDefault(React);
 var PropTypes = _interopDefault(require('prop-types'));
 var styles = require('@material-ui/core/styles');
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
-var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
+require('@material-ui/core/IconButton');
 var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
-var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
 var Button = _interopDefault(require('@material-ui/core/Button'));
+var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
 require('@material-ui/icons/AttachFile');
 var CloudUploadIcon = _interopDefault(require('@material-ui/icons/CloudUpload'));
 var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
@@ -821,6 +821,7 @@ var styles$2 = {
     imageContainer: {
         position: 'relative',
         zIndex: 10,
+        textAlign: 'center',
         '&:hover $smallPreviewImg': {
             opacity: 0.3
         },
@@ -845,12 +846,12 @@ function PreviewList(props) {
                 { item: true, xs: 4, key: i, className: classes.imageContainer },
                 img,
                 React__default.createElement(
-                    IconButton,
-                    null,
-                    React__default.createElement(DeleteIcon, {
-                        className: classes.removeBtn,
-                        onClick: handleRemove(i)
-                    })
+                    Button,
+                    { variant: 'fab',
+                        onClick: handleRemove(i),
+                        'aria-label': 'Delete',
+                        className: classes.removeBtn },
+                    React__default.createElement(DeleteIcon, null)
                 )
             );
         })
@@ -980,7 +981,10 @@ var MaterialDropZone = function (_React$Component) {
                             return fileObject.file;
                         }));
                     }
-                    _this2.props.enqueueSnackbar('File ' + file.name + ' removed', { variant: 'warning' });
+                    _this2.setState({
+                        openSnackBar: true,
+                        errorMessage: 'File ' + file.name + ' removed'
+                    });
                 });
             };
         };
@@ -1059,13 +1063,16 @@ var MaterialDropZone = function (_React$Component) {
     }, {
         key: 'saveFiles',
         value: function saveFiles() {
-            if (this.state.files.length > this.props.filesLimit) {
+            var files = this.state.fileObjects.map(function (fileObject) {
+                return fileObject.file;
+            });
+            if (files.length > this.props.filesLimit) {
                 this.setState({
                     openSnackBar: true,
                     errorMessage: 'Cannot upload more then ' + filesLimit + ' items.'
                 });
-            } else {
-                this.props.saveFiles(this.state.files);
+            } else if (this.props.saveFiles) {
+                this.props.saveFiles(files);
             }
         }
     }, {
@@ -1161,7 +1168,7 @@ var MaterialDropZone = function (_React$Component) {
                     open: this.state.openSnackBar,
                     message: this.state.errorMessage,
                     autoHideDuration: 4000,
-                    onRequestClose: this.handleRequestCloseSnackBar
+                    onClose: this.handleRequestCloseSnackBar
                 })
             );
         }

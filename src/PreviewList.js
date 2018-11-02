@@ -4,6 +4,7 @@ import {isImage} from './helpers/helpers.js';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete'; 
+import Button from '@material-ui/core/Button';
 
 const styles = {
     removeBtn: {
@@ -15,7 +16,7 @@ const styles = {
         width: 40,
         height: 40
     },
-        smallPreviewImg: {
+    smallPreviewImg: {
         height: 100,
         width: 'initial',
         maxWidth: '100%',
@@ -32,6 +33,7 @@ const styles = {
     imageContainer: {
         position: 'relative',
         zIndex: 10,
+        textAlign: 'center',
         '&:hover $smallPreviewImg': {
             opacity: 0.3
         },
@@ -55,12 +57,14 @@ function PreviewList(props){
                     return (
                         <Grid item xs={4} key={i} className={classes.imageContainer}>
                             {img}
-                            <IconButton>
-                                <DeleteIcon
-                                    className={classes.removeBtn}
-                                    onClick={handleRemove(i)}
-                                />
-                            </IconButton>
+                            
+                            <Button variant="fab" 
+                                onClick={handleRemove(i)}
+                                aria-label="Delete" 
+                                className={classes.removeBtn}>
+                                <DeleteIcon />
+                            </Button>
+                            
                         </Grid>
                     );
                 })

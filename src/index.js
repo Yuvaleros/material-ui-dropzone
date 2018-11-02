@@ -126,28 +126,28 @@ class MaterialDropZone extends React.Component {
         const file = fileObjects.filter((fileObject, i) => i === fileIndex)[0].file;
         fileObjects.splice(fileIndex, 1);
         this.setState(fileObjects,() => {
-          if(this.props.onSelect){
-            this.props.onSelect(this.state.fileObjects.map(fileObject => fileObject.file));    
-          }
-          this.props.enqueueSnackbar(
-            'File ' + file.name+ ' removed', 
-            { variant: 'warning' }
-          );
+            if(this.props.onSelect){
+                this.props.onSelect(this.state.fileObjects.map(fileObject => fileObject.file));    
+            }
+            this.setState({
+                openSnackBar: true,
+                errorMessage: 'File ' + file.name+ ' removed',
+            });
         });
     }
     saveFiles() {
-        if (this.state.files.length > this.props.filesLimit) {
+        const files = this.state.fileObjects.map( fileObject => fileObject.file )
+        if (files.length > this.props.filesLimit) {
             this.setState({
                 openSnackBar: true,
                 errorMessage: 'Cannot upload more then ' + filesLimit + ' items.',
             });
-        } else {
-            this.props.saveFiles(this.state.files);
+        } else if(this.props.saveFiles){
+            this.props.saveFiles(files);
         }
     }
 
     onDropRejected() {
-        
         this.setState({
             openSnackBar: true,
             errorMessage: 'File too big, max size is 3MB',
@@ -187,12 +187,15 @@ class MaterialDropZone extends React.Component {
                                 <CloudUploadIcon className={classes.uploadIconSize}/>
                             </div>
                         </Dropzone>
-                        <Grid container>
-                            {this.state.fileObjects.length ? <span>Preview:</span> : ''}
-                        </Grid>
-                        <PreviewList 
-                            fileObjects={this.state.fileObjects} 
-                            handleRemove={this.handleRemove.bind(this)}/>
+                        {this.props.showPreviews && this.state.fileObjects.length &&
+                            <Grid container>
+                                <span>Preview:</span>
+                            </Grid>
+                            <PreviewList 
+                                fileObjects={this.state.fileObjects} 
+                                handleRemove={this.handleRemove.bind(this)}
+                            />
+                        }
                     </DialogContent>
                     <DialogActions>
                         <Button
@@ -210,12 +213,14 @@ class MaterialDropZone extends React.Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
-                <Snackbar
-                    open={this.state.openSnackBar}
-                    message={this.state.errorMessage}
-                    autoHideDuration={4000}
-                    onRequestClose={this.handleRequestCloseSnackBar}
-                />
+                {showAlerts &&
+                    <Snackbar
+                        open={this.state.openSnackBar}
+                        message={this.state.errorMessage}
+                        autoHideDuration={4000}
+                        onClose={this.handleRequestCloseSnackBar}
+                    />               
+                }
             </Fragment>
         );
     }
@@ -229,14 +234,16 @@ MaterialDropZone.defaultProps = {
     filesLimit: 3,
     maxFileSize: 3000000,
     showPreviews: true,
-    onChange: false
+    onChange: false,
+    showAlerts: true
 }
 MaterialDropZone.propTypes = {
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
     showPreviews: PropTypes.bool, 
-    onChange: PropTypes.function
+    onChange: PropTypes.function,
+    showAlerts: PropTypes.bool
 }
 
 export default withStyles(styles)(MaterialDropZone);
