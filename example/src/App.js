@@ -6,30 +6,32 @@ import Button from '@material-ui/core/Button';
 export default class App extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            openUploadModal: false,
-            files: [],
+            open: false,
+            files: []
         };
     }
 
-    closeDialog() {
-        this.setState({openUploadModal: false});
+    handleClose() {
+        this.setState({open: false});
     }
 
-    saveFiles(files) {
+    handleSave(files) {
         //Saving files to state for further use and closing Modal.
-        this.setState({files: files, openUploadModal: false});
-    }
-
-    handleOpenUpload() {
         this.setState({
-            openUploadModal: true,
+            files: files, 
+            open: false
         });
     }
 
-    deleteFile(fileName) {
-        this.props.deleteFile(fileName);
+    handleOpen() {
+        this.setState({
+            open: true,
+        });
+    }
+
+    handleDelete(file) {
+        // do something with this information
     }
 
     render() {
@@ -43,18 +45,17 @@ export default class App extends Component {
 
         return (
                 <div>
-                    <Button style={style.addFileBtn} onClick={this.handleOpenUpload.bind(this)}>
+                    <Button style={style.addFileBtn} onClick={this.handleOpen.bind(this)}>
                       Add Image
                     </Button>
                     <MaterialDropZone
-                        open={this.state.openUploadModal}
-                        saveFiles={this.saveFiles.bind(this)}
-                        deleteFile={this.deleteFile.bind(this)}
+                        open={this.state.open}
+                        onSave={this.handleSave.bind(this)}
+                        onDelete={this.handleDelete.bind(this)}
                         acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-                        files={files}
                         showPreviews={true}
-                        maxSize={5000000}
-                        closeDialog={this.closeDialog.bind(this)}
+                        maxFileSize={5000000}
+                        onClose={this.handleClose.bind(this)}
                     />
                 </div>
         );

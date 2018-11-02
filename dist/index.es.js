@@ -1,17 +1,111 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import '@material-ui/icons/AttachFile';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import PropTypes from 'prop-types';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
+import green from '@material-ui/core/colors/green';
+import amber from '@material-ui/core/colors/amber';
 import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import WarningIcon from '@material-ui/icons/Warning';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
+function isImage(file) {
+  var fileName = file.name || file.path;
+  var suffix = fileName.substr(fileName.indexOf('.') + 1).toLowerCase();
+  if (suffix === 'jpg' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'png') {
+    return true;
+  }
+}
+function convertBytesToMbsOrKbs(filesize) {
+  var size = '';
+  // I know, not technically correct...
+  if (filesize >= 1000000) {
+    size = filesize / 1000000 + ' megabytes';
+  } else if (filesize >= 1000) {
+    size = filesize / 1000 + ' kilobytes';
+  } else {
+    size = filesize + ' bytes';
+  }
+  return size;
+}
+
+var styles = {
+    removeBtn: {
+        transition: '.5s ease',
+        position: 'absolute',
+        opacity: 0,
+        top: -5,
+        right: -5,
+        width: 40,
+        height: 40
+    },
+    smallPreviewImg: {
+        height: 100,
+        width: 'initial',
+        maxWidth: '100%',
+        marginTop: 5,
+        marginRight: 10,
+        color: 'rgba(0, 0, 0, 0.87)',
+        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        boxSizing: 'border-box',
+        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+        borderRadius: 2,
+        zIndex: 5,
+        opacity: 1
+    },
+    imageContainer: {
+        position: 'relative',
+        zIndex: 10,
+        textAlign: 'center',
+        '&:hover $smallPreviewImg': {
+            opacity: 0.3
+        },
+        '&:hover $removeBtn': {
+            opacity: 1
+        }
+    }
+};
+
+function PreviewList(props) {
+    var fileObjects = props.fileObjects,
+        handleRemove = props.handleRemove,
+        classes = props.classes;
+
+    return React.createElement(
+        Grid,
+        { container: true, spacing: 8 },
+        fileObjects.map(function (fileObject, i) {
+            var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
+            return React.createElement(
+                Grid,
+                { item: true, xs: 4, key: i, className: classes.imageContainer },
+                img,
+                React.createElement(
+                    Button,
+                    { variant: 'fab',
+                        onClick: handleRemove(i),
+                        'aria-label': 'Delete',
+                        className: classes.removeBtn },
+                    React.createElement(DeleteIcon, null)
+                )
+            );
+        })
+    );
+}
+
+var PreviewList$1 = withStyles(styles)(PreviewList);
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
@@ -97,7 +191,7 @@ function isIeOrEdge() {
   return isIe(userAgent) || isEdge(userAgent);
 }
 
-var styles = {
+var styles$1 = {
   active: {
     borderStyle: 'solid',
     backgroundColor: '#eee'
@@ -531,11 +625,11 @@ var Dropzone = function (_React$Component) {
       }
 
       if (noStyles) {
-        style = styles.default;
-        activeStyle = styles.active;
-        acceptStyle = styles.accepted;
-        rejectStyle = styles.rejected;
-        disabledStyle = styles.disabled;
+        style = styles$1.default;
+        activeStyle = styles$1.active;
+        acceptStyle = styles$1.accepted;
+        rejectStyle = styles$1.rejected;
+        disabledStyle = styles$1.disabled;
       }
 
       var appliedStyle = _extends({ position: 'relative' }, style);
@@ -781,79 +875,54 @@ Dropzone.defaultProps = {
   getDataTransferItems: getDataTransferItems
 };
 
-function isImage(file) {
-    var fileName = file.name || file.path;
-    var suffix = fileName.substr(fileName.indexOf('.') + 1).toLowerCase();
-    if (suffix === 'jpg' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'png') {
-        return true;
-    }
-}
+var classnames = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
 
-var styles$1 = {
-    removeBtn: {
-        transition: '.5s ease',
-        position: 'absolute',
-        opacity: 0,
-        top: -5,
-        right: -5,
-        width: 40,
-        height: 40
-    },
-    smallPreviewImg: {
-        height: 100,
-        width: 'initial',
-        maxWidth: '100%',
-        marginTop: 5,
-        marginRight: 10,
-        color: 'rgba(0, 0, 0, 0.87)',
-        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-        boxSizing: 'border-box',
-        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-        borderRadius: 2,
-        zIndex: 5,
-        opacity: 1
-    },
-    imageContainer: {
-        position: 'relative',
-        zIndex: 10,
-        textAlign: 'center',
-        '&:hover $smallPreviewImg': {
-            opacity: 0.3
-        },
-        '&:hover $removeBtn': {
-            opacity: 1
-        }
-    }
-};
+(function () {
 
-function PreviewList(props) {
-    var fileObjects = props.fileObjects,
-        handleRemove = props.handleRemove,
-        classes = props.classes;
+	var hasOwn = {}.hasOwnProperty;
 
-    return React.createElement(
-        Grid,
-        { container: true, spacing: 8 },
-        fileObjects.map(function (fileObject, i) {
-            var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
-            return React.createElement(
-                Grid,
-                { item: true, xs: 4, key: i, className: classes.imageContainer },
-                img,
-                React.createElement(
-                    Button,
-                    { variant: 'fab',
-                        onClick: handleRemove(i),
-                        'aria-label': 'Delete',
-                        className: classes.removeBtn },
-                    React.createElement(DeleteIcon, null)
-                )
-            );
-        })
-    );
-}
+	function classNames () {
+		var classes = [];
 
-var PreviewList$1 = withStyles(styles$1)(PreviewList);
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -879,6 +948,20 @@ var createClass = function () {
   };
 }();
 
+var _extends$1 = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
 var inherits = function (subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -895,6 +978,18 @@ var inherits = function (subClass, superClass) {
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 };
 
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -903,63 +998,139 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var styles$2 = function styles(theme) {
-    return {
-        dropZone: {
-            position: 'relative',
-            width: '100%',
-            minHeight: 250,
-            height: '100%',
-            backgroundColor: '#F0F0F0',
-            border: 'dashed',
-            borderColor: '#C8C8C8',
-            cursor: 'pointer',
-            boxSizing: 'border-box',
-            padding: '0 20px'
-        },
-        stripes: {
-            width: '100%',
-            minHeight: 250,
-            height: '100%',
-            cursor: 'pointer',
-            border: 'solid',
-            borderColor: '#C8C8C8',
-            backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
-            animation: 'progress 2s linear infinite !important',
-            backgroundSize: '150% 100%'
-        },
-        rejectStripes: {
-            width: '100%',
-            minHeight: 250,
-            height: '100%',
-            cursor: 'pointer',
-            border: 'solid',
-            borderColor: '#C8C8C8',
-            backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
-            animation: 'progress 2s linear infinite !important',
-            backgroundSize: '150% 100%'
-        },
-        dropzoneTextStyle: {
-            textAlign: 'center'
-        },
-        uploadIconSize: {
-            width: 51,
-            height: 51,
-            color: '#909090'
-        },
-        dropzoneParagraph: {
-            fontSize: 24
-        }
-    };
+var variantIcon = {
+  success: CheckCircleIcon,
+  warning: WarningIcon,
+  error: ErrorIcon,
+  info: InfoIcon
 };
 
-var MaterialDropZone = function (_React$Component) {
-    inherits(MaterialDropZone, _React$Component);
+var styles$2 = function styles(theme) {
+  return {
+    success: {
+      backgroundColor: green[600]
+    },
+    error: {
+      backgroundColor: theme.palette.error.dark
+    },
+    info: {
+      backgroundColor: theme.palette.primary.dark
+    },
+    warning: {
+      backgroundColor: amber[700]
+    },
+    icon: {
+      fontSize: 20
+    },
+    iconVariant: {
+      opacity: 0.9,
+      marginRight: theme.spacing.unit
+    },
+    message: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  };
+};
 
-    function MaterialDropZone(props) {
-        classCallCheck(this, MaterialDropZone);
+function SnackbarContentWrapper(props) {
+  var classes = props.classes,
+      className = props.className,
+      message = props.message,
+      onClose = props.onClose,
+      variant = props.variant,
+      other = objectWithoutProperties(props, ['classes', 'className', 'message', 'onClose', 'variant']);
 
-        var _this2 = possibleConstructorReturn(this, (MaterialDropZone.__proto__ || Object.getPrototypeOf(MaterialDropZone)).call(this, props));
+  var Icon = variantIcon[variant];
+
+  return React.createElement(SnackbarContent, _extends$1({
+    className: classnames(classes[variant], className),
+    'aria-describedby': 'client-snackbar',
+    message: React.createElement(
+      'span',
+      { id: 'client-snackbar', className: classes.message },
+      React.createElement(Icon, { className: classnames(classes.icon, classes.iconVariant) }),
+      message
+    ),
+    action: [React.createElement(
+      IconButton,
+      {
+        key: 'close',
+        'aria-label': 'Close',
+        color: 'inherit',
+        className: classes.close,
+        onClick: onClose
+      },
+      React.createElement(CloseIcon, { className: classes.icon })
+    )]
+  }, other));
+}
+
+SnackbarContentWrapper.propTypes = {
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  message: PropTypes.node,
+  onClose: PropTypes.func,
+  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
+};
+
+var SnackbarContentWrapper$1 = withStyles(styles$2)(SnackbarContentWrapper);
+
+var styles$3 = {
+    dropZone: {
+        position: 'relative',
+        width: '100%',
+        minHeight: 250,
+        height: '100%',
+        backgroundColor: '#F0F0F0',
+        border: 'dashed',
+        borderColor: '#C8C8C8',
+        cursor: 'pointer',
+        boxSizing: 'border-box',
+        padding: '0 20px'
+    },
+    stripes: {
+        width: '100%',
+        minHeight: 250,
+        height: '100%',
+        cursor: 'pointer',
+        border: 'solid',
+        borderColor: '#C8C8C8',
+        backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
+        animation: 'progress 2s linear infinite !important',
+        backgroundSize: '150% 100%'
+    },
+    rejectStripes: {
+        width: '100%',
+        minHeight: 250,
+        height: '100%',
+        cursor: 'pointer',
+        border: 'solid',
+        borderColor: '#C8C8C8',
+        backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
+        animation: 'progress 2s linear infinite !important',
+        backgroundSize: '150% 100%'
+    },
+    dropzoneTextStyle: {
+        textAlign: 'center'
+    },
+    uploadIconSize: {
+        width: 51,
+        height: 51,
+        color: '#909090'
+    },
+    dropzoneParagraph: {
+        fontSize: 24
+    }
+};
+
+var DropzoneArea = function (_Component) {
+    inherits(DropzoneArea, _Component);
+
+    function DropzoneArea(props) {
+        classCallCheck(this, DropzoneArea);
+
+        var _this2 = possibleConstructorReturn(this, (DropzoneArea.__proto__ || Object.getPrototypeOf(DropzoneArea)).call(this, props));
 
         _this2.handleRemove = function (fileIndex) {
             return function (event) {
@@ -971,33 +1142,203 @@ var MaterialDropZone = function (_React$Component) {
                 })[0].file;
                 fileObjects.splice(fileIndex, 1);
                 _this2.setState(fileObjects, function () {
-                    if (_this2.props.onSelect) {
-                        _this2.props.onSelect(_this2.state.fileObjects.map(function (fileObject) {
-                            return fileObject.file;
-                        }));
+                    if (_this2.props.onDelete) {
+                        _this2.props.onDelete(file);
+                    }
+                    if (_this2.props.onChange) {
+                        _this2.props.onChange(_this2.state.fileObjects);
                     }
                     _this2.setState({
                         openSnackBar: true,
-                        errorMessage: 'File ' + file.name + ' removed'
+                        snackbarMessage: 'File ' + file.name + ' removed',
+                        snackbarVariant: 'info'
                     });
                 });
             };
         };
 
-        _this2.handleRequestCloseSnackBar = function () {
+        _this2.onCloseSnackbar = function () {
             _this2.setState({
                 openSnackBar: false
             });
         };
 
         _this2.state = {
-            open: false,
-            openSnackBar: false,
-            errorMessage: '',
             fileObjects: [],
-            disabled: true
+            openSnackBar: false,
+            snackbarMessage: '',
+            snackbarVariant: 'success'
         };
         return _this2;
+    }
+
+    createClass(DropzoneArea, [{
+        key: 'onDrop',
+        value: function onDrop(files) {
+            var _this3 = this;
+
+            var _this = this;
+            files.forEach(function (file) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    console.log(_this.state.fileObjects);
+                    console.log(_this.state.fileObjects.concat({ file: file, data: event.target.result }));
+                    _this.setState({
+                        fileObjects: _this.state.fileObjects.concat({ file: file, data: event.target.result })
+                    }, function () {
+                        if (_this3.props.onChange) {
+                            _this3.props.onChange(_this.state.fileObjects.map(function (fileObject) {
+                                return fileObject.file;
+                            }));
+                        }
+                        if (_this3.props.onDrop) {
+                            _this3.props.onDrop(file);
+                        }
+                        _this3.setState({
+                            openSnackBar: true,
+                            snackbarMessage: 'File ' + file.name + ' successfully uploaded',
+                            snackbarVariant: 'success'
+                        });
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    }, {
+        key: 'handleDropRejected',
+        value: function handleDropRejected(rejectedFiles, evt) {
+            var _this4 = this;
+
+            var message = '';
+            rejectedFiles.forEach(function (rejectedFile) {
+                var message = 'File ' + rejectedFile.name + ' was rejected. ';
+                if (!_this4.state.acceptedFiles.includes(rejectedFile.type)) {
+                    message += 'File type not supported. ';
+                }
+                if (rejectedFile.size > _this4.state.fileSizeLimit) {
+                    message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(_this4.state.fileSizeLimit) + '. ';
+                }
+            });
+            if (this.props.onDropRejected) {
+                this.props.onDropRejected(rejectedFiles, evt);
+            }
+            this.setState({
+                openSnackBar: true,
+                snackbarMessage: message,
+                variant: 'error'
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var classes = this.props.classes;
+
+            var showPreviews = this.props.showPreviews && this.state.fileObjects.length > 0;
+            var showPreviewsInDropzone = this.props.showPreviewsInDropzone && this.state.fileObjects.length > 0;
+            return React.createElement(
+                Fragment,
+                null,
+                React.createElement(
+                    Dropzone,
+                    {
+                        accept: this.props.acceptedFiles.join(','),
+                        onDrop: this.onDrop.bind(this),
+                        onDropRejected: this.handleDropRejected.bind(this),
+                        className: classes.dropZone,
+                        acceptClassName: classes.stripes,
+                        rejectClassName: classes.rejectStripes,
+                        maxSize: this.props.maxFileSize
+                    },
+                    React.createElement(
+                        'div',
+                        { className: classes.dropzoneTextStyle },
+                        React.createElement(
+                            'p',
+                            { className: classes.dropzoneParagraph },
+                            'Drag and drop an image file here or click'
+                        ),
+                        React.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
+                    ),
+                    showPreviewsInDropzone && React.createElement(PreviewList$1, {
+                        fileObjects: this.state.fileObjects,
+                        handleRemove: this.handleRemove.bind(this)
+                    })
+                ),
+                showPreviews && React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        Grid,
+                        { container: true },
+                        React.createElement(
+                            'span',
+                            null,
+                            'Preview:'
+                        )
+                    ),
+                    React.createElement(PreviewList$1, {
+                        fileObjects: this.state.fileObjects,
+                        handleRemove: this.handleRemove.bind(this)
+                    })
+                ),
+                this.props.showAlerts && React.createElement(
+                    Snackbar,
+                    {
+                        anchorOrigin: {
+                            vertical: 'bottom',
+                            horizontal: 'left'
+                        },
+                        open: this.state.openSnackBar,
+                        autoHideDuration: 6000,
+                        onClose: this.onCloseSnackbar
+                    },
+                    React.createElement(SnackbarContentWrapper$1, {
+                        onClose: this.onCloseSnackbar,
+                        variant: this.state.snackbarVariant,
+                        message: this.state.snackbarMessage
+                    })
+                )
+            );
+        }
+    }]);
+    return DropzoneArea;
+}(Component);
+
+DropzoneArea.defaultProps = {
+    acceptedFiles: ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+    filesLimit: 3,
+    maxFileSize: 3000000,
+    showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
+    showPreviewsInDropzone: true
+};
+DropzoneArea.propTypes = {
+    acceptedFiles: PropTypes.array,
+    filesLimit: PropTypes.number,
+    maxFileSize: PropTypes.number,
+    showPreviews: PropTypes.bool,
+    showPreviewsInDropzone: PropTypes.bool,
+    showAlerts: PropTypes.bool,
+    onChange: PropTypes.function,
+    onDrop: PropTypes.function,
+    onDropRejected: PropTypes.function,
+    onDelete: PropTypes.function
+};
+var DropzoneArea$1 = withStyles(styles$3)(DropzoneArea);
+
+var MaterialDropZone = function (_React$Component) {
+    inherits(MaterialDropZone, _React$Component);
+
+    function MaterialDropZone(props) {
+        classCallCheck(this, MaterialDropZone);
+
+        var _this = possibleConstructorReturn(this, (MaterialDropZone.__proto__ || Object.getPrototypeOf(MaterialDropZone)).call(this, props));
+
+        _this.state = {
+            open: false,
+            files: [],
+            disabled: true
+        };
+        return _this;
     }
 
     createClass(MaterialDropZone, [{
@@ -1007,83 +1348,75 @@ var MaterialDropZone = function (_React$Component) {
                 this.setState({
                     open: this.props.open
                 });
+                if (this.props.onClose && !this.props.open) {
+                    this.props.onClose();
+                }
             }
-            if (this.state.fileObjects.length !== prevState.fileObjects.length) {
+            if (this.state.files.length !== prevState.files.length) {
                 this.setState({
-                    disabled: this.state.fileObjects.length === 0
+                    disabled: this.state.files.length === 0
                 });
             }
         }
     }, {
         key: 'handleClose',
         value: function handleClose() {
-            this.props.closeDialog();
+            if (this.props.onClose) {
+                this.props.onClose();
+            }
             this.setState({ open: false });
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(files) {
+            var _this2 = this;
+
+            console.log('Files changed', files);
+            this.setState({
+                files: files
+            }, function () {
+                if (_this2.props.onChange) {
+                    _this2.props.onChange(files);
+                }
+            });
+        }
+    }, {
+        key: 'onDelete',
+        value: function onDelete(file) {
+            // this passes it on to the parent component to do with it what they will
+            console.log('File removed', file);
+            if (this.props.onDelete) {
+                this.props.onDelete(file);
+            }
         }
     }, {
         key: 'onDrop',
         value: function onDrop(files) {
-            var _this3 = this;
-
-            //create the preview
-            var _this = this;
-            if (files.length + _this.state.fileObjects.length > _this.state.filesLimit) {
-                this.setState({
-                    openSnackBar: true,
-                    errorMessage: 'Cannot upload more then ' + this.props.filesLimit + ' items.'
-                });
-            } else {
-                // we cannot do this on render because it is asynchronous and will cause bugs in older browsers
-                files = files.forEach(function (file) {
-                    var reader = new FileReader();
-                    reader.onload = function (event) {
-                        _this.setState({
-                            fileObjects: _this.state.fileObjects.concat({ file: file, data: event.target.result })
-                        }, function () {
-                            if (_this3.props.onChange) {
-                                _this3.props.onChange(_this.state.fileObjects.map(function (fileObject) {
-                                    return fileObject.file;
-                                }));
-                            }
-                            _this3.setState({
-                                openSnackBar: true,
-                                errorMessage: 'File ' + file.name + ' successfully uploaded'
-                            });
-                        });
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-        }
-    }, {
-        key: 'saveFiles',
-        value: function saveFiles() {
-            var files = this.state.fileObjects.map(function (fileObject) {
-                return fileObject.file;
-            });
-            if (files.length > this.props.filesLimit) {
-                this.setState({
-                    openSnackBar: true,
-                    errorMessage: 'Cannot upload more then ' + filesLimit + ' items.'
-                });
-            } else if (this.props.saveFiles) {
-                this.props.saveFiles(files);
+            // this passes it on to the parent component to do with it what they will
+            console.log('Files dropped', files);
+            if (this.props.onDrop) {
+                this.props.onDrop(files);
             }
         }
     }, {
         key: 'onDropRejected',
-        value: function onDropRejected() {
-
-            this.setState({
-                openSnackBar: true,
-                errorMessage: 'File too big, max size is 3MB'
-            });
+        value: function onDropRejected(files, evt) {
+            // this passes it on to the parent component to do with it what they will
+            console.log('Files rejected', files);
+            if (this.props.onDropRejected) {
+                this.props.onDropRejected(files, evt);
+            }
+        }
+    }, {
+        key: 'handleSaveClick',
+        value: function handleSaveClick() {
+            if (this.props.onSave) {
+                this.props.onSave(this.state.files);
+            }
         }
     }, {
         key: 'render',
         value: function render() {
-            var classes = this.props.classes;
-
             return React.createElement(
                 Fragment,
                 null,
@@ -1101,41 +1434,18 @@ var MaterialDropZone = function (_React$Component) {
                     React.createElement(
                         DialogContent,
                         null,
-                        React.createElement(
-                            Dropzone,
-                            {
-                                accept: this.props.acceptedFiles.join(','),
-                                onDrop: this.onDrop.bind(this),
-                                className: classes.dropZone,
-                                acceptClassName: classes.stripes,
-                                rejectClassName: classes.rejectStripes,
-                                onDropRejected: this.onDropRejected.bind(this),
-                                maxSize: this.props.maxFileSize
-                            },
-                            React.createElement(
-                                'div',
-                                { className: classes.dropzoneTextStyle },
-                                React.createElement(
-                                    'p',
-                                    { className: classes.dropzoneParagraph },
-                                    'Drag and drop an image file here or click'
-                                ),
-                                React.createElement('br', null),
-                                React.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
-                            )
-                        ),
-                        React.createElement(
-                            Grid,
-                            { container: true },
-                            this.state.fileObjects.length ? React.createElement(
-                                'span',
-                                null,
-                                'Preview:'
-                            ) : ''
-                        ),
-                        React.createElement(PreviewList$1, {
-                            fileObjects: this.state.fileObjects,
-                            handleRemove: this.handleRemove.bind(this) })
+                        React.createElement(DropzoneArea$1, {
+                            acceptedFiles: this.props.acceptedFiles,
+                            filesLimit: this.props.filesLimit,
+                            maxFileSize: this.props.maxFileSize,
+                            showPreviews: this.props.showPreviews,
+                            showPreviewsInDropzone: this.props.showPreviewsInDropzone,
+                            showAlerts: this.props.showAlerts,
+                            onChange: this.onChange.bind(this),
+                            onDrop: this.onDrop.bind(this),
+                            onDropRejected: this.onDropRejected.bind(this),
+                            onDelete: this.onDelete.bind(this)
+                        })
                     ),
                     React.createElement(
                         DialogActions,
@@ -1153,18 +1463,12 @@ var MaterialDropZone = function (_React$Component) {
                             {
                                 color: 'primary',
                                 disabled: this.state.disabled,
-                                onClick: this.saveFiles.bind(this)
+                                onClick: this.handleSaveClick.bind(this)
                             },
                             'Submit'
                         )
                     )
-                ),
-                React.createElement(Snackbar, {
-                    open: this.state.openSnackBar,
-                    message: this.state.errorMessage,
-                    autoHideDuration: 4000,
-                    onClose: this.handleRequestCloseSnackBar
-                })
+                )
             );
         }
     }]);
@@ -1172,21 +1476,28 @@ var MaterialDropZone = function (_React$Component) {
 }(React.Component);
 
 MaterialDropZone.defaultProps = {
+    open: false,
     acceptedFiles: ['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
     filesLimit: 3,
     maxFileSize: 3000000,
     showPreviews: true,
-    onChange: false
+    showPreviewsInDropzone: false,
+    showAlerts: true
 };
 MaterialDropZone.propTypes = {
+    open: PropTypes.bool,
+    onSave: PropTypes.function,
+    onDelete: PropTypes.function,
+    onClose: PropTypes.function,
+    onChange: PropTypes.function,
+    onDropRejected: PropTypes.function,
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
     showPreviews: PropTypes.bool,
-    onChange: PropTypes.function
+    showPreviewsInDropzone: PropTypes.bool,
+    showAlerts: PropTypes.bool
 };
 
-var index = withStyles(styles$2)(MaterialDropZone);
-
-export default index;
+export default MaterialDropZone;
 //# sourceMappingURL=index.es.js.map

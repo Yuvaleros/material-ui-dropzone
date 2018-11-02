@@ -5,3 +5,15 @@ export function isImage(file) {
         return true;
     }
 }
+export function convertBytesToMbsOrKbs(filesize){
+  var size = '';
+  // I know, not technically correct...
+  if(filesize >= 1000000){
+    size = (filesize / 1000000) + ' megabytes';
+  }else if(filesize >= 1000){
+    size = (filesize / 1000) + ' kilobytes';
+  }else{
+    size = filesize + ' bytes' 
+  }
+  return size
+}
