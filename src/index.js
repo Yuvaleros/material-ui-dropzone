@@ -78,6 +78,11 @@ class MaterialDropZone extends React.Component {
                 open: this.props.open
             });
         }
+        if(this.state.fileObjects.length !== prevState.fileObjects.length){
+            this.setState({
+                disabled: this.state.fileObjects.length === 0 
+            });   
+        }
     }
 
     handleClose() {
@@ -129,20 +134,7 @@ class MaterialDropZone extends React.Component {
             { variant: 'warning' }
           );
         });
-      }
-
-    changeButtonDisable() {
-        if (this.state.fileObjects.length !== 0) {
-            this.setState({
-                disabled: false,
-            });
-        } else {
-            this.setState({
-                disabled: true,
-            });
-        }
     }
-
     saveFiles() {
         if (this.state.files.length > this.props.filesLimit) {
             this.setState({

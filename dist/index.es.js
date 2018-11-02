@@ -1004,6 +1004,11 @@ var MaterialDropZone = function (_React$Component) {
                     open: this.props.open
                 });
             }
+            if (this.state.fileObjects.length !== prevState.fileObjects.length) {
+                this.setState({
+                    disabled: this.state.fileObjects.length === 0
+                });
+            }
         }
     }, {
         key: 'handleClose',
@@ -1043,19 +1048,6 @@ var MaterialDropZone = function (_React$Component) {
                         });
                     };
                     reader.readAsDataURL(file);
-                });
-            }
-        }
-    }, {
-        key: 'changeButtonDisable',
-        value: function changeButtonDisable() {
-            if (this.state.fileObjects.length !== 0) {
-                this.setState({
-                    disabled: false
-                });
-            } else {
-                this.setState({
-                    disabled: true
                 });
             }
         }
