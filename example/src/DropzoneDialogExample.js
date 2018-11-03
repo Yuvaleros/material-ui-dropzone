@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
 
@@ -13,7 +12,9 @@ export default class DropzoneDialogExample extends Component {
     }
 
     handleClose() {
-        this.setState({open: false});
+        this.setState({
+            open: false
+        });
     }
 
     handleSave(files) {
@@ -30,34 +31,21 @@ export default class DropzoneDialogExample extends Component {
         });
     }
 
-    handleDelete(file) {
-        // do something with this information
-    }
-
     render() {
-        //If we already saved files they will be shown again in modal preview.
-        let files = this.state.files;
-        let style = {
-            addFileBtn: {
-                'marginTop': '15px',
-            },
-        };
-
         return (
-                <div>
-                    <Button style={style.addFileBtn} onClick={this.handleOpen.bind(this)}>
-                      Add Image
-                    </Button>
-                    <DropzoneDialog
-                        open={this.state.open}
-                        onSave={this.handleSave.bind(this)}
-                        onDelete={this.handleDelete.bind(this)}
-                        acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-                        showPreviews={true}
-                        maxFileSize={5000000}
-                        onClose={this.handleClose.bind(this)}
-                    />
-                </div>
+            <div>
+                <Button onClick={this.handleOpen.bind(this)}>
+                  Add Image
+                </Button>
+                <DropzoneDialog
+                    open={this.state.open}
+                    onSave={this.handleSave.bind(this)}
+                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+                    showPreviews={true}
+                    maxFileSize={5000000}
+                    onClose={this.handleClose.bind(this)}
+                />
+            </div>
         );
     }
 }

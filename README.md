@@ -62,7 +62,7 @@ export default DropzoneAreaExample;
 
 | Name           |Type         |Default     |Description
 |----------------|-------------|------------|--------------------------------
-| acceptedFiles  | Array       |\['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.presentationml.presentation','application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'] | A list of file mime types to accept. 
+| acceptedFiles  | Array       |\['image/\*', 'video/\*', 'application/\*'], | A list of file mime types to accept. 
 | filesLimit    | Number       | 3           | Maximum number of files that can be loaded into the dropzone
 | maxFileSize   | Number       | 3000000     | Maximum file size (in bytes) that the dropzone will accept
 | showPreviews  | Boolean | false       | Shows previews **BELOW** the Dropzone
@@ -124,7 +124,7 @@ export default class DropzoneDialogExample extends Component {
     render() {
         return (
             <div>
-                <Button style={style.addFileBtn} onClick={this.handleOpen.bind(this)}>
+                <Button onClick={this.handleOpen.bind(this)}>
                   Add Image
                 </Button>
                 <DropzoneDialog
@@ -145,7 +145,7 @@ export default class DropzoneDialogExample extends Component {
 | Name           |Type         |Default     |Description
 |----------------|-------------|------------|--------------------------------
 | open           | Boolean     | false      | Required. Sets whether the dialog is open or closed 
-| acceptedFiles  | Array       |\['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.presentationml.presentation','application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'] | A list of file mime types to accept. 
+| acceptedFiles  | Array       |\['image/\*', 'video/\*', 'application/\*'] | A list of file mime types to accept. 
 | filesLimit    | Number       | 3           | Maximum number of files that can be loaded into the dropzone
 | maxFileSize   | Number       | 3000000     | Maximum file size (in bytes) that the dropzone will accept
 | showPreviews  | Boolean | false       | Shows previews **BELOW** the Dropzone
