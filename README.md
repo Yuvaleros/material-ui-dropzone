@@ -62,7 +62,7 @@ export default DropzoneAreaExample;
 
 | Name           |Type         |Default     |Description
 |----------------|-------------|------------|--------------------------------
-| acceptedFiles  | Array       |\['image/\*', 'video/\*', 'application/\*'], | A list of file mime types to accept. Does support wildcards.
+| acceptedFiles  | Array       |\['image/\*', 'video/\*', 'application/\*'] | A list of file mime types to accept. Does support wildcards.
 | filesLimit    | Number       | 3           | Maximum number of files that can be loaded into the dropzone
 | maxFileSize   | Number       | 3000000     | Maximum file size (in bytes) that the dropzone will accept
 | showPreviews  | Boolean | false       | Shows previews **BELOW** the Dropzone
