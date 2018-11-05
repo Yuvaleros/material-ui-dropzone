@@ -19,6 +19,13 @@ class DropzoneDialog extends React.Component {
             disabled: true,
         };
     }
+    componentWillUnmount(){
+        if(this.props.clearOnUnmount){
+            this.setState({
+                files: []
+            })
+        } 
+    }
     componentDidUpdate(prevProps, prevState){
         if(this.props.open !== prevProps.open){
             this.setState({
@@ -95,6 +102,7 @@ class DropzoneDialog extends React.Component {
                             onDrop={this.onDrop.bind(this)}
                             onDropRejected={this.onDropRejected.bind(this)}
                             onDelete={this.onDelete.bind(this)}
+                            clearOnUnmount={this.props.clearOnUnmount}
                         />
                     </DialogContent>
                     <DialogActions>
@@ -125,6 +133,7 @@ DropzoneDialog.defaultProps = {
     showPreviews: true,
     showPreviewsInDropzone: false,
     showAlerts: true,
+    clearOnUnmount: true, 
     onSave:() => {},
     onDelete:() => {},
     onClose:() => {},
@@ -145,7 +154,8 @@ DropzoneDialog.propTypes = {
     maxFileSize: PropTypes.number,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
-    showAlerts: PropTypes.bool
+    showAlerts: PropTypes.bool,
+    clearOnUnmount: PropTypes.bool
 }
 
 export default DropzoneDialog;

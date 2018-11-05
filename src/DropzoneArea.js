@@ -36,6 +36,13 @@ class DropzoneArea extends Component{
             snackbarVariant: 'success'
         }
     }
+    componentWillUnmount(){
+        if(this.props.clearOnUnmount){
+            this.setState({
+                fileObjects: []
+            })
+        } 
+    }
     onDrop(files){
         const _this = this;
         if(this.state.fileObjects + files.length > this.props.filesLimit){
@@ -187,6 +194,7 @@ DropzoneArea.defaultProps = {
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showAlerts: true,
+    clearOnUnmount: true,
     onChange: () => {},
     onDrop: () => {},
     onDropRejected: () => {},
@@ -199,6 +207,7 @@ DropzoneArea.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showAlerts: PropTypes.bool,
+    clearOnUnmount: PropTypes.bool, 
     onChange: PropTypes.func,
     onDrop: PropTypes.func,
     onDropRejected: PropTypes.func,

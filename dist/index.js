@@ -1179,6 +1179,15 @@ var DropzoneArea = function (_Component) {
     }
 
     createClass(DropzoneArea, [{
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            if (this.props.clearOnUnmount) {
+                this.setState({
+                    fileObjects: []
+                });
+            }
+        }
+    }, {
         key: 'onDrop',
         value: function onDrop(files) {
             var _this3 = this;
@@ -1330,6 +1339,7 @@ DropzoneArea.defaultProps = {
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showAlerts: true,
+    clearOnUnmount: true,
     onChange: function onChange() {},
     onDrop: function onDrop() {},
     onDropRejected: function onDropRejected() {},
@@ -1342,6 +1352,7 @@ DropzoneArea.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showAlerts: PropTypes.bool,
+    clearOnUnmount: PropTypes.bool,
     onChange: PropTypes.func,
     onDrop: PropTypes.func,
     onDropRejected: PropTypes.func,
@@ -1366,6 +1377,15 @@ var DropzoneDialog = function (_React$Component) {
     }
 
     createClass(DropzoneDialog, [{
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            if (this.props.clearOnUnmount) {
+                this.setState({
+                    files: []
+                });
+            }
+        }
+    }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
             if (this.props.open !== prevProps.open) {
@@ -1468,7 +1488,8 @@ var DropzoneDialog = function (_React$Component) {
                             onChange: this.onChange.bind(this),
                             onDrop: this.onDrop.bind(this),
                             onDropRejected: this.onDropRejected.bind(this),
-                            onDelete: this.onDelete.bind(this)
+                            onDelete: this.onDelete.bind(this),
+                            clearOnUnmount: this.props.clearOnUnmount
                         })
                     ),
                     React__default.createElement(
@@ -1507,6 +1528,7 @@ DropzoneDialog.defaultProps = {
     showPreviews: true,
     showPreviewsInDropzone: false,
     showAlerts: true,
+    clearOnUnmount: true,
     onSave: function onSave() {},
     onDelete: function onDelete() {},
     onClose: function onClose() {},
@@ -1527,7 +1549,8 @@ DropzoneDialog.propTypes = {
     maxFileSize: PropTypes.number,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
-    showAlerts: PropTypes.bool
+    showAlerts: PropTypes.bool,
+    clearOnUnmount: PropTypes.bool
 };
 
 exports.DropzoneArea = DropzoneArea$1;
