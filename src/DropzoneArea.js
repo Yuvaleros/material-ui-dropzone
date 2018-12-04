@@ -8,10 +8,38 @@ import Grid from '@material-ui/core/Grid';
 import {convertBytesToMbsOrKbs} from './helpers/helpers'
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 import PreviewList from './PreviewList';
-import style from './css/index.css'
-console.log(style)
 
 const styles = {
+   '@keyframes progress': {
+     '0%': {
+       backgroundPosition: '0 0',
+     },
+     '100%': {
+       backgroundPosition: '-70px 0',
+     },
+   },
+   dropZone: {
+     position: 'relative',
+     width: '100%',
+     minHeight: '250px',
+     backgroundColor: '#F0F0F0',
+     border: 'dashed',
+     borderColor: '#C8C8C8',
+     cursor: 'pointer',
+     boxSizing: 'border-box',
+   },
+   stripes: {
+     border: 'solid',
+     backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
+     animation: 'progress 2s linear infinite !important',
+     backgroundSize: '150% 100%',
+   },
+   rejectStripes: {
+     border: 'solid',
+     backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
+     animation: 'progress 2s linear infinite !important',
+     backgroundSize: '150% 100%',
+   },
     dropzoneTextStyle:{
         textAlign: 'center'
     },
@@ -136,9 +164,9 @@ class DropzoneArea extends Component{
                     accept={this.props.acceptedFiles.join(',')}
                     onDrop={this.onDrop.bind(this)}
                     onDropRejected={this.handleDropRejected.bind(this)}
-                    className={style.dropZone}
-                    acceptClassName={style.stripes}
-                    rejectClassName={style.rejectStripes}
+                    className={classes.dropZone}
+                    acceptClassName={classes.stripes}
+                    rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
                      >
                     <div className={classes.dropzoneTextStyle}>

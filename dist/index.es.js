@@ -1076,40 +1076,37 @@ function PreviewList(props) {
 
 var PreviewList$1 = withStyles(styles$2)(PreviewList);
 
-function styleInject(css, ref) {
-  if ( ref === void 0 ) ref = {};
-  var insertAt = ref.insertAt;
-
-  if (!css || typeof document === 'undefined') { return; }
-
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
-
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
-    }
-  } else {
-    head.appendChild(style);
-  }
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-}
-
-var css = "@-webkit-keyframes index_progress__1dJoy {\n    0% {\n        background-position: 0 0;\n    }\n    100% {\n        background-position: -75px 0;\n    }\n}\n\n@-moz-keyframes index_progress__1dJoy {\n    0% {\n        background-position: 0 0;\n    }\n    100% {\n        background-position: -75px 0;\n    }\n}\n\n@-ms-keyframes index_progress__1dJoy {\n    0% {\n        background-position: 0 0;\n    }\n    100% {\n        background-position: -75px 0;\n    }\n}\n\n@keyframes index_progress__1dJoy {\n    0% {\n        background-position: 0 0;\n    }\n    100% {\n        background-position: -70px 0;\n    }\n}\n.index_dropZone__3qnOt {\n    position: relative;\n    width: 100%;\n    min-height: 250px;\n    background-color: #F0F0F0;\n    border: dashed;\n    border-color: #C8C8C8;\n    cursor: pointer;\n    box-sizing: border-box;\n}\n.index_dropZone__3qnOt.index_stripes__3g1gO{\n    border: solid;\n    background-image: repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px);\n    -webkit-animation: index_progress__1dJoy 2s linear infinite !important;\n    -moz-animation: index_progress__1dJoy 2s linear infinite !important;\n    animation: index_progress__1dJoy 2s linear infinite !important;\n    background-size: 150% 100%;\n}\n.index_dropZone__3qnOt.index_rejectStripes__2uOYF{\n    border: solid;\n    background-image: repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px);\n    -webkit-animation: index_progress__1dJoy 2s linear infinite !important;\n    -moz-animation: index_progress__1dJoy 2s linear infinite !important;\n    animation: index_progress__1dJoy 2s linear infinite !important;\n    background-size: 150% 100%;\n}";
-var style = { "dropZone": "index_dropZone__3qnOt", "stripes": "index_stripes__3g1gO", "progress": "index_progress__1dJoy", "rejectStripes": "index_rejectStripes__2uOYF" };
-styleInject(css);
-
-console.log(style);
-
 var styles$3 = {
+    '@keyframes progress': {
+        '0%': {
+            backgroundPosition: '0 0'
+        },
+        '100%': {
+            backgroundPosition: '-70px 0'
+        }
+    },
+    dropZone: {
+        position: 'relative',
+        width: '100%',
+        minHeight: '250px',
+        backgroundColor: '#F0F0F0',
+        border: 'dashed',
+        borderColor: '#C8C8C8',
+        cursor: 'pointer',
+        boxSizing: 'border-box'
+    },
+    stripes: {
+        border: 'solid',
+        backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
+        animation: 'progress 2s linear infinite !important',
+        backgroundSize: '150% 100%'
+    },
+    rejectStripes: {
+        border: 'solid',
+        backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
+        animation: 'progress 2s linear infinite !important',
+        backgroundSize: '150% 100%'
+    },
     dropzoneTextStyle: {
         textAlign: 'center'
     },
@@ -1265,9 +1262,9 @@ var DropzoneArea = function (_Component) {
                         accept: this.props.acceptedFiles.join(','),
                         onDrop: this.onDrop.bind(this),
                         onDropRejected: this.handleDropRejected.bind(this),
-                        className: style.dropZone,
-                        acceptClassName: style.stripes,
-                        rejectClassName: style.rejectStripes,
+                        className: classes.dropZone,
+                        acceptClassName: classes.stripes,
+                        rejectClassName: classes.rejectStripes,
                         maxSize: this.props.maxFileSize
                     },
                     React.createElement(
