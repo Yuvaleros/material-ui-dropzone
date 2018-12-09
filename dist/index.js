@@ -22,6 +22,7 @@ var styles = require('@material-ui/core/styles');
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
 var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
 var AttachFileIcon = _interopDefault(require('@material-ui/icons/AttachFile'));
+var Fab = _interopDefault(require('@material-ui/core/Fab'));
 var CloudUploadIcon = _interopDefault(require('@material-ui/icons/CloudUpload'));
 var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
 var DialogContent = _interopDefault(require('@material-ui/core/DialogContent'));
@@ -1069,9 +1070,8 @@ function PreviewList(props) {
                 { item: true, xs: 4, key: i, className: classes.imageContainer },
                 img,
                 React__default.createElement(
-                    Button,
-                    { variant: 'fab',
-                        onClick: handleRemove(i),
+                    Fab,
+                    { onClick: handleRemove(i),
                         'aria-label': 'Delete',
                         className: classes.removeBtn },
                     React__default.createElement(DeleteIcon, null)

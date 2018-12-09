@@ -41,7 +41,7 @@
   "license": "MIT",
   "author": "Yuval",
   "devDependencies": {
-    "@material-ui/core": "^3.3.2",
+    "@material-ui/core": "^3.6.1",
     "@material-ui/icons": "^3.0.1",
     "@svgr/rollup": "^2.4.1",
     "babel-core": "^6.26.3",

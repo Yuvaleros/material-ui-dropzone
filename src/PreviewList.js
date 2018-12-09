@@ -2,10 +2,9 @@ import React from "react";
 import {withStyles} from '@material-ui/core/styles';
 import {isImage} from './helpers/helpers.js';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete'; 
-import Button from '@material-ui/core/Button';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import Fab from '@material-ui/core/Fab';
 
 const styles = {
     removeBtn: {
@@ -59,13 +58,11 @@ function PreviewList(props){
                         <Grid item xs={4} key={i} className={classes.imageContainer}>
                             {img}
                             
-                            <Button variant="fab" 
-                                onClick={handleRemove(i)}
+                            <Fab onClick={handleRemove(i)}
                                 aria-label="Delete" 
                                 className={classes.removeBtn}>
                                 <DeleteIcon />
-                            </Button>
-                            
+                            </Fab>
                         </Grid>
                     );
                 })
