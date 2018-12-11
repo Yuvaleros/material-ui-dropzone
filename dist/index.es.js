@@ -15,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import Fab from '@material-ui/core/Fab';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -1062,9 +1063,8 @@ function PreviewList(props) {
                 { item: true, xs: 4, key: i, className: classes.imageContainer },
                 img,
                 React.createElement(
-                    Button,
-                    { variant: 'fab',
-                        onClick: handleRemove(i),
+                    Fab,
+                    { onClick: handleRemove(i),
                         'aria-label': 'Delete',
                         className: classes.removeBtn },
                     React.createElement(DeleteIcon, null)
