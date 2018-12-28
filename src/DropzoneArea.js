@@ -171,7 +171,7 @@ class DropzoneArea extends Component{
                      >
                     <div className={classes.dropzoneTextStyle}>
                         <p className={classes.dropzoneParagraph}>
-                            Drag and drop an image file here or click
+                            {this.props.dropzoneText}
                         </p>
                         <CloudUploadIcon className={classes.uploadIconSize}/>
                     </div>
@@ -219,6 +219,7 @@ DropzoneArea.defaultProps = {
     acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
     maxFileSize: 3000000,
+    dropzoneText: 'Drag and drop an image file here or click',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showAlerts: true,
@@ -232,6 +233,7 @@ DropzoneArea.propTypes = {
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
+    dropzoneText: PropTypes.string,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showAlerts: PropTypes.bool,
