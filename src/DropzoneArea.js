@@ -73,7 +73,7 @@ class DropzoneArea extends Component{
     }
     onDrop(files){
         const _this = this;
-        if(this.state.fileObjects + files.length > this.props.filesLimit){
+        if(this.state.fileObjects.length + files.length > this.props.filesLimit){
             this.setState({
                 openSnackBar: true,
                 snackbarMessage: `Maximum allowed number of files exceeded. Only ${this.props.filesLimit} allowed`, 
