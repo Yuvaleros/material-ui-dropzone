@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as classnames from 'classnames'
+import * as myclassnames from 'classnames'
 import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -53,11 +53,11 @@ function SnackbarContentWrapper(props) {
 
   return (
     <SnackbarContent
-      className={classnames(classes[variant], className)}
+      className={myclassnames(classes[variant], className)}
       aria-describedby="client-snackbar"
       message={
         <span id="client-snackbar" className={classes.message}>
-          <Icon className={classnames(classes.icon, classes.iconVariant)} />
+          <Icon className={myclassnames(classes.icon, classes.iconVariant)} />
           {message}
         </span>
       }
