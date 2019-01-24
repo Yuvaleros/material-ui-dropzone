@@ -120,7 +120,7 @@ class DropzoneArea extends Component{
                 this.props.onDelete(file);    
             }
             if(this.props.onChange){
-                this.props.onChange(this.state.fileObjects);    
+                this.props.onChange(this.state.fileObjects.map(fileObject => fileObject.file));
             }
             this.setState({
                 openSnackBar: true,
