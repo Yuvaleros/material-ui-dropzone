@@ -44,7 +44,7 @@ const styles = {
 }
 
 function PreviewList(props){
-    const {fileObjects, handleRemove, classes} = props
+    const {fileObjects, handleRemove, showFileNames, classes} = props;
     return(
         <Grid container spacing={8}>
             {
@@ -58,6 +58,10 @@ function PreviewList(props){
                         <Grid item xs={4} key={i} className={classes.imageContainer}>
                             {img}
                             
+                            {showFileNames &&
+                                <p>{fileObject.file.name}</p>
+                            }
+
                             <Fab onClick={handleRemove(i)}
                                 aria-label="Delete" 
                                 className={classes.removeBtn}>
