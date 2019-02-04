@@ -69,6 +69,8 @@ export default DropzoneAreaExample;
 | showPreviews  | Boolean | false       | Shows previews **BELOW** the Dropzone
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or rejected. 
+| dropZoneClass    | String | null             | Custom CSS class name for dropzone container. 
+| dropzoneParagraphClass    | String | null             | Custom CSS class name for text inside the container. 
     
 
 
