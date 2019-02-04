@@ -164,7 +164,7 @@ class DropzoneArea extends Component{
                     accept={this.props.acceptedFiles.join(',')}
                     onDrop={this.onDrop.bind(this)}
                     onDropRejected={this.handleDropRejected.bind(this)}
-                    className={classNames(classes.dropZone,this.props.dropZone.class)}
+                    className={classNames(classes.dropZone,this.props.dropZoneClass)}
                     acceptClassName={classes.stripes}
                     rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
