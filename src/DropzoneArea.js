@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import {convertBytesToMbsOrKbs} from './helpers/helpers'
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 import PreviewList from './PreviewList';
-
+import classNames from 'classnames';
 const styles = {
    '@keyframes progress': {
      '0%': {
@@ -164,13 +164,13 @@ class DropzoneArea extends Component{
                     accept={this.props.acceptedFiles.join(',')}
                     onDrop={this.onDrop.bind(this)}
                     onDropRejected={this.handleDropRejected.bind(this)}
-                    className={classes.dropZone}
+                    className={classNames(classes.dropZone,this.props.dropZoneClass)}
                     acceptClassName={classes.stripes}
                     rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
                      >
                     <div className={classes.dropzoneTextStyle}>
-                        <p className={classes.dropzoneParagraph}>
+                        <p className={classNames(classes.dropzoneParagraph,this.props.dropzoneParagraphClass)}>
                             {this.props.dropzoneText}
                         </p>
                         <CloudUploadIcon className={classes.uploadIconSize}/>
