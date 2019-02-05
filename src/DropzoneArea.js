@@ -179,6 +179,7 @@ class DropzoneArea extends Component{
                         <PreviewList 
                             fileObjects={this.state.fileObjects} 
                             handleRemove={this.handleRemove.bind(this)}
+                            showFileNames={this.props.showFileNamesInPreview}
                         />
                     }
                 </Dropzone>
@@ -190,6 +191,7 @@ class DropzoneArea extends Component{
                         <PreviewList 
                             fileObjects={this.state.fileObjects} 
                             handleRemove={this.handleRemove.bind(this)}
+                            showFileNames={this.props.showFileNamesInPreview}
                         />
                     </Fragment>
                 }
@@ -222,6 +224,7 @@ DropzoneArea.defaultProps = {
     dropzoneText: 'Drag and drop an image file here or click',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
+    showFileNamesInPreview: false,
     showAlerts: true,
     clearOnUnmount: true,
     onChange: () => {},
@@ -236,6 +239,7 @@ DropzoneArea.propTypes = {
     dropzoneText: PropTypes.string,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
+    showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool, 
     onChange: PropTypes.func,
