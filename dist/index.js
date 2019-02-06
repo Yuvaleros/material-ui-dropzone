@@ -1058,6 +1058,7 @@ var styles$3 = {
 function PreviewList(props) {
     var fileObjects = props.fileObjects,
         handleRemove = props.handleRemove,
+        showFileNames = props.showFileNames,
         classes = props.classes;
 
     return React__default.createElement(
@@ -1069,6 +1070,11 @@ function PreviewList(props) {
                 Grid,
                 { item: true, xs: 4, key: i, className: classes.imageContainer },
                 img,
+                showFileNames && React__default.createElement(
+                    'p',
+                    null,
+                    fileObject.file.name
+                ),
                 React__default.createElement(
                     Fab,
                     { onClick: handleRemove(i),
@@ -1271,7 +1277,7 @@ var DropzoneArea = function (_Component) {
                         accept: this.props.acceptedFiles.join(','),
                         onDrop: this.onDrop.bind(this),
                         onDropRejected: this.handleDropRejected.bind(this),
-                        className: classes.dropZone,
+                        className: classnames(classes.dropZone, this.props.dropZoneClass),
                         acceptClassName: classes.stripes,
                         rejectClassName: classes.rejectStripes,
                         maxSize: this.props.maxFileSize
@@ -1281,14 +1287,15 @@ var DropzoneArea = function (_Component) {
                         { className: classes.dropzoneTextStyle },
                         React__default.createElement(
                             'p',
-                            { className: classes.dropzoneParagraph },
+                            { className: classnames(classes.dropzoneParagraph, this.props.dropzoneParagraphClass) },
                             this.props.dropzoneText
                         ),
                         React__default.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
                     ),
                     showPreviewsInDropzone && React__default.createElement(PreviewList$1, {
                         fileObjects: this.state.fileObjects,
-                        handleRemove: this.handleRemove.bind(this)
+                        handleRemove: this.handleRemove.bind(this),
+                        showFileNames: this.props.showFileNamesInPreview
                     })
                 ),
                 showPreviews && React__default.createElement(
@@ -1305,7 +1312,8 @@ var DropzoneArea = function (_Component) {
                     ),
                     React__default.createElement(PreviewList$1, {
                         fileObjects: this.state.fileObjects,
-                        handleRemove: this.handleRemove.bind(this)
+                        handleRemove: this.handleRemove.bind(this),
+                        showFileNames: this.props.showFileNamesInPreview
                     })
                 ),
                 this.props.showAlerts && React__default.createElement(
@@ -1338,6 +1346,7 @@ DropzoneArea.defaultProps = {
     dropzoneText: 'Drag and drop an image file here or click',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
+    showFileNamesInPreview: false,
     showAlerts: true,
     clearOnUnmount: true,
     onChange: function onChange() {},
@@ -1352,6 +1361,7 @@ DropzoneArea.propTypes = {
     dropzoneText: PropTypes.string,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
+    showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     onChange: PropTypes.func,
