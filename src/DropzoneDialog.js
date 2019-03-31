@@ -92,6 +92,7 @@ class DropzoneDialog extends React.Component {
                     <DialogTitle>Upload File</DialogTitle>
                     <DialogContent>
                         <DropzoneArea
+                            dropzoneText={this.props.dropzoneText}
                             acceptedFiles={this.props.acceptedFiles}
                             filesLimit={this.props.filesLimit}
                             maxFileSize={this.props.maxFileSize}
