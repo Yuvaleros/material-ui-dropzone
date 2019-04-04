@@ -42,7 +42,7 @@
   "author": "Yuval",
   "devDependencies": {
     "@material-ui/core": "^3.6.1",
-    "@material-ui/icons": "^3.0.1",
+    "@material-ui/icons": "^3.0.2",
     "@svgr/rollup": "^2.4.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.5",
