@@ -1483,6 +1483,7 @@ var DropzoneDialog = function (_React$Component) {
                         DialogContent,
                         null,
                         React.createElement(DropzoneArea$1, {
+                            dropzoneText: this.props.dropzoneText,
                             acceptedFiles: this.props.acceptedFiles,
                             filesLimit: this.props.filesLimit,
                             maxFileSize: this.props.maxFileSize,

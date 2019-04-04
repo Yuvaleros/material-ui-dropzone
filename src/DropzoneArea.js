@@ -71,6 +71,14 @@ class DropzoneArea extends Component{
             })
         } 
     }
+    componentDidUpdate(prevProps){
+        if(this.props.dropzoneText !== prevProps.dropzoneText){
+            this.setState({
+                dropzoneText: this.props.dropzoneText
+            });
+        }
+
+    }
     onDrop(files){
         const _this = this;
         if(this.state.fileObjects.length + files.length > this.props.filesLimit){
@@ -94,7 +102,7 @@ class DropzoneArea extends Component{
                         if(this.props.onDrop){
                             this.props.onDrop(file)
                         }
-                        message += `File ${file.name} successfully uploaded. `;
+                        message += `File ${file.name} successfully added. `;
                         count++; // we cannot rely on the index because this is asynchronous
                         if(count === files.length){
                             // display message when the last one fires
@@ -171,7 +179,7 @@ class DropzoneArea extends Component{
                      >
                     <div className={classes.dropzoneTextStyle}>
                         <p className={classNames(classes.dropzoneParagraph,this.props.dropzoneParagraphClass)}>
-                            {this.props.dropzoneText}
+                            {this.state.dropzoneText}
                         </p>
                         <CloudUploadIcon className={classes.uploadIconSize}/>
                     </div>
