@@ -62,6 +62,7 @@ class DropzoneArea extends Component{
             openSnackBar: false,
             snackbarMessage: '',
             snackbarVariant: 'success'
+            dropzoneText: props.dropzoneText
         }
     }
     componentWillUnmount(){
