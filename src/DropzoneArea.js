@@ -145,8 +145,8 @@ class DropzoneArea extends Component{
             if(!this.props.acceptedFiles.includes(rejectedFile.type)){
                 message += 'File type not supported. '
             }
-            if(rejectedFile.size > this.props.fileSizeLimit){
-                message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(this.props.fileSizeLimit) + '. ';
+            if(rejectedFile.size > this.props.maxFileSize){
+                message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(this.props.maxFileSize) + '. ';
             }
         });
         if(this.props.onDropRejected){
