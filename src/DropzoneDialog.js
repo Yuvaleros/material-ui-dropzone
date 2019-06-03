@@ -135,7 +135,7 @@ DropzoneDialog.defaultProps = {
     showPreviewsInDropzone: false,
     showAlerts: true,
     clearOnUnmount: true,
-    dialogTitle: "uuupload file",
+    dialogTitle: "Upload file",
     onSave:() => {},
     onDelete:() => {},
     onClose:() => {},

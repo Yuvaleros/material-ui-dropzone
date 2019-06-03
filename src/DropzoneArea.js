@@ -177,13 +177,12 @@ class DropzoneArea extends Component{
                     acceptClassName={classes.stripes}
                     rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
-                    uploadIcon={this.props.uploadIcon}
                      >
                     <div className={classes.dropzoneTextStyle}>
                         <p className={classNames(classes.dropzoneParagraph,this.props.dropzoneParagraphClass)}>
                             {this.state.dropzoneText}
                         </p>
-                        <img src={CloudUploadIcon} alt="logo" className={classes.uploadIconSize} />
+                        <CloudUploadIcon className={classes.uploadIconSize} />
                     </div>
                     {showPreviewsInDropzone &&
                         <PreviewList 
@@ -231,7 +230,7 @@ DropzoneArea.defaultProps = {
     acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
     maxFileSize: 3000000,
-    dropzoneText: 'Draag and drop an image file here or click',
+    dropzoneText: 'Drag and drop an image file here or click',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNamesInPreview: false,
