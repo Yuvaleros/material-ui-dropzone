@@ -6,7 +6,8 @@ import DropzoneAreaExample from './DropzoneAreaExample';
 export default function(props){
     return (
         <Fragment>
-            <DropzoneDialogExample/>
+            <DropzoneDialogExample
+            />
             <br/>
             <DropzoneAreaExample />
         </Fragment>

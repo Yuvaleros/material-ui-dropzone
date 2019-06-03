@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/index';
-import Snackbar from '@material-ui/core/Snackbar/index';
-import Dropzone from 'react-dropzone/typings/react-dropzone';
+import {withStyles} from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import Dropzone from 'react-dropzone';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import Grid from '@material-ui/core/Grid/index';
-import {convertBytesToMbsOrKbs} from '../../src/helpers/helpers'
-import SnackbarContentWrapper from '../../src/SnackbarContentWrapper';
-import PreviewList from '../../src/PreviewList';
+import Grid from '@material-ui/core/Grid';
+import {convertBytesToMbsOrKbs} from './helpers/helpers'
+import SnackbarContentWrapper from './SnackbarContentWrapper';
+import PreviewList from './PreviewList';
 import classNames from 'classnames';
 const styles = {
    '@keyframes progress': {
@@ -177,16 +177,13 @@ class DropzoneArea extends Component{
                     acceptClassName={classes.stripes}
                     rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
+                    uploadIcon={this.props.uploadIcon}
                      >
                     <div className={classes.dropzoneTextStyle}>
                         <p className={classNames(classes.dropzoneParagraph,this.props.dropzoneParagraphClass)}>
                             {this.state.dropzoneText}
                         </p>
-                        {console.log(this.props.uploadIcon)}
-                        {this.props.uploadIcon ?
-                            <img src={this.props.uploadIcon} alt="logo" className={classes.uploadIconSize} />
-                            : <p>test</p>}
-
+                        <img src={CloudUploadIcon} alt="logo" className={classes.uploadIconSize} />
                     </div>
                     {showPreviewsInDropzone &&
                         <PreviewList 
@@ -234,7 +231,7 @@ DropzoneArea.defaultProps = {
     acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
     maxFileSize: 3000000,
-    dropzoneText: 'Drag and drop an image file here or click',
+    dropzoneText: 'Draag and drop an image file here or click',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNamesInPreview: false,
@@ -250,7 +247,6 @@ DropzoneArea.propTypes = {
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
     dropzoneText: PropTypes.string,
-    uploadIcon: PropTypes.Object,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,

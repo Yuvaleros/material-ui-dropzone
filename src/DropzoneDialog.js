@@ -89,7 +89,7 @@ class DropzoneDialog extends React.Component {
                     open={this.state.open}
                     onClose={this.handleClose.bind(this)}
                 >
-                    <DialogTitle>Upload File</DialogTitle>
+                    <DialogTitle>{this.props.dialogTitle}</DialogTitle>
                     <DialogContent>
                         <DropzoneArea
                             dropzoneText={this.props.dropzoneText}
@@ -134,7 +134,8 @@ DropzoneDialog.defaultProps = {
     showPreviews: true,
     showPreviewsInDropzone: false,
     showAlerts: true,
-    clearOnUnmount: true, 
+    clearOnUnmount: true,
+    dialogTitle: "uuupload file",
     onSave:() => {},
     onDelete:() => {},
     onClose:() => {},
@@ -156,7 +157,8 @@ DropzoneDialog.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showAlerts: PropTypes.bool,
-    clearOnUnmount: PropTypes.bool
+    clearOnUnmount: PropTypes.bool,
+    dialogTitle: PropTypes.string
 }
 
 export default DropzoneDialog;
