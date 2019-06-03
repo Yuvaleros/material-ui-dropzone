@@ -188,7 +188,7 @@ class DropzoneArea extends Component{
                         <PreviewList 
                             fileObjects={this.state.fileObjects} 
                             handleRemove={this.handleRemove.bind(this)}
-                            showFileNames={this.props.showFileNamesInPreview}
+                            showFileNames={this.props.showFileNames}
                         />
                     }
                 </Dropzone>

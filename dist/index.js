@@ -1768,6 +1768,7 @@ var DropzoneArea = function (_Component) {
             var classes = this.props.classes;
 
             var showPreviews = this.props.showPreviews && this.state.fileObjects.length > 0;
+            console.log(showPreviews);
             var showPreviewsInDropzone = this.props.showPreviewsInDropzone && this.state.fileObjects.length > 0;
             return React__default.createElement(
                 React.Fragment,
@@ -1796,7 +1797,7 @@ var DropzoneArea = function (_Component) {
                     showPreviewsInDropzone && React__default.createElement(PreviewList$1, {
                         fileObjects: this.state.fileObjects,
                         handleRemove: this.handleRemove.bind(this),
-                        showFileNames: this.props.showFileNamesInPreview
+                        showFileNames: this.props.showFileNames
                     })
                 ),
                 showPreviews && React__default.createElement(
@@ -1844,7 +1845,7 @@ DropzoneArea.defaultProps = {
     acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
     maxFileSize: 3000000,
-    dropzoneText: 'Drag and drop an image file here or click',
+    dropzoneText: 'Draaaag and drop an image file here or click',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNamesInPreview: false,
@@ -1997,12 +1998,14 @@ var DropzoneDialog = function (_React$Component) {
                             maxFileSize: this.props.maxFileSize,
                             showPreviews: this.props.showPreviews,
                             showPreviewsInDropzone: this.props.showPreviewsInDropzone,
+                            showFileNames: this.props.showFileNames,
                             showAlerts: this.props.showAlerts,
                             onChange: this.onChange.bind(this),
                             onDrop: this.onDrop.bind(this),
                             onDropRejected: this.onDropRejected.bind(this),
                             onDelete: this.onDelete.bind(this),
-                            clearOnUnmount: this.props.clearOnUnmount
+                            clearOnUnmount: this.props.clearOnUnmount,
+                            showFileNamesInPreview: this.props.showFileNamesInPreview
                         })
                     ),
                     React__default.createElement(
@@ -2040,6 +2043,7 @@ DropzoneDialog.defaultProps = {
     maxFileSize: 3000000,
     showPreviews: true,
     showPreviewsInDropzone: false,
+    showFileNamesInPreview: true,
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: "Upload file",
@@ -2063,6 +2067,7 @@ DropzoneDialog.propTypes = {
     maxFileSize: PropTypes.number,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
+    showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     dialogTitle: PropTypes.string
