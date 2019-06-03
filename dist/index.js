@@ -1111,7 +1111,7 @@ var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.d
 exports.default = _default;
 });
 
-unwrapExports(CloudUpload);
+var CloudUploadIcon = unwrapExports(CloudUpload);
 
 function isImage(file) {
   var fileName = file.name || file.path;
@@ -1769,7 +1769,6 @@ var DropzoneArea = function (_Component) {
 
             var showPreviews = this.props.showPreviews && this.state.fileObjects.length > 0;
             var showPreviewsInDropzone = this.props.showPreviewsInDropzone && this.state.fileObjects.length > 0;
-            console.log(this.props.uploadIcon);
             return React__default.createElement(
                 React.Fragment,
                 null,
@@ -1782,8 +1781,7 @@ var DropzoneArea = function (_Component) {
                         className: classnames(classes.dropZone, this.props.dropZoneClass),
                         acceptClassName: classes.stripes,
                         rejectClassName: classes.rejectStripes,
-                        maxSize: this.props.maxFileSize,
-                        uploadIcon: this.props.uploadIcon
+                        maxSize: this.props.maxFileSize
                     },
                     React__default.createElement(
                         'div',
@@ -1793,8 +1791,7 @@ var DropzoneArea = function (_Component) {
                             { className: classnames(classes.dropzoneParagraph, this.props.dropzoneParagraphClass) },
                             this.state.dropzoneText
                         ),
-                        console.log(this.props.uploadIcon),
-                        this.props.uploadIcon ? React__default.createElement('img', { src: this.props.uploadIcon, alt: 'logo', className: classes.uploadIconSize }) : false
+                        React__default.createElement(CloudUploadIcon, { className: classes.uploadIconSize })
                     ),
                     showPreviewsInDropzone && React__default.createElement(PreviewList$1, {
                         fileObjects: this.state.fileObjects,
@@ -1847,7 +1844,7 @@ DropzoneArea.defaultProps = {
     acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
     maxFileSize: 3000000,
-    dropzoneText: 'Draag and drop an image file here or click',
+    dropzoneText: 'Drag and drop an image file here or click',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNamesInPreview: false,
@@ -1863,7 +1860,6 @@ DropzoneArea.propTypes = {
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
     dropzoneText: PropTypes.string,
-    uploadIcon: PropTypes.string,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,
@@ -2046,7 +2042,7 @@ DropzoneDialog.defaultProps = {
     showPreviewsInDropzone: false,
     showAlerts: true,
     clearOnUnmount: true,
-    dialogTitle: "uuupload file",
+    dialogTitle: "Upload file",
     onSave: function onSave() {},
     onDelete: function onDelete() {},
     onClose: function onClose() {},
