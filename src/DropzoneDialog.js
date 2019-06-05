@@ -89,7 +89,7 @@ class DropzoneDialog extends React.Component {
                     open={this.state.open}
                     onClose={this.handleClose.bind(this)}
                 >
-                    <DialogTitle>Upload File</DialogTitle>
+                    <DialogTitle>{this.props.dialogTitle}</DialogTitle>
                     <DialogContent>
                         <DropzoneArea
                             dropzoneText={this.props.dropzoneText}
@@ -98,12 +98,14 @@ class DropzoneDialog extends React.Component {
                             maxFileSize={this.props.maxFileSize}
                             showPreviews={this.props.showPreviews}
                             showPreviewsInDropzone={this.props.showPreviewsInDropzone}
+                            showFileNames={this.props.showFileNames}
                             showAlerts={this.props.showAlerts}
                             onChange={this.onChange.bind(this)}
                             onDrop={this.onDrop.bind(this)}
                             onDropRejected={this.onDropRejected.bind(this)}
                             onDelete={this.onDelete.bind(this)}
                             clearOnUnmount={this.props.clearOnUnmount}
+                            showFileNamesInPreview={this.props.showFileNamesInPreview}
                         />
                     </DialogContent>
                     <DialogActions>
@@ -133,8 +135,10 @@ DropzoneDialog.defaultProps = {
     maxFileSize: 3000000,
     showPreviews: true,
     showPreviewsInDropzone: false,
+    showFileNamesInPreview: true,
     showAlerts: true,
-    clearOnUnmount: true, 
+    clearOnUnmount: true,
+    dialogTitle: "Upload file",
     onSave:() => {},
     onDelete:() => {},
     onClose:() => {},
@@ -155,8 +159,10 @@ DropzoneDialog.propTypes = {
     maxFileSize: PropTypes.number,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
+    showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
-    clearOnUnmount: PropTypes.bool
+    clearOnUnmount: PropTypes.bool,
+    dialogTitle: PropTypes.string
 }
 
 export default DropzoneDialog;

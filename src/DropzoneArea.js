@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';  
+import Snackbar from '@material-ui/core/Snackbar';
 import Dropzone from 'react-dropzone';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Grid from '@material-ui/core/Grid';
@@ -182,13 +182,13 @@ class DropzoneArea extends Component{
                         <p className={classNames(classes.dropzoneParagraph,this.props.dropzoneParagraphClass)}>
                             {this.state.dropzoneText}
                         </p>
-                        <CloudUploadIcon className={classes.uploadIconSize}/>
+                        <CloudUploadIcon className={classes.uploadIconSize} />
                     </div>
                     {showPreviewsInDropzone &&
                         <PreviewList 
                             fileObjects={this.state.fileObjects} 
                             handleRemove={this.handleRemove.bind(this)}
-                            showFileNames={this.props.showFileNamesInPreview}
+                            showFileNames={this.props.showFileNames}
                         />
                     }
                 </Dropzone>
