@@ -10,7 +10,7 @@ export interface DropzoneAreaProps {
     showFileNamesInPreview?: boolean;
     showAlerts?: boolean;
     clearOnUnmount?: boolean;
-    dropZoneClass?: string;
+    dropzoneClass?: string;
     dropzoneParagraphClass?: string;
     onChange?: (files: any) => void;
     onDrop?: (files: any) => void;
