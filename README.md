@@ -83,6 +83,14 @@ export default DropzoneAreaExample;
 |onDropRejected  |files(array) | Fired when a file is rejected because of wrong file type, size or goes beyond the filesLimit. Returns the files that were rejected
 |onDelete        |file        | Fired when a file is deleted from the previews panel. 
 
+### DropzoneArea Componet Get Alert Messages
+
+|Name                     |Params    |Return Params|Description|Default message
+|-------------------------|----------|-------------|-----------|-----------
+|getFileLimitExceedMessage|filesLimit|String       |Get alert message to display when files limit is exceed | Maximum allowed number of files exceeded. Only `${filesLimit}` allowed
+|getFileAddedMessage      |fileName  |String       |Get alert message to display when a new file is added | File `${fileName}` successfully added.
+|getFileRemovedMessage      |fileName  |String       |Get alert message to display when a file is removed | File `${fileName}` removed.
+|getDropRejectMessage      |rejectedFile, acceptedFiles, maxFileSize  |String       |Get alert message to display when a file is removed | File `${rejectedFile.name}` was rejected..
 
 ## DropzoneDialog Component
 
