@@ -1652,7 +1652,7 @@ var DropzoneArea = function (_Component) {
                     }
                     _this2.setState({
                         openSnackBar: true,
-                        snackbarMessage: 'File ' + file.name + ' removed',
+                        snackbarMessage: _this2.props.getFileRemovedMessage(file.name),
                         snackbarVariant: 'info'
                     });
                 });
@@ -1702,7 +1702,7 @@ var DropzoneArea = function (_Component) {
             if (this.state.fileObjects.length + files.length > this.props.filesLimit) {
                 this.setState({
                     openSnackBar: true,
-                    snackbarMessage: 'Maximum allowed number of files exceeded. Only ' + this.props.filesLimit + ' allowed',
+                    snackbarMessage: this.props.getFileLimitExceedMessage(this.props.filesLimit),
                     snackbarVariant: 'error'
                 });
             } else {
@@ -1722,7 +1722,7 @@ var DropzoneArea = function (_Component) {
                             if (_this3.props.onDrop) {
                                 _this3.props.onDrop(file);
                             }
-                            message += 'File ' + file.name + ' successfully added. ';
+                            message += _this3.props.getFileAddedMessage(file.name);
                             count++; // we cannot rely on the index because this is asynchronous
                             if (count === files.length) {
                                 // display message when the last one fires
@@ -1745,13 +1745,7 @@ var DropzoneArea = function (_Component) {
 
             var message = '';
             rejectedFiles.forEach(function (rejectedFile) {
-                message = 'File ' + rejectedFile.name + ' was rejected. ';
-                if (!_this4.props.acceptedFiles.includes(rejectedFile.type)) {
-                    message += 'File type not supported. ';
-                }
-                if (rejectedFile.size > _this4.props.maxFileSize) {
-                    message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(_this4.props.maxFileSize) + '. ';
-                }
+                message = _this4.props.getDropRejectMessage(rejectedFile, _this4.props.acceptedFiles, _this4.props.maxFileSize);
             });
             if (this.props.onDropRejected) {
                 this.props.onDropRejected(rejectedFiles, evt);
@@ -1850,6 +1844,25 @@ DropzoneArea.defaultProps = {
     showFileNamesInPreview: false,
     showAlerts: true,
     clearOnUnmount: true,
+    getFileLimitExceedMessage: function getFileLimitExceedMessage(filesLimit) {
+        return 'Maximum allowed number of files exceeded. Only ' + filesLimit + ' allowed';
+    },
+    getFileAddedMessage: function getFileAddedMessage(fileName) {
+        return 'File ' + fileName + ' successfully added.';
+    },
+    getFileRemovedMessage: function getFileRemovedMessage(fileName) {
+        return 'File ' + fileName + ' removed.';
+    },
+    getDropRejectMessage: function getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize) {
+        var message = 'File ' + rejectedFile.name + ' was rejected. ';
+        if (!acceptedFiles.includes(rejectedFile.type)) {
+            message += 'File type not supported. ';
+        }
+        if (rejectedFile.size > maxFileSize) {
+            message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(maxFileSize) + '. ';
+        }
+        return message;
+    },
     onChange: function onChange() {},
     onDrop: function onDrop() {},
     onDropRejected: function onDropRejected() {},
@@ -1866,6 +1879,10 @@ DropzoneArea.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
+    getFileLimitExceedMessage: PropTypes.func,
+    getFileAddedMessage: PropTypes.func,
+    getFileRemovedMessage: PropTypes.func,
+    getDropRejectMessage: PropTypes.func,
     onChange: PropTypes.func,
     onDrop: PropTypes.func,
     onDropRejected: PropTypes.func,

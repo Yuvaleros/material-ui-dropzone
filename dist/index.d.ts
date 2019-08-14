@@ -29,7 +29,8 @@ export interface DropzoneDialogProps {
     onDropRejected?: (files: any, evt: any) => void;
     acceptedFiles?: string[];
     filesLimit?: number;
-    maxFileSize?: number
+    maxFileSize?: number;
+    dropzoneText?: string;
     showPreviews?: boolean;
     showPreviewsInDropzone?: boolean;
     showAlerts?: boolean;
