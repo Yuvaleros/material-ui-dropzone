@@ -1113,6 +1113,109 @@ exports.default = _default;
 
 var CloudUploadIcon = unwrapExports(CloudUpload);
 
+var asyncToGenerator = function (fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new Promise(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+
+        if (info.done) {
+          resolve(value);
+        } else {
+          return Promise.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
+
+      return step("next");
+    });
+  };
+};
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+var _extends$1 = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
 function isImage(file) {
   var fileName = file.name || file.path;
   var suffix = fileName.substr(fileName.indexOf('.') + 1).toLowerCase();
@@ -1132,6 +1235,41 @@ function convertBytesToMbsOrKbs(filesize) {
   }
   return size;
 }
+
+var createFileFromUrl = function () {
+  var _ref = asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(url) {
+    var response, data, metadata, filename, ext;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return fetch(url);
+
+          case 2:
+            response = _context.sent;
+            _context.next = 5;
+            return response.blob();
+
+          case 5:
+            data = _context.sent;
+            metadata = { type: data.type };
+            filename = url.replace(/\?.+/, '').split('/').pop();
+            ext = data.type.split('/').pop();
+            return _context.abrupt('return', new File([data], filename + '.' + ext, metadata));
+
+          case 10:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
+
+  return function createFileFromUrl(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
 
 var classnames = createCommonjsModule(function (module) {
 /*!
@@ -1306,80 +1444,6 @@ exports.default = _default;
 });
 
 var WarningIcon = unwrapExports(Warning);
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-var _extends$1 = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-var objectWithoutProperties = function (obj, keys) {
-  var target = {};
-
-  for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;
-    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-    target[i] = obj[i];
-  }
-
-  return target;
-};
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
 
 var variantIcon = {
   success: CheckCircleIcon,
@@ -1676,6 +1740,129 @@ var DropzoneArea = function (_Component) {
     }
 
     createClass(DropzoneArea, [{
+        key: 'filesArray',
+        value: function () {
+            var _ref = asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(urls) {
+                var _this3 = this;
+
+                var _loop, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, url;
+
+                return regeneratorRuntime.wrap(function _callee$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.prev = 0;
+                                _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop(url) {
+                                    var file, reader;
+                                    return regeneratorRuntime.wrap(function _loop$(_context) {
+                                        while (1) {
+                                            switch (_context.prev = _context.next) {
+                                                case 0:
+                                                    _context.next = 2;
+                                                    return createFileFromUrl(url);
+
+                                                case 2:
+                                                    file = _context.sent;
+                                                    reader = new FileReader();
+
+                                                    reader.onload = function (event) {
+                                                        _this3.setState({
+                                                            fileObjects: _this3.state.fileObjects.concat({ file: file, data: event.target.result })
+                                                        });
+                                                    };
+                                                    reader.readAsDataURL(file);
+
+                                                case 6:
+                                                case 'end':
+                                                    return _context.stop();
+                                            }
+                                        }
+                                    }, _loop, _this3);
+                                });
+                                _iteratorNormalCompletion = true;
+                                _didIteratorError = false;
+                                _iteratorError = undefined;
+                                _context2.prev = 5;
+                                _iterator = urls[Symbol.iterator]();
+
+                            case 7:
+                                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                                    _context2.next = 13;
+                                    break;
+                                }
+
+                                url = _step.value;
+                                return _context2.delegateYield(_loop(url), 't0', 10);
+
+                            case 10:
+                                _iteratorNormalCompletion = true;
+                                _context2.next = 7;
+                                break;
+
+                            case 13:
+                                _context2.next = 19;
+                                break;
+
+                            case 15:
+                                _context2.prev = 15;
+                                _context2.t1 = _context2['catch'](5);
+                                _didIteratorError = true;
+                                _iteratorError = _context2.t1;
+
+                            case 19:
+                                _context2.prev = 19;
+                                _context2.prev = 20;
+
+                                if (!_iteratorNormalCompletion && _iterator.return) {
+                                    _iterator.return();
+                                }
+
+                            case 22:
+                                _context2.prev = 22;
+
+                                if (!_didIteratorError) {
+                                    _context2.next = 25;
+                                    break;
+                                }
+
+                                throw _iteratorError;
+
+                            case 25:
+                                return _context2.finish(22);
+
+                            case 26:
+                                return _context2.finish(19);
+
+                            case 27:
+                                _context2.next = 32;
+                                break;
+
+                            case 29:
+                                _context2.prev = 29;
+                                _context2.t2 = _context2['catch'](0);
+
+                                console.log(_context2.t2);
+
+                            case 32:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee, this, [[0, 29], [5, 15, 19, 27], [20,, 22, 26]]);
+            }));
+
+            function filesArray(_x) {
+                return _ref.apply(this, arguments);
+            }
+
+            return filesArray;
+        }()
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.filesArray(this.props.initialFiles);
+        }
+    }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             if (this.props.clearOnUnmount) {
@@ -1696,7 +1883,7 @@ var DropzoneArea = function (_Component) {
     }, {
         key: 'onDrop',
         value: function onDrop(files) {
-            var _this3 = this;
+            var _this4 = this;
 
             var _this = this;
             if (this.state.fileObjects.length + files.length > this.props.filesLimit) {
@@ -1714,19 +1901,19 @@ var DropzoneArea = function (_Component) {
                         _this.setState({
                             fileObjects: _this.state.fileObjects.concat({ file: file, data: event.target.result })
                         }, function () {
-                            if (_this3.props.onChange) {
-                                _this3.props.onChange(_this.state.fileObjects.map(function (fileObject) {
+                            if (_this4.props.onChange) {
+                                _this4.props.onChange(_this.state.fileObjects.map(function (fileObject) {
                                     return fileObject.file;
                                 }));
                             }
-                            if (_this3.props.onDrop) {
-                                _this3.props.onDrop(file);
+                            if (_this4.props.onDrop) {
+                                _this4.props.onDrop(file);
                             }
-                            message += _this3.props.getFileAddedMessage(file.name);
+                            message += _this4.props.getFileAddedMessage(file.name);
                             count++; // we cannot rely on the index because this is asynchronous
                             if (count === files.length) {
                                 // display message when the last one fires
-                                _this3.setState({
+                                _this4.setState({
                                     openSnackBar: true,
                                     snackbarMessage: message,
                                     snackbarVariant: 'success'
@@ -1741,11 +1928,11 @@ var DropzoneArea = function (_Component) {
     }, {
         key: 'handleDropRejected',
         value: function handleDropRejected(rejectedFiles, evt) {
-            var _this4 = this;
+            var _this5 = this;
 
             var message = '';
             rejectedFiles.forEach(function (rejectedFile) {
-                message = _this4.props.getDropRejectMessage(rejectedFile, _this4.props.acceptedFiles, _this4.props.maxFileSize);
+                message = _this5.props.getDropRejectMessage(rejectedFile, _this5.props.acceptedFiles, _this5.props.maxFileSize);
             });
             if (this.props.onDropRejected) {
                 this.props.onDropRejected(rejectedFiles, evt);
@@ -1844,6 +2031,7 @@ DropzoneArea.defaultProps = {
     showFileNamesInPreview: false,
     showAlerts: true,
     clearOnUnmount: true,
+    initialFiles: [],
     getFileLimitExceedMessage: function getFileLimitExceedMessage(filesLimit) {
         return 'Maximum allowed number of files exceeded. Only ' + filesLimit + ' allowed';
     },
@@ -1879,6 +2067,7 @@ DropzoneArea.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
+    initialFiles: PropTypes.arrayOf[PropTypes.string],
     getFileLimitExceedMessage: PropTypes.func,
     getFileAddedMessage: PropTypes.func,
     getFileRemovedMessage: PropTypes.func,

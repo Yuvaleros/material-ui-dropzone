@@ -73,6 +73,7 @@ export default DropzoneAreaExample;
 | dropzoneParagraphClass    | String | null             | Custom CSS class name for text inside the container. 
 | showFileNamesInPreview | Boolean | false | Shows file name under the image    
 | showFileNames | Boolean | false | Shows file name under the dropzone image.
+| initialFiles | Array | [] | A list of urls of already uploaded images. Please take care of CORS
 
 ### DropzoneArea Component Events
 
