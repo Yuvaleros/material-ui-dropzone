@@ -17,3 +17,12 @@ export function convertBytesToMbsOrKbs(filesize){
   }
   return size
 }
+
+export async function createFileFromUrl (url) {
+  const response = await fetch(url);
+  const data = await response.blob();
+  const metadata = { type: data.type };
+  const filename = url.replace(/\?.+/, '').split('/').pop();
+  const ext = data.type.split('/').pop();
+  return new File([data], `${filename}.${ext}`, metadata);
+}

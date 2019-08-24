@@ -5,7 +5,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Dropzone from 'react-dropzone';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Grid from '@material-ui/core/Grid';
-import { convertBytesToMbsOrKbs } from './helpers/helpers'
+import { convertBytesToMbsOrKbs, createFileFromUrl } from './helpers/helpers'
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 import PreviewList from './PreviewList';
 import classNames from 'classnames';
@@ -64,6 +64,25 @@ class DropzoneArea extends Component {
             snackbarVariant: 'success',
             dropzoneText: props.dropzoneText
         }
+    }
+    async filesArray (urls) {
+        try {
+            for (const url of urls) {
+                const file = await createFileFromUrl(url);
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    this.setState({
+                        fileObjects: this.state.fileObjects.concat({file: file, data: event.target.result})
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    componentDidMount() {
+        this.filesArray(this.props.initialFiles);
     }
     componentWillUnmount() {
         if (this.props.clearOnUnmount) {
@@ -234,6 +253,7 @@ DropzoneArea.defaultProps = {
     showFileNamesInPreview: false,
     showAlerts: true,
     clearOnUnmount: true,
+    initialFiles: [],
     getFileLimitExceedMessage: (filesLimit) => (`Maximum allowed number of files exceeded. Only ${filesLimit} allowed`),
     getFileAddedMessage: (fileName) => (`File ${fileName} successfully added.`),
     getFileRemovedMessage: (fileName) => (`File ${fileName} removed.`),
@@ -263,6 +283,7 @@ DropzoneArea.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
+    initialFiles: PropTypes.arrayOf[PropTypes.string],
     getFileLimitExceedMessage: PropTypes.func,
     getFileAddedMessage: PropTypes.func,
     getFileRemovedMessage: PropTypes.func,
