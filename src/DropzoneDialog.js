@@ -88,6 +88,8 @@ class DropzoneDialog extends React.Component {
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose.bind(this)}
+                    maxWidth={this.props.maxWidth}
+                    fullWidth={this.props.fullWidth}
                 >
                     <DialogTitle>{this.props.dialogTitle}</DialogTitle>
                     <DialogContent>
@@ -139,6 +141,8 @@ DropzoneDialog.defaultProps = {
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: "Upload file",
+    maxWidth: "sm",
+    fullWidth: true,
     onSave:() => {},
     onDelete:() => {},
     onClose:() => {},
@@ -162,7 +166,9 @@ DropzoneDialog.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
-    dialogTitle: PropTypes.string
+    dialogTitle: PropTypes.string,
+    maxWidth: PropTypes.string,
+    fullWidth: PropTypes.bool,
 }
 
 export default DropzoneDialog;
