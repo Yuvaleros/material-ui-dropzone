@@ -80,9 +80,9 @@ export default DropzoneAreaExample;
 |Name            |Return Params|Description
 |----------------|-------------|--------------------------------
 |onChange        |files(array) | Fired when the user drops files into dropzone or deletes a file. Returns all the files currently loaded into the dropzone.
-|onDrop          |files(array) | Fired when the user drops files into the dropzone. Returns the files dropped 
+|onDrop          |files(array) | Fired when the user drops files into the dropzone. Returns the files dropped
 |onDropRejected  |files(array) | Fired when a file is rejected because of wrong file type, size or goes beyond the filesLimit. Returns the files that were rejected
-|onDelete        |file        | Fired when a file is deleted from the previews panel. 
+|onDelete        |file        | Fired when a file is deleted from the previews panel.
 
 ### DropzoneArea Componet Get Alert Messages
 
@@ -162,7 +162,9 @@ export default class DropzoneDialogExample extends Component {
 | maxFileSize   | Number       | 3000000     | Maximum file size (in bytes) that the dropzone will accept
 | showPreviews  | Boolean | false       | Shows previews **BELOW** the Dropzone
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
-| showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or 
+| showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or
+| maxWidth      | string      | sm          | Sets dialog width. Width grows with the size of the screen.
+| fullWidth.    | boolean     | true        | If true, the dialog stretches to maxWidth.
 
 
 ### DropzoneDialog Component Events
