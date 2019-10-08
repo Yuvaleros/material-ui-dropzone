@@ -163,8 +163,8 @@ export default class DropzoneDialogExample extends Component {
 | showPreviews  | Boolean | false       | Shows previews **BELOW** the Dropzone
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or
-| maxWidth      | string      | sm          | Sets dialog width. Width grows with the size of the screen.
-| fullWidth.    | boolean     | true        | If true, the dialog stretches to maxWidth.
+| maxWidth      | String      | sm          | Sets dialog width. Width grows with the size of the screen.
+| fullWidth    | Boolean     | true        | If true, the dialog stretches to maxWidth.
 
 
 ### DropzoneDialog Component Events
