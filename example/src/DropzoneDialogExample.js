@@ -20,7 +20,7 @@ export default class DropzoneDialogExample extends Component {
     handleSave(files) {
         //Saving files to state for further use and closing Modal.
         this.setState({
-            files: files, 
+            files: files,
             open: false
         });
     }
@@ -40,8 +40,10 @@ export default class DropzoneDialogExample extends Component {
                 <DropzoneDialog
                     open={this.state.open}
                     onSave={this.handleSave.bind(this)}
-                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+                    acceptedFiles={['image/png']}
                     showPreviews={true}
+                    cancelButtonText={"cancel"}
+                    submitButtonText={"submit"}
                     maxFileSize={5000000}
                     onClose={this.handleClose.bind(this)}
                     showFileNamesInPreview={true}

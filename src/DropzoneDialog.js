@@ -1,12 +1,10 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle'
-import PreviewList from './PreviewList';
 import DropzoneArea from './DropzoneArea';
 
 
@@ -24,7 +22,7 @@ class DropzoneDialog extends React.Component {
             this.setState({
                 files: []
             })
-        } 
+        }
     }
     componentDidUpdate(prevProps, prevState){
         if(this.props.open !== prevProps.open){
@@ -37,8 +35,8 @@ class DropzoneDialog extends React.Component {
         }
         if(this.state.files.length !== prevState.files.length){
             this.setState({
-                disabled: this.state.files.length === 0 
-            });   
+                disabled: this.state.files.length === 0
+            });
         }
     }
 
@@ -49,7 +47,7 @@ class DropzoneDialog extends React.Component {
         this.setState({open: false});
     }
     onChange(files){
-        console.log('Files changed', files)
+        console.log('Files changed', files);
         this.setState({
             files: files
         }, () =>{
@@ -60,20 +58,20 @@ class DropzoneDialog extends React.Component {
     }
 
     onDelete(file) { // this passes it on to the parent component to do with it what they will
-        console.log('File removed', file)
+        console.log('File removed', file);
         if(this.props.onDelete){
             this.props.onDelete(file)
         }
     }
     onDrop(files) { // this passes it on to the parent component to do with it what they will
-        console.log('Files dropped', files)
+        console.log('Files dropped', files);
         if(this.props.onDrop){
             this.props.onDrop(files)
         }
     }
     onDropRejected(files, evt){ // this passes it on to the parent component to do with it what they will
-        console.log('Files rejected', files)
-        if(this.props.onDropRejected){ 
+        console.log('Files rejected', files);
+        if(this.props.onDropRejected){
             this.props.onDropRejected(files, evt);
         }
     }
@@ -115,14 +113,14 @@ class DropzoneDialog extends React.Component {
                             color="primary"
                             onClick={this.handleClose.bind(this)}
                             >
-                            Cancel
+                            {this.props.cancelButtonText}
                         </Button>
                         <Button
                             color="primary"
                             disabled={this.state.disabled}
                             onClick={this.handleSaveClick.bind(this)}
                             >
-                            Submit
+                            {this.props.submitButtonText}
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -141,6 +139,8 @@ DropzoneDialog.defaultProps = {
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: "Upload file",
+    submitButtonText: "Submit",
+    cancelButtonText: "Cancel",
     maxWidth: "sm",
     fullWidth: true,
     onSave:() => {},
@@ -149,15 +149,16 @@ DropzoneDialog.defaultProps = {
     onChange: () => {},
     onDrop: () => {},
     onDropRejected: () => {},
-}
+};
+
 DropzoneDialog.propTypes = {
-    open: PropTypes.bool.isRequired, 
-    onSave: PropTypes.func, 
+    open: PropTypes.bool.isRequired,
+    onSave: PropTypes.func,
     onDelete: PropTypes.func,
     onClose: PropTypes.func,
     onChange: PropTypes.func,
     onDrop: PropTypes.func,
-    onDropRejected: PropTypes.func, 
+    onDropRejected: PropTypes.func,
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
@@ -167,8 +168,10 @@ DropzoneDialog.propTypes = {
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     dialogTitle: PropTypes.string,
+    submitButtonText: PropTypes.string,
+    cancelButtonText: PropTypes.string,
     maxWidth: PropTypes.string,
     fullWidth: PropTypes.bool,
-}
+};
 
 export default DropzoneDialog;

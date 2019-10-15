@@ -1464,7 +1464,7 @@ var styles$1 = function styles(theme) {
     },
     iconVariant: {
       opacity: 0.9,
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing(1)
     },
     message: {
       display: 'flex',
@@ -1952,7 +1952,7 @@ var DropzoneArea = function (_Component) {
                         accept: this.props.acceptedFiles.join(','),
                         onDrop: this.onDrop.bind(this),
                         onDropRejected: this.handleDropRejected.bind(this),
-                        className: classnames(classes.dropZone, this.props.dropzoneClass),
+                        className: classnames(this.props.dropzoneClass, classes.dropZone),
                         acceptClassName: classes.stripes,
                         rejectClassName: classes.rejectStripes,
                         maxSize: this.props.maxFileSize
@@ -2180,7 +2180,9 @@ var DropzoneDialog = function (_React$Component) {
                     Dialog,
                     {
                         open: this.state.open,
-                        onClose: this.handleClose.bind(this)
+                        onClose: this.handleClose.bind(this),
+                        maxWidth: this.props.maxWidth,
+                        fullWidth: this.props.fullWidth
                     },
                     React.createElement(
                         DialogTitle,
@@ -2216,7 +2218,7 @@ var DropzoneDialog = function (_React$Component) {
                                 color: 'primary',
                                 onClick: this.handleClose.bind(this)
                             },
-                            'Cancel'
+                            this.props.cancelButtonText
                         ),
                         React.createElement(
                             Button,
@@ -2225,7 +2227,7 @@ var DropzoneDialog = function (_React$Component) {
                                 disabled: this.state.disabled,
                                 onClick: this.handleSaveClick.bind(this)
                             },
-                            'Submit'
+                            this.props.submitButtonText
                         )
                     )
                 )
@@ -2246,6 +2248,10 @@ DropzoneDialog.defaultProps = {
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: "Upload file",
+    submitButtonText: "Submit",
+    cancelButtonText: "Cancel",
+    maxWidth: "sm",
+    fullWidth: true,
     onSave: function onSave() {},
     onDelete: function onDelete() {},
     onClose: function onClose() {},
@@ -2253,6 +2259,7 @@ DropzoneDialog.defaultProps = {
     onDrop: function onDrop() {},
     onDropRejected: function onDropRejected() {}
 };
+
 DropzoneDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     onSave: PropTypes.func,
@@ -2269,7 +2276,11 @@ DropzoneDialog.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
-    dialogTitle: PropTypes.string
+    dialogTitle: PropTypes.string,
+    submitButtonText: PropTypes.string,
+    cancelButtonText: PropTypes.string,
+    maxWidth: PropTypes.string,
+    fullWidth: PropTypes.bool
 };
 
 export { DropzoneArea$1 as DropzoneArea, DropzoneDialog };
