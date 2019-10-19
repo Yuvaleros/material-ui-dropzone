@@ -2060,7 +2060,7 @@ DropzoneArea.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
-    initialFiles: PropTypes.arrayOf[PropTypes.string],
+    initialFiles: PropTypes.arrayOf(PropTypes.string),
     getFileLimitExceedMessage: PropTypes.func,
     getFileAddedMessage: PropTypes.func,
     getFileRemovedMessage: PropTypes.func,

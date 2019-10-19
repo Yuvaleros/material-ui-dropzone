@@ -51,7 +51,7 @@ const styles = {
     dropzoneParagraph: {
         fontSize: 24
     }
-}
+};
 
 
 class DropzoneArea extends Component {
@@ -156,12 +156,12 @@ class DropzoneArea extends Component {
                 snackbarVariant: 'info'
             });
         });
-    }
+    };
     handleDropRejected(rejectedFiles, evt) {
         var message = '';
         rejectedFiles.forEach((rejectedFile) => {
             message = this.props.getDropRejectMessage(
-                rejectedFile, 
+                rejectedFile,
                 this.props.acceptedFiles,
                 this.props.maxFileSize
             );
@@ -271,7 +271,7 @@ DropzoneArea.defaultProps = {
     onDrop: () => { },
     onDropRejected: () => { },
     onDelete: () => { }
-}
+};
 DropzoneArea.propTypes = {
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
@@ -283,7 +283,7 @@ DropzoneArea.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
-    initialFiles: PropTypes.arrayOf[PropTypes.string],
+    initialFiles: PropTypes.arrayOf(PropTypes.string),
     getFileLimitExceedMessage: PropTypes.func,
     getFileAddedMessage: PropTypes.func,
     getFileRemovedMessage: PropTypes.func,
@@ -292,5 +292,5 @@ DropzoneArea.propTypes = {
     onDrop: PropTypes.func,
     onDropRejected: PropTypes.func,
     onDelete: PropTypes.func
-}
+};
 export default withStyles(styles)(DropzoneArea)
