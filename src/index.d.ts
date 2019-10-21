@@ -8,6 +8,7 @@ export interface DropzoneAreaProps {
     showPreviews?: boolean;
     showPreviewsInDropzone?: boolean;
     showFileNamesInPreview?: boolean;
+    showFileNames?: boolean;
     showAlerts?: boolean;
     clearOnUnmount?: boolean;
     dropzoneClass?: string;
@@ -36,5 +37,10 @@ export interface DropzoneDialogProps {
     showPreviewsInDropzone?: boolean;
     showAlerts?: boolean;
     clearOnUnmount?: boolean;
+    dialogTitle?: string;
+    cancelButtonText?: string;
+    submitButtonText?: string;
+    maxWidth?: string;
+    fullWidth?: boolean;
 }
 export const DropzoneDialog: React.ComponentType<DropzoneDialogProps>;
