@@ -1,10 +1,11 @@
-import React from "react";
-import {withStyles} from '@material-ui/core/styles';
-import {isImage} from './helpers/helpers.js';
-import Grid from '@material-ui/core/Grid';
-import DeleteIcon from '@material-ui/icons/Delete'; 
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { Chip } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import DeleteIcon from '@material-ui/icons/Delete';
+import React from "react";
+import { isImage } from './helpers/helpers.js';
 
 const styles = {
     removeBtn: {
@@ -43,27 +44,41 @@ const styles = {
     }
 }
 
-function PreviewList(props){
-    const {fileObjects, handleRemove, showFileNames, classes} = props;
-    return(
+function PreviewList(props) {
+    const { fileObjects, handleRemove, showFileNames, useChipsForPreview, previewChipProps, classes } = props;
+    if (useChipsForPreview) {
+        return (
+            fileObjects.map((fileObject, i) => {
+                return (<div key={i}>
+                    <Chip
+                        label={fileObject.file.name}
+                        onDelete={handleRemove(i)}
+                        variant="outlined"
+                        {...previewChipProps}
+                    />
+                </div>)
+            })
+        )
+    }
+    return (
         <Grid container spacing={8}>
             {
                 fileObjects.map((fileObject, i) => {
-                    const img = (isImage(fileObject.file) ? 
-                    <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data}/>
-                        : 
+                    const img = (isImage(fileObject.file) ?
+                        <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data} />
+                        :
                         <AttachFileIcon className={classes.smallPreviewImg} />
                     );
                     return (
                         <Grid item xs={4} key={i} className={classes.imageContainer}>
                             {img}
-                            
+
                             {showFileNames &&
                                 <p>{fileObject.file.name}</p>
                             }
 
                             <Fab onClick={handleRemove(i)}
-                                aria-label="Delete" 
+                                aria-label="Delete"
                                 className={classes.removeBtn}>
                                 <DeleteIcon />
                             </Fab>
