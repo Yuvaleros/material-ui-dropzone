@@ -1,18 +1,19 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import PropTypes from 'prop-types';
+import { Chip } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 function unwrapExports (x) {
@@ -22,6 +23,378 @@ function unwrapExports (x) {
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
+
+var interopRequireDefault = createCommonjsModule(function (module) {
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+});
+
+unwrapExports(interopRequireDefault);
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+var inheritsLoose = _inheritsLoose;
+
+var setStatic_1 = createCommonjsModule(function (module, exports) {
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var setStatic = function setStatic(key, value) {
+  return function (BaseComponent) {
+    /* eslint-disable no-param-reassign */
+    BaseComponent[key] = value;
+    /* eslint-enable no-param-reassign */
+
+    return BaseComponent;
+  };
+};
+
+var _default = setStatic;
+exports.default = _default;
+});
+
+unwrapExports(setStatic_1);
+
+var setDisplayName_1 = createCommonjsModule(function (module, exports) {
+
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _setStatic = interopRequireDefault(setStatic_1);
+
+var setDisplayName = function setDisplayName(displayName) {
+  return (0, _setStatic.default)('displayName', displayName);
+};
+
+var _default = setDisplayName;
+exports.default = _default;
+});
+
+unwrapExports(setDisplayName_1);
+
+var getDisplayName_1 = createCommonjsModule(function (module, exports) {
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var getDisplayName = function getDisplayName(Component$$1) {
+  if (typeof Component$$1 === 'string') {
+    return Component$$1;
+  }
+
+  if (!Component$$1) {
+    return undefined;
+  }
+
+  return Component$$1.displayName || Component$$1.name || 'Component';
+};
+
+var _default = getDisplayName;
+exports.default = _default;
+});
+
+unwrapExports(getDisplayName_1);
+
+var wrapDisplayName_1 = createCommonjsModule(function (module, exports) {
+
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _getDisplayName = interopRequireDefault(getDisplayName_1);
+
+var wrapDisplayName = function wrapDisplayName(BaseComponent, hocName) {
+  return hocName + "(" + (0, _getDisplayName.default)(BaseComponent) + ")";
+};
+
+var _default = wrapDisplayName;
+exports.default = _default;
+});
+
+unwrapExports(wrapDisplayName_1);
+
+var shouldUpdate_1 = createCommonjsModule(function (module, exports) {
+
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _inheritsLoose2 = interopRequireDefault(inheritsLoose);
+
+
+
+var _setDisplayName = interopRequireDefault(setDisplayName_1);
+
+var _wrapDisplayName = interopRequireDefault(wrapDisplayName_1);
+
+var shouldUpdate = function shouldUpdate(test) {
+  return function (BaseComponent) {
+    var factory = (0, React.createFactory)(BaseComponent);
+
+    var ShouldUpdate =
+    /*#__PURE__*/
+    function (_Component) {
+      (0, _inheritsLoose2.default)(ShouldUpdate, _Component);
+
+      function ShouldUpdate() {
+        return _Component.apply(this, arguments) || this;
+      }
+
+      var _proto = ShouldUpdate.prototype;
+
+      _proto.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
+        return test(this.props, nextProps);
+      };
+
+      _proto.render = function render() {
+        return factory(this.props);
+      };
+
+      return ShouldUpdate;
+    }(React.Component);
+
+    if (process.env.NODE_ENV !== 'production') {
+      return (0, _setDisplayName.default)((0, _wrapDisplayName.default)(BaseComponent, 'shouldUpdate'))(ShouldUpdate);
+    }
+
+    return ShouldUpdate;
+  };
+};
+
+var _default = shouldUpdate;
+exports.default = _default;
+});
+
+unwrapExports(shouldUpdate_1);
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ * 
+ */
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+
+/**
+ * Performs equality by iterating through keys on an object and returning false
+ * when any key has values which are not strictly equal between the arguments.
+ * Returns true when the values of all keys are strictly equal.
+ */
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) {
+    return true;
+  }
+
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  // Test for A's keys different from B.
+  for (var i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+var shallowEqual_1 = shallowEqual;
+
+var shallowEqual$1 = createCommonjsModule(function (module, exports) {
+
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _shallowEqual = interopRequireDefault(shallowEqual_1);
+
+var _default = _shallowEqual.default;
+exports.default = _default;
+});
+
+unwrapExports(shallowEqual$1);
+
+var pure_1 = createCommonjsModule(function (module, exports) {
+
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _shouldUpdate = interopRequireDefault(shouldUpdate_1);
+
+var _shallowEqual = interopRequireDefault(shallowEqual$1);
+
+var _setDisplayName = interopRequireDefault(setDisplayName_1);
+
+var _wrapDisplayName = interopRequireDefault(wrapDisplayName_1);
+
+var pure = function pure(BaseComponent) {
+  var hoc = (0, _shouldUpdate.default)(function (props, nextProps) {
+    return !(0, _shallowEqual.default)(props, nextProps);
+  });
+
+  if (process.env.NODE_ENV !== 'production') {
+    return (0, _setDisplayName.default)((0, _wrapDisplayName.default)(BaseComponent, 'pure'))(hoc(BaseComponent));
+  }
+
+  return hoc(BaseComponent);
+};
+
+var _default = pure;
+exports.default = _default;
+});
+
+unwrapExports(pure_1);
+
+var createSvgIcon_1 = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = interopRequireDefault(React);
+
+var _pure = interopRequireDefault(pure_1);
+
+var _SvgIcon = interopRequireDefault(SvgIcon);
+
+function createSvgIcon(path, displayName) {
+  var Icon = function Icon(props) {
+    return _react.default.createElement(_SvgIcon.default, props, path);
+  };
+
+  Icon.displayName = "".concat(displayName, "Icon");
+  Icon = (0, _pure.default)(Icon);
+  Icon.muiName = 'SvgIcon';
+  return Icon;
+}
+var _default = createSvgIcon;
+exports.default = _default;
+});
+
+unwrapExports(createSvgIcon_1);
+
+var CloudUpload = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = interopRequireDefault(React);
+
+var _createSvgIcon = interopRequireDefault(createSvgIcon_1);
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
+  fill: "none",
+  d: "M0 0h24v24H0z"
+}), _react.default.createElement("path", {
+  d: "M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"
+})), 'CloudUpload');
+
+exports.default = _default;
+});
+
+var CloudUploadIcon = unwrapExports(CloudUpload);
+
+var classnames = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
 
 var dist = createCommonjsModule(function (module) {
 module.exports=function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={i:e,l:!1,exports:{}};return t[e].call(o.exports,o,o.exports,n),o.l=!0,o.exports}var r={};return n.m=t,n.c=r,n.d=function(t,r,e){n.o(t,r)||Object.defineProperty(t,r,{configurable:!1,enumerable:!0,get:e});},n.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(r,"a",r),r},n.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},n.p="",n(n.s=13)}([function(t,n){var r=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=r);},function(t,n){t.exports=function(t){return "object"==typeof t?null!==t:"function"==typeof t};},function(t,n){var r=t.exports={version:"2.5.0"};"number"==typeof __e&&(__e=r);},function(t,n,r){t.exports=!r(4)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a});},function(t,n){t.exports=function(t){try{return !!t()}catch(t){return !0}};},function(t,n){var r={}.toString;t.exports=function(t){return r.call(t).slice(8,-1)};},function(t,n,r){var e=r(32)("wks"),o=r(9),i=r(0).Symbol,u="function"==typeof i;(t.exports=function(t){return e[t]||(e[t]=u&&i[t]||(u?i:o)("Symbol."+t))}).store=e;},function(t,n,r){var e=r(0),o=r(2),i=r(8),u=r(22),c=r(10),f=function(t,n,r){var a,s,p,l,v=t&f.F,y=t&f.G,h=t&f.S,d=t&f.P,x=t&f.B,g=y?e:h?e[n]||(e[n]={}):(e[n]||{}).prototype,m=y?o:o[n]||(o[n]={}),b=m.prototype||(m.prototype={});y&&(r=n);for(a in r)s=!v&&g&&void 0!==g[a],p=(s?g:r)[a],l=x&&s?c(p,e):d&&"function"==typeof p?c(Function.call,p):p,g&&u(g,a,p,t&f.U),m[a]!=p&&i(m,a,l),d&&b[a]!=p&&(b[a]=p);};e.core=o,f.F=1,f.G=2,f.S=4,f.P=8,f.B=16,f.W=32,f.U=64,f.R=128,t.exports=f;},function(t,n,r){var e=r(16),o=r(21);t.exports=r(3)?function(t,n,r){return e.f(t,n,o(1,r))}:function(t,n,r){return t[n]=r,t};},function(t,n){var r=0,e=Math.random();t.exports=function(t){return "Symbol(".concat(void 0===t?"":t,")_",(++r+e).toString(36))};},function(t,n,r){var e=r(24);t.exports=function(t,n,r){if(e(t),void 0===n)return t;switch(r){case 1:return function(r){return t.call(n,r)};case 2:return function(r,e){return t.call(n,r,e)};case 3:return function(r,e,o){return t.call(n,r,e,o)}}return function(){return t.apply(n,arguments)}};},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t};},function(t,n,r){var e=r(28),o=Math.min;t.exports=function(t){return t>0?o(e(t),9007199254740991):0};},function(t,n,r){n.__esModule=!0,n.default=function(t,n){if(t&&n){var r=Array.isArray(n)?n:n.split(","),e=t.name||"",o=t.type||"",i=o.replace(/\/.*$/,"");return r.some(function(t){var n=t.trim();return "."===n.charAt(0)?e.toLowerCase().endsWith(n.toLowerCase()):n.endsWith("/*")?i===n.replace(/\/.*$/,""):o===n})}return !0},r(14),r(34);},function(t,n,r){r(15),t.exports=r(2).Array.some;},function(t,n,r){var e=r(7),o=r(25)(3);e(e.P+e.F*!r(33)([].some,!0),"Array",{some:function(t){return o(this,t,arguments[1])}});},function(t,n,r){var e=r(17),o=r(18),i=r(20),u=Object.defineProperty;n.f=r(3)?Object.defineProperty:function(t,n,r){if(e(t),n=i(n,!0),e(r),o)try{return u(t,n,r)}catch(t){}if("get"in r||"set"in r)throw TypeError("Accessors not supported!");return "value"in r&&(t[n]=r.value),t};},function(t,n,r){var e=r(1);t.exports=function(t){if(!e(t))throw TypeError(t+" is not an object!");return t};},function(t,n,r){t.exports=!r(3)&&!r(4)(function(){return 7!=Object.defineProperty(r(19)("div"),"a",{get:function(){return 7}}).a});},function(t,n,r){var e=r(1),o=r(0).document,i=e(o)&&e(o.createElement);t.exports=function(t){return i?o.createElement(t):{}};},function(t,n,r){var e=r(1);t.exports=function(t,n){if(!e(t))return t;var r,o;if(n&&"function"==typeof(r=t.toString)&&!e(o=r.call(t)))return o;if("function"==typeof(r=t.valueOf)&&!e(o=r.call(t)))return o;if(!n&&"function"==typeof(r=t.toString)&&!e(o=r.call(t)))return o;throw TypeError("Can't convert object to primitive value")};},function(t,n){t.exports=function(t,n){return {enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}};},function(t,n,r){var e=r(0),o=r(8),i=r(23),u=r(9)("src"),c=Function.toString,f=(""+c).split("toString");r(2).inspectSource=function(t){return c.call(t)},(t.exports=function(t,n,r,c){var a="function"==typeof r;a&&(i(r,"name")||o(r,"name",n)),t[n]!==r&&(a&&(i(r,u)||o(r,u,t[n]?""+t[n]:f.join(String(n)))),t===e?t[n]=r:c?t[n]?t[n]=r:o(t,n,r):(delete t[n],o(t,n,r)));})(Function.prototype,"toString",function(){return "function"==typeof this&&this[u]||c.call(this)});},function(t,n){var r={}.hasOwnProperty;t.exports=function(t,n){return r.call(t,n)};},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t};},function(t,n,r){var e=r(10),o=r(26),i=r(27),u=r(12),c=r(29);t.exports=function(t,n){var r=1==t,f=2==t,a=3==t,s=4==t,p=6==t,l=5==t||p,v=n||c;return function(n,c,y){for(var h,d,x=i(n),g=o(x),m=e(c,y,3),b=u(g.length),_=0,w=r?v(n,b):f?v(n,0):void 0;b>_;_++)if((l||_ in g)&&(h=g[_],d=m(h,_,x),t))if(r)w[_]=d;else if(d)switch(t){case 3:return !0;case 5:return h;case 6:return _;case 2:w.push(h);}else if(s)return !1;return p?-1:a||s?s:w}};},function(t,n,r){var e=r(5);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return "String"==e(t)?t.split(""):Object(t)};},function(t,n,r){var e=r(11);t.exports=function(t){return Object(e(t))};},function(t,n){var r=Math.ceil,e=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?e:r)(t)};},function(t,n,r){var e=r(30);t.exports=function(t,n){return new(e(t))(n)};},function(t,n,r){var e=r(1),o=r(31),i=r(6)("species");t.exports=function(t){var n;return o(t)&&(n=t.constructor,"function"!=typeof n||n!==Array&&!o(n.prototype)||(n=void 0),e(n)&&null===(n=n[i])&&(n=void 0)),void 0===n?Array:n};},function(t,n,r){var e=r(5);t.exports=Array.isArray||function(t){return "Array"==e(t)};},function(t,n,r){var e=r(0),o=e["__core-js_shared__"]||(e["__core-js_shared__"]={});t.exports=function(t){return o[t]||(o[t]={})};},function(t,n,r){var e=r(4);t.exports=function(t,n){return !!t&&e(function(){n?t.call(null,function(){},1):t.call(null);})};},function(t,n,r){r(35),t.exports=r(2).String.endsWith;},function(t,n,r){var e=r(7),o=r(12),i=r(36),u="".endsWith;e(e.P+e.F*r(38)("endsWith"),"String",{endsWith:function(t){var n=i(this,t,"endsWith"),r=arguments.length>1?arguments[1]:void 0,e=o(n.length),c=void 0===r?e:Math.min(o(r),e),f=String(t);return u?u.call(n,f,c):n.slice(c-f.length,c)===f}});},function(t,n,r){var e=r(37),o=r(11);t.exports=function(t,n,r){if(e(n))throw TypeError("String#"+r+" doesn't accept regex!");return String(o(t))};},function(t,n,r){var e=r(1),o=r(5),i=r(6)("match");t.exports=function(t){var n;return e(t)&&(void 0!==(n=t[i])?!!n:"RegExp"==o(t))};},function(t,n,r){var e=r(6)("match");t.exports=function(t){var n=/./;try{"/./"[t](n);}catch(r){try{return n[e]=!1,!"/./"[t](n)}catch(t){}}return !0};}]);
@@ -783,329 +1156,6 @@ Dropzone.defaultProps = {
   getDataTransferItems: getDataTransferItems
 };
 
-var interopRequireDefault = createCommonjsModule(function (module) {
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault;
-});
-
-unwrapExports(interopRequireDefault);
-
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
-}
-
-var inheritsLoose = _inheritsLoose;
-
-var setStatic_1 = createCommonjsModule(function (module, exports) {
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var setStatic = function setStatic(key, value) {
-  return function (BaseComponent) {
-    /* eslint-disable no-param-reassign */
-    BaseComponent[key] = value;
-    /* eslint-enable no-param-reassign */
-
-    return BaseComponent;
-  };
-};
-
-var _default = setStatic;
-exports.default = _default;
-});
-
-unwrapExports(setStatic_1);
-
-var setDisplayName_1 = createCommonjsModule(function (module, exports) {
-
-
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _setStatic = interopRequireDefault(setStatic_1);
-
-var setDisplayName = function setDisplayName(displayName) {
-  return (0, _setStatic.default)('displayName', displayName);
-};
-
-var _default = setDisplayName;
-exports.default = _default;
-});
-
-unwrapExports(setDisplayName_1);
-
-var getDisplayName_1 = createCommonjsModule(function (module, exports) {
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var getDisplayName = function getDisplayName(Component$$1) {
-  if (typeof Component$$1 === 'string') {
-    return Component$$1;
-  }
-
-  if (!Component$$1) {
-    return undefined;
-  }
-
-  return Component$$1.displayName || Component$$1.name || 'Component';
-};
-
-var _default = getDisplayName;
-exports.default = _default;
-});
-
-unwrapExports(getDisplayName_1);
-
-var wrapDisplayName_1 = createCommonjsModule(function (module, exports) {
-
-
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _getDisplayName = interopRequireDefault(getDisplayName_1);
-
-var wrapDisplayName = function wrapDisplayName(BaseComponent, hocName) {
-  return hocName + "(" + (0, _getDisplayName.default)(BaseComponent) + ")";
-};
-
-var _default = wrapDisplayName;
-exports.default = _default;
-});
-
-unwrapExports(wrapDisplayName_1);
-
-var shouldUpdate_1 = createCommonjsModule(function (module, exports) {
-
-
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _inheritsLoose2 = interopRequireDefault(inheritsLoose);
-
-
-
-var _setDisplayName = interopRequireDefault(setDisplayName_1);
-
-var _wrapDisplayName = interopRequireDefault(wrapDisplayName_1);
-
-var shouldUpdate = function shouldUpdate(test) {
-  return function (BaseComponent) {
-    var factory = (0, React.createFactory)(BaseComponent);
-
-    var ShouldUpdate =
-    /*#__PURE__*/
-    function (_Component) {
-      (0, _inheritsLoose2.default)(ShouldUpdate, _Component);
-
-      function ShouldUpdate() {
-        return _Component.apply(this, arguments) || this;
-      }
-
-      var _proto = ShouldUpdate.prototype;
-
-      _proto.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
-        return test(this.props, nextProps);
-      };
-
-      _proto.render = function render() {
-        return factory(this.props);
-      };
-
-      return ShouldUpdate;
-    }(React.Component);
-
-    if (process.env.NODE_ENV !== 'production') {
-      return (0, _setDisplayName.default)((0, _wrapDisplayName.default)(BaseComponent, 'shouldUpdate'))(ShouldUpdate);
-    }
-
-    return ShouldUpdate;
-  };
-};
-
-var _default = shouldUpdate;
-exports.default = _default;
-});
-
-unwrapExports(shouldUpdate_1);
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- * 
- */
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-/**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */
-function is(x, y) {
-  // SameValue algorithm
-  if (x === y) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    // Added the nonzero y check to make Flow happy, but it is redundant
-    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-  } else {
-    // Step 6.a: NaN == NaN
-    return x !== x && y !== y;
-  }
-}
-
-/**
- * Performs equality by iterating through keys on an object and returning false
- * when any key has values which are not strictly equal between the arguments.
- * Returns true when the values of all keys are strictly equal.
- */
-function shallowEqual(objA, objB) {
-  if (is(objA, objB)) {
-    return true;
-  }
-
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-    return false;
-  }
-
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  // Test for A's keys different from B.
-  for (var i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-var shallowEqual_1 = shallowEqual;
-
-var shallowEqual$1 = createCommonjsModule(function (module, exports) {
-
-
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _shallowEqual = interopRequireDefault(shallowEqual_1);
-
-var _default = _shallowEqual.default;
-exports.default = _default;
-});
-
-unwrapExports(shallowEqual$1);
-
-var pure_1 = createCommonjsModule(function (module, exports) {
-
-
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _shouldUpdate = interopRequireDefault(shouldUpdate_1);
-
-var _shallowEqual = interopRequireDefault(shallowEqual$1);
-
-var _setDisplayName = interopRequireDefault(setDisplayName_1);
-
-var _wrapDisplayName = interopRequireDefault(wrapDisplayName_1);
-
-var pure = function pure(BaseComponent) {
-  var hoc = (0, _shouldUpdate.default)(function (props, nextProps) {
-    return !(0, _shallowEqual.default)(props, nextProps);
-  });
-
-  if (process.env.NODE_ENV !== 'production') {
-    return (0, _setDisplayName.default)((0, _wrapDisplayName.default)(BaseComponent, 'pure'))(hoc(BaseComponent));
-  }
-
-  return hoc(BaseComponent);
-};
-
-var _default = pure;
-exports.default = _default;
-});
-
-unwrapExports(pure_1);
-
-var createSvgIcon_1 = createCommonjsModule(function (module, exports) {
-
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = interopRequireDefault(React);
-
-var _pure = interopRequireDefault(pure_1);
-
-var _SvgIcon = interopRequireDefault(SvgIcon);
-
-function createSvgIcon(path, displayName) {
-  var Icon = function Icon(props) {
-    return _react.default.createElement(_SvgIcon.default, props, path);
-  };
-
-  Icon.displayName = "".concat(displayName, "Icon");
-  Icon = (0, _pure.default)(Icon);
-  Icon.muiName = 'SvgIcon';
-  return Icon;
-}
-var _default = createSvgIcon;
-exports.default = _default;
-});
-
-unwrapExports(createSvgIcon_1);
-
-var CloudUpload = createCommonjsModule(function (module, exports) {
-
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = interopRequireDefault(React);
-
-var _createSvgIcon = interopRequireDefault(createSvgIcon_1);
-
-var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
-  fill: "none",
-  d: "M0 0h24v24H0z"
-}), _react.default.createElement("path", {
-  d: "M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"
-})), 'CloudUpload');
-
-exports.default = _default;
-});
-
-var CloudUploadIcon = unwrapExports(CloudUpload);
-
 var asyncToGenerator = function (fn) {
   return function () {
     var gen = fn.apply(this, arguments);
@@ -1264,54 +1314,141 @@ var createFileFromUrl = function () {
   };
 }();
 
-var classnames = createCommonjsModule(function (module) {
-/*!
-  Copyright (c) 2017 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
+var AttachFile = createCommonjsModule(function (module, exports) {
 
-(function () {
 
-	var hasOwn = {}.hasOwnProperty;
 
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg) && arg.length) {
-				var inner = classNames.apply(null, arg);
-				if (inner) {
-					classes.push(inner);
-				}
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if (module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else {
-		window.classNames = classNames;
-	}
-}());
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.default = void 0;
+
+var _react = interopRequireDefault(React);
+
+var _createSvgIcon = interopRequireDefault(createSvgIcon_1);
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
+  d: "M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"
+}), _react.default.createElement("path", {
+  fill: "none",
+  d: "M0 0h24v24H0z"
+})), 'AttachFile');
+
+exports.default = _default;
+});
+
+var AttachFileIcon = unwrapExports(AttachFile);
+
+var Delete = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = interopRequireDefault(React);
+
+var _createSvgIcon = interopRequireDefault(createSvgIcon_1);
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
+  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+}), _react.default.createElement("path", {
+  fill: "none",
+  d: "M0 0h24v24H0z"
+})), 'Delete');
+
+exports.default = _default;
+});
+
+var DeleteIcon = unwrapExports(Delete);
+
+var styles$1 = {
+    removeBtn: {
+        transition: '.5s ease',
+        position: 'absolute',
+        opacity: 0,
+        top: -5,
+        right: -5,
+        width: 40,
+        height: 40
+    },
+    smallPreviewImg: {
+        height: 100,
+        width: 'initial',
+        maxWidth: '100%',
+        marginTop: 5,
+        marginRight: 10,
+        color: 'rgba(0, 0, 0, 0.87)',
+        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        boxSizing: 'border-box',
+        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+        borderRadius: 2,
+        zIndex: 5,
+        opacity: 1
+    },
+    imageContainer: {
+        position: 'relative',
+        zIndex: 10,
+        textAlign: 'center',
+        '&:hover $smallPreviewImg': {
+            opacity: 0.3
+        },
+        '&:hover $removeBtn': {
+            opacity: 1
+        }
+    }
+};
+
+function PreviewList(props) {
+    var fileObjects = props.fileObjects,
+        handleRemove = props.handleRemove,
+        showFileNames = props.showFileNames,
+        useChipsForPreview = props.useChipsForPreview,
+        previewChipProps = props.previewChipProps,
+        classes = props.classes;
+
+    if (useChipsForPreview) {
+        return fileObjects.map(function (fileObject, i) {
+            return React.createElement(
+                'div',
+                { key: i },
+                React.createElement(Chip, _extends$1({
+                    label: fileObject.file.name,
+                    onDelete: handleRemove(i),
+                    variant: 'outlined'
+                }, previewChipProps))
+            );
+        });
+    }
+    return React.createElement(
+        Grid,
+        { container: true, spacing: 8 },
+        fileObjects.map(function (fileObject, i) {
+            var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
+            return React.createElement(
+                Grid,
+                { item: true, xs: 4, key: i, className: classes.imageContainer },
+                img,
+                showFileNames && React.createElement(
+                    'p',
+                    null,
+                    fileObject.file.name
+                ),
+                React.createElement(
+                    Fab,
+                    { onClick: handleRemove(i),
+                        'aria-label': 'Delete',
+                        className: classes.removeBtn },
+                    React.createElement(DeleteIcon, null)
+                )
+            );
+        })
+    );
+}
+
+var PreviewList$1 = withStyles(styles$1)(PreviewList);
 
 var CheckCircle = createCommonjsModule(function (module, exports) {
 
@@ -1445,7 +1582,7 @@ var variantIcon = {
   info: InfoIcon
 };
 
-var styles$1 = function styles(theme) {
+var styles$2 = function styles(theme) {
   return {
     success: {
       backgroundColor: green[600]
@@ -1514,128 +1651,7 @@ SnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
 };
 
-var SnackbarContentWrapper$1 = withStyles(styles$1)(SnackbarContentWrapper);
-
-var Delete = createCommonjsModule(function (module, exports) {
-
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = interopRequireDefault(React);
-
-var _createSvgIcon = interopRequireDefault(createSvgIcon_1);
-
-var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
-  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-}), _react.default.createElement("path", {
-  fill: "none",
-  d: "M0 0h24v24H0z"
-})), 'Delete');
-
-exports.default = _default;
-});
-
-var DeleteIcon = unwrapExports(Delete);
-
-var AttachFile = createCommonjsModule(function (module, exports) {
-
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = interopRequireDefault(React);
-
-var _createSvgIcon = interopRequireDefault(createSvgIcon_1);
-
-var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
-  d: "M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"
-}), _react.default.createElement("path", {
-  fill: "none",
-  d: "M0 0h24v24H0z"
-})), 'AttachFile');
-
-exports.default = _default;
-});
-
-var AttachFileIcon = unwrapExports(AttachFile);
-
-var styles$2 = {
-    removeBtn: {
-        transition: '.5s ease',
-        position: 'absolute',
-        opacity: 0,
-        top: -5,
-        right: -5,
-        width: 40,
-        height: 40
-    },
-    smallPreviewImg: {
-        height: 100,
-        width: 'initial',
-        maxWidth: '100%',
-        marginTop: 5,
-        marginRight: 10,
-        color: 'rgba(0, 0, 0, 0.87)',
-        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-        boxSizing: 'border-box',
-        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-        borderRadius: 2,
-        zIndex: 5,
-        opacity: 1
-    },
-    imageContainer: {
-        position: 'relative',
-        zIndex: 10,
-        textAlign: 'center',
-        '&:hover $smallPreviewImg': {
-            opacity: 0.3
-        },
-        '&:hover $removeBtn': {
-            opacity: 1
-        }
-    }
-};
-
-function PreviewList(props) {
-    var fileObjects = props.fileObjects,
-        handleRemove = props.handleRemove,
-        showFileNames = props.showFileNames,
-        classes = props.classes;
-
-    return React.createElement(
-        Grid,
-        { container: true, spacing: 8 },
-        fileObjects.map(function (fileObject, i) {
-            var img = isImage(fileObject.file) ? React.createElement('img', { className: classes.smallPreviewImg, role: 'presentation', src: fileObject.data }) : React.createElement(AttachFileIcon, { className: classes.smallPreviewImg });
-            return React.createElement(
-                Grid,
-                { item: true, xs: 4, key: i, className: classes.imageContainer },
-                img,
-                showFileNames && React.createElement(
-                    'p',
-                    null,
-                    fileObject.file.name
-                ),
-                React.createElement(
-                    Fab,
-                    { onClick: handleRemove(i),
-                        'aria-label': 'Delete',
-                        className: classes.removeBtn },
-                    React.createElement(DeleteIcon, null)
-                )
-            );
-        })
-    );
-}
-
-var PreviewList$1 = withStyles(styles$2)(PreviewList);
+var SnackbarContentWrapper$1 = withStyles(styles$2)(SnackbarContentWrapper);
 
 var styles$3 = {
     '@keyframes progress': {
@@ -1970,7 +1986,9 @@ var DropzoneArea = function (_Component) {
                     showPreviewsInDropzone && React.createElement(PreviewList$1, {
                         fileObjects: this.state.fileObjects,
                         handleRemove: this.handleRemove.bind(this),
-                        showFileNames: this.props.showFileNames
+                        showFileNames: this.props.showFileNames,
+                        useChipsForPreview: this.props.useChipsForPreview,
+                        previewChipProps: this.props.previewChipProps
                     })
                 ),
                 showPreviews && React.createElement(
@@ -1988,7 +2006,9 @@ var DropzoneArea = function (_Component) {
                     React.createElement(PreviewList$1, {
                         fileObjects: this.state.fileObjects,
                         handleRemove: this.handleRemove.bind(this),
-                        showFileNames: this.props.showFileNamesInPreview
+                        showFileNames: this.props.showFileNamesInPreview,
+                        useChipsForPreview: this.props.useChipsForPreview,
+                        previewChipProps: this.props.previewChipProps
                     })
                 ),
                 this.props.showAlerts && React.createElement(
@@ -2022,6 +2042,7 @@ DropzoneArea.defaultProps = {
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNamesInPreview: false,
+    previewChipProps: {},
     showAlerts: true,
     clearOnUnmount: true,
     initialFiles: [],
@@ -2058,6 +2079,8 @@ DropzoneArea.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,
+    useChipsForPreview: PropTypes.bool,
+    previewChipProps: PropTypes.object,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     initialFiles: PropTypes.arrayOf(PropTypes.string),
@@ -2206,7 +2229,9 @@ var DropzoneDialog = function (_React$Component) {
                             onDropRejected: this.onDropRejected.bind(this),
                             onDelete: this.onDelete.bind(this),
                             clearOnUnmount: this.props.clearOnUnmount,
-                            showFileNamesInPreview: this.props.showFileNamesInPreview
+                            showFileNamesInPreview: this.props.showFileNamesInPreview,
+                            useChipsForPreview: this.props.useChipsForPreview,
+                            previewChipProps: this.props.previewChipProps
                         })
                     ),
                     React.createElement(
@@ -2245,6 +2270,7 @@ DropzoneDialog.defaultProps = {
     showPreviews: true,
     showPreviewsInDropzone: false,
     showFileNamesInPreview: true,
+    previewChipProps: {},
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: "Upload file",
@@ -2274,6 +2300,8 @@ DropzoneDialog.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,
+    useChipsForPreview: PropTypes.bool,
+    previewChipProps: PropTypes.object,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     dialogTitle: PropTypes.string,

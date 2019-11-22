@@ -1,14 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
-import Dropzone from 'react-dropzone';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Grid from '@material-ui/core/Grid';
-import { convertBytesToMbsOrKbs, createFileFromUrl } from './helpers/helpers'
-import SnackbarContentWrapper from './SnackbarContentWrapper';
-import PreviewList from './PreviewList';
+import Snackbar from '@material-ui/core/Snackbar';
+import { withStyles } from '@material-ui/core/styles';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import Dropzone from 'react-dropzone';
+import { convertBytesToMbsOrKbs, createFileFromUrl } from './helpers/helpers';
+import PreviewList from './PreviewList';
+import SnackbarContentWrapper from './SnackbarContentWrapper';
 const styles = {
     '@keyframes progress': {
         '0%': {
@@ -65,14 +65,14 @@ class DropzoneArea extends Component {
             dropzoneText: props.dropzoneText
         }
     }
-    async filesArray (urls) {
+    async filesArray(urls) {
         try {
             for (const url of urls) {
                 const file = await createFileFromUrl(url);
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     this.setState({
-                        fileObjects: this.state.fileObjects.concat({file: file, data: event.target.result})
+                        fileObjects: this.state.fileObjects.concat({ file: file, data: event.target.result })
                     });
                 };
                 reader.readAsDataURL(file);
@@ -206,6 +206,8 @@ class DropzoneArea extends Component {
                             fileObjects={this.state.fileObjects}
                             handleRemove={this.handleRemove.bind(this)}
                             showFileNames={this.props.showFileNames}
+                            useChipsForPreview={this.props.useChipsForPreview}
+                            previewChipProps={this.props.previewChipProps}
                         />
                     }
                 </Dropzone>
@@ -218,6 +220,8 @@ class DropzoneArea extends Component {
                             fileObjects={this.state.fileObjects}
                             handleRemove={this.handleRemove.bind(this)}
                             showFileNames={this.props.showFileNamesInPreview}
+                            useChipsForPreview={this.props.useChipsForPreview}
+                            previewChipProps={this.props.previewChipProps}
                         />
                     </Fragment>
                 }
@@ -251,6 +255,7 @@ DropzoneArea.defaultProps = {
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNamesInPreview: false,
+    previewChipProps: {},
     showAlerts: true,
     clearOnUnmount: true,
     initialFiles: [],
@@ -281,6 +286,8 @@ DropzoneArea.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,
+    useChipsForPreview: PropTypes.bool,
+    previewChipProps: PropTypes.object,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     initialFiles: PropTypes.arrayOf(PropTypes.string),

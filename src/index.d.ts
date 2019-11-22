@@ -1,3 +1,4 @@
+import { ChipProps } from '@material-ui/core/Chip';
 import * as React from 'react';
 
 export interface DropzoneAreaProps {
@@ -9,6 +10,8 @@ export interface DropzoneAreaProps {
   showPreviewsInDropzone?: boolean;
   showFileNamesInPreview?: boolean;
   showFileNames?: boolean;
+  useChipsForPreview?: boolean;
+  previewChipProps?: ChipProps;
   showAlerts?: boolean;
   clearOnUnmount?: boolean;
   dropzoneClass?: string;
@@ -43,6 +46,8 @@ export interface DropzoneDialogProps {
   dropzoneText?: string;
   showPreviews?: boolean;
   showPreviewsInDropzone?: boolean;
+  useChipsForPreview?: boolean;
+  previewChipProps?: ChipProps;
   showAlerts?: boolean;
   clearOnUnmount?: boolean;
   dialogTitle?: string;

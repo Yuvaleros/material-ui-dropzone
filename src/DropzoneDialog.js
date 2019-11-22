@@ -1,10 +1,10 @@
-import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import DropzoneArea from './DropzoneArea';
 
 
@@ -17,23 +17,23 @@ class DropzoneDialog extends React.Component {
             disabled: true,
         };
     }
-    componentWillUnmount(){
-        if(this.props.clearOnUnmount){
+    componentWillUnmount() {
+        if (this.props.clearOnUnmount) {
             this.setState({
                 files: []
             })
         }
     }
-    componentDidUpdate(prevProps, prevState){
-        if(this.props.open !== prevProps.open){
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.open !== prevProps.open) {
             this.setState({
                 open: this.props.open
             });
-            if(this.props.onClose && !this.props.open){
+            if (this.props.onClose && !this.props.open) {
                 this.props.onClose();
             }
         }
-        if(this.state.files.length !== prevState.files.length){
+        if (this.state.files.length !== prevState.files.length) {
             this.setState({
                 disabled: this.state.files.length === 0
             });
@@ -41,17 +41,17 @@ class DropzoneDialog extends React.Component {
     }
 
     handleClose(event) {
-        if(this.props.onClose){
+        if (this.props.onClose) {
             this.props.onClose(event);
         }
-        this.setState({open: false});
+        this.setState({ open: false });
     }
-    onChange(files){
+    onChange(files) {
         console.log('Files changed', files);
         this.setState({
             files: files
-        }, () =>{
-            if(this.props.onChange){
+        }, () => {
+            if (this.props.onChange) {
                 this.props.onChange(files);
             }
         })
@@ -59,24 +59,24 @@ class DropzoneDialog extends React.Component {
 
     onDelete(file) { // this passes it on to the parent component to do with it what they will
         console.log('File removed', file);
-        if(this.props.onDelete){
+        if (this.props.onDelete) {
             this.props.onDelete(file)
         }
     }
     onDrop(files) { // this passes it on to the parent component to do with it what they will
         console.log('Files dropped', files);
-        if(this.props.onDrop){
+        if (this.props.onDrop) {
             this.props.onDrop(files)
         }
     }
-    onDropRejected(files, evt){ // this passes it on to the parent component to do with it what they will
+    onDropRejected(files, evt) { // this passes it on to the parent component to do with it what they will
         console.log('Files rejected', files);
-        if(this.props.onDropRejected){
+        if (this.props.onDropRejected) {
             this.props.onDropRejected(files, evt);
         }
     }
     handleSaveClick() {
-        if(this.props.onSave){
+        if (this.props.onSave) {
             this.props.onSave(this.state.files);
         }
     }
@@ -106,20 +106,22 @@ class DropzoneDialog extends React.Component {
                             onDelete={this.onDelete.bind(this)}
                             clearOnUnmount={this.props.clearOnUnmount}
                             showFileNamesInPreview={this.props.showFileNamesInPreview}
+                            useChipsForPreview={this.props.useChipsForPreview}
+                            previewChipProps={this.props.previewChipProps}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button
                             color="primary"
                             onClick={this.handleClose.bind(this)}
-                            >
+                        >
                             {this.props.cancelButtonText}
                         </Button>
                         <Button
                             color="primary"
                             disabled={this.state.disabled}
                             onClick={this.handleSaveClick.bind(this)}
-                            >
+                        >
                             {this.props.submitButtonText}
                         </Button>
                     </DialogActions>
@@ -136,6 +138,7 @@ DropzoneDialog.defaultProps = {
     showPreviews: true,
     showPreviewsInDropzone: false,
     showFileNamesInPreview: true,
+    previewChipProps: {},
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: "Upload file",
@@ -143,12 +146,12 @@ DropzoneDialog.defaultProps = {
     cancelButtonText: "Cancel",
     maxWidth: "sm",
     fullWidth: true,
-    onSave:() => {},
-    onDelete:() => {},
-    onClose:() => {},
-    onChange: () => {},
-    onDrop: () => {},
-    onDropRejected: () => {},
+    onSave: () => { },
+    onDelete: () => { },
+    onClose: () => { },
+    onChange: () => { },
+    onDrop: () => { },
+    onDropRejected: () => { },
 };
 
 DropzoneDialog.propTypes = {
@@ -165,6 +168,8 @@ DropzoneDialog.propTypes = {
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,
+    useChipsForPreview: PropTypes.bool,
+    previewChipProps: PropTypes.object,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     dialogTitle: PropTypes.string,
