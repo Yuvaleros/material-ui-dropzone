@@ -300,4 +300,5 @@ DropzoneArea.propTypes = {
     onDropRejected: PropTypes.func,
     onDelete: PropTypes.func
 };
-export default withStyles(styles)(DropzoneArea)
+
+export default withStyles(styles)(DropzoneArea);

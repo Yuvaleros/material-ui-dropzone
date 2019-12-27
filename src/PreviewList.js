@@ -42,7 +42,7 @@ const styles = {
             opacity: 1
         }
     }
-}
+};
 
 function PreviewList(props) {
     const { fileObjects, handleRemove, showFileNames, useChipsForPreview, previewChipProps, classes } = props;
