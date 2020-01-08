@@ -1895,7 +1895,7 @@ var DropzoneArea = function (_Component) {
             var _this4 = this;
 
             var _this = this;
-            if (this.props.filesLimit != 0 && this.state.fileObjects.length + files.length > this.props.filesLimit) {
+            if (this.props.filesLimit > 1 && this.state.fileObjects.length + files.length > this.props.filesLimit) {
                 this.setState({
                     openSnackBar: true,
                     snackbarMessage: this.props.getFileLimitExceedMessage(this.props.filesLimit),
@@ -1910,7 +1910,7 @@ var DropzoneArea = function (_Component) {
                     var reader = new FileReader();
                     reader.onload = function (event) {
                         _this.setState({
-                            fileObjects: _this4.props.filesLimit == 0 ? [{ file: file, data: event.target.result }] : _this.state.fileObjects.concat({ file: file, data: event.target.result })
+                            fileObjects: _this4.props.filesLimit <= 1 ? [{ file: file, data: event.target.result }] : _this.state.fileObjects.concat({ file: file, data: event.target.result })
                         }, function () {
                             if (_this4.props.onChange) {
                                 _this4.props.onChange(_this.state.fileObjects.map(function (fileObject) {
@@ -1974,7 +1974,7 @@ var DropzoneArea = function (_Component) {
                         acceptClassName: classes.stripes,
                         rejectClassName: classes.rejectStripes,
                         maxSize: this.props.maxFileSize,
-                        multiple: this.props.filesLimit != 0
+                        multiple: this.props.filesLimit > 1
                     },
                     React.createElement(
                         'div',
