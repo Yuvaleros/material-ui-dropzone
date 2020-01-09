@@ -12,12 +12,12 @@ var core = require('@material-ui/core');
 var Fab = _interopDefault(require('@material-ui/core/Fab'));
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
 var styles = require('@material-ui/core/styles');
-var Button = _interopDefault(require('@material-ui/core/Button'));
 var green = _interopDefault(require('@material-ui/core/colors/green'));
 var amber = _interopDefault(require('@material-ui/core/colors/amber'));
 var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
-var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
 var SnackbarContent = _interopDefault(require('@material-ui/core/SnackbarContent'));
+var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
+var Button = _interopDefault(require('@material-ui/core/Button'));
 var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
 var DialogActions = _interopDefault(require('@material-ui/core/DialogActions'));
 var DialogContent = _interopDefault(require('@material-ui/core/DialogContent'));
@@ -1268,7 +1268,7 @@ var possibleConstructorReturn = function (self, call) {
 
 function isImage(file) {
   var fileName = file.name || file.path;
-  var suffix = fileName.substr(fileName.indexOf('.') + 1).toLowerCase();
+  var suffix = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
   if (suffix === 'jpg' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'png') {
     return true;
   }
@@ -2100,6 +2100,7 @@ DropzoneArea.propTypes = {
     onDropRejected: PropTypes.func,
     onDelete: PropTypes.func
 };
+
 var DropzoneArea$1 = styles.withStyles(styles$4)(DropzoneArea);
 
 var DropzoneDialog = function (_React$Component) {

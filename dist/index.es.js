@@ -5,12 +5,12 @@ import { Chip } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
 import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import Snackbar from '@material-ui/core/Snackbar';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -1261,7 +1261,7 @@ var possibleConstructorReturn = function (self, call) {
 
 function isImage(file) {
   var fileName = file.name || file.path;
-  var suffix = fileName.substr(fileName.indexOf('.') + 1).toLowerCase();
+  var suffix = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
   if (suffix === 'jpg' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'png') {
     return true;
   }
@@ -2093,6 +2093,7 @@ DropzoneArea.propTypes = {
     onDropRejected: PropTypes.func,
     onDelete: PropTypes.func
 };
+
 var DropzoneArea$1 = withStyles(styles$3)(DropzoneArea);
 
 var DropzoneDialog = function (_React$Component) {
