@@ -101,7 +101,7 @@ class DropzoneArea extends Component {
     }
     onDrop(files) {
         const _this = this;
-        if (this.state.fileObjects.length + files.length > this.props.filesLimit) {
+        if (this.props.filesLimit > 1 && this.state.fileObjects.length + files.length > this.props.filesLimit) {
             this.setState({
                 openSnackBar: true,
                 snackbarMessage: this.props.getFileLimitExceedMessage(this.props.filesLimit),
@@ -110,11 +110,13 @@ class DropzoneArea extends Component {
         } else {
             var count = 0;
             var message = '';
+            if(!Array.isArray(files)) files = [files];
+
             files.forEach((file) => {
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     _this.setState({
-                        fileObjects: _this.state.fileObjects.concat({ file: file, data: event.target.result })
+                        fileObjects: this.props.filesLimit <= 1 ? [{ file: file, data: event.target.result }] : _this.state.fileObjects.concat({ file: file, data: event.target.result })
                     }, () => {
                         if (this.props.onChange) {
                             this.props.onChange(_this.state.fileObjects.map(fileObject => fileObject.file));
@@ -194,6 +196,7 @@ class DropzoneArea extends Component {
                     acceptClassName={classes.stripes}
                     rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
+                    multiple={this.props.filesLimit > 1}
                 >
                     <div className={classes.dropzoneTextStyle}>
                         <p className={classNames(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)}>
