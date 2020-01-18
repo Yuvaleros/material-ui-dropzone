@@ -12,12 +12,12 @@ var core = require('@material-ui/core');
 var Fab = _interopDefault(require('@material-ui/core/Fab'));
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
 var styles = require('@material-ui/core/styles');
-var Button = _interopDefault(require('@material-ui/core/Button'));
 var green = _interopDefault(require('@material-ui/core/colors/green'));
 var amber = _interopDefault(require('@material-ui/core/colors/amber'));
 var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
-var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
 var SnackbarContent = _interopDefault(require('@material-ui/core/SnackbarContent'));
+var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
+var Button = _interopDefault(require('@material-ui/core/Button'));
 var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
 var DialogActions = _interopDefault(require('@material-ui/core/DialogActions'));
 var DialogContent = _interopDefault(require('@material-ui/core/DialogContent'));
@@ -1902,7 +1902,7 @@ var DropzoneArea = function (_Component) {
             var _this4 = this;
 
             var _this = this;
-            if (this.state.fileObjects.length + files.length > this.props.filesLimit) {
+            if (this.props.filesLimit > 1 && this.state.fileObjects.length + files.length > this.props.filesLimit) {
                 this.setState({
                     openSnackBar: true,
                     snackbarMessage: this.props.getFileLimitExceedMessage(this.props.filesLimit),
@@ -1911,11 +1911,13 @@ var DropzoneArea = function (_Component) {
             } else {
                 var count = 0;
                 var message = '';
+                if (!Array.isArray(files)) files = [files];
+
                 files.forEach(function (file) {
                     var reader = new FileReader();
                     reader.onload = function (event) {
                         _this.setState({
-                            fileObjects: _this.state.fileObjects.concat({ file: file, data: event.target.result })
+                            fileObjects: _this4.props.filesLimit <= 1 ? [{ file: file, data: event.target.result }] : _this.state.fileObjects.concat({ file: file, data: event.target.result })
                         }, function () {
                             if (_this4.props.onChange) {
                                 _this4.props.onChange(_this.state.fileObjects.map(function (fileObject) {
@@ -1978,7 +1980,8 @@ var DropzoneArea = function (_Component) {
                         className: classnames(this.props.dropzoneClass, classes.dropZone),
                         acceptClassName: classes.stripes,
                         rejectClassName: classes.rejectStripes,
-                        maxSize: this.props.maxFileSize
+                        maxSize: this.props.maxFileSize,
+                        multiple: this.props.filesLimit > 1
                     },
                     React__default.createElement(
                         'div',
@@ -2100,6 +2103,7 @@ DropzoneArea.propTypes = {
     onDropRejected: PropTypes.func,
     onDelete: PropTypes.func
 };
+
 var DropzoneArea$1 = styles.withStyles(styles$4)(DropzoneArea);
 
 var DropzoneDialog = function (_React$Component) {
