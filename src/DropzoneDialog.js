@@ -47,7 +47,9 @@ class DropzoneDialog extends React.Component {
         this.setState({ open: false });
     }
     onChange(files) {
-        console.log('Files changed', files);
+        if (this.props.logEvents) {
+            console.log('Files changed', files);
+        }
         this.setState({
             files: files
         }, () => {
@@ -58,19 +60,25 @@ class DropzoneDialog extends React.Component {
     }
 
     onDelete(file) { // this passes it on to the parent component to do with it what they will
-        console.log('File removed', file);
+        if (this.props.logEvents) {
+            console.log('File removed', file);
+        }
         if (this.props.onDelete) {
             this.props.onDelete(file)
         }
     }
     onDrop(files) { // this passes it on to the parent component to do with it what they will
-        console.log('Files dropped', files);
+        if (this.props.logEvents) {
+            console.log('Files dropped', files);
+        }
         if (this.props.onDrop) {
             this.props.onDrop(files)
         }
     }
     onDropRejected(files, evt) { // this passes it on to the parent component to do with it what they will
-        console.log('Files rejected', files);
+        if (this.props.logEvents) {
+            console.log('Files rejected', files);
+        }
         if (this.props.onDropRejected) {
             this.props.onDropRejected(files, evt);
         }
@@ -152,6 +160,7 @@ DropzoneDialog.defaultProps = {
     onChange: () => { },
     onDrop: () => { },
     onDropRejected: () => { },
+    logEvents: false
 };
 
 DropzoneDialog.propTypes = {
@@ -177,6 +186,7 @@ DropzoneDialog.propTypes = {
     cancelButtonText: PropTypes.string,
     maxWidth: PropTypes.string,
     fullWidth: PropTypes.bool,
+    logEvents: PropTypes.bool
 };
 
 export default DropzoneDialog;
