@@ -1260,9 +1260,7 @@ var possibleConstructorReturn = function (self, call) {
 };
 
 function isImage(file) {
-  var fileName = file.name || file.path;
-  var suffix = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
-  if (suffix === 'jpg' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'png') {
+  if (file.type.split('/')[0] === 'image') {
     return true;
   }
 }
@@ -2154,7 +2152,9 @@ var DropzoneDialog = function (_React$Component) {
         value: function onChange(files) {
             var _this2 = this;
 
-            console.log('Files changed', files);
+            if (this.props.logEvents) {
+                console.log('Files changed', files);
+            }
             this.setState({
                 files: files
             }, function () {
@@ -2167,7 +2167,9 @@ var DropzoneDialog = function (_React$Component) {
         key: 'onDelete',
         value: function onDelete(file) {
             // this passes it on to the parent component to do with it what they will
-            console.log('File removed', file);
+            if (this.props.logEvents) {
+                console.log('File removed', file);
+            }
             if (this.props.onDelete) {
                 this.props.onDelete(file);
             }
@@ -2176,7 +2178,9 @@ var DropzoneDialog = function (_React$Component) {
         key: 'onDrop',
         value: function onDrop(files) {
             // this passes it on to the parent component to do with it what they will
-            console.log('Files dropped', files);
+            if (this.props.logEvents) {
+                console.log('Files dropped', files);
+            }
             if (this.props.onDrop) {
                 this.props.onDrop(files);
             }
@@ -2185,7 +2189,9 @@ var DropzoneDialog = function (_React$Component) {
         key: 'onDropRejected',
         value: function onDropRejected(files, evt) {
             // this passes it on to the parent component to do with it what they will
-            console.log('Files rejected', files);
+            if (this.props.logEvents) {
+                console.log('Files rejected', files);
+            }
             if (this.props.onDropRejected) {
                 this.props.onDropRejected(files, evt);
             }
@@ -2287,7 +2293,8 @@ DropzoneDialog.defaultProps = {
     onClose: function onClose() {},
     onChange: function onChange() {},
     onDrop: function onDrop() {},
-    onDropRejected: function onDropRejected() {}
+    onDropRejected: function onDropRejected() {},
+    logEvents: false
 };
 
 DropzoneDialog.propTypes = {
@@ -2312,7 +2319,8 @@ DropzoneDialog.propTypes = {
     submitButtonText: PropTypes.string,
     cancelButtonText: PropTypes.string,
     maxWidth: PropTypes.string,
-    fullWidth: PropTypes.bool
+    fullWidth: PropTypes.bool,
+    logEvents: PropTypes.bool
 };
 
 export { DropzoneArea$1 as DropzoneArea, DropzoneDialog };
