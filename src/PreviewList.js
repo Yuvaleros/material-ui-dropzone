@@ -1,4 +1,4 @@
-import { Chip } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
