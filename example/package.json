@@ -4,11 +4,13 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.0.0",
+    "@material-ui/icons": "^4.0.0",
+    "material-ui-dropzone": "file:..",
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
+    "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "^3.1.1",
-    "material-ui-dropzone": "file:.."
+    "react-scripts": "^3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
