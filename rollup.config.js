@@ -21,7 +21,9 @@ export default {
     }
   ],
   plugins: [
-    external(),
+    external({
+      includeDependencies: true,
+    }),
     babel({
       exclude: 'node_modules/**',
       plugins: [ 'external-helpers' ]
