@@ -35,7 +35,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
+    "clsx": "^1.0.2",
     "react-dropzone": "^7.0.1"
   },
   "peerDependencies": {

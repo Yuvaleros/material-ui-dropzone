@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/core/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import Dropzone from 'react-dropzone';
@@ -192,14 +192,14 @@ class DropzoneArea extends Component {
                     accept={this.props.acceptedFiles.join(',')}
                     onDrop={this.onDrop.bind(this)}
                     onDropRejected={this.handleDropRejected.bind(this)}
-                    className={classNames(this.props.dropzoneClass, classes.dropZone)}
+                    className={clsx(this.props.dropzoneClass, classes.dropZone)}
                     acceptClassName={classes.stripes}
                     rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
                     multiple={this.props.filesLimit > 1}
                 >
                     <div className={classes.dropzoneTextStyle}>
-                        <p className={classNames(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)}>
+                        <p className={clsx(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)}>
                             {this.state.dropzoneText}
                         </p>
                         <CloudUploadIcon className={classes.uploadIconSize} />
