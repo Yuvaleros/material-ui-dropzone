@@ -96,6 +96,7 @@ class DropzoneDialog extends React.Component {
                     onClose={this.handleClose.bind(this)}
                     maxWidth={this.props.maxWidth}
                     fullWidth={this.props.fullWidth}
+                    {...this.props.dialogProps}
                 >
                     <DialogTitle>{this.props.dialogTitle}</DialogTitle>
                     <DialogContent>
@@ -150,6 +151,7 @@ DropzoneDialog.defaultProps = {
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: "Upload file",
+    dialogProps: {},
     submitButtonText: "Submit",
     cancelButtonText: "Cancel",
     maxWidth: "sm",
@@ -182,6 +184,7 @@ DropzoneDialog.propTypes = {
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     dialogTitle: PropTypes.string,
+    dialogProps: PropTypes.object,
     submitButtonText: PropTypes.string,
     cancelButtonText: PropTypes.string,
     maxWidth: PropTypes.string,
