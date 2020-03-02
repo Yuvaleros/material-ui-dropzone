@@ -4,7 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import DropzoneArea from './DropzoneArea';
 
 
@@ -17,25 +17,28 @@ class DropzoneDialog extends React.Component {
             disabled: true,
         };
     }
-    componentWillUnmount() {
-        if (this.props.clearOnUnmount) {
-            this.setState({
-                files: []
-            })
-        }
-    }
+
     componentDidUpdate(prevProps, prevState) {
         if (this.props.open !== prevProps.open) {
             this.setState({
-                open: this.props.open
+                open: this.props.open,
             });
             if (this.props.onClose && !this.props.open) {
                 this.props.onClose();
             }
         }
+
         if (this.state.files.length !== prevState.files.length) {
             this.setState({
-                disabled: this.state.files.length === 0
+                disabled: this.state.files.length === 0,
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.props.clearOnUnmount) {
+            this.setState({
+                files: [],
             });
         }
     }
@@ -44,19 +47,20 @@ class DropzoneDialog extends React.Component {
         if (this.props.onClose) {
             this.props.onClose(event);
         }
-        this.setState({ open: false });
+        this.setState({open: false});
     }
+
     onChange(files) {
         if (this.props.logEvents) {
             console.log('Files changed', files);
         }
         this.setState({
-            files: files
+            files: files,
         }, () => {
             if (this.props.onChange) {
                 this.props.onChange(files);
             }
-        })
+        });
     }
 
     onDelete(file) { // this passes it on to the parent component to do with it what they will
@@ -64,17 +68,19 @@ class DropzoneDialog extends React.Component {
             console.log('File removed', file);
         }
         if (this.props.onDelete) {
-            this.props.onDelete(file)
+            this.props.onDelete(file);
         }
     }
+
     onDrop(files) { // this passes it on to the parent component to do with it what they will
         if (this.props.logEvents) {
             console.log('Files dropped', files);
         }
         if (this.props.onDrop) {
-            this.props.onDrop(files)
+            this.props.onDrop(files);
         }
     }
+
     onDropRejected(files, evt) { // this passes it on to the parent component to do with it what they will
         if (this.props.logEvents) {
             console.log('Files rejected', files);
@@ -150,11 +156,11 @@ DropzoneDialog.defaultProps = {
     previewChipProps: {},
     showAlerts: true,
     clearOnUnmount: true,
-    dialogTitle: "Upload file",
+    dialogTitle: 'Upload file',
     dialogProps: {},
-    submitButtonText: "Submit",
-    cancelButtonText: "Cancel",
-    maxWidth: "sm",
+    submitButtonText: 'Submit',
+    cancelButtonText: 'Cancel',
+    maxWidth: 'sm',
     fullWidth: true,
     onSave: () => { },
     onDelete: () => { },
@@ -162,7 +168,7 @@ DropzoneDialog.defaultProps = {
     onChange: () => { },
     onDrop: () => { },
     onDropRejected: () => { },
-    logEvents: false
+    logEvents: false,
 };
 
 DropzoneDialog.propTypes = {
@@ -176,8 +182,10 @@ DropzoneDialog.propTypes = {
     acceptedFiles: PropTypes.array,
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
+    dropzoneText: PropTypes.string,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
+    showFileNames: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
@@ -189,7 +197,7 @@ DropzoneDialog.propTypes = {
     cancelButtonText: PropTypes.string,
     maxWidth: PropTypes.string,
     fullWidth: PropTypes.bool,
-    logEvents: PropTypes.bool
+    logEvents: PropTypes.bool,
 };
 
 export default DropzoneDialog;
