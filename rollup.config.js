@@ -1,8 +1,10 @@
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import copy from 'rollup-plugin-cpy'
 import external from 'rollup-plugin-peer-deps-external';
-import resolve from 'rollup-plugin-node-resolve';
-import copyPlugin from 'rollup-copy-plugin';
+import { sizeSnapshot } from "rollup-plugin-size-snapshot";
+import { terser } from "rollup-plugin-terser";
 
 import pkg from './package.json'
 
@@ -28,10 +30,13 @@ export default {
       exclude: 'node_modules/**',
       plugins: [ 'external-helpers' ]
     }),
-    copyPlugin({
-      './src/index.d.ts': './dist/index.d.ts',
+    copy({
+      files: ['src/index.d.ts'],
+      dest: 'dist',
     }),
     resolve(),
-    commonjs()
+    commonjs(),
+    sizeSnapshot(),
+    terser()
   ]
 }
