@@ -25,13 +25,13 @@
   ],
   "engines": {
     "node": ">=8",
-    "npm": ">=5"
+    "yarn": ">=1"
   },
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "prepare": "npm run build",
-    "predeploy": "cd example && npm install && npm run build",
+    "prepare": "yarn build",
+    "predeploy": "cd example && yarn && yarn build",
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
