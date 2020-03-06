@@ -92,11 +92,11 @@ class DropzoneDialog extends React.Component {
         return (
             <Fragment>
                 <Dialog
+                    {...this.props.dialogProps}
                     open={this.state.open}
                     onClose={this.handleClose.bind(this)}
                     maxWidth={this.props.maxWidth}
                     fullWidth={this.props.fullWidth}
-                    {...this.props.dialogProps}
                 >
                     <DialogTitle>{this.props.dialogTitle}</DialogTitle>
                     <DialogContent>
