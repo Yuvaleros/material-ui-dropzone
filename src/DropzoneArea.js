@@ -183,9 +183,12 @@ class DropzoneArea extends Component {
         });
     };
     render() {
-        const { classes } = this.props;
+        const { classes, icon, showIcon } = this.props;
         const showPreviews = this.props.showPreviews && this.state.fileObjects.length > 0;
         const showPreviewsInDropzone = this.props.showPreviewsInDropzone && this.state.fileObjects.length > 0;
+
+        const dropzopneIcon = icon ? icon :  <CloudUploadIcon className={classes.uploadIconSize} />
+
         return (
             <Fragment>
                 <Dropzone
@@ -202,7 +205,7 @@ class DropzoneArea extends Component {
                         <p className={classNames(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)}>
                             {this.state.dropzoneText}
                         </p>
-                        <CloudUploadIcon className={classes.uploadIconSize} />
+                        {showIcon && dropzopneIcon} 
                     </div>
                     {showPreviewsInDropzone &&
                         <PreviewList
@@ -285,6 +288,7 @@ DropzoneArea.propTypes = {
     filesLimit: PropTypes.number,
     maxFileSize: PropTypes.number,
     dropzoneText: PropTypes.string,
+    icon: PropTypes.object,
     dropzoneClass: PropTypes.string,
     showPreviews: PropTypes.bool,
     showPreviewsInDropzone: PropTypes.bool,
@@ -303,5 +307,9 @@ DropzoneArea.propTypes = {
     onDropRejected: PropTypes.func,
     onDelete: PropTypes.func
 };
+
+DropzoneArea.defaultProps = {
+    showIcon: true
+}
 
 export default withStyles(styles)(DropzoneArea);
