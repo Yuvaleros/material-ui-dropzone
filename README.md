@@ -76,6 +76,7 @@ export default DropzoneAreaExample;
 | showFileNamesInPreview | Boolean | false | Shows file name under the image    
 | showFileNames | Boolean | false | Shows file name under the dropzone image.
 | initialFiles | Array | [] | A list of urls of already uploaded images. Please take care of CORS
+| previewText | String | Preview: | The label under the file preview
 
 ### DropzoneArea Component Events
 
@@ -173,7 +174,7 @@ export default class DropzoneDialogExample extends Component {
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or
 | maxWidth      | String      | sm          | Sets dialog width. Width grows with the size of the screen.
 | fullWidth    | Boolean     | true        | If true, the dialog stretches to maxWidth.
-
+| previewText | String | Preview: | The label under the file preview
 
 ### DropzoneDialog Component Events
 
