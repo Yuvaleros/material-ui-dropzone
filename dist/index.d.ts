@@ -1,5 +1,5 @@
-import { ChipProps } from '@material-ui/core/Chip';
-import * as React from 'react';
+import { ChipProps } from "@material-ui/core/Chip";
+import * as React from "react";
 
 export interface DropzoneAreaProps {
   acceptedFiles?: string[];
@@ -29,6 +29,7 @@ export interface DropzoneAreaProps {
     acceptedFiles: string[],
     maxFileSize: number
   ) => string;
+  previewText?: string;
 }
 export const DropzoneArea: React.ComponentType<DropzoneAreaProps>;
 
@@ -55,5 +56,6 @@ export interface DropzoneDialogProps {
   submitButtonText?: string;
   maxWidth?: string;
   fullWidth?: boolean;
+  previewText?: string;
 }
 export const DropzoneDialog: React.ComponentType<DropzoneDialogProps>;
