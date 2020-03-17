@@ -1,2 +1,924 @@
-"use strict";function e(e){return e&&"object"==typeof e&&"default"in e?e.default:e}Object.defineProperty(exports,"__esModule",{value:!0});var t=e(require("@material-ui/core/Grid")),r=e(require("@material-ui/core/Snackbar")),o=require("@material-ui/core/styles"),i=e(require("@material-ui/icons/CloudUpload")),n=e(require("clsx")),s=e(require("prop-types")),a=require("react"),l=e(a),p=e(require("react-dropzone")),c=e(require("@material-ui/core/Chip")),u=e(require("@material-ui/core/Fab")),h=e(require("@material-ui/icons/AttachFile")),m=e(require("@material-ui/icons/Delete")),d=e(require("@material-ui/icons/CheckCircle")),f=e(require("@material-ui/icons/Error")),g=e(require("@material-ui/icons/Info")),b=e(require("@material-ui/icons/Close")),v=e(require("@material-ui/core/colors/green")),w=e(require("@material-ui/core/colors/amber")),C=e(require("@material-ui/core/IconButton")),y=e(require("@material-ui/core/SnackbarContent")),x=e(require("@material-ui/icons/Warning")),F=e(require("@material-ui/core/Button")),k=e(require("@material-ui/core/Dialog")),P=e(require("@material-ui/core/DialogActions")),D=e(require("@material-ui/core/DialogContent")),S=e(require("@material-ui/core/DialogTitle")),j=function(e){return function(){var t=e.apply(this,arguments);return new Promise((function(e,r){return function o(i,n){try{var s=t[i](n),a=s.value}catch(e){return void r(e)}if(!s.done)return Promise.resolve(a).then((function(e){o("next",e)}),(function(e){o("throw",e)}));e(a)}("next")}))}},z=function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")},E=function(){function e(e,t){for(var r=0;r<t.length;r++){var o=t[r];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,r,o){return r&&e(t.prototype,r),o&&e(t,o),t}}(),O=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var o in r)Object.prototype.hasOwnProperty.call(r,o)&&(e[o]=r[o])}return e},R=function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)},N=function(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t};var q,T=(q=j(regeneratorRuntime.mark((function e(t){var r,o,i,n,s;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,fetch(t);case 2:return r=e.sent,e.next=5,r.blob();case 5:return o=e.sent,i={type:o.type},n=t.replace(/\?.+/,"").split("/").pop(),s=o.type.split("/").pop(),e.abrupt("return",new File([o],n+"."+s,i));case 10:case"end":return e.stop()}}),e,this)}))),function(e){return q.apply(this,arguments)});function I(e){var r=e.fileObjects,o=e.handleRemove,i=e.showFileNames,n=e.useChipsForPreview,s=e.previewChipProps,a=e.classes;return n?r.map((function(e,t){return l.createElement("div",{key:t},l.createElement(c,O({label:e.file.name,onDelete:o(t),variant:"outlined"},s)))})):l.createElement(t,{container:!0,spacing:8},r.map((function(e,r){var n=function(e){if("image"===e.type.split("/")[0])return!0}(e.file)?l.createElement("img",{className:a.smallPreviewImg,role:"presentation",src:e.data}):l.createElement(h,{className:a.smallPreviewImg});return l.createElement(t,{item:!0,xs:4,key:r,className:a.imageContainer},n,i&&l.createElement("p",null,e.file.name),l.createElement(u,{onClick:o(r),"aria-label":"Delete",className:a.removeBtn},l.createElement(m,null)))})))}I.propTypes={classes:s.object.isRequired,fileObjects:s.arrayOf(s.object).isRequired,handleRemove:s.func.isRequired,showFileNames:s.bool,useChipsForPreview:s.bool,previewChipProps:s.object};var A=o.withStyles({removeBtn:{transition:".5s ease",position:"absolute",opacity:0,top:-5,right:-5,width:40,height:40},smallPreviewImg:{height:100,width:"initial",maxWidth:"100%",marginTop:5,marginRight:10,color:"rgba(0, 0, 0, 0.87)",transition:"all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",boxSizing:"border-box",boxShadow:"rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px",borderRadius:2,zIndex:5,opacity:1},imageContainer:{position:"relative",zIndex:10,textAlign:"center","&:hover $smallPreviewImg":{opacity:.3},"&:hover $removeBtn":{opacity:1}}})(I),M={success:d,warning:x,error:f,info:g};function B(e){var t=e.classes,r=e.className,o=e.message,i=e.onClose,s=e.variant,a=function(e,t){var r={};for(var o in e)t.indexOf(o)>=0||Object.prototype.hasOwnProperty.call(e,o)&&(r[o]=e[o]);return r}(e,["classes","className","message","onClose","variant"]),p=M[s];return l.createElement(y,O({className:n(t[s],r),"aria-describedby":"client-snackbar",message:l.createElement("span",{id:"client-snackbar",className:t.message},l.createElement(p,{className:n(t.icon,t.iconVariant)}),o),action:[l.createElement(C,{key:"close","aria-label":"Close",color:"inherit",className:t.close,onClick:i},l.createElement(b,{className:t.icon}))]},a))}B.propTypes={classes:s.object.isRequired,className:s.string,message:s.node,onClose:s.func,variant:s.oneOf(["success","warning","error","info"]).isRequired};var L=o.withStyles((function(e){return{success:{backgroundColor:v[600]},error:{backgroundColor:e.palette.error.dark},info:{backgroundColor:e.palette.primary.dark},warning:{backgroundColor:w[700]},icon:{fontSize:20},iconVariant:{opacity:.9,marginRight:e.spacing(1)},message:{display:"flex",alignItems:"center"}}}))(B),U=function(e){function o(e){z(this,o);var t=N(this,(o.__proto__||Object.getPrototypeOf(o)).call(this,e));return t.handleRemove=function(e){return function(r){r.stopPropagation();var o=t.state.fileObjects,i=o.filter((function(t,r){return r===e}))[0].file;o.splice(e,1),t.setState(o,(function(){t.props.onDelete&&t.props.onDelete(i),t.props.onChange&&t.props.onChange(t.state.fileObjects.map((function(e){return e.file}))),t.setState({openSnackBar:!0,snackbarMessage:t.props.getFileRemovedMessage(i.name),snackbarVariant:"info"})}))}},t.handleCloseSnackbar=function(){t.setState({openSnackBar:!1})},t.state={fileObjects:[],openSnackBar:!1,snackbarMessage:"",snackbarVariant:"success",dropzoneText:e.dropzoneText},t}return R(o,e),E(o,[{key:"componentDidMount",value:function(){this.filesArray(this.props.initialFiles)}},{key:"componentDidUpdate",value:function(e){this.props.dropzoneText!==e.dropzoneText&&this.setState({dropzoneText:this.props.dropzoneText})}},{key:"componentWillUnmount",value:function(){this.props.clearOnUnmount&&this.setState({fileObjects:[]})}},{key:"filesArray",value:function(){var e=j(regeneratorRuntime.mark((function e(t){var r,o,i,n,s,a,l,p=this;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:e.prev=0,r=regeneratorRuntime.mark((function e(t){var r,o;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,T(t);case 2:r=e.sent,(o=new FileReader).onload=function(e){p.setState({fileObjects:p.state.fileObjects.concat({file:r,data:e.target.result})})},o.readAsDataURL(r);case 6:case"end":return e.stop()}}),e,p)})),o=!0,i=!1,n=void 0,e.prev=5,s=t[Symbol.iterator]();case 7:if(o=(a=s.next()).done){e.next=13;break}return l=a.value,e.delegateYield(r(l),"t0",10);case 10:o=!0,e.next=7;break;case 13:e.next=19;break;case 15:e.prev=15,e.t1=e.catch(5),i=!0,n=e.t1;case 19:e.prev=19,e.prev=20,!o&&s.return&&s.return();case 22:if(e.prev=22,!i){e.next=25;break}throw n;case 25:return e.finish(22);case 26:return e.finish(19);case 27:e.next=32;break;case 29:e.prev=29,e.t2=e.catch(0),console.log(e.t2);case 32:case"end":return e.stop()}}),e,this,[[0,29],[5,15,19,27],[20,,22,26]])})));return function(t){return e.apply(this,arguments)}}()},{key:"onDrop",value:function(e){var t=this,r=this;if(this.props.filesLimit>1&&this.state.fileObjects.length+e.length>this.props.filesLimit)this.setState({openSnackBar:!0,snackbarMessage:this.props.getFileLimitExceedMessage(this.props.filesLimit),snackbarVariant:"error"});else{var o=0,i="";Array.isArray(e)||(e=[e]),e.forEach((function(n){var s=new FileReader;s.onload=function(s){r.setState({fileObjects:t.props.filesLimit<=1?[{file:n,data:s.target.result}]:r.state.fileObjects.concat({file:n,data:s.target.result})},(function(){t.props.onChange&&t.props.onChange(r.state.fileObjects.map((function(e){return e.file}))),t.props.onDrop&&t.props.onDrop(n),i+=t.props.getFileAddedMessage(n.name),++o===e.length&&t.setState({openSnackBar:!0,snackbarMessage:i,snackbarVariant:"success"})}))},s.readAsDataURL(n)}))}}},{key:"handleDropRejected",value:function(e,t){var r=this,o="";e.forEach((function(e){o=r.props.getDropRejectMessage(e,r.props.acceptedFiles,r.props.maxFileSize)})),this.props.onDropRejected&&this.props.onDropRejected(e,t),this.setState({openSnackBar:!0,snackbarMessage:o,snackbarVariant:"error"})}},{key:"render",value:function(){var e=this.props.classes,o=this.props.showPreviews&&this.state.fileObjects.length>0,s=this.props.showPreviewsInDropzone&&this.state.fileObjects.length>0;return l.createElement(a.Fragment,null,l.createElement(p,{accept:this.props.acceptedFiles.join(","),onDrop:this.onDrop.bind(this),onDropRejected:this.handleDropRejected.bind(this),className:n(this.props.dropzoneClass,e.dropZone),acceptClassName:e.stripes,rejectClassName:e.rejectStripes,maxSize:this.props.maxFileSize,multiple:this.props.filesLimit>1},l.createElement("div",{className:e.dropzoneTextStyle},l.createElement("p",{className:n(e.dropzoneParagraph,this.props.dropzoneParagraphClass)},this.state.dropzoneText),l.createElement(i,{className:e.uploadIconSize})),s&&l.createElement(A,{fileObjects:this.state.fileObjects,handleRemove:this.handleRemove.bind(this),showFileNames:this.props.showFileNames,useChipsForPreview:this.props.useChipsForPreview,previewChipProps:this.props.previewChipProps})),o&&l.createElement(a.Fragment,null,l.createElement(t,{container:!0},l.createElement("span",null,"Preview:")),l.createElement(A,{fileObjects:this.state.fileObjects,handleRemove:this.handleRemove.bind(this),showFileNames:this.props.showFileNamesInPreview,useChipsForPreview:this.props.useChipsForPreview,previewChipProps:this.props.previewChipProps})),this.props.showAlerts&&l.createElement(r,{anchorOrigin:{vertical:"bottom",horizontal:"left"},open:this.state.openSnackBar,autoHideDuration:6e3,onClose:this.handleCloseSnackbar},l.createElement(L,{onClose:this.handleCloseSnackbar,variant:this.state.snackbarVariant,message:this.state.snackbarMessage})))}}]),o}(a.Component);U.defaultProps={acceptedFiles:["image/*","video/*","application/*"],filesLimit:3,maxFileSize:3e6,dropzoneText:"Drag and drop an image file here or click",showPreviews:!1,showPreviewsInDropzone:!0,showFileNames:!1,showFileNamesInPreview:!1,previewChipProps:{},showAlerts:!0,clearOnUnmount:!0,initialFiles:[],getFileLimitExceedMessage:function(e){return"Maximum allowed number of files exceeded. Only "+e+" allowed"},getFileAddedMessage:function(e){return"File "+e+" successfully added."},getFileRemovedMessage:function(e){return"File "+e+" removed."},getDropRejectMessage:function(e,t,r){var o,i="File "+e.name+" was rejected. ";return t.includes(e.type)||(i+="File type not supported. "),e.size>r&&(i+="File is too big. Size limit is "+((o=r)>=1e6?o/1e6+" megabytes":o>=1e3?o/1e3+" kilobytes":o+" bytes")+". "),i},onChange:function(){},onDrop:function(){},onDropRejected:function(){},onDelete:function(){}},U.propTypes={classes:s.object.isRequired,acceptedFiles:s.array,filesLimit:s.number,maxFileSize:s.number,dropzoneText:s.string,dropzoneClass:s.string,dropzoneParagraphClass:s.string,showPreviews:s.bool,showPreviewsInDropzone:s.bool,showFileNames:s.bool,showFileNamesInPreview:s.bool,useChipsForPreview:s.bool,previewChipProps:s.object,showAlerts:s.bool,clearOnUnmount:s.bool,initialFiles:s.arrayOf(s.string),getFileLimitExceedMessage:s.func,getFileAddedMessage:s.func,getFileRemovedMessage:s.func,getDropRejectMessage:s.func,onChange:s.func,onDrop:s.func,onDropRejected:s.func,onDelete:s.func};var _=o.withStyles({"@keyframes progress":{"0%":{backgroundPosition:"0 0"},"100%":{backgroundPosition:"-70px 0"}},dropZone:{position:"relative",width:"100%",minHeight:"250px",backgroundColor:"#F0F0F0",border:"dashed",borderColor:"#C8C8C8",cursor:"pointer",boxSizing:"border-box"},stripes:{border:"solid",backgroundImage:"repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)",animation:"progress 2s linear infinite !important",backgroundSize:"150% 100%"},rejectStripes:{border:"solid",backgroundImage:"repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)",animation:"progress 2s linear infinite !important",backgroundSize:"150% 100%"},dropzoneTextStyle:{textAlign:"center"},uploadIconSize:{width:51,height:51,color:"#909090"},dropzoneParagraph:{fontSize:24}})(U),W=function(e){function t(e){z(this,t);var r=N(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e));return r.state={open:!1,files:[],disabled:!0},r}return R(t,e),E(t,[{key:"componentDidUpdate",value:function(e,t){this.props.open!==e.open&&(this.setState({open:this.props.open}),this.props.onClose&&!this.props.open&&this.props.onClose()),this.state.files.length!==t.files.length&&this.setState({disabled:0===this.state.files.length})}},{key:"componentWillUnmount",value:function(){this.props.clearOnUnmount&&this.setState({files:[]})}},{key:"handleClose",value:function(e){this.props.onClose&&this.props.onClose(e),this.setState({open:!1})}},{key:"onChange",value:function(e){var t=this;this.props.logEvents&&console.log("Files changed",e),this.setState({files:e},(function(){t.props.onChange&&t.props.onChange(e)}))}},{key:"onDelete",value:function(e){this.props.logEvents&&console.log("File removed",e),this.props.onDelete&&this.props.onDelete(e)}},{key:"onDrop",value:function(e){this.props.logEvents&&console.log("Files dropped",e),this.props.onDrop&&this.props.onDrop(e)}},{key:"onDropRejected",value:function(e,t){this.props.logEvents&&console.log("Files rejected",e),this.props.onDropRejected&&this.props.onDropRejected(e,t)}},{key:"handleSaveClick",value:function(){this.props.onSave&&this.props.onSave(this.state.files)}},{key:"render",value:function(){return l.createElement(a.Fragment,null,l.createElement(k,O({},this.props.dialogProps,{open:this.state.open,onClose:this.handleClose.bind(this),maxWidth:this.props.maxWidth,fullWidth:this.props.fullWidth}),l.createElement(S,null,this.props.dialogTitle),l.createElement(D,null,l.createElement(_,{dropzoneText:this.props.dropzoneText,acceptedFiles:this.props.acceptedFiles,filesLimit:this.props.filesLimit,maxFileSize:this.props.maxFileSize,showPreviews:this.props.showPreviews,showPreviewsInDropzone:this.props.showPreviewsInDropzone,showFileNames:this.props.showFileNames,showAlerts:this.props.showAlerts,onChange:this.onChange.bind(this),onDrop:this.onDrop.bind(this),onDropRejected:this.onDropRejected.bind(this),onDelete:this.onDelete.bind(this),clearOnUnmount:this.props.clearOnUnmount,showFileNamesInPreview:this.props.showFileNamesInPreview,useChipsForPreview:this.props.useChipsForPreview,previewChipProps:this.props.previewChipProps})),l.createElement(P,null,l.createElement(F,{color:"primary",onClick:this.handleClose.bind(this)},this.props.cancelButtonText),l.createElement(F,{color:"primary",disabled:this.state.disabled,onClick:this.handleSaveClick.bind(this)},this.props.submitButtonText))))}}]),t}(l.Component);W.defaultProps={open:!1,acceptedFiles:["image/*","video/*","application/*"],filesLimit:3,maxFileSize:3e6,showPreviews:!0,showPreviewsInDropzone:!1,showFileNamesInPreview:!0,previewChipProps:{},showAlerts:!0,clearOnUnmount:!0,dialogTitle:"Upload file",dialogProps:{},submitButtonText:"Submit",cancelButtonText:"Cancel",maxWidth:"sm",fullWidth:!0,onSave:function(){},onDelete:function(){},onClose:function(){},onChange:function(){},onDrop:function(){},onDropRejected:function(){},logEvents:!1},W.propTypes={open:s.bool.isRequired,onSave:s.func,onDelete:s.func,onClose:s.func,onChange:s.func,onDrop:s.func,onDropRejected:s.func,acceptedFiles:s.array,filesLimit:s.number,maxFileSize:s.number,dropzoneText:s.string,showPreviews:s.bool,showPreviewsInDropzone:s.bool,showFileNames:s.bool,showFileNamesInPreview:s.bool,useChipsForPreview:s.bool,previewChipProps:s.object,showAlerts:s.bool,clearOnUnmount:s.bool,dialogTitle:s.string,dialogProps:s.object,submitButtonText:s.string,cancelButtonText:s.string,maxWidth:s.string,fullWidth:s.bool,logEvents:s.bool},exports.DropzoneArea=_,exports.DropzoneDialog=W;
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var _regeneratorRuntime = _interopDefault(require('@babel/runtime/regenerator'));
+var _asyncToGenerator = _interopDefault(require('@babel/runtime/helpers/asyncToGenerator'));
+var _classCallCheck = _interopDefault(require('@babel/runtime/helpers/classCallCheck'));
+var _createClass = _interopDefault(require('@babel/runtime/helpers/createClass'));
+var _possibleConstructorReturn = _interopDefault(require('@babel/runtime/helpers/possibleConstructorReturn'));
+var _getPrototypeOf = _interopDefault(require('@babel/runtime/helpers/getPrototypeOf'));
+var _inherits = _interopDefault(require('@babel/runtime/helpers/inherits'));
+var Grid = _interopDefault(require('@material-ui/core/Grid'));
+var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
+var styles$3 = require('@material-ui/core/styles');
+var CloudUploadIcon = _interopDefault(require('@material-ui/icons/CloudUpload'));
+var clsx = _interopDefault(require('clsx'));
+var PropTypes = _interopDefault(require('prop-types'));
+var React = require('react');
+var React__default = _interopDefault(React);
+var Dropzone = _interopDefault(require('react-dropzone'));
+var _extends = _interopDefault(require('@babel/runtime/helpers/extends'));
+var Chip = _interopDefault(require('@material-ui/core/Chip'));
+var Fab = _interopDefault(require('@material-ui/core/Fab'));
+var AttachFileIcon = _interopDefault(require('@material-ui/icons/AttachFile'));
+var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
+var _objectWithoutProperties = _interopDefault(require('@babel/runtime/helpers/objectWithoutProperties'));
+var CheckCircleIcon = _interopDefault(require('@material-ui/icons/CheckCircle'));
+var ErrorIcon = _interopDefault(require('@material-ui/icons/Error'));
+var InfoIcon = _interopDefault(require('@material-ui/icons/Info'));
+var CloseIcon = _interopDefault(require('@material-ui/icons/Close'));
+var green = _interopDefault(require('@material-ui/core/colors/green'));
+var amber = _interopDefault(require('@material-ui/core/colors/amber'));
+var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
+var SnackbarContent = _interopDefault(require('@material-ui/core/SnackbarContent'));
+var WarningIcon = _interopDefault(require('@material-ui/icons/Warning'));
+var Button = _interopDefault(require('@material-ui/core/Button'));
+var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
+var DialogActions = _interopDefault(require('@material-ui/core/DialogActions'));
+var DialogContent = _interopDefault(require('@material-ui/core/DialogContent'));
+var DialogTitle = _interopDefault(require('@material-ui/core/DialogTitle'));
+
+function isImage(file) {
+  if (file.type.split('/')[0] === 'image') {
+    return true;
+  }
+}
+function convertBytesToMbsOrKbs(filesize) {
+  var size = ''; // I know, not technically correct...
+
+  if (filesize >= 1000000) {
+    size = filesize / 1000000 + ' megabytes';
+  } else if (filesize >= 1000) {
+    size = filesize / 1000 + ' kilobytes';
+  } else {
+    size = filesize + ' bytes';
+  }
+
+  return size;
+}
+function createFileFromUrl(_x) {
+  return _createFileFromUrl.apply(this, arguments);
+}
+
+function _createFileFromUrl() {
+  _createFileFromUrl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
+    var response, data, metadata, filename, ext;
+    return _regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return fetch(url);
+
+          case 2:
+            response = _context.sent;
+            _context.next = 5;
+            return response.blob();
+
+          case 5:
+            data = _context.sent;
+            metadata = {
+              type: data.type
+            };
+            filename = url.replace(/\?.+/, '').split('/').pop();
+            ext = data.type.split('/').pop();
+            return _context.abrupt("return", new File([data], "".concat(filename, ".").concat(ext), metadata));
+
+          case 10:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _createFileFromUrl.apply(this, arguments);
+}
+
+var styles = {
+  removeBtn: {
+    transition: '.5s ease',
+    position: 'absolute',
+    opacity: 0,
+    top: -5,
+    right: -5,
+    width: 40,
+    height: 40
+  },
+  smallPreviewImg: {
+    height: 100,
+    width: 'initial',
+    maxWidth: '100%',
+    marginTop: 5,
+    marginRight: 10,
+    color: 'rgba(0, 0, 0, 0.87)',
+    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+    boxSizing: 'border-box',
+    boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+    borderRadius: 2,
+    zIndex: 5,
+    opacity: 1
+  },
+  imageContainer: {
+    position: 'relative',
+    zIndex: 10,
+    textAlign: 'center',
+    '&:hover $smallPreviewImg': {
+      opacity: 0.3
+    },
+    '&:hover $removeBtn': {
+      opacity: 1
+    }
+  }
+};
+
+var _ref = /*#__PURE__*/React__default.createElement(DeleteIcon, null);
+
+function PreviewList(props) {
+  var fileObjects = props.fileObjects,
+      handleRemove = props.handleRemove,
+      showFileNames = props.showFileNames,
+      useChipsForPreview = props.useChipsForPreview,
+      previewChipProps = props.previewChipProps,
+      classes = props.classes;
+
+  if (useChipsForPreview) {
+    return fileObjects.map(function (fileObject, i) {
+      return React__default.createElement("div", {
+        key: i
+      }, React__default.createElement(Chip, _extends({
+        label: fileObject.file.name,
+        onDelete: handleRemove(i),
+        variant: "outlined"
+      }, previewChipProps)));
+    });
+  }
+
+  return React__default.createElement(Grid, {
+    container: true,
+    spacing: 8
+  }, fileObjects.map(function (fileObject, i) {
+    var img = isImage(fileObject.file) ? React__default.createElement("img", {
+      className: classes.smallPreviewImg,
+      role: "presentation",
+      src: fileObject.data
+    }) : React__default.createElement(AttachFileIcon, {
+      className: classes.smallPreviewImg
+    });
+    return React__default.createElement(Grid, {
+      item: true,
+      xs: 4,
+      key: i,
+      className: classes.imageContainer
+    }, img, showFileNames && React__default.createElement("p", null, fileObject.file.name), React__default.createElement(Fab, {
+      onClick: handleRemove(i),
+      "aria-label": "Delete",
+      className: classes.removeBtn
+    }, _ref));
+  }));
+}
+
+process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
+  classes: PropTypes.object.isRequired,
+  fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleRemove: PropTypes.func.isRequired,
+  showFileNames: PropTypes.bool,
+  useChipsForPreview: PropTypes.bool,
+  previewChipProps: PropTypes.object
+} : void 0;
+var PreviewList$1 = styles$3.withStyles(styles)(PreviewList);
+
+var variantIcon = {
+  success: CheckCircleIcon,
+  warning: WarningIcon,
+  error: ErrorIcon,
+  info: InfoIcon
+};
+
+var styles$1 = function styles(theme) {
+  return {
+    success: {
+      backgroundColor: green[600]
+    },
+    error: {
+      backgroundColor: theme.palette.error.dark
+    },
+    info: {
+      backgroundColor: theme.palette.primary.dark
+    },
+    warning: {
+      backgroundColor: amber[700]
+    },
+    icon: {
+      fontSize: 20
+    },
+    iconVariant: {
+      opacity: 0.9,
+      marginRight: theme.spacing(1)
+    },
+    message: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  };
+};
+
+function SnackbarContentWrapper(props) {
+  var classes = props.classes,
+      className = props.className,
+      message = props.message,
+      onClose = props.onClose,
+      variant = props.variant,
+      other = _objectWithoutProperties(props, ["classes", "className", "message", "onClose", "variant"]);
+
+  var Icon = variantIcon[variant];
+  return React__default.createElement(SnackbarContent, _extends({
+    className: clsx(classes[variant], className),
+    "aria-describedby": "client-snackbar",
+    message: React__default.createElement("span", {
+      id: "client-snackbar",
+      className: classes.message
+    }, React__default.createElement(Icon, {
+      className: clsx(classes.icon, classes.iconVariant)
+    }), message),
+    action: [React__default.createElement(IconButton, {
+      key: "close",
+      "aria-label": "Close",
+      color: "inherit",
+      className: classes.close,
+      onClick: onClose
+    }, React__default.createElement(CloseIcon, {
+      className: classes.icon
+    }))]
+  }, other));
+}
+
+process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  message: PropTypes.node,
+  onClose: PropTypes.func,
+  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
+} : void 0;
+var SnackbarContentWrapper$1 = styles$3.withStyles(styles$1)(SnackbarContentWrapper);
+
+var styles$2 = {
+  '@keyframes progress': {
+    '0%': {
+      backgroundPosition: '0 0'
+    },
+    '100%': {
+      backgroundPosition: '-70px 0'
+    }
+  },
+  dropZone: {
+    position: 'relative',
+    width: '100%',
+    minHeight: '250px',
+    backgroundColor: '#F0F0F0',
+    border: 'dashed',
+    borderColor: '#C8C8C8',
+    cursor: 'pointer',
+    boxSizing: 'border-box'
+  },
+  stripes: {
+    border: 'solid',
+    backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
+    animation: 'progress 2s linear infinite !important',
+    backgroundSize: '150% 100%'
+  },
+  rejectStripes: {
+    border: 'solid',
+    backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
+    animation: 'progress 2s linear infinite !important',
+    backgroundSize: '150% 100%'
+  },
+  dropzoneTextStyle: {
+    textAlign: 'center'
+  },
+  uploadIconSize: {
+    width: 51,
+    height: 51,
+    color: '#909090'
+  },
+  dropzoneParagraph: {
+    fontSize: 24
+  }
+};
+
+var _ref$1 = /*#__PURE__*/React__default.createElement(Grid, {
+  container: true
+}, React__default.createElement("span", null, "Preview:"));
+
+var DropzoneArea = /*#__PURE__*/function (_Component) {
+  _inherits(DropzoneArea, _Component);
+
+  function DropzoneArea(props) {
+    var _this;
+
+    _classCallCheck(this, DropzoneArea);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DropzoneArea).call(this, props));
+
+    _this.handleRemove = function (fileIndex) {
+      return function (event) {
+        event.stopPropagation();
+        var fileObjects = _this.state.fileObjects;
+        var file = fileObjects.filter(function (fileObject, i) {
+          return i === fileIndex;
+        })[0].file;
+        fileObjects.splice(fileIndex, 1);
+
+        _this.setState(fileObjects, function () {
+          if (_this.props.onDelete) {
+            _this.props.onDelete(file);
+          }
+
+          if (_this.props.onChange) {
+            _this.props.onChange(_this.state.fileObjects.map(function (fileObject) {
+              return fileObject.file;
+            }));
+          }
+
+          _this.setState({
+            openSnackBar: true,
+            snackbarMessage: _this.props.getFileRemovedMessage(file.name),
+            snackbarVariant: 'info'
+          });
+        });
+      };
+    };
+
+    _this.handleCloseSnackbar = function () {
+      _this.setState({
+        openSnackBar: false
+      });
+    };
+
+    _this.state = {
+      fileObjects: [],
+      openSnackBar: false,
+      snackbarMessage: '',
+      snackbarVariant: 'success',
+      dropzoneText: props.dropzoneText
+    };
+    return _this;
+  }
+
+  _createClass(DropzoneArea, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.filesArray(this.props.initialFiles);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.dropzoneText !== prevProps.dropzoneText) {
+        this.setState({
+          dropzoneText: this.props.dropzoneText
+        });
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      if (this.props.clearOnUnmount) {
+        this.setState({
+          fileObjects: []
+        });
+      }
+    }
+  }, {
+    key: "filesArray",
+    value: function () {
+      var _filesArray = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(urls) {
+        var _this2 = this;
+
+        var _iteratorNormalCompletion, _didIteratorError, _iteratorError, _loop, _iterator, _step;
+
+        return _regeneratorRuntime.wrap(function _callee$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _iteratorNormalCompletion = true;
+                _didIteratorError = false;
+                _iteratorError = undefined;
+                _context2.prev = 4;
+                _loop = /*#__PURE__*/_regeneratorRuntime.mark(function _loop() {
+                  var url, file, reader;
+                  return _regeneratorRuntime.wrap(function _loop$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          url = _step.value;
+                          _context.next = 3;
+                          return createFileFromUrl(url);
+
+                        case 3:
+                          file = _context.sent;
+                          reader = new FileReader();
+
+                          reader.onload = function (event) {
+                            _this2.setState({
+                              fileObjects: _this2.state.fileObjects.concat({
+                                file: file,
+                                data: event.target.result
+                              })
+                            });
+                          };
+
+                          reader.readAsDataURL(file);
+
+                        case 7:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _loop);
+                });
+                _iterator = urls[Symbol.iterator]();
+
+              case 7:
+                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                  _context2.next = 12;
+                  break;
+                }
+
+                return _context2.delegateYield(_loop(), "t0", 9);
+
+              case 9:
+                _iteratorNormalCompletion = true;
+                _context2.next = 7;
+                break;
+
+              case 12:
+                _context2.next = 18;
+                break;
+
+              case 14:
+                _context2.prev = 14;
+                _context2.t1 = _context2["catch"](4);
+                _didIteratorError = true;
+                _iteratorError = _context2.t1;
+
+              case 18:
+                _context2.prev = 18;
+                _context2.prev = 19;
+
+                if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                  _iterator["return"]();
+                }
+
+              case 21:
+                _context2.prev = 21;
+
+                if (!_didIteratorError) {
+                  _context2.next = 24;
+                  break;
+                }
+
+                throw _iteratorError;
+
+              case 24:
+                return _context2.finish(21);
+
+              case 25:
+                return _context2.finish(18);
+
+              case 26:
+                _context2.next = 31;
+                break;
+
+              case 28:
+                _context2.prev = 28;
+                _context2.t2 = _context2["catch"](0);
+                console.log(_context2.t2);
+
+              case 31:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee, null, [[0, 28], [4, 14, 18, 26], [19,, 21, 25]]);
+      }));
+
+      function filesArray(_x) {
+        return _filesArray.apply(this, arguments);
+      }
+
+      return filesArray;
+    }()
+  }, {
+    key: "onDrop",
+    value: function onDrop(files) {
+      var _this3 = this;
+
+      var _this = this;
+
+      if (this.props.filesLimit > 1 && this.state.fileObjects.length + files.length > this.props.filesLimit) {
+        this.setState({
+          openSnackBar: true,
+          snackbarMessage: this.props.getFileLimitExceedMessage(this.props.filesLimit),
+          snackbarVariant: 'error'
+        });
+      } else {
+        var count = 0;
+        var message = '';
+        if (!Array.isArray(files)) files = [files];
+        files.forEach(function (file) {
+          var reader = new FileReader();
+
+          reader.onload = function (event) {
+            _this.setState({
+              fileObjects: _this3.props.filesLimit <= 1 ? [{
+                file: file,
+                data: event.target.result
+              }] : _this.state.fileObjects.concat({
+                file: file,
+                data: event.target.result
+              })
+            }, function () {
+              if (_this3.props.onChange) {
+                _this3.props.onChange(_this.state.fileObjects.map(function (fileObject) {
+                  return fileObject.file;
+                }));
+              }
+
+              if (_this3.props.onDrop) {
+                _this3.props.onDrop(file);
+              }
+
+              message += _this3.props.getFileAddedMessage(file.name);
+              count++; // we cannot rely on the index because this is asynchronous
+
+              if (count === files.length) {
+                // display message when the last one fires
+                _this3.setState({
+                  openSnackBar: true,
+                  snackbarMessage: message,
+                  snackbarVariant: 'success'
+                });
+              }
+            });
+          };
+
+          reader.readAsDataURL(file);
+        });
+      }
+    }
+  }, {
+    key: "handleDropRejected",
+    value: function handleDropRejected(rejectedFiles, evt) {
+      var _this4 = this;
+
+      var message = '';
+      rejectedFiles.forEach(function (rejectedFile) {
+        message = _this4.props.getDropRejectMessage(rejectedFile, _this4.props.acceptedFiles, _this4.props.maxFileSize);
+      });
+
+      if (this.props.onDropRejected) {
+        this.props.onDropRejected(rejectedFiles, evt);
+      }
+
+      this.setState({
+        openSnackBar: true,
+        snackbarMessage: message,
+        snackbarVariant: 'error'
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var classes = this.props.classes;
+      var showPreviews = this.props.showPreviews && this.state.fileObjects.length > 0;
+      var showPreviewsInDropzone = this.props.showPreviewsInDropzone && this.state.fileObjects.length > 0;
+      return React__default.createElement(React.Fragment, null, React__default.createElement(Dropzone, {
+        accept: this.props.acceptedFiles.join(','),
+        onDrop: this.onDrop.bind(this),
+        onDropRejected: this.handleDropRejected.bind(this),
+        className: clsx(this.props.dropzoneClass, classes.dropZone),
+        acceptClassName: classes.stripes,
+        rejectClassName: classes.rejectStripes,
+        maxSize: this.props.maxFileSize,
+        multiple: this.props.filesLimit > 1
+      }, React__default.createElement("div", {
+        className: classes.dropzoneTextStyle
+      }, React__default.createElement("p", {
+        className: clsx(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)
+      }, this.state.dropzoneText), React__default.createElement(CloudUploadIcon, {
+        className: classes.uploadIconSize
+      })), showPreviewsInDropzone && React__default.createElement(PreviewList$1, {
+        fileObjects: this.state.fileObjects,
+        handleRemove: this.handleRemove.bind(this),
+        showFileNames: this.props.showFileNames,
+        useChipsForPreview: this.props.useChipsForPreview,
+        previewChipProps: this.props.previewChipProps
+      })), showPreviews && React__default.createElement(React.Fragment, null, _ref$1, React__default.createElement(PreviewList$1, {
+        fileObjects: this.state.fileObjects,
+        handleRemove: this.handleRemove.bind(this),
+        showFileNames: this.props.showFileNamesInPreview,
+        useChipsForPreview: this.props.useChipsForPreview,
+        previewChipProps: this.props.previewChipProps
+      })), this.props.showAlerts && React__default.createElement(Snackbar, {
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'left'
+        },
+        open: this.state.openSnackBar,
+        autoHideDuration: 6000,
+        onClose: this.handleCloseSnackbar
+      }, React__default.createElement(SnackbarContentWrapper$1, {
+        onClose: this.handleCloseSnackbar,
+        variant: this.state.snackbarVariant,
+        message: this.state.snackbarMessage
+      })));
+    }
+  }]);
+
+  return DropzoneArea;
+}(React.Component);
+
+DropzoneArea.defaultProps = {
+  acceptedFiles: ['image/*', 'video/*', 'application/*'],
+  filesLimit: 3,
+  maxFileSize: 3000000,
+  dropzoneText: 'Drag and drop an image file here or click',
+  showPreviews: false,
+  // By default previews show up under in the dialog and inside in the standalone
+  showPreviewsInDropzone: true,
+  showFileNames: false,
+  showFileNamesInPreview: false,
+  previewChipProps: {},
+  showAlerts: true,
+  clearOnUnmount: true,
+  initialFiles: [],
+  getFileLimitExceedMessage: function getFileLimitExceedMessage(filesLimit) {
+    return "Maximum allowed number of files exceeded. Only ".concat(filesLimit, " allowed");
+  },
+  getFileAddedMessage: function getFileAddedMessage(fileName) {
+    return "File ".concat(fileName, " successfully added.");
+  },
+  getFileRemovedMessage: function getFileRemovedMessage(fileName) {
+    return "File ".concat(fileName, " removed.");
+  },
+  getDropRejectMessage: function getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize) {
+    var message = "File ".concat(rejectedFile.name, " was rejected. ");
+
+    if (!acceptedFiles.includes(rejectedFile.type)) {
+      message += 'File type not supported. ';
+    }
+
+    if (rejectedFile.size > maxFileSize) {
+      message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(maxFileSize) + '. ';
+    }
+
+    return message;
+  },
+  onChange: function onChange() {},
+  onDrop: function onDrop() {},
+  onDropRejected: function onDropRejected() {},
+  onDelete: function onDelete() {}
+};
+process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
+  classes: PropTypes.object.isRequired,
+  acceptedFiles: PropTypes.array,
+  filesLimit: PropTypes.number,
+  maxFileSize: PropTypes.number,
+  dropzoneText: PropTypes.string,
+  dropzoneClass: PropTypes.string,
+  dropzoneParagraphClass: PropTypes.string,
+  showPreviews: PropTypes.bool,
+  showPreviewsInDropzone: PropTypes.bool,
+  showFileNames: PropTypes.bool,
+  showFileNamesInPreview: PropTypes.bool,
+  useChipsForPreview: PropTypes.bool,
+  previewChipProps: PropTypes.object,
+  showAlerts: PropTypes.bool,
+  clearOnUnmount: PropTypes.bool,
+  initialFiles: PropTypes.arrayOf(PropTypes.string),
+  getFileLimitExceedMessage: PropTypes.func,
+  getFileAddedMessage: PropTypes.func,
+  getFileRemovedMessage: PropTypes.func,
+  getDropRejectMessage: PropTypes.func,
+  onChange: PropTypes.func,
+  onDrop: PropTypes.func,
+  onDropRejected: PropTypes.func,
+  onDelete: PropTypes.func
+} : void 0;
+var DropzoneArea$1 = styles$3.withStyles(styles$2)(DropzoneArea);
+
+var DropzoneDialog = /*#__PURE__*/function (_React$Component) {
+  _inherits(DropzoneDialog, _React$Component);
+
+  function DropzoneDialog(props) {
+    var _this;
+
+    _classCallCheck(this, DropzoneDialog);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DropzoneDialog).call(this, props));
+    _this.state = {
+      open: false,
+      files: [],
+      disabled: true
+    };
+    return _this;
+  }
+
+  _createClass(DropzoneDialog, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.props.open !== prevProps.open) {
+        this.setState({
+          open: this.props.open
+        });
+
+        if (this.props.onClose && !this.props.open) {
+          this.props.onClose();
+        }
+      }
+
+      if (this.state.files.length !== prevState.files.length) {
+        this.setState({
+          disabled: this.state.files.length === 0
+        });
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      if (this.props.clearOnUnmount) {
+        this.setState({
+          files: []
+        });
+      }
+    }
+  }, {
+    key: "handleClose",
+    value: function handleClose(event) {
+      if (this.props.onClose) {
+        this.props.onClose(event);
+      }
+
+      this.setState({
+        open: false
+      });
+    }
+  }, {
+    key: "onChange",
+    value: function onChange(files) {
+      var _this2 = this;
+
+      if (this.props.logEvents) {
+        console.log('Files changed', files);
+      }
+
+      this.setState({
+        files: files
+      }, function () {
+        if (_this2.props.onChange) {
+          _this2.props.onChange(files);
+        }
+      });
+    }
+  }, {
+    key: "onDelete",
+    value: function onDelete(file) {
+      // this passes it on to the parent component to do with it what they will
+      if (this.props.logEvents) {
+        console.log('File removed', file);
+      }
+
+      if (this.props.onDelete) {
+        this.props.onDelete(file);
+      }
+    }
+  }, {
+    key: "onDrop",
+    value: function onDrop(files) {
+      // this passes it on to the parent component to do with it what they will
+      if (this.props.logEvents) {
+        console.log('Files dropped', files);
+      }
+
+      if (this.props.onDrop) {
+        this.props.onDrop(files);
+      }
+    }
+  }, {
+    key: "onDropRejected",
+    value: function onDropRejected(files, evt) {
+      // this passes it on to the parent component to do with it what they will
+      if (this.props.logEvents) {
+        console.log('Files rejected', files);
+      }
+
+      if (this.props.onDropRejected) {
+        this.props.onDropRejected(files, evt);
+      }
+    }
+  }, {
+    key: "handleSaveClick",
+    value: function handleSaveClick() {
+      if (this.props.onSave) {
+        this.props.onSave(this.state.files);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React__default.createElement(React.Fragment, null, React__default.createElement(Dialog, _extends({}, this.props.dialogProps, {
+        open: this.state.open,
+        onClose: this.handleClose.bind(this),
+        maxWidth: this.props.maxWidth,
+        fullWidth: this.props.fullWidth
+      }), React__default.createElement(DialogTitle, null, this.props.dialogTitle), React__default.createElement(DialogContent, null, React__default.createElement(DropzoneArea$1, {
+        dropzoneText: this.props.dropzoneText,
+        acceptedFiles: this.props.acceptedFiles,
+        filesLimit: this.props.filesLimit,
+        maxFileSize: this.props.maxFileSize,
+        showPreviews: this.props.showPreviews,
+        showPreviewsInDropzone: this.props.showPreviewsInDropzone,
+        showFileNames: this.props.showFileNames,
+        showAlerts: this.props.showAlerts,
+        onChange: this.onChange.bind(this),
+        onDrop: this.onDrop.bind(this),
+        onDropRejected: this.onDropRejected.bind(this),
+        onDelete: this.onDelete.bind(this),
+        clearOnUnmount: this.props.clearOnUnmount,
+        showFileNamesInPreview: this.props.showFileNamesInPreview,
+        useChipsForPreview: this.props.useChipsForPreview,
+        previewChipProps: this.props.previewChipProps
+      })), React__default.createElement(DialogActions, null, React__default.createElement(Button, {
+        color: "primary",
+        onClick: this.handleClose.bind(this)
+      }, this.props.cancelButtonText), React__default.createElement(Button, {
+        color: "primary",
+        disabled: this.state.disabled,
+        onClick: this.handleSaveClick.bind(this)
+      }, this.props.submitButtonText))));
+    }
+  }]);
+
+  return DropzoneDialog;
+}(React__default.Component);
+
+DropzoneDialog.defaultProps = {
+  open: false,
+  acceptedFiles: ['image/*', 'video/*', 'application/*'],
+  filesLimit: 3,
+  maxFileSize: 3000000,
+  showPreviews: true,
+  showPreviewsInDropzone: false,
+  showFileNamesInPreview: true,
+  previewChipProps: {},
+  showAlerts: true,
+  clearOnUnmount: true,
+  dialogTitle: 'Upload file',
+  dialogProps: {},
+  submitButtonText: 'Submit',
+  cancelButtonText: 'Cancel',
+  maxWidth: 'sm',
+  fullWidth: true,
+  onSave: function onSave() {},
+  onDelete: function onDelete() {},
+  onClose: function onClose() {},
+  onChange: function onChange() {},
+  onDrop: function onDrop() {},
+  onDropRejected: function onDropRejected() {},
+  logEvents: false
+};
+process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onSave: PropTypes.func,
+  onDelete: PropTypes.func,
+  onClose: PropTypes.func,
+  onChange: PropTypes.func,
+  onDrop: PropTypes.func,
+  onDropRejected: PropTypes.func,
+  acceptedFiles: PropTypes.array,
+  filesLimit: PropTypes.number,
+  maxFileSize: PropTypes.number,
+  dropzoneText: PropTypes.string,
+  showPreviews: PropTypes.bool,
+  showPreviewsInDropzone: PropTypes.bool,
+  showFileNames: PropTypes.bool,
+  showFileNamesInPreview: PropTypes.bool,
+  useChipsForPreview: PropTypes.bool,
+  previewChipProps: PropTypes.object,
+  showAlerts: PropTypes.bool,
+  clearOnUnmount: PropTypes.bool,
+  dialogTitle: PropTypes.string,
+  dialogProps: PropTypes.object,
+  submitButtonText: PropTypes.string,
+  cancelButtonText: PropTypes.string,
+  maxWidth: PropTypes.string,
+  fullWidth: PropTypes.bool,
+  logEvents: PropTypes.bool
+} : void 0;
+
+exports.DropzoneArea = DropzoneArea$1;
+exports.DropzoneDialog = DropzoneDialog;
 //# sourceMappingURL=index.js.map
