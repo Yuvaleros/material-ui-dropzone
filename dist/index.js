@@ -4,6 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var _extends = _interopDefault(require('@babel/runtime/helpers/extends'));
 var _regeneratorRuntime = _interopDefault(require('@babel/runtime/regenerator'));
 var _asyncToGenerator = _interopDefault(require('@babel/runtime/helpers/asyncToGenerator'));
 var _classCallCheck = _interopDefault(require('@babel/runtime/helpers/classCallCheck'));
@@ -20,7 +21,6 @@ var PropTypes = _interopDefault(require('prop-types'));
 var React = require('react');
 var React__default = _interopDefault(React);
 var Dropzone = _interopDefault(require('react-dropzone'));
-var _extends = _interopDefault(require('@babel/runtime/helpers/extends'));
 var Chip = _interopDefault(require('@material-ui/core/Chip'));
 var Fab = _interopDefault(require('@material-ui/core/Fab'));
 var AttachFileIcon = _interopDefault(require('@material-ui/icons/AttachFile'));
@@ -296,10 +296,7 @@ var styles$2 = {
     backgroundSize: '150% 100%'
   },
   rejectStripes: {
-    border: 'solid',
-    backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
-    animation: 'progress 2s linear infinite !important',
-    backgroundSize: '150% 100%'
+    backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)'
   },
   dropzoneTextStyle: {
     textAlign: 'center'
@@ -314,7 +311,7 @@ var styles$2 = {
   }
 };
 
-var _ref$1 = /*#__PURE__*/React__default.createElement(Grid, {
+var _ref2 = /*#__PURE__*/React__default.createElement(Grid, {
   container: true
 }, React__default.createElement("span", null, "Preview:"));
 
@@ -598,6 +595,8 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       var classes = this.props.classes;
       var showPreviews = this.props.showPreviews && this.state.fileObjects.length > 0;
       var showPreviewsInDropzone = this.props.showPreviewsInDropzone && this.state.fileObjects.length > 0;
@@ -605,26 +604,31 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
         accept: this.props.acceptedFiles.join(','),
         onDrop: this.onDrop.bind(this),
         onDropRejected: this.handleDropRejected.bind(this),
-        className: clsx(this.props.dropzoneClass, classes.dropZone),
-        acceptClassName: classes.stripes,
-        rejectClassName: classes.rejectStripes,
         maxSize: this.props.maxFileSize,
         multiple: this.props.filesLimit > 1
-      }, React__default.createElement("div", {
-        className: classes.dropzoneTextStyle
-      }, React__default.createElement("p", {
-        className: clsx(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)
-      }, this.state.dropzoneText), React__default.createElement(CloudUploadIcon, {
-        className: classes.uploadIconSize
-      })), showPreviewsInDropzone && React__default.createElement(PreviewList$1, {
-        fileObjects: this.state.fileObjects,
-        handleRemove: this.handleRemove.bind(this),
-        showFileNames: this.props.showFileNames,
-        useChipsForPreview: this.props.useChipsForPreview,
-        previewChipProps: this.props.previewChipProps,
-        previewGridClasses: this.props.previewGridClasses,
-        previewGridProps: this.props.previewGridProps
-      })), showPreviews && React__default.createElement(React.Fragment, null, _ref$1, React__default.createElement(PreviewList$1, {
+      }, function (_ref) {
+        var getRootProps = _ref.getRootProps,
+            getInputProps = _ref.getInputProps,
+            isDragActive = _ref.isDragActive,
+            isDragReject = _ref.isDragReject;
+        return React__default.createElement("div", _extends({}, getRootProps(), {
+          className: clsx(classes.dropZone, _this5.props.dropzoneClass, isDragActive && classes.stripes, isDragReject && classes.rejectStripes)
+        }), React__default.createElement("input", getInputProps()), React__default.createElement("div", {
+          className: classes.dropzoneTextStyle
+        }, React__default.createElement("p", {
+          className: clsx(classes.dropzoneParagraph, _this5.props.dropzoneParagraphClass)
+        }, _this5.state.dropzoneText), React__default.createElement(CloudUploadIcon, {
+          className: classes.uploadIconSize
+        })), showPreviewsInDropzone && React__default.createElement(PreviewList$1, {
+          fileObjects: _this5.state.fileObjects,
+          handleRemove: _this5.handleRemove.bind(_this5),
+          showFileNames: _this5.props.showFileNames,
+          useChipsForPreview: _this5.props.useChipsForPreview,
+          previewChipProps: _this5.props.previewChipProps,
+          previewGridClasses: _this5.props.previewGridClasses,
+          previewGridProps: _this5.props.previewGridProps
+        }));
+      }), showPreviews && React__default.createElement(React.Fragment, null, _ref2, React__default.createElement(PreviewList$1, {
         fileObjects: this.state.fileObjects,
         handleRemove: this.handleRemove.bind(this),
         showFileNames: this.props.showFileNamesInPreview,
