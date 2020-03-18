@@ -1,6 +1,10 @@
 import { ChipProps } from '@material-ui/core/Chip';
+import { DialogProps } from '@material-ui/core/Dialog';
 import { GridProps } from '@material-ui/core/Grid';
 import * as React from 'react';
+import { DropEvent } from 'react-dropzone';
+
+// DropzoneArea
 
 export interface DropzoneAreaProps {
   acceptedFiles?: string[];
@@ -27,52 +31,34 @@ export interface DropzoneAreaProps {
   dropzoneClass?: string;
   dropzoneParagraphClass?: string;
   initialFiles?: string[];
-  onChange?: (files: any) => void;
-  onDrop?: (files: any) => void;
-  onDropRejected?: (files: any, evt: any) => void;
-  onDelete?: (file: any) => void;
+  onChange?: (files: File[]) => void;
+  onDrop?: (files: File[], event: DropEvent) => void;
+  onDropRejected?: (files: File[], event: DropEvent) => void;
+  onDelete?: (file: File) => void;
   getFileLimitExceedMessage?: (filesLimit: number) => string;
   getFileAddedMessage?: (fileName: string) => string;
   getFileRemovedMessage?: (fileName: string) => string;
   getDropRejectMessage?: (
-    rejectedFile: { name: string; type: string | undefined; size: number },
+    rejectedFile: File,
     acceptedFiles: string[],
-    maxFileSize: number
+    maxFileSize: number,
   ) => string;
 }
+
 export const DropzoneArea: React.ComponentType<DropzoneAreaProps>;
 
-export interface DropzoneDialogProps {
-  open: boolean;
-  onSave?: (files: any) => void;
-  onDelete?: (file: any) => void;
-  onClose?: () => void;
-  onChange?: (files: any) => void;
-  onDrop?: (files: any) => void;
-  onDropRejected?: (files: any, evt: any) => void;
-  acceptedFiles?: string[];
-  filesLimit?: number;
-  maxFileSize?: number;
-  dropzoneText?: string;
-  showPreviews?: boolean;
-  showPreviewsInDropzone?: boolean;
-  useChipsForPreview?: boolean;
-  previewChipProps?: ChipProps;
-  previewGridClasses?: {
-    container?: string,
-    item?: string,
-    image?: string
-  };
-  previewGridProps?: {
-    container?: GridProps,
-    item?: GridProps
-  };
-  showAlerts?: boolean;
-  clearOnUnmount?: boolean;
-  dialogTitle?: string;
+// DropzoneDialog
+
+export interface DropzoneDialogProps extends DropzoneAreaProps {
   cancelButtonText?: string;
-  submitButtonText?: string;
-  maxWidth?: string;
+  dialogProps?: DialogProps;
+  dialogTitle?: string;
   fullWidth?: boolean;
+  maxWidth?: string;
+  onClose?: () => void;
+  onSave?: (files: File[]) => void;
+  open?: boolean;
+  submitButtonText?: string;
 }
+
 export const DropzoneDialog: React.ComponentType<DropzoneDialogProps>;
