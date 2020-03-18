@@ -67,6 +67,7 @@ export default DropzoneAreaExample;
 | maxFileSize   | Number       | 3000000     | Maximum file size (in bytes) that the dropzone will accept
 | dropzoneText  | String       | 'Drag and drop an image file here or click' | Text in dropzone
 | dropzoneClass    | String | null             | Custom CSS class name for dropzone container.
+| previewText | String | 'Preview:' | The label for the file preview section
 | showPreviews  | Boolean | false       | Shows previews **BELOW** the Dropzone
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
 | useChipsForPreview| Boolean| false      | Uses deletable Material-ui Chip components to display file names

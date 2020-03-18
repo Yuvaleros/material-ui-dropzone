@@ -251,6 +251,7 @@ class DropzoneArea extends React.PureComponent {
             previewChipProps,
             previewGridClasses,
             previewGridProps,
+            previewText,
             showAlerts,
             showFileNames,
             showFileNamesInPreview,
@@ -315,7 +316,7 @@ class DropzoneArea extends React.PureComponent {
                 {previewsVisible &&
                     <Fragment>
                         <Typography variant="subtitle1" component="span">
-                            Preview:
+                            {previewText}
                         </Typography>
 
                         <PreviewList
@@ -354,6 +355,7 @@ DropzoneArea.defaultProps = {
     filesLimit: 3,
     maxFileSize: 3000000,
     dropzoneText: 'Drag and drop an image file here or click',
+    previewText: 'Preview:',
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNames: false,
@@ -396,6 +398,7 @@ DropzoneArea.propTypes = {
     showFileNames: PropTypes.bool,
     showFileNamesInPreview: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
+    previewText: PropTypes.string,
     previewChipProps: PropTypes.object,
     previewGridClasses: PropTypes.object,
     previewGridProps: PropTypes.object,
