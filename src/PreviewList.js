@@ -46,62 +46,60 @@ const styles = {
     },
 };
 
-function PreviewList(props) {
-    const {
-        fileObjects,
-        handleRemove,
-        showFileNames,
-        useChipsForPreview,
-        previewChipProps,
-        previewGridClasses,
-        previewGridProps,
-        classes,
-    } = props;
+function PreviewList({
+    fileObjects,
+    handleRemove,
+    showFileNames,
+    useChipsForPreview,
+    previewChipProps,
+    previewGridClasses,
+    previewGridProps,
+    classes,
+}) {
     if (useChipsForPreview) {
         return (
-            fileObjects.map((fileObject, i) => {
-                return (<div key={i}>
+            fileObjects.map((fileObject, i) => (
+                <div key={i}>
                     <Chip
                         label={fileObject.file.name}
                         onDelete={handleRemove(i)}
                         variant="outlined"
                         {...previewChipProps}
                     />
-                </div>);
-            })
+                </div>
+            ))
         );
     }
+
     return (
         <Grid container={true} spacing={8} className={previewGridClasses.container} {...previewGridProps.container}>
-            {
-                fileObjects.map((fileObject, i) => {
-                    const img = (isImage(fileObject.file) ?
-                        <img className={clsx(previewGridClasses.image, classes.smallPreviewImg)}
-                            role="presentation" src={fileObject.data} /> :
-                        <AttachFileIcon className={clsx(previewGridClasses.image, classes.smallPreviewImg)} />
-                    );
-                    return (
-                        <Grid
-                            item={true} xs={4} key={i} {...previewGridProps.item}
-                            className={clsx(previewGridClasses.item, classes.imageContainer)}
+            {fileObjects.map((fileObject, i) => {
+                const img = (isImage(fileObject.file) ?
+                    <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data} /> :
+                    <AttachFileIcon className={classes.smallPreviewImg} />
+                );
+
+                return (
+                    <Grid
+                        item={true} xs={4} key={i} {...previewGridProps.item}
+                        className={clsx(previewGridClasses.item, classes.imageContainer)}
+                    >
+                        {img}
+
+                        {showFileNames &&
+                            <p>{fileObject.file.name}</p>
+                        }
+
+                        <Fab
+                            onClick={handleRemove(i)}
+                            aria-label="Delete"
+                            className={classes.removeBtn}
                         >
-                            {img}
-
-                            {showFileNames &&
-                                <p>{fileObject.file.name}</p>
-                            }
-
-                            <Fab
-                                onClick={handleRemove(i)}
-                                aria-label="Delete"
-                                className={classes.removeBtn}
-                            >
-                                <DeleteIcon />
-                            </Fab>
-                        </Grid>
-                    );
-                })
-            }
+                            <DeleteIcon />
+                        </Fab>
+                    </Grid>
+                );
+            })}
         </Grid>
     );
 }
