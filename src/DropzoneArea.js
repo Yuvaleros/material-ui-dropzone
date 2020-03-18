@@ -71,10 +71,16 @@ class DropzoneArea extends React.PureComponent {
     }
 
     componentWillUnmount() {
-        if (this.props.clearOnUnmount) {
+        const {clearOnUnmount, onChange} = this.props;
+
+        if (clearOnUnmount) {
             this.setState({
                 fileObjects: [],
             });
+
+            if (onChange) {
+                onChange([]);
+            }
         }
     }
 
@@ -97,7 +103,15 @@ class DropzoneArea extends React.PureComponent {
                     state.fileObjects,
                     fileObjs
                 ),
-            }));
+            }),
+            () => {
+                const {onChange} = this.props;
+                const {fileObjects} = this.state;
+
+                if (onChange) {
+                    onChange(fileObjects.map((fileObject) => fileObject.file));
+                }
+            });
         } catch (err) {
             console.log(err);
         }
