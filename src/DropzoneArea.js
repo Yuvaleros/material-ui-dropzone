@@ -103,7 +103,7 @@ class DropzoneArea extends React.PureComponent {
         }
     }
 
-    handleDropAccepted = async(acceptedFiles) => {
+    handleDropAccepted = async(acceptedFiles, evt) => {
         const {filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onDrop} = this.props;
         const {fileObjects} = this.state;
 
@@ -116,15 +116,14 @@ class DropzoneArea extends React.PureComponent {
             return;
         }
 
-        const files = !Array.isArray(acceptedFiles) ? [acceptedFiles] : acceptedFiles;
+        // Notify Drop event
+        if (onDrop) {
+            onDrop(acceptedFiles, evt);
+        }
 
+        // Retrieve fileObjects data
         const fileObjs = await Promise.all(
-            files.map(async(file) => {
-                if (onDrop) {
-                    // Notify Drop event
-                    onDrop(file);
-                }
-
+            acceptedFiles.map(async(file) => {
                 const data = await readFile(file);
                 return {
                     file,
@@ -133,7 +132,7 @@ class DropzoneArea extends React.PureComponent {
             })
         );
 
-        // display message
+        // Display message
         const message = fileObjs.reduce((msg, fileObj) => msg + getFileAddedMessage(fileObj.file.name), '');
         this.setState({
             openSnackBar: true,
