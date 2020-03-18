@@ -11,6 +11,7 @@ export interface DropzoneAreaProps {
   filesLimit?: number;
   maxFileSize?: number;
   dropzoneText?: string;
+  previewText?: string;
   showPreviews?: boolean;
   showPreviewsInDropzone?: boolean;
   showFileNamesInPreview?: boolean;
