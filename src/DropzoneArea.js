@@ -1,5 +1,5 @@
-import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
+import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import clsx from 'clsx';
@@ -49,7 +49,8 @@ const styles = {
         color: '#909090',
     },
     dropzoneParagraph: {
-        fontSize: 24,
+        marginBottom: 20,
+        marginTop: 20,
     },
 };
 
@@ -284,10 +285,15 @@ class DropzoneArea extends React.PureComponent {
                             )}
                         >
                             <input {...getInputProps()} />
+
                             <div className={classes.dropzoneTextStyle}>
-                                <p className={clsx(classes.dropzoneParagraph, dropzoneParagraphClass)}>
+                                <Typography
+                                    variant="h5"
+                                    component="p"
+                                    className={clsx(classes.dropzoneParagraph, dropzoneParagraphClass)}
+                                >
                                     {dropzoneText}
-                                </p>
+                                </Typography>
                                 <CloudUploadIcon className={classes.uploadIconSize} />
                             </div>
 
@@ -308,9 +314,9 @@ class DropzoneArea extends React.PureComponent {
 
                 {previewsVisible &&
                     <Fragment>
-                        <Grid container={true}>
-                            <span>Preview:</span>
-                        </Grid>
+                        <Typography variant="subtitle1" component="span">
+                            Preview:
+                        </Typography>
 
                         <PreviewList
                             fileObjects={fileObjects}

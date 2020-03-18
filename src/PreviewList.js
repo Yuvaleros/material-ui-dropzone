@@ -1,6 +1,7 @@
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -81,14 +82,19 @@ function PreviewList({
 
                 return (
                     <Grid
-                        item={true} xs={4} key={i} {...previewGridProps.item}
+                        key={i}
+                        item={true}
+                        xs={4}
+                        {...previewGridProps.item}
                         className={clsx(previewGridClasses.item, classes.imageContainer)}
                     >
                         {img}
 
-                        {showFileNames &&
-                            <p>{fileObject.file.name}</p>
-                        }
+                        {showFileNames && (
+                            <Typography variant="body1" component="p">
+                                {fileObject.file.name}
+                            </Typography>
+                        )}
 
                         <Fab
                             onClick={handleRemove(i)}
@@ -108,11 +114,11 @@ PreviewList.propTypes = {
     classes: PropTypes.object.isRequired,
     fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
     handleRemove: PropTypes.func.isRequired,
-    showFileNames: PropTypes.bool,
-    useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
     previewGridClasses: PropTypes.object,
     previewGridProps: PropTypes.object,
+    showFileNames: PropTypes.bool,
+    useChipsForPreview: PropTypes.bool,
 };
 
 export default withStyles(styles)(PreviewList);
