@@ -160,6 +160,7 @@ export default class DropzoneDialogExample extends Component {
 |----------------|-------------|------------|--------------------------------
 | open           | Boolean     | false      | Required. Sets whether the dialog is open or closed 
 | dialogTitle    | String      | true      | Sets dialog title.
+| dialogProps    | Object      | {}         | Props to pass to the Material-ui Dialog component
 | dropzoneText   | String      | true      | Sets dropzone text.
 | cancelButtonText   | String      | true      | Sets submit button text in dialog.
 | submitButtonText   | String      | true      | Sets cancel button text in dialog.
