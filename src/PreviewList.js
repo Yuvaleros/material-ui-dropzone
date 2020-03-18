@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import {isImage} from './helpers/helpers.js';
 import clsx from 'clsx';
