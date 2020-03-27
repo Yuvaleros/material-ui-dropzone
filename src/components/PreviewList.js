@@ -5,10 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
+import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {isImage} from './helpers.js';
-import clsx from 'clsx';
+
+import {isImage} from '../helpers';
 
 const styles = {
     removeBtn: {
