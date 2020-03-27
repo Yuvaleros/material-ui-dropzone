@@ -40,6 +40,11 @@ function splitDropzoneDialogProps(allProps) {
     ];
 }
 
+/**
+ * This component provides the DropzoneArea inside of a Material-UI Dialog.
+ *
+ * It supports all the Props and Methods from `DropzoneArea`.
+ */
 class DropzoneDialog extends React.PureComponent {
     state = {
         files: [],
@@ -132,31 +137,64 @@ class DropzoneDialog extends React.PureComponent {
 
 DropzoneDialog.defaultProps = {
     ...DropzoneArea.defaultProps,
-    cancelButtonText: 'Cancel',
-    dialogProps: {},
+    open: false,
     dialogTitle: 'Upload file',
+    dialogProps: {},
     fullWidth: true,
     maxWidth: 'sm',
-    onClose: () => { },
-    onSave: () => { },
-    open: false,
-    showPreviews: true, // By default previews show up under in the dialog and inside in the standalone
+    cancelButtonText: 'Cancel',
+    submitButtonText: 'Submit',
+    showPreviews: true,
     showPreviewsInDropzone: false,
     showFileNamesInPreview: true,
-    submitButtonText: 'Submit',
 };
 
 DropzoneDialog.propTypes = {
     ...DropzoneArea.propTypes,
-    cancelButtonText: PropTypes.string,
-    dialogProps: PropTypes.object,
+    /** Sets whether the dialog is open or closed. */
+    open: PropTypes.bool,
+    /** The Dialog title. */
     dialogTitle: PropTypes.string,
+    /**
+     * Props to pass to the Material-UI Dialog components.
+     * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
+     */
+    dialogProps: PropTypes.object,
+    /**
+     * If `true`, the dialog stretches to `maxWidth`.<br/>
+     * Notice that the dialog width grow is limited by the default margin.
+     */
     fullWidth: PropTypes.bool,
+    /**
+     * Determine the max-width of the dialog. The dialog width grows with the size of the screen.<br/>
+     * Set to `false` to disable `maxWidth`.
+     */
     maxWidth: PropTypes.string,
-    onClose: PropTypes.func,
-    onSave: PropTypes.func,
-    open: PropTypes.bool.isRequired,
+    /** Cancel button text in dialog. */
+    cancelButtonText: PropTypes.string,
+    /** Submit button text in dialog. */
     submitButtonText: PropTypes.string,
+    /**
+     * Fired when the modal is closed
+     *
+     * @param {SyntheticEvent} event The react `SyntheticEvent`
+     */
+    onClose: PropTypes.func,
+    /**
+     * Fired when the user clicks the Submit button.
+     *
+     * @param {File[]} files All the files currently inside the Dropzone.
+     */
+    onSave: PropTypes.func,
+    /**
+     * Shows previews **BELOW** the dropzone.<br/>
+     * **Note:** By default previews show up under in the Dialog and inside in the standalone.
+     */
+    showPreviews: PropTypes.bool,
+    /** Shows preview **INSIDE** the dropzone area. */
+    showPreviewsInDropzone: PropTypes.bool,
+    /** Shows file name under the image. */
+    showFileNamesInPreview: PropTypes.bool,
 };
 
 export default DropzoneDialog;
