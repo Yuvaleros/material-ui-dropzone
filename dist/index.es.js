@@ -332,6 +332,9 @@ var snackbarAnchorOrigin = {
   vertical: 'bottom',
   horizontal: 'left'
 };
+/**
+ * This components creates a Material-UI Dropzone, with previews and snackbar notifications.
+ */
 
 var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
   _inherits(DropzoneArea, _React$PureComponent);
@@ -735,13 +738,14 @@ DropzoneArea.defaultProps = {
   acceptedFiles: ['image/*', 'video/*', 'application/*'],
   filesLimit: 3,
   maxFileSize: 3000000,
-  dropzoneText: 'Drag and drop an image file here or click',
+  dropzoneText: 'Drag and drop a file here or click',
   previewText: 'Preview:',
   showPreviews: false,
   // By default previews show up under in the dialog and inside in the standalone
   showPreviewsInDropzone: true,
   showFileNames: false,
   showFileNamesInPreview: false,
+  useChipsForPreview: false,
   previewChipProps: {},
   previewGridClasses: {},
   previewGridProps: {},
@@ -769,39 +773,144 @@ DropzoneArea.defaultProps = {
     }
 
     return message;
-  },
-  onChange: function onChange() {},
-  onDrop: function onDrop() {},
-  onDropRejected: function onDropRejected() {},
-  onDelete: function onDelete() {}
+  }
 };
 process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
+  /** @ignore */
   classes: PropTypes.object.isRequired,
-  acceptedFiles: PropTypes.array,
+
+  /** A list of file types to accept.
+   * @see See [here](https://react-dropzone.js.org/#section-accepting-specific-file-types) for more details.
+   */
+  acceptedFiles: PropTypes.arrayOf(PropTypes.string),
+
+  /** Maximum number of files that can be loaded into the dropzone. */
   filesLimit: PropTypes.number,
+
+  /** Maximum file size (in bytes) that the dropzone will accept. */
   maxFileSize: PropTypes.number,
+
+  /** Text inside the dropzone. */
   dropzoneText: PropTypes.string,
+
+  /** Custom CSS class name for dropzone container. */
   dropzoneClass: PropTypes.string,
+
+  /** Custom CSS class name for text inside the container. */
   dropzoneParagraphClass: PropTypes.string,
+
+  /** Shows previews **BELOW** the dropzone. */
   showPreviews: PropTypes.bool,
+
+  /** Shows preview **INSIDE** the dropzone area. */
   showPreviewsInDropzone: PropTypes.bool,
+
+  /** Shows file name under the dropzone image. */
   showFileNames: PropTypes.bool,
+
+  /** Shows file name under the image. */
   showFileNamesInPreview: PropTypes.bool,
+
+  /** Uses deletable Material-UI Chip components to display file names. */
   useChipsForPreview: PropTypes.bool,
-  previewText: PropTypes.string,
+
+  /**
+   * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
+   *
+   * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
+   */
   previewChipProps: PropTypes.object,
+
+  /**
+   * Custom CSS classNames for preview Grid components.<br/>
+   * Should be in the form {container: string, item: string, image: string}.
+   */
   previewGridClasses: PropTypes.object,
+
+  /**
+   * Props to pass to the Material-UI Grid components.<br/>
+   * Should be in the form {container: GridProps, item: GridProps}.
+   *
+   * @see See [Material-UI Grid](https://material-ui.com/api/grid/#props) for available GridProps values.
+   */
   previewGridProps: PropTypes.object,
+
+  /** The label for the file preview section. */
+  previewText: PropTypes.string,
+
+  /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
   showAlerts: PropTypes.bool,
+
+  /** Clear uploaded files when component is unmounted. */
   clearOnUnmount: PropTypes.bool,
+
+  /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
   initialFiles: PropTypes.arrayOf(PropTypes.string),
+
+  /**
+   * Get alert message to display when files limit is exceed.
+   *
+   * *Default*: "Maximum allowed number of files exceeded. Only ${filesLimit} allowed"
+   *
+   * @param {number} filesLimit The `filesLimit` currently set for the component.
+   */
   getFileLimitExceedMessage: PropTypes.func,
+
+  /**
+   * Get alert message to display when a new file is added.
+   *
+   * *Default*: "File ${fileName} successfully added."
+   *
+   * @param {string} fileName The newly added file name.
+   */
   getFileAddedMessage: PropTypes.func,
+
+  /**
+   * Get alert message to display when a file is removed.
+   *
+   * *Default*: "File ${fileName} removed."
+   *
+   * @param {string} fileName The name of the removed file.
+   */
   getFileRemovedMessage: PropTypes.func,
+
+  /**
+   * Get alert message to display when a file is rejected onDrop.
+   *
+   * *Default*: "File ${rejectedFile.name} was rejected."
+   *
+   * @param {Object} rejectedFile The file that got rejected
+   * @param {string[]} acceptedFiles The `acceptedFiles` prop currently set for the component
+   * @param {number} maxFileSize The `maxFileSize` prop currently set for the component
+   */
   getDropRejectMessage: PropTypes.func,
+
+  /**
+   * Fired when the files inside dropzone change.
+   *
+   * @param {File[]} loadedFiles All the files currently loaded into the dropzone.
+   */
   onChange: PropTypes.func,
+
+  /**
+   * Fired when the user drops files into the dropzone.
+   *
+   * @param {File[]} droppedFiles All the files dropped into the dropzone.
+   */
   onDrop: PropTypes.func,
+
+  /**
+   * Fired when a file is rejected because of wrong file type, size or goes beyond the filesLimit.
+   *
+   * @param {File[]} rejectedFiles All the rejected files.
+   */
   onDropRejected: PropTypes.func,
+
+  /**
+   * Fired when a file is deleted from the previews panel.
+   *
+   * @param {File} deletedFile The file that was removed.
+   */
   onDelete: PropTypes.func
 } : void 0;
 var DropzoneArea$1 = withStyles(styles$2)(DropzoneArea);
@@ -830,6 +939,12 @@ function splitDropzoneDialogProps(allProps) {
     submitButtonText: submitButtonText
   }, dropzoneAreaProps];
 }
+/**
+ * This component provides the DropzoneArea inside of a Material-UI Dialog.
+ *
+ * It supports all the Props and Methods from `DropzoneArea`.
+ */
+
 
 var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
   _inherits(DropzoneDialog, _React$PureComponent);
@@ -922,30 +1037,73 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
 }(PureComponent);
 
 DropzoneDialog.defaultProps = _extends({}, DropzoneArea$1.defaultProps, {
-  cancelButtonText: 'Cancel',
-  dialogProps: {},
+  open: false,
   dialogTitle: 'Upload file',
+  dialogProps: {},
   fullWidth: true,
   maxWidth: 'sm',
-  onClose: function onClose() {},
-  onSave: function onSave() {},
-  open: false,
+  cancelButtonText: 'Cancel',
+  submitButtonText: 'Submit',
   showPreviews: true,
-  // By default previews show up under in the dialog and inside in the standalone
   showPreviewsInDropzone: false,
-  showFileNamesInPreview: true,
-  submitButtonText: 'Submit'
+  showFileNamesInPreview: true
 });
 process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, DropzoneArea$1.propTypes, {
-  cancelButtonText: PropTypes.string,
-  dialogProps: PropTypes.object,
+  /** Sets whether the dialog is open or closed. */
+  open: PropTypes.bool,
+
+  /** The Dialog title. */
   dialogTitle: PropTypes.string,
+
+  /**
+   * Props to pass to the Material-UI Dialog components.
+   * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
+   */
+  dialogProps: PropTypes.object,
+
+  /**
+   * If `true`, the dialog stretches to `maxWidth`.<br/>
+   * Notice that the dialog width grow is limited by the default margin.
+   */
   fullWidth: PropTypes.bool,
+
+  /**
+   * Determine the max-width of the dialog. The dialog width grows with the size of the screen.<br/>
+   * Set to `false` to disable `maxWidth`.
+   */
   maxWidth: PropTypes.string,
+
+  /** Cancel button text in dialog. */
+  cancelButtonText: PropTypes.string,
+
+  /** Submit button text in dialog. */
+  submitButtonText: PropTypes.string,
+
+  /**
+   * Fired when the modal is closed
+   *
+   * @param {SyntheticEvent} event The react `SyntheticEvent`
+   */
   onClose: PropTypes.func,
+
+  /**
+   * Fired when the user clicks the Submit button.
+   *
+   * @param {File[]} files All the files currently inside the Dropzone.
+   */
   onSave: PropTypes.func,
-  open: PropTypes.bool.isRequired,
-  submitButtonText: PropTypes.string
+
+  /**
+   * Shows previews **BELOW** the dropzone.<br/>
+   * **Note:** By default previews show up under in the Dialog and inside in the standalone.
+   */
+  showPreviews: PropTypes.bool,
+
+  /** Shows preview **INSIDE** the dropzone area. */
+  showPreviewsInDropzone: PropTypes.bool,
+
+  /** Shows file name under the image. */
+  showFileNamesInPreview: PropTypes.bool
 }) : void 0;
 
 export { DropzoneArea$1 as DropzoneArea, DropzoneDialog };
