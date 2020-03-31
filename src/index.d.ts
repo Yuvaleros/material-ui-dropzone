@@ -12,6 +12,8 @@ export interface DropzoneAreaProps {
   showFileNames?: boolean;
   useChipsForPreview?: boolean;
   previewChipProps?: ChipProps;
+  previewColumns?: number;
+  previewSpacing?: number;
   showAlerts?: boolean;
   clearOnUnmount?: boolean;
   dropzoneClass?: string;
@@ -48,6 +50,8 @@ export interface DropzoneDialogProps {
   showPreviewsInDropzone?: boolean;
   useChipsForPreview?: boolean;
   previewChipProps?: ChipProps;
+  previewColumns?: number;
+  previewSpacing?: number;
   showAlerts?: boolean;
   clearOnUnmount?: boolean;
   dialogTitle?: string;

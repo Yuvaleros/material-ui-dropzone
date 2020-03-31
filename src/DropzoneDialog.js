@@ -123,6 +123,8 @@ class DropzoneDialog extends React.Component {
                             showFileNamesInPreview={this.props.showFileNamesInPreview}
                             useChipsForPreview={this.props.useChipsForPreview}
                             previewChipProps={this.props.previewChipProps}
+                            previewColumns={this.props.previewColumns}
+                            previewSpacing={this.props.previewSpacing}
                         />
                     </DialogContent>
                     <DialogActions>
@@ -154,6 +156,8 @@ DropzoneDialog.defaultProps = {
     showPreviewsInDropzone: false,
     showFileNamesInPreview: true,
     previewChipProps: {},
+    previewColumns: 3,
+    previewSpacing: 8,
     showAlerts: true,
     clearOnUnmount: true,
     dialogTitle: 'Upload file',
@@ -189,6 +193,8 @@ DropzoneDialog.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
+    previewColumns: PropTypes.number,
+    previewSpacing: PropTypes.number,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     dialogTitle: PropTypes.string,

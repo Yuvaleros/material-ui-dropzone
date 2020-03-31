@@ -135,6 +135,8 @@ function PreviewList(props) {
       showFileNames = props.showFileNames,
       useChipsForPreview = props.useChipsForPreview,
       previewChipProps = props.previewChipProps,
+      previewColumns = props.previewColumns,
+      previewSpacing = props.previewSpacing,
       classes = props.classes;
 
   if (useChipsForPreview) {
@@ -151,7 +153,7 @@ function PreviewList(props) {
 
   return React.createElement(Grid, {
     container: true,
-    spacing: 8
+    spacing: previewSpacing
   }, fileObjects.map(function (fileObject, i) {
     var img = isImage(fileObject.file) ? React.createElement("img", {
       className: classes.smallPreviewImg,
@@ -162,7 +164,7 @@ function PreviewList(props) {
     });
     return React.createElement(Grid, {
       item: true,
-      xs: 4,
+      xs: 12 / previewColumns,
       key: i,
       className: classes.imageContainer
     }, img, showFileNames && React.createElement("p", null, fileObject.file.name), React.createElement(Fab, {
@@ -179,7 +181,9 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   handleRemove: PropTypes.func.isRequired,
   showFileNames: PropTypes.bool,
   useChipsForPreview: PropTypes.bool,
-  previewChipProps: PropTypes.object
+  previewChipProps: PropTypes.object,
+  previewColumns: PropTypes.number,
+  previewSpacing: PropTypes.number
 } : void 0;
 var PreviewList$1 = withStyles(styles)(PreviewList);
 
@@ -608,13 +612,17 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
         handleRemove: this.handleRemove.bind(this),
         showFileNames: this.props.showFileNames,
         useChipsForPreview: this.props.useChipsForPreview,
-        previewChipProps: this.props.previewChipProps
+        previewChipProps: this.props.previewChipProps,
+        previewColumns: this.props.previewColumns,
+        previewSpacing: this.props.previewSpacing
       })), showPreviews && React.createElement(Fragment, null, _ref$1, React.createElement(PreviewList$1, {
         fileObjects: this.state.fileObjects,
         handleRemove: this.handleRemove.bind(this),
         showFileNames: this.props.showFileNamesInPreview,
         useChipsForPreview: this.props.useChipsForPreview,
-        previewChipProps: this.props.previewChipProps
+        previewChipProps: this.props.previewChipProps,
+        previewColumns: this.props.previewColumns,
+        previewSpacing: this.props.previewSpacing
       })), this.props.showAlerts && React.createElement(Snackbar, {
         anchorOrigin: {
           vertical: 'bottom',
@@ -645,6 +653,8 @@ DropzoneArea.defaultProps = {
   showFileNames: false,
   showFileNamesInPreview: false,
   previewChipProps: {},
+  previewColumns: 3,
+  previewSpacing: 8,
   showAlerts: true,
   clearOnUnmount: true,
   initialFiles: [],
@@ -689,6 +699,8 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
   showFileNamesInPreview: PropTypes.bool,
   useChipsForPreview: PropTypes.bool,
   previewChipProps: PropTypes.object,
+  previewColumns: PropTypes.number,
+  previewSpacing: PropTypes.number,
   showAlerts: PropTypes.bool,
   clearOnUnmount: PropTypes.bool,
   initialFiles: PropTypes.arrayOf(PropTypes.string),
@@ -843,7 +855,9 @@ var DropzoneDialog = /*#__PURE__*/function (_React$Component) {
         clearOnUnmount: this.props.clearOnUnmount,
         showFileNamesInPreview: this.props.showFileNamesInPreview,
         useChipsForPreview: this.props.useChipsForPreview,
-        previewChipProps: this.props.previewChipProps
+        previewChipProps: this.props.previewChipProps,
+        previewColumns: this.props.previewColumns,
+        previewSpacing: this.props.previewSpacing
       })), React.createElement(DialogActions, null, React.createElement(Button, {
         color: "primary",
         onClick: this.handleClose.bind(this)
@@ -867,6 +881,8 @@ DropzoneDialog.defaultProps = {
   showPreviewsInDropzone: false,
   showFileNamesInPreview: true,
   previewChipProps: {},
+  previewColumns: 3,
+  previewSpacing: 8,
   showAlerts: true,
   clearOnUnmount: true,
   dialogTitle: 'Upload file',
@@ -901,6 +917,8 @@ process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = {
   showFileNamesInPreview: PropTypes.bool,
   useChipsForPreview: PropTypes.bool,
   previewChipProps: PropTypes.object,
+  previewColumns: PropTypes.number,
+  previewSpacing: PropTypes.number,
   showAlerts: PropTypes.bool,
   clearOnUnmount: PropTypes.bool,
   dialogTitle: PropTypes.string,

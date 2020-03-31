@@ -238,6 +238,8 @@ class DropzoneArea extends Component {
                             showFileNames={this.props.showFileNames}
                             useChipsForPreview={this.props.useChipsForPreview}
                             previewChipProps={this.props.previewChipProps}
+                            previewColumns={this.props.previewColumns}
+                            previewSpacing={this.props.previewSpacing}
                         />
                     }
                 </Dropzone>
@@ -252,6 +254,8 @@ class DropzoneArea extends Component {
                             showFileNames={this.props.showFileNamesInPreview}
                             useChipsForPreview={this.props.useChipsForPreview}
                             previewChipProps={this.props.previewChipProps}
+                            previewColumns={this.props.previewColumns}
+                            previewSpacing={this.props.previewSpacing}
                         />
                     </Fragment>
                 }
@@ -287,6 +291,8 @@ DropzoneArea.defaultProps = {
     showFileNames: false,
     showFileNamesInPreview: false,
     previewChipProps: {},
+    previewColumns: 3,
+    previewSpacing: 8,
     showAlerts: true,
     clearOnUnmount: true,
     initialFiles: [],
@@ -322,6 +328,8 @@ DropzoneArea.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
+    previewColumns: PropTypes.number,
+    previewSpacing: PropTypes.number,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     initialFiles: PropTypes.arrayOf(PropTypes.string),

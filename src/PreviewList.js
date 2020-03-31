@@ -46,7 +46,16 @@ const styles = {
 };
 
 function PreviewList(props) {
-    const {fileObjects, handleRemove, showFileNames, useChipsForPreview, previewChipProps, classes} = props;
+    const {
+        fileObjects,
+        handleRemove,
+        showFileNames,
+        useChipsForPreview,
+        previewChipProps,
+        previewColumns,
+        previewSpacing,
+        classes,
+    } = props;
     if (useChipsForPreview) {
         return (
             fileObjects.map((fileObject, i) => {
@@ -62,7 +71,7 @@ function PreviewList(props) {
         );
     }
     return (
-        <Grid container={true} spacing={8}>
+        <Grid container={true} spacing={previewSpacing}>
             {
                 fileObjects.map((fileObject, i) => {
                     const img = (isImage(fileObject.file) ?
@@ -71,7 +80,7 @@ function PreviewList(props) {
                     );
                     return (
                         <Grid
-                            item={true} xs={4} key={i}
+                            item={true} xs={12 / previewColumns} key={i}
                             className={classes.imageContainer}
                         >
                             {img}
@@ -102,6 +111,8 @@ PreviewList.propTypes = {
     showFileNames: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
+    previewColumns: PropTypes.number,
+    previewSpacing: PropTypes.number,
 };
 
 export default withStyles(styles)(PreviewList);
