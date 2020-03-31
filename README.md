@@ -72,7 +72,7 @@ export default DropzoneAreaExample;
 | useChipsForPreview| Boolean| false      | Uses deletable Material-ui Chip components to display file names
 | previewChipProps| Object| {}      | Props to pass to the Material-ui Chip components
 | previewColumns | Number      | 3          | Number of columns in the preview grid. Supported values are 1,2,3,4,6,12.
-| previewSpacing | Number      | 8          | How far apart (in multiples of 8px) to space out the items in the preview grid. Supported values are 0-10.
+| previewSpacing | Number      | 8          | Sets preview grid spacing (in multiples of 8px). Supported values are 0-10.
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or rejected. 
 | dropzoneParagraphClass    | String | null             | Custom CSS class name for text inside the container. 
 | showFileNamesInPreview | Boolean | false | Shows file name under the image    
