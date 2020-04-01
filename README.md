@@ -71,8 +71,8 @@ export default DropzoneAreaExample;
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
 | useChipsForPreview| Boolean| false      | Uses deletable Material-ui Chip components to display file names
 | previewChipProps| Object| {}      | Props to pass to the Material-ui Chip components
-| previewColumns | Number      | 3          | Number of columns in the preview grid. Supported values are 1,2,3,4,6,12.
-| previewSpacing | Number      | 8          | Sets preview grid spacing (in multiples of 8px). Supported values are 0-10.
+| previewColumns | Number      | 3          | 1..4,6,12. Number of columns in the preview grid.
+| previewSpacing | Number      | 8          | 0..10, in multiples of 8px. Preview grid spacing.
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or rejected. 
 | dropzoneParagraphClass    | String | null             | Custom CSS class name for text inside the container. 
 | showFileNamesInPreview | Boolean | false | Shows file name under the image    
@@ -173,8 +173,8 @@ export default class DropzoneDialogExample extends Component {
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
 | useChipsForPreview| Boolean| false      | Uses deletable Material-ui Chip components to display file names
 | previewChipProps| Object| {}      | Props to pass to the Material-ui Chip components
-| previewColumns | Number      | 3          | Number of columns in the preview grid. Supported values are 1,2,3,4,6,12.
-| previewSpacing | Number      | 8          | Sets preview grid spacing (in multiples of 8px). Supported values are 0-10.
+| previewColumns | Number      | 3          | 1..4,6,12. Number of columns in the preview grid.
+| previewSpacing | Number      | 8          | 0..10, in multiples of 8px. Preview grid spacing.
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or
 | maxWidth      | String      | sm          | Sets dialog width. Width grows with the size of the screen.
 | fullWidth    | Boolean     | true        | If true, the dialog stretches to maxWidth.
