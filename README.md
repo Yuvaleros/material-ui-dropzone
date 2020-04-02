@@ -162,8 +162,8 @@ export default class DropzoneDialogExample extends Component {
 | dialogTitle    | String      | true      | Sets dialog title.
 | dialogProps    | Object      | {}         | Props to pass to the Material-ui Dialog component
 | dropzoneText   | String      | true      | Sets dropzone text.
-| cancelButtonText   | String      | true      | Sets submit button text in dialog.
-| submitButtonText   | String      | true      | Sets cancel button text in dialog.
+| cancelButtonText   | String      | true      | Sets cancel button text in dialog.
+| submitButtonText   | String      | true      | Sets submit button text in dialog.
 | acceptedFiles  | Array       |\['image/\*', 'video/\*', 'application/\*'] | A list of file mime types to accept. Does support wildcards.
 | filesLimit    | Number       | 3           | Maximum number of files that can be loaded into the dropzone
 | maxFileSize   | Number       | 3000000     | Maximum file size (in bytes) that the dropzone will accept
