@@ -72,7 +72,7 @@ function PreviewList(props) {
         );
     }
     return (
-        <Grid container={true} className={previewGridClasses.container} {...previewGridProps.container}>
+        <Grid container={true} spacing={8} className={previewGridClasses.container} {...previewGridProps.container}>
             {
                 fileObjects.map((fileObject, i) => {
                     const img = (isImage(fileObject.file) ?
@@ -82,7 +82,7 @@ function PreviewList(props) {
                     );
                     return (
                         <Grid
-                            item={true} key={i} {...previewGridProps.item}
+                            item={true} xs={4} key={i} {...previewGridProps.item}
                             className={clsx(previewGridClasses.item, classes.imageContainer)}
                         >
                             {img}
