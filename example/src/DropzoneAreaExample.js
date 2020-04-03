@@ -1,5 +1,12 @@
 import React, {Component} from 'react'
 import {DropzoneArea} from 'material-ui-dropzone'
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = {
+  item: {
+      zIndex: 20
+  },
+};
 
 class DropzoneAreaExample extends Component{
   constructor(props){
@@ -14,12 +21,16 @@ class DropzoneAreaExample extends Component{
     });
   }
   render(){
+    const {classes} = this.props;
+
     return (
       <DropzoneArea 
         onChange={this.handleChange.bind(this)}
+        previewGridProps={{container: {spacing: 1}, item: {xs: 6}}}
+        previewGridClasses={{item: classes.item}}
         />
     )  
   }
 } 
 
-export default DropzoneAreaExample;
+export default withStyles(styles)(DropzoneAreaExample);
