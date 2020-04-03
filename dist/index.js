@@ -160,6 +160,7 @@ function PreviewList(props) {
 
   return React__default.createElement(Grid, _extends({
     container: true,
+    spacing: 8,
     className: previewGridClasses.container
   }, previewGridProps.container), fileObjects.map(function (fileObject, i) {
     var img = isImage(fileObject.file) ? React__default.createElement("img", {
@@ -171,6 +172,7 @@ function PreviewList(props) {
     });
     return React__default.createElement(Grid, _extends({
       item: true,
+      xs: 4,
       key: i
     }, previewGridProps.item, {
       className: clsx(previewGridClasses.item, classes.imageContainer)
@@ -375,8 +377,6 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.filesArray(this.props.initialFiles);
-      console.log(this.props.previewGridProps);
-      console.log(this.props.previewGridClasses);
     }
   }, {
     key: "componentDidUpdate",

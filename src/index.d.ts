@@ -67,8 +67,6 @@ export interface DropzoneDialogProps {
     container?: GridProps,
     item?: GridProps
   };
-  previewColumns?: number;
-  previewSpacing?: number;
   showAlerts?: boolean;
   clearOnUnmount?: boolean;
   dialogTitle?: string;
