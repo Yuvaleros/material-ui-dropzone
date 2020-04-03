@@ -135,8 +135,8 @@ function PreviewList(props) {
       showFileNames = props.showFileNames,
       useChipsForPreview = props.useChipsForPreview,
       previewChipProps = props.previewChipProps,
-      previewColumns = props.previewColumns,
-      previewSpacing = props.previewSpacing,
+      previewGridClasses = props.previewGridClasses,
+      previewGridProps = props.previewGridProps,
       classes = props.classes;
 
   if (useChipsForPreview) {
@@ -151,23 +151,23 @@ function PreviewList(props) {
     });
   }
 
-  return React.createElement(Grid, {
+  return React.createElement(Grid, _extends({
     container: true,
-    spacing: previewSpacing
-  }, fileObjects.map(function (fileObject, i) {
+    className: previewGridClasses.container
+  }, previewGridProps.container), fileObjects.map(function (fileObject, i) {
     var img = isImage(fileObject.file) ? React.createElement("img", {
-      className: classes.smallPreviewImg,
+      className: clsx(previewGridClasses.image, classes.smallPreviewImg),
       role: "presentation",
       src: fileObject.data
     }) : React.createElement(AttachFileIcon, {
-      className: classes.smallPreviewImg
+      className: clsx(previewGridClasses.image, classes.smallPreviewImg)
     });
-    return React.createElement(Grid, {
+    return React.createElement(Grid, _extends({
       item: true,
-      xs: 12 / previewColumns,
-      key: i,
-      className: classes.imageContainer
-    }, img, showFileNames && React.createElement("p", null, fileObject.file.name), React.createElement(Fab, {
+      key: i
+    }, previewGridProps.item, {
+      className: clsx(previewGridClasses.item, classes.imageContainer)
+    }), img, showFileNames && React.createElement("p", null, fileObject.file.name), React.createElement(Fab, {
       onClick: handleRemove(i),
       "aria-label": "Delete",
       className: classes.removeBtn
@@ -182,8 +182,8 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   showFileNames: PropTypes.bool,
   useChipsForPreview: PropTypes.bool,
   previewChipProps: PropTypes.object,
-  previewColumns: PropTypes.number,
-  previewSpacing: PropTypes.number
+  previewGridClasses: PropTypes.object,
+  previewGridProps: PropTypes.object
 } : void 0;
 var PreviewList$1 = withStyles(styles)(PreviewList);
 
@@ -368,6 +368,8 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.filesArray(this.props.initialFiles);
+      console.log(this.props.previewGridProps);
+      console.log(this.props.previewGridClasses);
     }
   }, {
     key: "componentDidUpdate",
@@ -613,16 +615,16 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
         showFileNames: this.props.showFileNames,
         useChipsForPreview: this.props.useChipsForPreview,
         previewChipProps: this.props.previewChipProps,
-        previewColumns: this.props.previewColumns,
-        previewSpacing: this.props.previewSpacing
+        previewGridClasses: this.props.previewGridClasses,
+        previewGridProps: this.props.previewGridProps
       })), showPreviews && React.createElement(Fragment, null, _ref$1, React.createElement(PreviewList$1, {
         fileObjects: this.state.fileObjects,
         handleRemove: this.handleRemove.bind(this),
         showFileNames: this.props.showFileNamesInPreview,
         useChipsForPreview: this.props.useChipsForPreview,
         previewChipProps: this.props.previewChipProps,
-        previewColumns: this.props.previewColumns,
-        previewSpacing: this.props.previewSpacing
+        previewGridClasses: this.props.previewGridClasses,
+        previewGridProps: this.props.previewGridProps
       })), this.props.showAlerts && React.createElement(Snackbar, {
         anchorOrigin: {
           vertical: 'bottom',
@@ -653,8 +655,8 @@ DropzoneArea.defaultProps = {
   showFileNames: false,
   showFileNamesInPreview: false,
   previewChipProps: {},
-  previewColumns: 3,
-  previewSpacing: 8,
+  previewGridClasses: {},
+  previewGridProps: {},
   showAlerts: true,
   clearOnUnmount: true,
   initialFiles: [],
@@ -699,8 +701,8 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
   showFileNamesInPreview: PropTypes.bool,
   useChipsForPreview: PropTypes.bool,
   previewChipProps: PropTypes.object,
-  previewColumns: PropTypes.number,
-  previewSpacing: PropTypes.number,
+  previewGridClasses: PropTypes.object,
+  previewGridProps: PropTypes.object,
   showAlerts: PropTypes.bool,
   clearOnUnmount: PropTypes.bool,
   initialFiles: PropTypes.arrayOf(PropTypes.string),
@@ -856,8 +858,8 @@ var DropzoneDialog = /*#__PURE__*/function (_React$Component) {
         showFileNamesInPreview: this.props.showFileNamesInPreview,
         useChipsForPreview: this.props.useChipsForPreview,
         previewChipProps: this.props.previewChipProps,
-        previewColumns: this.props.previewColumns,
-        previewSpacing: this.props.previewSpacing
+        previewGridClasses: this.props.previewGridClasses,
+        previewGridProps: this.props.previewGridProps
       })), React.createElement(DialogActions, null, React.createElement(Button, {
         color: "primary",
         onClick: this.handleClose.bind(this)
@@ -881,8 +883,8 @@ DropzoneDialog.defaultProps = {
   showPreviewsInDropzone: false,
   showFileNamesInPreview: true,
   previewChipProps: {},
-  previewColumns: 3,
-  previewSpacing: 8,
+  previewGridClasses: {},
+  previewGridProps: {},
   showAlerts: true,
   clearOnUnmount: true,
   dialogTitle: 'Upload file',
@@ -917,8 +919,8 @@ process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = {
   showFileNamesInPreview: PropTypes.bool,
   useChipsForPreview: PropTypes.bool,
   previewChipProps: PropTypes.object,
-  previewColumns: PropTypes.number,
-  previewSpacing: PropTypes.number,
+  previewGridClasses: PropTypes.object,
+  previewGridProps: PropTypes.object,
   showAlerts: PropTypes.bool,
   clearOnUnmount: PropTypes.bool,
   dialogTitle: PropTypes.string,

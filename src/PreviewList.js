@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {isImage} from './helpers/helpers.js';
+import clsx from 'clsx';
 
 const styles = {
     removeBtn: {
@@ -52,8 +53,8 @@ function PreviewList(props) {
         showFileNames,
         useChipsForPreview,
         previewChipProps,
-        previewColumns,
-        previewSpacing,
+        previewGridClasses,
+        previewGridProps,
         classes,
     } = props;
     if (useChipsForPreview) {
@@ -71,17 +72,18 @@ function PreviewList(props) {
         );
     }
     return (
-        <Grid container={true} spacing={previewSpacing}>
+        <Grid container={true} className={previewGridClasses.container} {...previewGridProps.container}>
             {
                 fileObjects.map((fileObject, i) => {
                     const img = (isImage(fileObject.file) ?
-                        <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data} /> :
-                        <AttachFileIcon className={classes.smallPreviewImg} />
+                        <img className={clsx(previewGridClasses.image, classes.smallPreviewImg)}
+                            role="presentation" src={fileObject.data} /> :
+                        <AttachFileIcon className={clsx(previewGridClasses.image, classes.smallPreviewImg)} />
                     );
                     return (
                         <Grid
-                            item={true} xs={12 / previewColumns} key={i}
-                            className={classes.imageContainer}
+                            item={true} key={i} {...previewGridProps.item}
+                            className={clsx(previewGridClasses.item, classes.imageContainer)}
                         >
                             {img}
 
@@ -111,8 +113,8 @@ PreviewList.propTypes = {
     showFileNames: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
-    previewColumns: PropTypes.number,
-    previewSpacing: PropTypes.number,
+    previewGridClasses: PropTypes.object,
+    previewGridProps: PropTypes.object,
 };
 
 export default withStyles(styles)(PreviewList);

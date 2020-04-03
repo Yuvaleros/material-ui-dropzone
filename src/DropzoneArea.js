@@ -238,8 +238,8 @@ class DropzoneArea extends Component {
                             showFileNames={this.props.showFileNames}
                             useChipsForPreview={this.props.useChipsForPreview}
                             previewChipProps={this.props.previewChipProps}
-                            previewColumns={this.props.previewColumns}
-                            previewSpacing={this.props.previewSpacing}
+                            previewGridClasses={this.props.previewGridClasses}
+                            previewGridProps={this.props.previewGridProps}
                         />
                     }
                 </Dropzone>
@@ -254,8 +254,8 @@ class DropzoneArea extends Component {
                             showFileNames={this.props.showFileNamesInPreview}
                             useChipsForPreview={this.props.useChipsForPreview}
                             previewChipProps={this.props.previewChipProps}
-                            previewColumns={this.props.previewColumns}
-                            previewSpacing={this.props.previewSpacing}
+                            previewGridClasses={this.props.previewGridClasses}
+                            previewGridProps={this.props.previewGridProps}
                         />
                     </Fragment>
                 }
@@ -291,8 +291,8 @@ DropzoneArea.defaultProps = {
     showFileNames: false,
     showFileNamesInPreview: false,
     previewChipProps: {},
-    previewColumns: 3,
-    previewSpacing: 8,
+    previewGridClasses: {},
+    previewGridProps: {},
     showAlerts: true,
     clearOnUnmount: true,
     initialFiles: [],
@@ -328,8 +328,8 @@ DropzoneArea.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
-    previewColumns: PropTypes.number,
-    previewSpacing: PropTypes.number,
+    previewGridClasses: PropTypes.object,
+    previewGridProps: PropTypes.object,
     showAlerts: PropTypes.bool,
     clearOnUnmount: PropTypes.bool,
     initialFiles: PropTypes.arrayOf(PropTypes.string),
