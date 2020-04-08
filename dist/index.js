@@ -524,7 +524,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
                   // Handle a single file
                   if (filesLimit <= 1) {
                     return {
-                      fileObjects: fileObjs[0]
+                      fileObjects: [].concat(fileObjs[0])
                     };
                   } // Handle multiple files
 
