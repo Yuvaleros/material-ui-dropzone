@@ -37,7 +37,7 @@ And if you drag in a wrong type of file, you'll get yelled at:
 
 ## Documentation and Examples
 
-See [https://panz3r.github.io/material-ui-dropzone](https://panz3r.github.io/material-ui-dropzone) for Documentation and Examples.
+See [https://yuvaleros.github.io/material-ui-dropzone](https://yuvaleros.github.io/material-ui-dropzone) for Documentation and Examples.
 
 ## Components
 
