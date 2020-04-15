@@ -71,6 +71,8 @@ export default DropzoneAreaExample;
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
 | useChipsForPreview| Boolean| false      | Uses deletable Material-ui Chip components to display file names
 | previewChipProps| Object| {}      | Props to pass to the Material-ui Chip components
+| previewGridClasses | Object | {}             | {container: string, item: string, image: string}. Custom CSS classNames for preview grid components.
+| previewGridProps | Object      | {}          | {container: GridProps, item: GridProps}. Props to pass to the Material-ui Grid components.
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or rejected. 
 | dropzoneParagraphClass    | String | null             | Custom CSS class name for text inside the container. 
 | showFileNamesInPreview | Boolean | false | Shows file name under the image    
@@ -171,6 +173,8 @@ export default class DropzoneDialogExample extends Component {
 | showPreviewsInDropzone| Boolean| true      | Shows preview **INSIDE** the dropzone
 | useChipsForPreview| Boolean| false      | Uses deletable Material-ui Chip components to display file names
 | previewChipProps| Object| {}      | Props to pass to the Material-ui Chip components
+| previewGridClasses | Object | {}             | {container: string, item: string, image: string}. Custom CSS classNames for preview grid components.
+| previewGridProps | Object      | {}          | {container: GridProps, item: GridProps}. Props to pass to the Material-ui Grid components.
 | showAlerts    | Boolean | true             | shows styled snackbar alerts when files are dropped, deleted or
 | maxWidth      | String      | sm          | Sets dialog width. Width grows with the size of the screen.
 | fullWidth    | Boolean     | true        | If true, the dialog stretches to maxWidth.

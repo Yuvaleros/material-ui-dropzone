@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {isImage} from './helpers/helpers.js';
+import clsx from 'clsx';
 
 const styles = {
     removeBtn: {
@@ -46,7 +47,16 @@ const styles = {
 };
 
 function PreviewList(props) {
-    const {fileObjects, handleRemove, showFileNames, useChipsForPreview, previewChipProps, classes} = props;
+    const {
+        fileObjects,
+        handleRemove,
+        showFileNames,
+        useChipsForPreview,
+        previewChipProps,
+        previewGridClasses,
+        previewGridProps,
+        classes,
+    } = props;
     if (useChipsForPreview) {
         return (
             fileObjects.map((fileObject, i) => {
@@ -62,17 +72,18 @@ function PreviewList(props) {
         );
     }
     return (
-        <Grid container={true} spacing={8}>
+        <Grid container={true} spacing={8} className={previewGridClasses.container} {...previewGridProps.container}>
             {
                 fileObjects.map((fileObject, i) => {
                     const img = (isImage(fileObject.file) ?
-                        <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data} /> :
-                        <AttachFileIcon className={classes.smallPreviewImg} />
+                        <img className={clsx(previewGridClasses.image, classes.smallPreviewImg)}
+                            role="presentation" src={fileObject.data} /> :
+                        <AttachFileIcon className={clsx(previewGridClasses.image, classes.smallPreviewImg)} />
                     );
                     return (
                         <Grid
-                            item={true} xs={4} key={i}
-                            className={classes.imageContainer}
+                            item={true} xs={4} key={i} {...previewGridProps.item}
+                            className={clsx(previewGridClasses.item, classes.imageContainer)}
                         >
                             {img}
 
@@ -102,6 +113,8 @@ PreviewList.propTypes = {
     showFileNames: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
+    previewGridClasses: PropTypes.object,
+    previewGridProps: PropTypes.object,
 };
 
 export default withStyles(styles)(PreviewList);
