@@ -35,7 +35,10 @@ const styles = {
         backgroundSize: '150% 100%',
     },
     rejectStripes: {
+        border: 'solid',
         backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
+        animation: 'progress 2s linear infinite !important',
+        backgroundSize: '150% 100%',
     },
     dropzoneTextStyle: {
         textAlign: 'center',
@@ -60,6 +63,7 @@ class DropzoneArea extends Component {
             snackbarMessage: '',
             snackbarVariant: 'success',
             dropzoneText: props.dropzoneText,
+            previewText: props.previewText,
         };
     }
 
@@ -73,6 +77,12 @@ class DropzoneArea extends Component {
                 dropzoneText: this.props.dropzoneText,
             });
         }
+        
+        if (this.props.previewText !== prevProps.previewText) {
+            this.setState({
+                previewText: this.props.previewText
+            });
+        }	    
     }
 
     componentWillUnmount() {
@@ -216,44 +226,34 @@ class DropzoneArea extends Component {
                     accept={this.props.acceptedFiles.join(',')}
                     onDrop={this.onDrop.bind(this)}
                     onDropRejected={this.handleDropRejected.bind(this)}
+                    className={clsx(this.props.dropzoneClass, classes.dropZone)}
+                    acceptClassName={classes.stripes}
+                    rejectClassName={classes.rejectStripes}
                     maxSize={this.props.maxFileSize}
                     multiple={this.props.filesLimit > 1}
                 >
-                    {({getRootProps, getInputProps, isDragActive, isDragReject}) => (
-                        <div
-                            {...getRootProps()}
-                            className={clsx(
-                                classes.dropZone,
-                                this.props.dropzoneClass,
-                                isDragActive && classes.stripes,
-                                isDragReject && classes.rejectStripes,
-                            )}
-                        >
-                            <input {...getInputProps()} />
-                            <div className={classes.dropzoneTextStyle}>
-                                <p className={clsx(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)}>
-                                    {this.state.dropzoneText}
-                                </p>
-                                <CloudUploadIcon className={classes.uploadIconSize} />
-                            </div>
-                            {showPreviewsInDropzone &&
-                                <PreviewList
-                                    fileObjects={this.state.fileObjects}
-                                    handleRemove={this.handleRemove.bind(this)}
-                                    showFileNames={this.props.showFileNames}
-                                    useChipsForPreview={this.props.useChipsForPreview}
-                                    previewChipProps={this.props.previewChipProps}
-                                    previewGridClasses={this.props.previewGridClasses}
-                                    previewGridProps={this.props.previewGridProps}
-                                />
-                            }
-                        </div>
-                    )}
+                    <div className={classes.dropzoneTextStyle}>
+                        <p className={clsx(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)}>
+                            {this.state.dropzoneText}
+                        </p>
+                        <CloudUploadIcon className={classes.uploadIconSize} />
+                    </div>
+                    {showPreviewsInDropzone &&
+                        <PreviewList
+                            fileObjects={this.state.fileObjects}
+                            handleRemove={this.handleRemove.bind(this)}
+                            showFileNames={this.props.showFileNames}
+                            useChipsForPreview={this.props.useChipsForPreview}
+                            previewChipProps={this.props.previewChipProps}
+                            previewGridClasses={this.props.previewGridClasses}
+                            previewGridProps={this.props.previewGridProps}
+                        />
+                    }
                 </Dropzone>
                 {showPreviews &&
                     <Fragment>
                         <Grid container={true}>
-                            <span>Preview:</span>
+                            <span>{this.state.previewText}</span>
                         </Grid>
                         <PreviewList
                             fileObjects={this.state.fileObjects}
@@ -293,6 +293,7 @@ DropzoneArea.defaultProps = {
     filesLimit: 3,
     maxFileSize: 3000000,
     dropzoneText: 'Drag and drop an image file here or click',
+    previewText: "Preview:",
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNames: false,
@@ -348,6 +349,7 @@ DropzoneArea.propTypes = {
     onDrop: PropTypes.func,
     onDropRejected: PropTypes.func,
     onDelete: PropTypes.func,
+    previewText: PropTypes.string,
 };
 
 export default withStyles(styles)(DropzoneArea);
