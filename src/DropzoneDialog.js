@@ -4,142 +4,124 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
-import React, {Fragment} from 'react';
+import * as React from 'react';
+import {Fragment} from 'react';
+
 import DropzoneArea from './DropzoneArea';
 
+// Split props related to DropzoneDialog from DropzoneArea ones
+function splitDropzoneDialogProps(allProps) {
+    const {
+        cancelButtonText,
+        dialogProps,
+        dialogTitle,
+        fullWidth,
+        maxWidth,
+        onClose,
+        onSave,
+        open,
+        submitButtonText,
+        ...dropzoneAreaProps
+    } = allProps;
 
-class DropzoneDialog extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            files: [],
-            disabled: true,
-        };
+    return [
+        {
+            cancelButtonText,
+            dialogProps,
+            dialogTitle,
+            fullWidth,
+            maxWidth,
+            onClose,
+            onSave,
+            open,
+            submitButtonText,
+        },
+        dropzoneAreaProps,
+    ];
+}
+
+class DropzoneDialog extends React.PureComponent {
+    state = {
+        files: [],
+    };
+
+    handleClose = (event) => {
+        const {onClose} = this.props;
+        // Notify onClose
+        if (onClose) {
+            onClose(event);
+        }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.open !== prevProps.open) {
-            this.setState({
-                open: this.props.open,
-            });
-            if (this.props.onClose && !this.props.open) {
-                this.props.onClose();
-            }
-        }
+    handleChange = (files) => {
+        const {onChange} = this.props;
 
-        if (this.state.files.length !== prevState.files.length) {
-            this.setState({
-                disabled: this.state.files.length === 0,
-            });
-        }
-    }
-
-    componentWillUnmount() {
-        if (this.props.clearOnUnmount) {
-            this.setState({
-                files: [],
-            });
-        }
-    }
-
-    handleClose(event) {
-        if (this.props.onClose) {
-            this.props.onClose(event);
-        }
-        this.setState({open: false});
-    }
-
-    onChange(files) {
-        if (this.props.logEvents) {
-            console.log('Files changed', files);
-        }
         this.setState({
-            files: files,
-        }, () => {
-            if (this.props.onChange) {
-                this.props.onChange(files);
-            }
+            files,
         });
-    }
 
-    onDelete(file) { // this passes it on to the parent component to do with it what they will
-        if (this.props.logEvents) {
-            console.log('File removed', file);
-        }
-        if (this.props.onDelete) {
-            this.props.onDelete(file);
+        if (onChange) {
+            onChange(files);
         }
     }
 
-    onDrop(files) { // this passes it on to the parent component to do with it what they will
-        if (this.props.logEvents) {
-            console.log('Files dropped', files);
-        }
-        if (this.props.onDrop) {
-            this.props.onDrop(files);
+    handleSaveClick = () => {
+        const {onSave} = this.props;
+        const {files} = this.state;
+
+        if (onSave) {
+            onSave(files);
         }
     }
 
-    onDropRejected(files, evt) { // this passes it on to the parent component to do with it what they will
-        if (this.props.logEvents) {
-            console.log('Files rejected', files);
-        }
-        if (this.props.onDropRejected) {
-            this.props.onDropRejected(files, evt);
-        }
-    }
-    handleSaveClick() {
-        if (this.props.onSave) {
-            this.props.onSave(this.state.files);
-        }
-    }
     render() {
+        const [dropzoneDialogProps, dropzoneAreaProps] = splitDropzoneDialogProps(this.props);
+        const {
+            cancelButtonText,
+            dialogProps,
+            dialogTitle,
+            fullWidth,
+            maxWidth,
+            open,
+            submitButtonText,
+        } = dropzoneDialogProps;
+        const {files} = this.state;
+
+        // Submit button state
+        const submitDisabled = files.length === 0;
+
         return (
             <Fragment>
                 <Dialog
-                    {...this.props.dialogProps}
-                    open={this.state.open}
-                    onClose={this.handleClose.bind(this)}
-                    maxWidth={this.props.maxWidth}
-                    fullWidth={this.props.fullWidth}
+                    {...dialogProps}
+                    fullWidth={fullWidth}
+                    maxWidth={maxWidth}
+                    onClose={this.handleClose}
+                    open={open}
                 >
-                    <DialogTitle>{this.props.dialogTitle}</DialogTitle>
+                    <DialogTitle>{dialogTitle}</DialogTitle>
+
                     <DialogContent>
                         <DropzoneArea
-                            dropzoneText={this.props.dropzoneText}
-                            acceptedFiles={this.props.acceptedFiles}
-                            filesLimit={this.props.filesLimit}
-                            maxFileSize={this.props.maxFileSize}
-                            showPreviews={this.props.showPreviews}
-                            showPreviewsInDropzone={this.props.showPreviewsInDropzone}
-                            showFileNames={this.props.showFileNames}
-                            showAlerts={this.props.showAlerts}
-                            onChange={this.onChange.bind(this)}
-                            onDrop={this.onDrop.bind(this)}
-                            onDropRejected={this.onDropRejected.bind(this)}
-                            onDelete={this.onDelete.bind(this)}
-                            clearOnUnmount={this.props.clearOnUnmount}
-                            showFileNamesInPreview={this.props.showFileNamesInPreview}
-                            useChipsForPreview={this.props.useChipsForPreview}
-                            previewChipProps={this.props.previewChipProps}
-                            previewGridClasses={this.props.previewGridClasses}
-                            previewGridProps={this.props.previewGridProps}
+                            {...dropzoneAreaProps}
+                            onChange={this.handleChange}
                         />
                     </DialogContent>
+
                     <DialogActions>
                         <Button
                             color="primary"
-                            onClick={this.handleClose.bind(this)}
+                            onClick={this.handleClose}
                         >
-                            {this.props.cancelButtonText}
+                            {cancelButtonText}
                         </Button>
+
                         <Button
                             color="primary"
-                            disabled={this.state.disabled}
-                            onClick={this.handleSaveClick.bind(this)}
+                            disabled={submitDisabled}
+                            onClick={this.handleSaveClick}
                         >
-                            {this.props.submitButtonText}
+                            {submitButtonText}
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -147,63 +129,34 @@ class DropzoneDialog extends React.Component {
         );
     }
 }
+
 DropzoneDialog.defaultProps = {
+    ...DropzoneArea.defaultProps,
+    cancelButtonText: 'Cancel',
+    dialogProps: {},
+    dialogTitle: 'Upload file',
+    fullWidth: true,
+    maxWidth: 'sm',
+    onClose: () => { },
+    onSave: () => { },
     open: false,
-    acceptedFiles: ['image/*', 'video/*', 'application/*'],
-    filesLimit: 3,
-    maxFileSize: 3000000,
-    showPreviews: true,
+    showPreviews: true, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: false,
     showFileNamesInPreview: true,
-    previewChipProps: {},
-    previewGridClasses: {},
-    previewGridProps: {},
-    showAlerts: true,
-    clearOnUnmount: true,
-    dialogTitle: 'Upload file',
-    dialogProps: {},
     submitButtonText: 'Submit',
-    cancelButtonText: 'Cancel',
-    maxWidth: 'sm',
-    fullWidth: true,
-    onSave: () => { },
-    onDelete: () => { },
-    onClose: () => { },
-    onChange: () => { },
-    onDrop: () => { },
-    onDropRejected: () => { },
-    logEvents: false,
 };
 
 DropzoneDialog.propTypes = {
-    open: PropTypes.bool.isRequired,
-    onSave: PropTypes.func,
-    onDelete: PropTypes.func,
-    onClose: PropTypes.func,
-    onChange: PropTypes.func,
-    onDrop: PropTypes.func,
-    onDropRejected: PropTypes.func,
-    acceptedFiles: PropTypes.array,
-    filesLimit: PropTypes.number,
-    maxFileSize: PropTypes.number,
-    dropzoneText: PropTypes.string,
-    showPreviews: PropTypes.bool,
-    showPreviewsInDropzone: PropTypes.bool,
-    showFileNames: PropTypes.bool,
-    showFileNamesInPreview: PropTypes.bool,
-    useChipsForPreview: PropTypes.bool,
-    previewChipProps: PropTypes.object,
-    previewGridClasses: PropTypes.object,
-    previewGridProps: PropTypes.object,
-    showAlerts: PropTypes.bool,
-    clearOnUnmount: PropTypes.bool,
-    dialogTitle: PropTypes.string,
-    dialogProps: PropTypes.object,
-    submitButtonText: PropTypes.string,
+    ...DropzoneArea.propTypes,
     cancelButtonText: PropTypes.string,
-    maxWidth: PropTypes.string,
+    dialogProps: PropTypes.object,
+    dialogTitle: PropTypes.string,
     fullWidth: PropTypes.bool,
-    logEvents: PropTypes.bool,
+    maxWidth: PropTypes.string,
+    onClose: PropTypes.func,
+    onSave: PropTypes.func,
+    open: PropTypes.bool.isRequired,
+    submitButtonText: PropTypes.string,
 };
 
 export default DropzoneDialog;
