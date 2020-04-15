@@ -39,6 +39,7 @@ export interface DropzoneAreaProps {
     acceptedFiles: string[],
     maxFileSize: number
   ) => string;
+  previewText?: string;
 }
 export const DropzoneArea: React.ComponentType<DropzoneAreaProps>;
 
@@ -74,5 +75,6 @@ export interface DropzoneDialogProps {
   submitButtonText?: string;
   maxWidth?: string;
   fullWidth?: boolean;
+  previewText?: string;
 }
 export const DropzoneDialog: React.ComponentType<DropzoneDialogProps>;
