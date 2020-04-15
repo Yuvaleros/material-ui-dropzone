@@ -125,6 +125,7 @@ class DropzoneDialog extends React.Component {
                             previewChipProps={this.props.previewChipProps}
                             previewGridClasses={this.props.previewGridClasses}
                             previewGridProps={this.props.previewGridProps}
+                            previewText={this.props.previewText}
                         />
                     </DialogContent>
                     <DialogActions>
