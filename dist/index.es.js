@@ -1,3 +1,4 @@
+import _extends from '@babel/runtime/helpers/extends';
 import _regeneratorRuntime from '@babel/runtime/regenerator';
 import _asyncToGenerator from '@babel/runtime/helpers/asyncToGenerator';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
@@ -13,7 +14,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import Dropzone from 'react-dropzone';
-import _extends from '@babel/runtime/helpers/extends';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -289,10 +289,7 @@ var styles$2 = {
     backgroundSize: '150% 100%'
   },
   rejectStripes: {
-    border: 'solid',
-    backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
-    animation: 'progress 2s linear infinite !important',
-    backgroundSize: '150% 100%'
+    backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)'
   },
   dropzoneTextStyle: {
     textAlign: 'center'
@@ -307,7 +304,7 @@ var styles$2 = {
   }
 };
 
-var _ref$1 = /*#__PURE__*/React.createElement(Grid, {
+var _ref2 = /*#__PURE__*/React.createElement(Grid, {
   container: true
 }, React.createElement("span", null, "Preview:"));
 
@@ -591,6 +588,8 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       var classes = this.props.classes;
       var showPreviews = this.props.showPreviews && this.state.fileObjects.length > 0;
       var showPreviewsInDropzone = this.props.showPreviewsInDropzone && this.state.fileObjects.length > 0;
@@ -598,26 +597,31 @@ var DropzoneArea = /*#__PURE__*/function (_Component) {
         accept: this.props.acceptedFiles.join(','),
         onDrop: this.onDrop.bind(this),
         onDropRejected: this.handleDropRejected.bind(this),
-        className: clsx(this.props.dropzoneClass, classes.dropZone),
-        acceptClassName: classes.stripes,
-        rejectClassName: classes.rejectStripes,
         maxSize: this.props.maxFileSize,
         multiple: this.props.filesLimit > 1
-      }, React.createElement("div", {
-        className: classes.dropzoneTextStyle
-      }, React.createElement("p", {
-        className: clsx(classes.dropzoneParagraph, this.props.dropzoneParagraphClass)
-      }, this.state.dropzoneText), React.createElement(CloudUploadIcon, {
-        className: classes.uploadIconSize
-      })), showPreviewsInDropzone && React.createElement(PreviewList$1, {
-        fileObjects: this.state.fileObjects,
-        handleRemove: this.handleRemove.bind(this),
-        showFileNames: this.props.showFileNames,
-        useChipsForPreview: this.props.useChipsForPreview,
-        previewChipProps: this.props.previewChipProps,
-        previewGridClasses: this.props.previewGridClasses,
-        previewGridProps: this.props.previewGridProps
-      })), showPreviews && React.createElement(Fragment, null, _ref$1, React.createElement(PreviewList$1, {
+      }, function (_ref) {
+        var getRootProps = _ref.getRootProps,
+            getInputProps = _ref.getInputProps,
+            isDragActive = _ref.isDragActive,
+            isDragReject = _ref.isDragReject;
+        return React.createElement("div", _extends({}, getRootProps(), {
+          className: clsx(classes.dropZone, _this5.props.dropzoneClass, isDragActive && classes.stripes, isDragReject && classes.rejectStripes)
+        }), React.createElement("input", getInputProps()), React.createElement("div", {
+          className: classes.dropzoneTextStyle
+        }, React.createElement("p", {
+          className: clsx(classes.dropzoneParagraph, _this5.props.dropzoneParagraphClass)
+        }, _this5.state.dropzoneText), React.createElement(CloudUploadIcon, {
+          className: classes.uploadIconSize
+        })), showPreviewsInDropzone && React.createElement(PreviewList$1, {
+          fileObjects: _this5.state.fileObjects,
+          handleRemove: _this5.handleRemove.bind(_this5),
+          showFileNames: _this5.props.showFileNames,
+          useChipsForPreview: _this5.props.useChipsForPreview,
+          previewChipProps: _this5.props.previewChipProps,
+          previewGridClasses: _this5.props.previewGridClasses,
+          previewGridProps: _this5.props.previewGridProps
+        }));
+      }), showPreviews && React.createElement(Fragment, null, _ref2, React.createElement(PreviewList$1, {
         fileObjects: this.state.fileObjects,
         handleRemove: this.handleRemove.bind(this),
         showFileNames: this.props.showFileNamesInPreview,
