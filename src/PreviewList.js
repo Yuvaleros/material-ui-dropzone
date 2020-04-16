@@ -7,7 +7,7 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {isImage} from './helpers/helpers.js';
+import {isImage} from './helpers.js';
 import clsx from 'clsx';
 
 const styles = {
