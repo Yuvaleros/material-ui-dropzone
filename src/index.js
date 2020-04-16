@@ -1,5 +1,2 @@
-import DropzoneArea from './DropzoneArea';
-import DropzoneDialog from './DropzoneDialog';
-
-export {DropzoneArea};
-export {DropzoneDialog};
+export {default as DropzoneArea} from './components/DropzoneArea';
+export {default as DropzoneDialog} from './components/DropzoneDialog';

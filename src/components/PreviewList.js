@@ -1,13 +1,15 @@
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
-import React from 'react';
-import PropTypes from 'prop-types';
-import {isImage} from './helpers/helpers.js';
 import clsx from 'clsx';
+import * as React from 'react';
+import PropTypes from 'prop-types';
+
+import {isImage} from '../helpers';
 
 const styles = {
     removeBtn: {
@@ -46,62 +48,65 @@ const styles = {
     },
 };
 
-function PreviewList(props) {
-    const {
-        fileObjects,
-        handleRemove,
-        showFileNames,
-        useChipsForPreview,
-        previewChipProps,
-        previewGridClasses,
-        previewGridProps,
-        classes,
-    } = props;
+function PreviewList({
+    fileObjects,
+    handleRemove,
+    showFileNames,
+    useChipsForPreview,
+    previewChipProps,
+    previewGridClasses,
+    previewGridProps,
+    classes,
+}) {
     if (useChipsForPreview) {
         return (
-            fileObjects.map((fileObject, i) => {
-                return (<div key={i}>
+            fileObjects.map((fileObject, i) => (
+                <div key={i}>
                     <Chip
                         label={fileObject.file.name}
                         onDelete={handleRemove(i)}
                         variant="outlined"
                         {...previewChipProps}
                     />
-                </div>);
-            })
+                </div>
+            ))
         );
     }
+
     return (
         <Grid container={true} spacing={8} className={previewGridClasses.container} {...previewGridProps.container}>
-            {
-                fileObjects.map((fileObject, i) => {
-                    const img = (isImage(fileObject.file) ?
-                        <img className={clsx(previewGridClasses.image, classes.smallPreviewImg)}
-                            role="presentation" src={fileObject.data} /> :
-                        <AttachFileIcon className={clsx(previewGridClasses.image, classes.smallPreviewImg)} />
-                    );
-                    return (
-                        <Grid
-                            item={true} xs={4} key={i} {...previewGridProps.item}
-                            className={clsx(previewGridClasses.item, classes.imageContainer)}
+            {fileObjects.map((fileObject, i) => {
+                const img = (isImage(fileObject.file) ?
+                    <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data} /> :
+                    <AttachFileIcon className={classes.smallPreviewImg} />
+                );
+
+                return (
+                    <Grid
+                        key={i}
+                        item={true}
+                        xs={4}
+                        {...previewGridProps.item}
+                        className={clsx(previewGridClasses.item, classes.imageContainer)}
+                    >
+                        {img}
+
+                        {showFileNames && (
+                            <Typography variant="body1" component="p">
+                                {fileObject.file.name}
+                            </Typography>
+                        )}
+
+                        <Fab
+                            onClick={handleRemove(i)}
+                            aria-label="Delete"
+                            className={classes.removeBtn}
                         >
-                            {img}
-
-                            {showFileNames &&
-                                <p>{fileObject.file.name}</p>
-                            }
-
-                            <Fab
-                                onClick={handleRemove(i)}
-                                aria-label="Delete"
-                                className={classes.removeBtn}
-                            >
-                                <DeleteIcon />
-                            </Fab>
-                        </Grid>
-                    );
-                })
-            }
+                            <DeleteIcon />
+                        </Fab>
+                    </Grid>
+                );
+            })}
         </Grid>
     );
 }
@@ -110,11 +115,11 @@ PreviewList.propTypes = {
     classes: PropTypes.object.isRequired,
     fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
     handleRemove: PropTypes.func.isRequired,
-    showFileNames: PropTypes.bool,
-    useChipsForPreview: PropTypes.bool,
     previewChipProps: PropTypes.object,
     previewGridClasses: PropTypes.object,
     previewGridProps: PropTypes.object,
+    showFileNames: PropTypes.bool,
+    useChipsForPreview: PropTypes.bool,
 };
 
 export default withStyles(styles)(PreviewList);
