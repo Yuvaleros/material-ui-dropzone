@@ -11,6 +11,10 @@ module.exports = {
       content: './docs/installation.md',
     },
     {
+      name: 'Support',
+      content: './docs/support.md',
+    },
+    {
       name: 'Screenshots',
       content: './docs/screenshots.md',
     },
