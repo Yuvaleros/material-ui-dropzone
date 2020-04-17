@@ -250,6 +250,7 @@ class DropzoneArea extends React.PureComponent {
             disableRejectionFeedback,
             dropzoneClass,
             dropzoneParagraphClass,
+            dropzoneProps,
             dropzoneText,
             filesLimit,
             inputProps,
@@ -275,6 +276,7 @@ class DropzoneArea extends React.PureComponent {
         return (
             <Fragment>
                 <Dropzone
+                    {...dropzoneProps}
                     accept={acceptFiles}
                     onDropAccepted={this.handleDropAccepted}
                     onDropRejected={this.handleDropRejected}
@@ -440,6 +442,12 @@ DropzoneArea.propTypes = {
     previewText: PropTypes.string,
     /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
     showAlerts: PropTypes.bool,
+    /**
+     * Props to pass to the Dropzone component.
+     *
+     * @see See [Dropzone props](https://react-dropzone.js.org/#src) for available values.
+     */
+    dropzoneProps: PropTypes.object,
     /**
      * Attributes applied to the input element.
      *
