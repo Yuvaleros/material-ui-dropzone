@@ -55,9 +55,9 @@ const styles = {
     },
 };
 
-const snackbarAnchorOrigin = {
-    vertical: 'bottom',
+const defaultSnackbarAnchorOrigin = {
     horizontal: 'left',
+    vertical: 'bottom',
 };
 
 /**
@@ -246,6 +246,7 @@ class DropzoneArea extends React.PureComponent {
     render() {
         const {
             acceptedFiles,
+            alertSnackbarProps,
             classes,
             disableRejectionFeedback,
             dropzoneClass,
@@ -341,9 +342,10 @@ class DropzoneArea extends React.PureComponent {
 
                 {showAlerts &&
                     <Snackbar
-                        anchorOrigin={snackbarAnchorOrigin}
-                        open={openSnackBar}
+                        anchorOrigin={defaultSnackbarAnchorOrigin}
                         autoHideDuration={6000}
+                        {...alertSnackbarProps}
+                        open={openSnackBar}
                         onClose={this.handleCloseSnackbar}
                     >
                         <SnackbarContentWrapper
@@ -374,6 +376,13 @@ DropzoneArea.defaultProps = {
     previewGridClasses: {},
     previewGridProps: {},
     showAlerts: true,
+    alertSnackbarProps: {
+        anchorOrigin: {
+            horizontal: 'left',
+            vertical: 'bottom',
+        },
+        autoHideDuration: 6000,
+    },
     clearOnUnmount: true,
     initialFiles: [],
     getFileLimitExceedMessage: (filesLimit) => (`Maximum allowed number of files exceeded. Only ${filesLimit} allowed`),
@@ -442,6 +451,12 @@ DropzoneArea.propTypes = {
     previewText: PropTypes.string,
     /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
     showAlerts: PropTypes.bool,
+    /**
+     * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
+     *
+     * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+     */
+    alertSnackbarProps: PropTypes.object,
     /**
      * Props to pass to the Dropzone component.
      *
