@@ -251,6 +251,7 @@ class DropzoneArea extends React.PureComponent {
             dropzoneParagraphClass,
             dropzoneText,
             filesLimit,
+            inputProps,
             maxFileSize,
             previewChipProps,
             previewGridClasses,
@@ -289,7 +290,7 @@ class DropzoneArea extends React.PureComponent {
                                 isDragReject && classes.rejectStripes,
                             )}
                         >
-                            <input {...getInputProps()} />
+                            <input {...inputProps} {...getInputProps()} />
 
                             <div className={classes.dropzoneTextStyle}>
                                 <Typography
@@ -435,6 +436,12 @@ DropzoneArea.propTypes = {
     previewText: PropTypes.string,
     /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
     showAlerts: PropTypes.bool,
+    /**
+     * Attributes applied to the input element.
+     *
+     * @see See [MDN Input File attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Additional_attributes) for available values.
+     */
+    inputProps: PropTypes.object,
     /** Clear uploaded files when component is unmounted. */
     clearOnUnmount: PropTypes.bool,
     /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
