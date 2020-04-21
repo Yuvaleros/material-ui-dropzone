@@ -66,7 +66,7 @@ function createFileFromUrl(_x) {
 
 function _createFileFromUrl() {
   _createFileFromUrl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
-    var response, data, metadata, filename, ext;
+    var response, data, metadata, filename, ext, fullFilename;
     return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -85,10 +85,12 @@ function _createFileFromUrl() {
               type: data.type
             };
             filename = url.replace(/\?.+/, '').split('/').pop();
-            ext = data.type.split('/').pop();
-            return _context.abrupt("return", new File([data], "".concat(filename, ".").concat(ext), metadata));
+            ext = data.type.split('/').pop(); // Append extension only if not already present
 
-          case 10:
+            fullFilename = !(filename === null || filename === void 0 ? void 0 : filename.endsWith(ext)) ? "".concat(filename, ".").concat(ext) : filename;
+            return _context.abrupt("return", new File([data], fullFilename, metadata));
+
+          case 11:
           case "end":
             return _context.stop();
         }
