@@ -661,6 +661,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       var _this$props5 = this.props,
           acceptedFiles = _this$props5.acceptedFiles,
           classes = _this$props5.classes,
+          disableRejectionFeedback = _this$props5.disableRejectionFeedback,
           dropzoneClass = _this$props5.dropzoneClass,
           dropzoneParagraphClass = _this$props5.dropzoneParagraphClass,
           dropzoneText = _this$props5.dropzoneText,
@@ -697,7 +698,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
             isDragActive = _ref5.isDragActive,
             isDragReject = _ref5.isDragReject;
         return React.createElement("div", _extends({}, getRootProps(), {
-          className: clsx(classes.dropZone, dropzoneClass, isDragActive && classes.stripes, isDragReject && classes.rejectStripes)
+          className: clsx(classes.dropZone, dropzoneClass, isDragActive && classes.stripes, !disableRejectionFeedback && isDragReject && classes.rejectStripes)
         }), React.createElement("input", getInputProps()), React.createElement("div", {
           className: classes.dropzoneTextStyle
         }, React.createElement(Typography, {
@@ -748,6 +749,7 @@ DropzoneArea.defaultProps = {
   maxFileSize: 3000000,
   dropzoneText: 'Drag and drop a file here or click',
   previewText: 'Preview:',
+  disableRejectionFeedback: false,
   showPreviews: false,
   // By default previews show up under in the dialog and inside in the standalone
   showPreviewsInDropzone: true,
@@ -806,6 +808,9 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
 
   /** Custom CSS class name for text inside the container. */
   dropzoneParagraphClass: PropTypes.string,
+
+  /** Disable feedback effect when dropping rejected files. */
+  disableRejectionFeedback: PropTypes.bool,
 
   /** Shows previews **BELOW** the dropzone. */
   showPreviews: PropTypes.bool,
