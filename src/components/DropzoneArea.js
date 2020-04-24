@@ -247,6 +247,7 @@ class DropzoneArea extends React.PureComponent {
         const {
             acceptedFiles,
             classes,
+            disableRejectionFeedback,
             dropzoneClass,
             dropzoneParagraphClass,
             dropzoneText,
@@ -286,7 +287,7 @@ class DropzoneArea extends React.PureComponent {
                                 classes.dropZone,
                                 dropzoneClass,
                                 isDragActive && classes.stripes,
-                                isDragReject && classes.rejectStripes,
+                                (!disableRejectionFeedback && isDragReject) && classes.rejectStripes,
                             )}
                         >
                             <input {...getInputProps()} />
@@ -360,6 +361,7 @@ DropzoneArea.defaultProps = {
     maxFileSize: 3000000,
     dropzoneText: 'Drag and drop a file here or click',
     previewText: 'Preview:',
+    disableRejectionFeedback: false,
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNames: false,
@@ -403,6 +405,8 @@ DropzoneArea.propTypes = {
     dropzoneClass: PropTypes.string,
     /** Custom CSS class name for text inside the container. */
     dropzoneParagraphClass: PropTypes.string,
+    /** Disable feedback effect when dropping rejected files. */
+    disableRejectionFeedback: PropTypes.bool,
     /** Shows previews **BELOW** the dropzone. */
     showPreviews: PropTypes.bool,
     /** Shows preview **INSIDE** the dropzone area. */
