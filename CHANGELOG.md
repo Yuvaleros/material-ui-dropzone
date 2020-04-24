@@ -11,6 +11,7 @@ This changelog refers to `v2.x` branch, for updated changelog see [`master CHANG
 #### :sparkles: New Features
 
 * Addition of `previewText` prop to `DropzoneArea` component (PR [#132](https://github.com/Yuvaleros/material-ui-dropzone/pull/132) by **@panz3r**, same as [#112](https://github.com/Yuvaleros/material-ui-dropzone/pull/112) by **@charlot567**)
+* Add `disableRejectionFeedback` prop to `DropzoneArea` component (PR [#143](https://github.com/Yuvaleros/material-ui-dropzone/pull/143) by **@panz3r**, reported as [#141](https://github.com/Yuvaleros/material-ui-dropzone/issues/141) by **@PabloCanalSuarez**)
 
 #### :bug: Bugfixes
 
