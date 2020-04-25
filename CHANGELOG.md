@@ -6,7 +6,7 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 ## `v3.0.0`
 
-###### to be published
+###### April 25, 2020
 
 #### :boom: **BREAKING**
 
@@ -17,6 +17,14 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 * Addition of `previewText` prop to `DropzoneArea` component (PR [#121](https://github.com/Yuvaleros/material-ui-dropzone/pull/121) by **@panz3r**, same as [#112](https://github.com/Yuvaleros/material-ui-dropzone/pull/112) by **@charlot567**)
 * Add `disableRejectionFeedback` prop to `DropzoneArea` component (PR [#142](https://github.com/Yuvaleros/material-ui-dropzone/pull/142) by **@panz3r**, reported as [#141](https://github.com/Yuvaleros/material-ui-dropzone/issues/141) by **@PabloCanalSuarez**)
+* Add `inputProps` prop to `DropzoneArea` component (PR [#134](https://github.com/Yuvaleros/material-ui-dropzone/pull/134) by **@panz3r**), fixes:
+  * set name for `<input>` element ([#92](https://github.com/Yuvaleros/material-ui-dropzone/issues/92) by **@mnlbox**)
+  * Upload Directory/folder ([#122](https://github.com/Yuvaleros/material-ui-dropzone/issues/122) by **@antares-va-tech**)
+* Add `dropzoneProps` prop to `DropzoneArea` component (PR [#134](https://github.com/Yuvaleros/material-ui-dropzone/pull/134) by **@panz3r**), fixes:
+  * Dropzone disable attribute not working ([#103](https://github.com/Yuvaleros/material-ui-dropzone/issues/103) by **@stefanstankovic995**)
+* Add `alertSnackbarProps` prop to `DropzoneArea` component (PR [#134](https://github.com/Yuvaleros/material-ui-dropzone/pull/134) by **@panz3r**), fixes:
+  * Ability to override snackbard background colours ([#45](https://github.com/Yuvaleros/material-ui-dropzone/issues/45) by **@IsabellaRey**)
+  * Allow the abillity of change anchorOrigin of snackbar ([#64](https://github.com/Yuvaleros/material-ui-dropzone/issues/64) by **@widomin**)
 
 #### :bug: Bugfixes
 
