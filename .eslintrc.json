@@ -51,7 +51,7 @@
     "jsx-quotes": ["error", "prefer-double"],
     "key-spacing": "error",
     "keyword-spacing": "error",
-    "max-len": ["error", 120, 4],
+    "max-len": ["error", 120, 4, {"ignoreComments": true}],
     "new-cap": ["off", {"capIsNew": true, "newIsCap": true}],
     "no-await-in-loop": "error",
     "no-case-declarations": "off",
