@@ -22,10 +22,7 @@ export async function createFileFromUrl(url) {
     const data = await response.blob();
     const metadata = {type: data.type};
     const filename = url.replace(/\?.+/, '').split('/').pop();
-    const ext = data.type.split('/').pop();
-    // Append extension only if not already present
-    const fullFilename = !filename?.endsWith(ext) ? `${filename}.${ext}` : filename;
-    return new File([data], fullFilename, metadata);
+    return new File([data], filename, metadata);
 }
 
 export function readFile(file) {
