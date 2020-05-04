@@ -66,7 +66,7 @@ function createFileFromUrl(_x) {
 
 function _createFileFromUrl() {
   _createFileFromUrl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
-    var response, data, metadata, filename, ext, fullFilename;
+    var response, data, metadata, filename;
     return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -85,12 +85,9 @@ function _createFileFromUrl() {
               type: data.type
             };
             filename = url.replace(/\?.+/, '').split('/').pop();
-            ext = data.type.split('/').pop(); // Append extension only if not already present
+            return _context.abrupt("return", new File([data], filename, metadata));
 
-            fullFilename = !(filename === null || filename === void 0 ? void 0 : filename.endsWith(ext)) ? "".concat(filename, ".").concat(ext) : filename;
-            return _context.abrupt("return", new File([data], fullFilename, metadata));
-
-          case 11:
+          case 9:
           case "end":
             return _context.stop();
         }
@@ -336,9 +333,9 @@ var styles$2 = {
     marginTop: 20
   }
 };
-var snackbarAnchorOrigin = {
-  vertical: 'bottom',
-  horizontal: 'left'
+var defaultSnackbarAnchorOrigin = {
+  horizontal: 'left',
+  vertical: 'bottom'
 };
 /**
  * This components creates a Material-UI Dropzone, with previews and snackbar notifications.
@@ -660,11 +657,15 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
 
       var _this$props5 = this.props,
           acceptedFiles = _this$props5.acceptedFiles,
+          alertSnackbarProps = _this$props5.alertSnackbarProps,
           classes = _this$props5.classes,
+          disableRejectionFeedback = _this$props5.disableRejectionFeedback,
           dropzoneClass = _this$props5.dropzoneClass,
           dropzoneParagraphClass = _this$props5.dropzoneParagraphClass,
+          dropzoneProps = _this$props5.dropzoneProps,
           dropzoneText = _this$props5.dropzoneText,
           filesLimit = _this$props5.filesLimit,
+          inputProps = _this$props5.inputProps,
           maxFileSize = _this$props5.maxFileSize,
           previewChipProps = _this$props5.previewChipProps,
           previewGridClasses = _this$props5.previewGridClasses,
@@ -685,20 +686,20 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       var isMultiple = filesLimit > 1;
       var previewsVisible = showPreviews && fileObjects.length > 0;
       var previewsInDropzoneVisible = showPreviewsInDropzone && fileObjects.length > 0;
-      return React.createElement(React.Fragment, null, React.createElement(Dropzone, {
+      return React.createElement(React.Fragment, null, React.createElement(Dropzone, _extends({}, dropzoneProps, {
         accept: acceptFiles,
         onDropAccepted: this.handleDropAccepted,
         onDropRejected: this.handleDropRejected,
         maxSize: maxFileSize,
         multiple: isMultiple
-      }, function (_ref5) {
+      }), function (_ref5) {
         var getRootProps = _ref5.getRootProps,
             getInputProps = _ref5.getInputProps,
             isDragActive = _ref5.isDragActive,
             isDragReject = _ref5.isDragReject;
         return React.createElement("div", _extends({}, getRootProps(), {
-          className: clsx(classes.dropZone, dropzoneClass, isDragActive && classes.stripes, isDragReject && classes.rejectStripes)
-        }), React.createElement("input", getInputProps()), React.createElement("div", {
+          className: clsx(classes.dropZone, dropzoneClass, isDragActive && classes.stripes, !disableRejectionFeedback && isDragReject && classes.rejectStripes)
+        }), React.createElement("input", _extends({}, inputProps, getInputProps())), React.createElement("div", {
           className: classes.dropzoneTextStyle
         }, React.createElement(Typography, {
           variant: "h5",
@@ -726,12 +727,13 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
         previewChipProps: previewChipProps,
         previewGridClasses: previewGridClasses,
         previewGridProps: previewGridProps
-      })), showAlerts && React.createElement(Snackbar, {
-        anchorOrigin: snackbarAnchorOrigin,
+      })), showAlerts && React.createElement(Snackbar, _extends({
+        anchorOrigin: defaultSnackbarAnchorOrigin,
+        autoHideDuration: 6000
+      }, alertSnackbarProps, {
         open: openSnackBar,
-        autoHideDuration: 6000,
         onClose: this.handleCloseSnackbar
-      }, React.createElement(SnackbarContentWrapper$1, {
+      }), React.createElement(SnackbarContentWrapper$1, {
         onClose: this.handleCloseSnackbar,
         variant: snackbarVariant,
         message: snackbarMessage
@@ -748,6 +750,7 @@ DropzoneArea.defaultProps = {
   maxFileSize: 3000000,
   dropzoneText: 'Drag and drop a file here or click',
   previewText: 'Preview:',
+  disableRejectionFeedback: false,
   showPreviews: false,
   // By default previews show up under in the dialog and inside in the standalone
   showPreviewsInDropzone: true,
@@ -758,6 +761,13 @@ DropzoneArea.defaultProps = {
   previewGridClasses: {},
   previewGridProps: {},
   showAlerts: true,
+  alertSnackbarProps: {
+    anchorOrigin: {
+      horizontal: 'left',
+      vertical: 'bottom'
+    },
+    autoHideDuration: 6000
+  },
   clearOnUnmount: true,
   initialFiles: [],
   getFileLimitExceedMessage: function getFileLimitExceedMessage(filesLimit) {
@@ -807,6 +817,9 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
   /** Custom CSS class name for text inside the container. */
   dropzoneParagraphClass: PropTypes.string,
 
+  /** Disable feedback effect when dropping rejected files. */
+  disableRejectionFeedback: PropTypes.bool,
+
   /** Shows previews **BELOW** the dropzone. */
   showPreviews: PropTypes.bool,
 
@@ -848,6 +861,27 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
 
   /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
   showAlerts: PropTypes.bool,
+
+  /**
+   * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
+   *
+   * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+   */
+  alertSnackbarProps: PropTypes.object,
+
+  /**
+   * Props to pass to the Dropzone component.
+   *
+   * @see See [Dropzone props](https://react-dropzone.js.org/#src) for available values.
+   */
+  dropzoneProps: PropTypes.object,
+
+  /**
+   * Attributes applied to the input element.
+   *
+   * @see See [MDN Input File attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Additional_attributes) for available values.
+   */
+  inputProps: PropTypes.object,
 
   /** Clear uploaded files when component is unmounted. */
   clearOnUnmount: PropTypes.bool,

@@ -55,9 +55,9 @@ const styles = {
     },
 };
 
-const snackbarAnchorOrigin = {
-    vertical: 'bottom',
+const defaultSnackbarAnchorOrigin = {
     horizontal: 'left',
+    vertical: 'bottom',
 };
 
 /**
@@ -246,11 +246,15 @@ class DropzoneArea extends React.PureComponent {
     render() {
         const {
             acceptedFiles,
+            alertSnackbarProps,
             classes,
+            disableRejectionFeedback,
             dropzoneClass,
             dropzoneParagraphClass,
+            dropzoneProps,
             dropzoneText,
             filesLimit,
+            inputProps,
             maxFileSize,
             previewChipProps,
             previewGridClasses,
@@ -273,6 +277,7 @@ class DropzoneArea extends React.PureComponent {
         return (
             <Fragment>
                 <Dropzone
+                    {...dropzoneProps}
                     accept={acceptFiles}
                     onDropAccepted={this.handleDropAccepted}
                     onDropRejected={this.handleDropRejected}
@@ -286,10 +291,10 @@ class DropzoneArea extends React.PureComponent {
                                 classes.dropZone,
                                 dropzoneClass,
                                 isDragActive && classes.stripes,
-                                isDragReject && classes.rejectStripes,
+                                (!disableRejectionFeedback && isDragReject) && classes.rejectStripes,
                             )}
                         >
-                            <input {...getInputProps()} />
+                            <input {...inputProps} {...getInputProps()} />
 
                             <div className={classes.dropzoneTextStyle}>
                                 <Typography
@@ -337,9 +342,10 @@ class DropzoneArea extends React.PureComponent {
 
                 {showAlerts &&
                     <Snackbar
-                        anchorOrigin={snackbarAnchorOrigin}
-                        open={openSnackBar}
+                        anchorOrigin={defaultSnackbarAnchorOrigin}
                         autoHideDuration={6000}
+                        {...alertSnackbarProps}
+                        open={openSnackBar}
                         onClose={this.handleCloseSnackbar}
                     >
                         <SnackbarContentWrapper
@@ -360,6 +366,7 @@ DropzoneArea.defaultProps = {
     maxFileSize: 3000000,
     dropzoneText: 'Drag and drop a file here or click',
     previewText: 'Preview:',
+    disableRejectionFeedback: false,
     showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
     showPreviewsInDropzone: true,
     showFileNames: false,
@@ -369,6 +376,13 @@ DropzoneArea.defaultProps = {
     previewGridClasses: {},
     previewGridProps: {},
     showAlerts: true,
+    alertSnackbarProps: {
+        anchorOrigin: {
+            horizontal: 'left',
+            vertical: 'bottom',
+        },
+        autoHideDuration: 6000,
+    },
     clearOnUnmount: true,
     initialFiles: [],
     getFileLimitExceedMessage: (filesLimit) => (`Maximum allowed number of files exceeded. Only ${filesLimit} allowed`),
@@ -403,6 +417,8 @@ DropzoneArea.propTypes = {
     dropzoneClass: PropTypes.string,
     /** Custom CSS class name for text inside the container. */
     dropzoneParagraphClass: PropTypes.string,
+    /** Disable feedback effect when dropping rejected files. */
+    disableRejectionFeedback: PropTypes.bool,
     /** Shows previews **BELOW** the dropzone. */
     showPreviews: PropTypes.bool,
     /** Shows preview **INSIDE** the dropzone area. */
@@ -435,6 +451,24 @@ DropzoneArea.propTypes = {
     previewText: PropTypes.string,
     /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
     showAlerts: PropTypes.bool,
+    /**
+     * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
+     *
+     * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+     */
+    alertSnackbarProps: PropTypes.object,
+    /**
+     * Props to pass to the Dropzone component.
+     *
+     * @see See [Dropzone props](https://react-dropzone.js.org/#src) for available values.
+     */
+    dropzoneProps: PropTypes.object,
+    /**
+     * Attributes applied to the input element.
+     *
+     * @see See [MDN Input File attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Additional_attributes) for available values.
+     */
+    inputProps: PropTypes.object,
     /** Clear uploaded files when component is unmounted. */
     clearOnUnmount: PropTypes.bool,
     /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */

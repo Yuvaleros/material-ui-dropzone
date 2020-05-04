@@ -1,8 +1,9 @@
 import { ChipProps } from '@material-ui/core/Chip';
 import { DialogProps } from '@material-ui/core/Dialog';
 import { GridProps } from '@material-ui/core/Grid';
+import { SnackbarProps } from '@material-ui/core/Snackbar';
 import * as React from 'react';
-import { DropEvent } from 'react-dropzone';
+import { DropEvent, DropzoneProps } from 'react-dropzone';
 
 // DropzoneArea
 
@@ -28,6 +29,9 @@ export interface DropzoneAreaProps {
     item?: GridProps
   };
   showAlerts?: boolean;
+  alertSnackbarProps?: SnackbarProps;
+  dropzoneProps?: DropzoneProps;
+  inputProps?: React.HTMLProps<HTMLInputElement>;
   clearOnUnmount?: boolean;
   dropzoneClass?: string;
   dropzoneParagraphClass?: string;
