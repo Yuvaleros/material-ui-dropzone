@@ -12,13 +12,14 @@ import { withStyles } from '@material-ui/core/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { createElement, Fragment, PureComponent } from 'react';
+import React__default, { createElement, Fragment, PureComponent } from 'react';
 import Dropzone from 'react-dropzone';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
+import _extends$1 from '@babel/runtime/helpers/esm/extends';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
@@ -110,16 +111,30 @@ function readFile(file) {
   });
 }
 
+function createSvgIcon(path, displayName) {
+  var Component = React__default.memo(React__default.forwardRef(function (props, ref) {
+    return React__default.createElement(SvgIcon, _extends$1({
+      ref: ref
+    }, props), path);
+  }));
+
+  if (process.env.NODE_ENV !== 'production') {
+    Component.displayName = "".concat(displayName, "Icon");
+  }
+
+  Component.muiName = SvgIcon.muiName;
+  return Component;
+}
+
+var AttachFile = createSvgIcon(React__default.createElement("path", {
+  d: "M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"
+}), 'AttachFile');
+
+var Description = createSvgIcon(React__default.createElement("path", {
+  d: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+}), 'Description');
+
 var styles = {
-  removeBtn: {
-    transition: '.5s ease',
-    position: 'absolute',
-    opacity: 0,
-    top: -5,
-    right: -5,
-    width: 40,
-    height: 40
-  },
   smallPreviewImg: {
     height: 100,
     width: 'initial',
@@ -133,6 +148,51 @@ var styles = {
     borderRadius: 2,
     zIndex: 5,
     opacity: 1
+  }
+};
+
+function getFileTypeIcon(type, classes) {
+  var props = {
+    className: classes.smallPreviewImg
+  };
+  console.log(type);
+
+  switch (type) {
+    case 'application/msword':
+    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+      return createElement(Description, props);
+
+    default:
+      return createElement(AttachFile, props);
+  }
+}
+
+function PreviewImage(_ref) {
+  var fileObject = _ref.fileObject,
+      classes = _ref.classes;
+  var image = isImage(fileObject.file) ? createElement("img", {
+    className: classes.smallPreviewImg,
+    role: "presentation",
+    src: fileObject.data
+  }) : getFileTypeIcon(fileObject.file.type, classes);
+  return image;
+}
+
+PreviewImage.propTypes = {
+  classes: PropTypes.object.isRequired,
+  fileObject: PropTypes.object.isRequired
+};
+var PreviewImage$1 = withStyles(styles)(PreviewImage);
+
+var styles$1 = {
+  removeBtn: {
+    transition: '.5s ease',
+    position: 'absolute',
+    opacity: 0,
+    top: -5,
+    right: -5,
+    width: 40,
+    height: 40
   },
   imageContainer: {
     position: 'relative',
@@ -176,20 +236,15 @@ function PreviewList(_ref) {
     spacing: 8,
     className: previewGridClasses.container
   }, previewGridProps.container), fileObjects.map(function (fileObject, i) {
-    var img = isImage(fileObject.file) ? createElement("img", {
-      className: classes.smallPreviewImg,
-      role: "presentation",
-      src: fileObject.data
-    }) : createElement(AttachFileIcon, {
-      className: classes.smallPreviewImg
-    });
     return createElement(Grid, _extends({
       key: i,
       item: true,
       xs: 4
     }, previewGridProps.item, {
       className: clsx(previewGridClasses.item, classes.imageContainer)
-    }), img, showFileNames && createElement(Typography, {
+    }), createElement(PreviewImage$1, {
+      fileObject: fileObject
+    }), showFileNames && createElement(Typography, {
       variant: "body1",
       component: "p"
     }, fileObject.file.name), createElement(Fab, {
@@ -210,7 +265,7 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   showFileNames: PropTypes.bool,
   useChipsForPreview: PropTypes.bool
 } : void 0;
-var PreviewList$1 = withStyles(styles)(PreviewList);
+var PreviewList$1 = withStyles(styles$1)(PreviewList);
 
 var variantIcon = {
   success: CheckCircleIcon,
@@ -219,7 +274,7 @@ var variantIcon = {
   info: InfoIcon
 };
 
-var styles$1 = function styles(theme) {
+var styles$2 = function styles(theme) {
   return {
     success: {
       backgroundColor: green[600]
@@ -284,9 +339,9 @@ process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
 } : void 0;
-var SnackbarContentWrapper$1 = withStyles(styles$1)(SnackbarContentWrapper);
+var SnackbarContentWrapper$1 = withStyles(styles$2)(SnackbarContentWrapper);
 
-var styles$2 = {
+var styles$3 = {
   '@keyframes progress': {
     '0%': {
       backgroundPosition: '0 0'
@@ -949,7 +1004,7 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
    */
   onDelete: PropTypes.func
 } : void 0;
-var DropzoneArea$1 = withStyles(styles$2)(DropzoneArea);
+var DropzoneArea$1 = withStyles(styles$3)(DropzoneArea);
 
 function splitDropzoneDialogProps(allProps) {
   var cancelButtonText = allProps.cancelButtonText,
