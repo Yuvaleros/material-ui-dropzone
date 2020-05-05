@@ -3,13 +3,10 @@ import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-
-import {isImage} from '../helpers';
 
 const styles = {
     removeBtn: {
@@ -57,6 +54,7 @@ function PreviewList({
     previewGridClasses,
     previewGridProps,
     classes,
+    getPreviewIcon,
 }) {
     if (useChipsForPreview) {
         return (
@@ -76,10 +74,7 @@ function PreviewList({
     return (
         <Grid container={true} spacing={8} className={previewGridClasses.container} {...previewGridProps.container}>
             {fileObjects.map((fileObject, i) => {
-                const img = (isImage(fileObject.file) ?
-                    <img className={classes.smallPreviewImg} role="presentation" src={fileObject.data} /> :
-                    <AttachFileIcon className={classes.smallPreviewImg} />
-                );
+                const img = getPreviewIcon(fileObject, classes);
 
                 return (
                     <Grid
@@ -114,6 +109,7 @@ function PreviewList({
 PreviewList.propTypes = {
     classes: PropTypes.object.isRequired,
     fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
+    getPreviewIcon: PropTypes.func.isRequired,
     handleRemove: PropTypes.func.isRequired,
     previewChipProps: PropTypes.object,
     previewGridClasses: PropTypes.object,

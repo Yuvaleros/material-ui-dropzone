@@ -1,15 +1,14 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import {Fragment} from 'react';
 import Dropzone from 'react-dropzone';
-
-import {convertBytesToMbsOrKbs, createFileFromUrl, readFile} from '../helpers';
-
+import {convertBytesToMbsOrKbs, createFileFromUrl, isImage, readFile} from '../helpers';
 import PreviewList from './PreviewList';
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 
@@ -58,6 +57,18 @@ const styles = {
 const defaultSnackbarAnchorOrigin = {
     horizontal: 'left',
     vertical: 'bottom',
+};
+
+const defaultGetPreviewIcon = (fileObject, classes) => {
+    if (isImage(fileObject.file)) {
+        return (<img
+            className={classes.smallPreviewImg}
+            role="presentation"
+            src={fileObject.data}
+        />);
+    }
+
+    return <AttachFileIcon className={classes.smallPreviewImg} />;
 };
 
 /**
@@ -254,6 +265,7 @@ class DropzoneArea extends React.PureComponent {
             dropzoneProps,
             dropzoneText,
             filesLimit,
+            getPreviewIcon,
             inputProps,
             maxFileSize,
             previewChipProps,
@@ -311,6 +323,7 @@ class DropzoneArea extends React.PureComponent {
                                 <PreviewList
                                     fileObjects={fileObjects}
                                     handleRemove={this.handleRemove}
+                                    getPreviewIcon={getPreviewIcon}
                                     showFileNames={showFileNames}
                                     useChipsForPreview={useChipsForPreview}
                                     previewChipProps={previewChipProps}
@@ -387,6 +400,7 @@ DropzoneArea.defaultProps = {
     initialFiles: [],
     getFileLimitExceedMessage: (filesLimit) => (`Maximum allowed number of files exceeded. Only ${filesLimit} allowed`),
     getFileAddedMessage: (fileName) => (`File ${fileName} successfully added.`),
+    getPreviewIcon: defaultGetPreviewIcon,
     getFileRemovedMessage: (fileName) => (`File ${fileName} removed.`),
     getDropRejectMessage: (rejectedFile, acceptedFiles, maxFileSize) => {
         let message = `File ${rejectedFile.name} was rejected. `;
@@ -507,6 +521,15 @@ DropzoneArea.propTypes = {
      * @param {number} maxFileSize The `maxFileSize` prop currently set for the component
      */
     getDropRejectMessage: PropTypes.func,
+    /**
+     * A function which determines which icon to display for a file preview.
+     *
+     * *Default*: If its an image then displays a preview the image, otherwise it will display an attachment icon
+     *
+     * @param {File} objectFile The file which the preview will belong to
+     * @param {Object} classes The classes for the file preview icon, in the default case we use the smallPreviewImg className.
+     */
+    getPreviewIcon: PropTypes.func,
     /**
      * Fired when the files inside dropzone change.
      *
