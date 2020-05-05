@@ -9,6 +9,7 @@ import _inherits from '@babel/runtime/helpers/inherits';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -17,7 +18,6 @@ import Dropzone from 'react-dropzone';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
 import DeleteIcon from '@material-ui/icons/Delete';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import green from '@material-ui/core/colors/green';
@@ -157,7 +157,8 @@ function PreviewList(_ref) {
       previewChipProps = _ref.previewChipProps,
       previewGridClasses = _ref.previewGridClasses,
       previewGridProps = _ref.previewGridProps,
-      classes = _ref.classes;
+      classes = _ref.classes,
+      getPreviewIcon = _ref.getPreviewIcon;
 
   if (useChipsForPreview) {
     return fileObjects.map(function (fileObject, i) {
@@ -176,13 +177,7 @@ function PreviewList(_ref) {
     spacing: 8,
     className: previewGridClasses.container
   }, previewGridProps.container), fileObjects.map(function (fileObject, i) {
-    var img = isImage(fileObject.file) ? createElement("img", {
-      className: classes.smallPreviewImg,
-      role: "presentation",
-      src: fileObject.data
-    }) : createElement(AttachFileIcon, {
-      className: classes.smallPreviewImg
-    });
+    var img = getPreviewIcon(fileObject, classes);
     return createElement(Grid, _extends({
       key: i,
       item: true,
@@ -203,6 +198,7 @@ function PreviewList(_ref) {
 process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   classes: PropTypes.object.isRequired,
   fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getPreviewIcon: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
   previewChipProps: PropTypes.object,
   previewGridClasses: PropTypes.object,
@@ -331,9 +327,24 @@ var defaultSnackbarAnchorOrigin = {
   horizontal: 'left',
   vertical: 'bottom'
 };
+
+var defaultGetPreviewIcon = function defaultGetPreviewIcon(fileObject, classes) {
+  if (isImage(fileObject.file)) {
+    return createElement("img", {
+      className: classes.smallPreviewImg,
+      role: "presentation",
+      src: fileObject.data
+    });
+  }
+
+  return createElement(AttachFileIcon, {
+    className: classes.smallPreviewImg
+  });
+};
 /**
  * This components creates a Material-UI Dropzone, with previews and snackbar notifications.
  */
+
 
 var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
   _inherits(DropzoneArea, _React$PureComponent);
@@ -659,6 +670,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
           dropzoneProps = _this$props5.dropzoneProps,
           dropzoneText = _this$props5.dropzoneText,
           filesLimit = _this$props5.filesLimit,
+          getPreviewIcon = _this$props5.getPreviewIcon,
           inputProps = _this$props5.inputProps,
           maxFileSize = _this$props5.maxFileSize,
           previewChipProps = _this$props5.previewChipProps,
@@ -704,6 +716,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
         })), previewsInDropzoneVisible && createElement(PreviewList$1, {
           fileObjects: fileObjects,
           handleRemove: _this2.handleRemove,
+          getPreviewIcon: getPreviewIcon,
           showFileNames: showFileNames,
           useChipsForPreview: useChipsForPreview,
           previewChipProps: previewChipProps,
@@ -770,6 +783,7 @@ DropzoneArea.defaultProps = {
   getFileAddedMessage: function getFileAddedMessage(fileName) {
     return "File ".concat(fileName, " successfully added.");
   },
+  getPreviewIcon: defaultGetPreviewIcon,
   getFileRemovedMessage: function getFileRemovedMessage(fileName) {
     return "File ".concat(fileName, " removed.");
   },
@@ -920,6 +934,16 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
    * @param {number} maxFileSize The `maxFileSize` prop currently set for the component
    */
   getDropRejectMessage: PropTypes.func,
+
+  /**
+   * A function which determines which icon to display for a file preview.
+   *
+   * *Default*: If its an image then displays a preview the image, otherwise it will display an attachment icon
+   *
+   * @param {File} objectFile The file which the preview will belong to
+   * @param {Object} classes The classes for the file preview icon, in the default case we use the smallPreviewImg className.
+   */
+  getPreviewIcon: PropTypes.func,
 
   /**
    * Fired when the files inside dropzone change.
