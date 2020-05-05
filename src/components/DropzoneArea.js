@@ -30,6 +30,7 @@ const styles = {
         borderColor: '#C8C8C8',
         cursor: 'pointer',
         boxSizing: 'border-box',
+        overflow: 'hidden',
     },
     stripes: {
         border: 'solid',
