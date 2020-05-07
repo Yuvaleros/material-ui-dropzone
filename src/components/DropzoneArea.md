@@ -24,35 +24,35 @@ import { DropzoneArea } from 'material-ui-dropzone';
 
 ### Custom Preview Icon
 
-Demonstration of how to customize the preview icon for: 
+Demonstration of how to customize the preview icon for:
+
 * PDF files
 * Video
 * Audio
 * Word Documents
 
-
 ```jsx
-import react from 'react'
+import * as React from 'react';
 import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@material-ui/icons';
 
-const handlePreviewIcon=(fileObject, classes) => {
-  const {type} = fileObject.file 
-  const iconProps = { className : classes.smallPreviewImg} 
+const handlePreviewIcon = (fileObject, classes) => {
+  const {type} = fileObject.file
+  const iconProps = {
+    className : classes.image,
+  }
 
   if (type.startsWith("video/")) return <Theaters {...iconProps} />
   if (type.startsWith("audio/")) return <AudioTrack {...iconProps} />
 
-  let component
   switch (type) {
-    case "application/msword": 
-    case "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 
-      return <Description {...iconProps} />      
+    case "application/msword":
+    case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+      return <Description {...iconProps} />
     case "application/pdf":
-      return <PictureAsPdf {...iconProps} />  
+      return <PictureAsPdf {...iconProps} />
     default:
-      return <AttachFile {...iconProps} />  
+      return <AttachFile {...iconProps} />
   }
-
 }
 
 <DropzoneArea
