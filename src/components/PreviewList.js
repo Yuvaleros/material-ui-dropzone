@@ -8,42 +8,41 @@ import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-const styles = {
-    removeBtn: {
-        transition: '.5s ease',
-        position: 'absolute',
-        opacity: 0,
-        top: -5,
-        right: -5,
-        width: 40,
-        height: 40,
-    },
-    smallPreviewImg: {
-        height: 100,
-        width: 'initial',
-        maxWidth: '100%',
-        marginTop: 5,
-        marginRight: 10,
-        color: 'rgba(0, 0, 0, 0.87)',
-        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-        boxSizing: 'border-box',
-        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-        borderRadius: 2,
-        zIndex: 5,
-        opacity: 1,
-    },
+const styles = ({palette, shape, spacing}) => ({
+    root: {},
     imageContainer: {
         position: 'relative',
         zIndex: 10,
         textAlign: 'center',
-        '&:hover $smallPreviewImg': {
+        '&:hover $image': {
             opacity: 0.3,
         },
-        '&:hover $removeBtn': {
+        '&:hover $removeButton': {
             opacity: 1,
         },
     },
-};
+    image: {
+        height: 100,
+        width: 'initial',
+        maxWidth: '100%',
+        color: palette.text.primary,
+        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        boxSizing: 'border-box',
+        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+        borderRadius: shape.borderRadius,
+        zIndex: 5,
+        opacity: 1,
+    },
+    removeButton: {
+        transition: '.5s ease',
+        position: 'absolute',
+        opacity: 0,
+        top: spacing(-1),
+        right: spacing(-1),
+        width: 40,
+        height: 40,
+    },
+});
 
 function PreviewList({
     fileObjects,
@@ -61,10 +60,10 @@ function PreviewList({
             fileObjects.map((fileObject, i) => (
                 <div key={i}>
                     <Chip
-                        label={fileObject.file.name}
-                        onDelete={handleRemove(i)}
                         variant="outlined"
                         {...previewChipProps}
+                        label={fileObject.file.name}
+                        onDelete={handleRemove(i)}
                     />
                 </div>
             ))
@@ -72,19 +71,22 @@ function PreviewList({
     }
 
     return (
-        <Grid container={true} spacing={8} className={previewGridClasses.container} {...previewGridProps.container}>
+        <Grid
+            spacing={8}
+            {...previewGridProps.container}
+            container={true}
+            className={clsx(classes.root, previewGridClasses.container)}
+        >
             {fileObjects.map((fileObject, i) => {
-                const img = getPreviewIcon(fileObject, classes);
-
                 return (
                     <Grid
-                        key={i}
-                        item={true}
                         xs={4}
                         {...previewGridProps.item}
-                        className={clsx(previewGridClasses.item, classes.imageContainer)}
+                        item={true}
+                        key={`${fileObject.file?.name ?? 'file'}-${i}`}
+                        className={clsx(classes.imageContainer, previewGridClasses.item)}
                     >
-                        {img}
+                        {getPreviewIcon(fileObject, classes)}
 
                         {showFileNames && (
                             <Typography variant="body1" component="p">
@@ -95,7 +97,7 @@ function PreviewList({
                         <Fab
                             onClick={handleRemove(i)}
                             aria-label="Delete"
-                            className={classes.removeBtn}
+                            className={classes.removeButton}
                         >
                             <DeleteIcon />
                         </Fab>
@@ -118,4 +120,4 @@ PreviewList.propTypes = {
     useChipsForPreview: PropTypes.bool,
 };
 
-export default withStyles(styles)(PreviewList);
+export default withStyles(styles, {name: 'MuiDropzonePreviewList'})(PreviewList);
