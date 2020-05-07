@@ -1,5 +1,3 @@
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import {withStyles} from '@material-ui/core/styles';
@@ -21,28 +19,27 @@ const variantIcon = {
 
 const styles = (theme) => ({
     success: {
-        backgroundColor: green[600],
+        backgroundColor: theme.palette.success.main,
     },
     error: {
-        backgroundColor: theme.palette.error.dark,
+        backgroundColor: theme.palette.error.main,
     },
     info: {
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: theme.palette.info.main,
     },
     warning: {
-        backgroundColor: amber[700],
-    },
-    icon: {
-        fontSize: 20,
-    },
-    iconVariant: {
-        opacity: 0.9,
-        marginRight: theme.spacing(1),
+        backgroundColor: theme.palette.warning.main,
     },
     message: {
         display: 'flex',
         alignItems: 'center',
     },
+    icon: {
+        fontSize: 20,
+        opacity: 0.9,
+        marginRight: theme.spacing(1),
+    },
+    closeButton: {},
 });
 
 function SnackbarContentWrapper(props) {
@@ -55,7 +52,7 @@ function SnackbarContentWrapper(props) {
             aria-describedby="client-snackbar"
             message={
                 <span id="client-snackbar" className={classes.message}>
-                    <Icon className={clsx(classes.icon, classes.iconVariant)} />
+                    <Icon className={classes.icon} />
                     {message}
                 </span>
             }
@@ -64,7 +61,7 @@ function SnackbarContentWrapper(props) {
                     key="close"
                     aria-label="Close"
                     color="inherit"
-                    className={classes.close}
+                    className={classes.closeButton}
                     onClick={onClose}
                 >
                     <CloseIcon className={classes.icon} />
@@ -83,4 +80,4 @@ SnackbarContentWrapper.propTypes = {
     variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-export default withStyles(styles)(SnackbarContentWrapper);
+export default withStyles(styles, {name: 'MuiDropzoneSnackbar'})(SnackbarContentWrapper);
