@@ -22,10 +22,14 @@ module.exports = {
       name: 'Components',
       components: './src/components/**.js',
     },
+    {
+      name: 'Theme',
+      content: './docs/theming.md',
+    },
   ],
   skipComponentsWithoutExample: true,
   usageMode: 'expand',
-  sortProps: props => props,
+  sortProps: (props) => props,
   webpackConfig: {
     module: {
       rules: [
