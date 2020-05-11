@@ -8,6 +8,10 @@ This changelog refers to `v2.x` branch, for updated changelog see [`master CHANG
 
 ###### to be published
 
+#### :boom: **BREAKING**
+
+* After the code refactor of PR [#132](https://github.com/Yuvaleros/material-ui-dropzone/pull/132), the `onChange` handler is invoked also on component mount (with or without files depending on the value of the `initialFiles` prop) - see issue [#153](https://github.com/Yuvaleros/material-ui-dropzone/issues/153) for more details.
+
 #### :sparkles: New Features
 
 * Addition of `previewText` prop to `DropzoneArea` component (PR [#132](https://github.com/Yuvaleros/material-ui-dropzone/pull/132) by **@panz3r**, same as [#112](https://github.com/Yuvaleros/material-ui-dropzone/pull/112) by **@charlot567**)
@@ -20,12 +24,20 @@ This changelog refers to `v2.x` branch, for updated changelog see [`master CHANG
 * Add `alertSnackbarProps` prop to `DropzoneArea` component (PR [#148](https://github.com/Yuvaleros/material-ui-dropzone/pull/148) by **@panz3r**), fixes:
   * Ability to override snackbard background colours ([#45](https://github.com/Yuvaleros/material-ui-dropzone/issues/45) by **@IsabellaRey**)
   * Allow the abillity of change anchorOrigin of snackbar ([#64](https://github.com/Yuvaleros/material-ui-dropzone/issues/64) by **@widomin**)
+* Add `getPreviewIcon` prop to DropzoneArea component to customize file preview (PR [#155](https://github.com/Yuvaleros/material-ui-dropzone/pull/155) by **@max-carroll**)
+* Add support for style with MUI Theme, see [docs](https://yuvaleros.github.io/material-ui-dropzone/#section-theme) for more details (PR [#163](https://github.com/Yuvaleros/material-ui-dropzone/pull/163) by **@panz3r**):
+  * Closes issue [#73](https://github.com/Yuvaleros/material-ui-dropzone/issues/73) by **@sirsaeta**
+  * Closes issue [#80](https://github.com/Yuvaleros/material-ui-dropzone/issues/80) by **@mikiasmohamed**
+  * Closes issue [#125](https://github.com/Yuvaleros/material-ui-dropzone/issues/125) by **@suiaing**
+  * Closes issue [#146](https://github.com/Yuvaleros/material-ui-dropzone/issues/146) by **@mattcorner**
 
 #### :bug: Bugfixes
 
 * Avoid appending extension if present when loading external files (PR [#138](https://github.com/Yuvaleros/material-ui-dropzone/pull/138) by **@panz3r**, reported as [#135](https://github.com/Yuvaleros/material-ui-dropzone/issues/135) by **@mballeng91**)
 * onDrop returns each file one at a time (PR [#132](https://github.com/Yuvaleros/material-ui-dropzone/pull/132) by **@panz3r**, reported as [#65](https://github.com/Yuvaleros/material-ui-dropzone/issues/65) by **@AlanOrtega91**)
 * Fully support setting `acceptedFiles` as `.fileending` (PR [#132](https://github.com/Yuvaleros/material-ui-dropzone/pull/132) by **@panz3r**, reported as [#107](https://github.com/Yuvaleros/material-ui-dropzone/issues/107) by **@wirmar**)
+* Avoid appending extension if present when loading external files (PR [#152](https://github.com/Yuvaleros/material-ui-dropzone/pull/152) by **@panz3r**, reported as [#135](https://github.com/Yuvaleros/material-ui-dropzone/issues/135) by **@mballeng91**)
+* Prevent control focus rubber band (PR [#157](https://github.com/Yuvaleros/material-ui-dropzone/pull/157) by **@max-carroll**, reported as [#145](https://github.com/Yuvaleros/material-ui-dropzone/issues/145) by **@topninja**)
 
 #### :zap: Improvements
 
