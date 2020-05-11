@@ -12,7 +12,7 @@ import {convertBytesToMbsOrKbs, createFileFromUrl, isImage, readFile} from '../h
 import PreviewList from './PreviewList';
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 
-const styles = {
+const styles = ({palette, shape, spacing}) => ({
     '@keyframes progress': {
         '0%': {
             backgroundPosition: '0 0',
@@ -21,39 +21,44 @@ const styles = {
             backgroundPosition: '-70px 0',
         },
     },
-    dropZone: {
+    root: {
         position: 'relative',
         width: '100%',
         minHeight: '250px',
-        backgroundColor: '#F0F0F0',
+        backgroundColor: palette.background.paper,
         border: 'dashed',
-        borderColor: '#C8C8C8',
-        cursor: 'pointer',
+        borderColor: palette.divider,
+        borderRadius: shape.borderRadius,
         boxSizing: 'border-box',
+        cursor: 'pointer',
         overflow: 'hidden',
     },
-    stripes: {
-        border: 'solid',
-        backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
-        animation: 'progress 2s linear infinite !important',
+    active: {
+        animation: '$progress 2s linear infinite !important',
+        // eslint-disable-next-line max-len
+        backgroundImage: `repeating-linear-gradient(-45deg, ${palette.background.paper}, ${palette.background.paper} 25px, ${palette.divider} 25px, ${palette.divider} 50px)`,
         backgroundSize: '150% 100%',
+        border: 'solid',
+        borderColor: palette.primary.light,
     },
-    rejectStripes: {
-        backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)',
+    invalid: {
+        // eslint-disable-next-line max-len
+        backgroundImage: `repeating-linear-gradient(-45deg, ${palette.error.light}, ${palette.error.light} 25px, ${palette.error.dark} 25px, ${palette.error.dark} 50px)`,
+        borderColor: palette.error.main,
     },
-    dropzoneTextStyle: {
+    textContainer: {
         textAlign: 'center',
     },
-    uploadIconSize: {
+    text: {
+        marginBottom: spacing(3),
+        marginTop: spacing(3),
+    },
+    icon: {
         width: 51,
         height: 51,
-        color: '#909090',
+        color: palette.text.primary,
     },
-    dropzoneParagraph: {
-        marginBottom: 20,
-        marginTop: 20,
-    },
-};
+});
 
 const defaultSnackbarAnchorOrigin = {
     horizontal: 'left',
@@ -63,13 +68,13 @@ const defaultSnackbarAnchorOrigin = {
 const defaultGetPreviewIcon = (fileObject, classes) => {
     if (isImage(fileObject.file)) {
         return (<img
-            className={classes.smallPreviewImg}
+            className={classes.image}
             role="presentation"
             src={fileObject.data}
         />);
     }
 
-    return <AttachFileIcon className={classes.smallPreviewImg} />;
+    return <AttachFileIcon className={classes.image} />;
 };
 
 /**
@@ -301,23 +306,23 @@ class DropzoneArea extends React.PureComponent {
                         <div
                             {...getRootProps()}
                             className={clsx(
-                                classes.dropZone,
+                                classes.root,
                                 dropzoneClass,
-                                isDragActive && classes.stripes,
-                                (!disableRejectionFeedback && isDragReject) && classes.rejectStripes,
+                                isDragActive && classes.active,
+                                (!disableRejectionFeedback && isDragReject) && classes.invalid,
                             )}
                         >
                             <input {...inputProps} {...getInputProps()} />
 
-                            <div className={classes.dropzoneTextStyle}>
+                            <div className={classes.textContainer}>
                                 <Typography
                                     variant="h5"
                                     component="p"
-                                    className={clsx(classes.dropzoneParagraph, dropzoneParagraphClass)}
+                                    className={clsx(classes.text, dropzoneParagraphClass)}
                                 >
                                     {dropzoneText}
                                 </Typography>
-                                <CloudUploadIcon className={classes.uploadIconSize} />
+                                <CloudUploadIcon className={classes.icon} />
                             </div>
 
                             {previewsInDropzoneVisible &&
@@ -528,7 +533,7 @@ DropzoneArea.propTypes = {
      * *Default*: If its an image then displays a preview the image, otherwise it will display an attachment icon
      *
      * @param {File} objectFile The file which the preview will belong to
-     * @param {Object} classes The classes for the file preview icon, in the default case we use the smallPreviewImg className.
+     * @param {Object} classes The classes for the file preview icon, in the default case we use the 'image' className.
      */
     getPreviewIcon: PropTypes.func,
     /**
@@ -557,4 +562,4 @@ DropzoneArea.propTypes = {
     onDelete: PropTypes.func,
 };
 
-export default withStyles(styles)(DropzoneArea);
+export default withStyles(styles, {name: 'MuiDropzoneArea'})(DropzoneArea);
