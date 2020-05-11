@@ -26,8 +26,6 @@ var Fab = _interopDefault(require('@material-ui/core/Fab'));
 var Grid = _interopDefault(require('@material-ui/core/Grid'));
 var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
 var _objectWithoutProperties = _interopDefault(require('@babel/runtime/helpers/objectWithoutProperties'));
-var green = _interopDefault(require('@material-ui/core/colors/green'));
-var amber = _interopDefault(require('@material-ui/core/colors/amber'));
 var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
 var SnackbarContent = _interopDefault(require('@material-ui/core/SnackbarContent'));
 var CheckCircleIcon = _interopDefault(require('@material-ui/icons/CheckCircle'));
@@ -116,88 +114,95 @@ function readFile(file) {
   });
 }
 
-var styles = {
-  removeBtn: {
-    transition: '.5s ease',
-    position: 'absolute',
-    opacity: 0,
-    top: -5,
-    right: -5,
-    width: 40,
-    height: 40
-  },
-  smallPreviewImg: {
-    height: 100,
-    width: 'initial',
-    maxWidth: '100%',
-    marginTop: 5,
-    marginRight: 10,
-    color: 'rgba(0, 0, 0, 0.87)',
-    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-    boxSizing: 'border-box',
-    boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-    borderRadius: 2,
-    zIndex: 5,
-    opacity: 1
-  },
-  imageContainer: {
-    position: 'relative',
-    zIndex: 10,
-    textAlign: 'center',
-    '&:hover $smallPreviewImg': {
-      opacity: 0.3
+var styles = function styles(_ref) {
+  var palette = _ref.palette,
+      shape = _ref.shape,
+      spacing = _ref.spacing;
+  return {
+    root: {},
+    imageContainer: {
+      position: 'relative',
+      zIndex: 10,
+      textAlign: 'center',
+      '&:hover $image': {
+        opacity: 0.3
+      },
+      '&:hover $removeButton': {
+        opacity: 1
+      }
     },
-    '&:hover $removeBtn': {
+    image: {
+      height: 100,
+      width: 'initial',
+      maxWidth: '100%',
+      color: palette.text.primary,
+      transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+      boxSizing: 'border-box',
+      boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
+      borderRadius: shape.borderRadius,
+      zIndex: 5,
       opacity: 1
+    },
+    removeButton: {
+      transition: '.5s ease',
+      position: 'absolute',
+      opacity: 0,
+      top: spacing(-1),
+      right: spacing(-1),
+      width: 40,
+      height: 40
     }
-  }
+  };
 };
 
-var _ref2 = /*#__PURE__*/React.createElement(DeleteIcon, null);
+var _ref4 = /*#__PURE__*/React.createElement(DeleteIcon, null);
 
-function PreviewList(_ref) {
-  var fileObjects = _ref.fileObjects,
-      handleRemove = _ref.handleRemove,
-      showFileNames = _ref.showFileNames,
-      useChipsForPreview = _ref.useChipsForPreview,
-      previewChipProps = _ref.previewChipProps,
-      previewGridClasses = _ref.previewGridClasses,
-      previewGridProps = _ref.previewGridProps,
-      classes = _ref.classes,
-      getPreviewIcon = _ref.getPreviewIcon;
+function PreviewList(_ref2) {
+  var fileObjects = _ref2.fileObjects,
+      handleRemove = _ref2.handleRemove,
+      showFileNames = _ref2.showFileNames,
+      useChipsForPreview = _ref2.useChipsForPreview,
+      previewChipProps = _ref2.previewChipProps,
+      previewGridClasses = _ref2.previewGridClasses,
+      previewGridProps = _ref2.previewGridProps,
+      classes = _ref2.classes,
+      getPreviewIcon = _ref2.getPreviewIcon;
 
   if (useChipsForPreview) {
     return fileObjects.map(function (fileObject, i) {
       return React.createElement("div", {
         key: i
       }, React.createElement(Chip, _extends({
-        label: fileObject.file.name,
-        onDelete: handleRemove(i),
         variant: "outlined"
-      }, previewChipProps)));
+      }, previewChipProps, {
+        label: fileObject.file.name,
+        onDelete: handleRemove(i)
+      })));
     });
   }
 
   return React.createElement(Grid, _extends({
+    spacing: 8
+  }, previewGridProps.container, {
     container: true,
-    spacing: 8,
-    className: previewGridClasses.container
-  }, previewGridProps.container), fileObjects.map(function (fileObject, i) {
-    var img = getPreviewIcon(fileObject, classes);
+    className: clsx(classes.root, previewGridClasses.container)
+  }), fileObjects.map(function (fileObject, i) {
+    var _ref3, _fileObject$file;
+
     return React.createElement(Grid, _extends({
-      key: i,
-      item: true,
       xs: 4
     }, previewGridProps.item, {
-      className: clsx(previewGridClasses.item, classes.imageContainer)
-    }), img, showFileNames && React.createElement(Typography, {
+      item: true,
+      key: "".concat((_ref3 = (_fileObject$file = fileObject.file) === null || _fileObject$file === void 0 ? void 0 : _fileObject$file.name) !== null && _ref3 !== void 0 ? _ref3 : 'file', "-").concat(i),
+      className: clsx(classes.imageContainer, previewGridClasses.item)
+    }), getPreviewIcon(fileObject, classes), showFileNames && React.createElement(Typography, {
       variant: "body1",
       component: "p"
     }, fileObject.file.name), React.createElement(Fab, {
       onClick: handleRemove(i),
       "aria-label": "Delete",
-      className: classes.removeBtn
-    }, _ref2));
+      className: classes.removeButton
+    }, _ref4));
   }));
 }
 
@@ -212,7 +217,9 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   showFileNames: PropTypes.bool,
   useChipsForPreview: PropTypes.bool
 } : void 0;
-var PreviewList$1 = styles$3.withStyles(styles)(PreviewList);
+var PreviewList$1 = styles$3.withStyles(styles, {
+  name: 'MuiDropzonePreviewList'
+})(PreviewList);
 
 var variantIcon = {
   success: CheckCircleIcon,
@@ -224,28 +231,27 @@ var variantIcon = {
 var styles$1 = function styles(theme) {
   return {
     success: {
-      backgroundColor: green[600]
+      backgroundColor: theme.palette.success.main
     },
     error: {
-      backgroundColor: theme.palette.error.dark
+      backgroundColor: theme.palette.error.main
     },
     info: {
-      backgroundColor: theme.palette.primary.dark
+      backgroundColor: theme.palette.info.main
     },
     warning: {
-      backgroundColor: amber[700]
-    },
-    icon: {
-      fontSize: 20
-    },
-    iconVariant: {
-      opacity: 0.9,
-      marginRight: theme.spacing(1)
+      backgroundColor: theme.palette.warning.main
     },
     message: {
       display: 'flex',
       alignItems: 'center'
-    }
+    },
+    icon: {
+      fontSize: 20,
+      opacity: 0.9,
+      marginRight: theme.spacing(1)
+    },
+    closeButton: {}
   };
 };
 
@@ -265,13 +271,13 @@ function SnackbarContentWrapper(props) {
       id: "client-snackbar",
       className: classes.message
     }, React.createElement(Icon, {
-      className: clsx(classes.icon, classes.iconVariant)
+      className: classes.icon
     }), message),
     action: [React.createElement(IconButton, {
       key: "close",
       "aria-label": "Close",
       color: "inherit",
-      className: classes.close,
+      className: classes.closeButton,
       onClick: onClose
     }, React.createElement(CloseIcon, {
       className: classes.icon
@@ -286,50 +292,63 @@ process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
 } : void 0;
-var SnackbarContentWrapper$1 = styles$3.withStyles(styles$1)(SnackbarContentWrapper);
+var SnackbarContentWrapper$1 = styles$3.withStyles(styles$1, {
+  name: 'MuiDropzoneSnackbar'
+})(SnackbarContentWrapper);
 
-var styles$2 = {
-  '@keyframes progress': {
-    '0%': {
-      backgroundPosition: '0 0'
+var styles$2 = function styles(_ref) {
+  var palette = _ref.palette,
+      shape = _ref.shape,
+      spacing = _ref.spacing;
+  return {
+    '@keyframes progress': {
+      '0%': {
+        backgroundPosition: '0 0'
+      },
+      '100%': {
+        backgroundPosition: '-70px 0'
+      }
     },
-    '100%': {
-      backgroundPosition: '-70px 0'
+    root: {
+      position: 'relative',
+      width: '100%',
+      minHeight: '250px',
+      backgroundColor: palette.background.paper,
+      border: 'dashed',
+      borderColor: palette.divider,
+      borderRadius: shape.borderRadius,
+      boxSizing: 'border-box',
+      cursor: 'pointer',
+      overflow: 'hidden'
+    },
+    active: {
+      animation: '$progress 2s linear infinite !important',
+      // eslint-disable-next-line max-len
+      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette.background.paper, ", ").concat(palette.background.paper, " 25px, ").concat(palette.divider, " 25px, ").concat(palette.divider, " 50px)"),
+      backgroundSize: '150% 100%',
+      border: 'solid',
+      borderColor: palette.primary.light
+    },
+    invalid: {
+      // eslint-disable-next-line max-len
+      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette.error.light, ", ").concat(palette.error.light, " 25px, ").concat(palette.error.dark, " 25px, ").concat(palette.error.dark, " 50px)"),
+      borderColor: palette.error.main
+    },
+    textContainer: {
+      textAlign: 'center'
+    },
+    text: {
+      marginBottom: spacing(3),
+      marginTop: spacing(3)
+    },
+    icon: {
+      width: 51,
+      height: 51,
+      color: palette.text.primary
     }
-  },
-  dropZone: {
-    position: 'relative',
-    width: '100%',
-    minHeight: '250px',
-    backgroundColor: '#F0F0F0',
-    border: 'dashed',
-    borderColor: '#C8C8C8',
-    cursor: 'pointer',
-    boxSizing: 'border-box',
-    overflow: 'hidden'
-  },
-  stripes: {
-    border: 'solid',
-    backgroundImage: 'repeating-linear-gradient(-45deg, #F0F0F0, #F0F0F0 25px, #C8C8C8 25px, #C8C8C8 50px)',
-    animation: 'progress 2s linear infinite !important',
-    backgroundSize: '150% 100%'
-  },
-  rejectStripes: {
-    backgroundImage: 'repeating-linear-gradient(-45deg, #fc8785, #fc8785 25px, #f4231f 25px, #f4231f 50px)'
-  },
-  dropzoneTextStyle: {
-    textAlign: 'center'
-  },
-  uploadIconSize: {
-    width: 51,
-    height: 51,
-    color: '#909090'
-  },
-  dropzoneParagraph: {
-    marginBottom: 20,
-    marginTop: 20
-  }
+  };
 };
+
 var defaultSnackbarAnchorOrigin = {
   horizontal: 'left',
   vertical: 'bottom'
@@ -338,14 +357,14 @@ var defaultSnackbarAnchorOrigin = {
 var defaultGetPreviewIcon = function defaultGetPreviewIcon(fileObject, classes) {
   if (isImage(fileObject.file)) {
     return React.createElement("img", {
-      className: classes.smallPreviewImg,
+      className: classes.image,
       role: "presentation",
       src: fileObject.data
     });
   }
 
   return React.createElement(AttachFileIcon, {
-    className: classes.smallPreviewImg
+    className: classes.image
   });
 };
 /**
@@ -376,7 +395,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
     };
 
     _this.filesArray = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(urls) {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(urls) {
         var fileObjs;
         return _regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -385,7 +404,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
                 _context2.prev = 0;
                 _context2.next = 3;
                 return Promise.all(urls.map( /*#__PURE__*/function () {
-                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
                     var file, data;
                     return _regeneratorRuntime.wrap(function _callee$(_context) {
                       while (1) {
@@ -415,7 +434,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
                   }));
 
                   return function (_x2) {
-                    return _ref2.apply(this, arguments);
+                    return _ref3.apply(this, arguments);
                   };
                 }()));
 
@@ -454,12 +473,12 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       }));
 
       return function (_x) {
-        return _ref.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       };
     }();
 
     _this.handleDropAccepted = /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(acceptedFiles, evt) {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(acceptedFiles, evt) {
         var _this$props, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onDrop, fileObjects, fileObjs, message;
 
         return _regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -491,7 +510,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
 
                 _context4.next = 8;
                 return Promise.all(acceptedFiles.map( /*#__PURE__*/function () {
-                  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(file) {
+                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(file) {
                     var data;
                     return _regeneratorRuntime.wrap(function _callee3$(_context3) {
                       while (1) {
@@ -516,7 +535,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
                   }));
 
                   return function (_x5) {
-                    return _ref4.apply(this, arguments);
+                    return _ref5.apply(this, arguments);
                   };
                 }()));
 
@@ -566,7 +585,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       }));
 
       return function (_x3, _x4) {
-        return _ref3.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       };
     }();
 
@@ -705,21 +724,21 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
         onDropRejected: this.handleDropRejected,
         maxSize: maxFileSize,
         multiple: isMultiple
-      }), function (_ref5) {
-        var getRootProps = _ref5.getRootProps,
-            getInputProps = _ref5.getInputProps,
-            isDragActive = _ref5.isDragActive,
-            isDragReject = _ref5.isDragReject;
+      }), function (_ref6) {
+        var getRootProps = _ref6.getRootProps,
+            getInputProps = _ref6.getInputProps,
+            isDragActive = _ref6.isDragActive,
+            isDragReject = _ref6.isDragReject;
         return React.createElement("div", _extends({}, getRootProps(), {
-          className: clsx(classes.dropZone, dropzoneClass, isDragActive && classes.stripes, !disableRejectionFeedback && isDragReject && classes.rejectStripes)
+          className: clsx(classes.root, dropzoneClass, isDragActive && classes.active, !disableRejectionFeedback && isDragReject && classes.invalid)
         }), React.createElement("input", _extends({}, inputProps, getInputProps())), React.createElement("div", {
-          className: classes.dropzoneTextStyle
+          className: classes.textContainer
         }, React.createElement(Typography, {
           variant: "h5",
           component: "p",
-          className: clsx(classes.dropzoneParagraph, dropzoneParagraphClass)
+          className: clsx(classes.text, dropzoneParagraphClass)
         }, dropzoneText), React.createElement(CloudUploadIcon, {
-          className: classes.uploadIconSize
+          className: classes.icon
         })), previewsInDropzoneVisible && React.createElement(PreviewList$1, {
           fileObjects: fileObjects,
           handleRemove: _this2.handleRemove,
@@ -948,7 +967,7 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
    * *Default*: If its an image then displays a preview the image, otherwise it will display an attachment icon
    *
    * @param {File} objectFile The file which the preview will belong to
-   * @param {Object} classes The classes for the file preview icon, in the default case we use the smallPreviewImg className.
+   * @param {Object} classes The classes for the file preview icon, in the default case we use the 'image' className.
    */
   getPreviewIcon: PropTypes.func,
 
@@ -980,7 +999,9 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
    */
   onDelete: PropTypes.func
 } : void 0;
-var DropzoneArea$1 = styles$3.withStyles(styles$2)(DropzoneArea);
+var DropzoneArea$1 = styles$3.withStyles(styles$2, {
+  name: 'MuiDropzoneArea'
+})(DropzoneArea);
 
 function splitDropzoneDialogProps(allProps) {
   var cancelButtonText = allProps.cancelButtonText,
