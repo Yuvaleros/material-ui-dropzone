@@ -4,6 +4,24 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
+## `v3.1.0`
+
+###### to be published
+
+#### :sparkles: New Features
+
+* Add `getPreviewIcon` prop to DropzoneArea component to customize file preview (PR [#154](https://github.com/Yuvaleros/material-ui-dropzone/pull/154) by **@max-carroll**)
+* Add support for style with MUI Theme, see [docs](https://yuvaleros.github.io/material-ui-dropzone/#section-theme) for more details (PR [#158](https://github.com/Yuvaleros/material-ui-dropzone/pull/158) by **@panz3r**):
+  * Closes issue [#73](https://github.com/Yuvaleros/material-ui-dropzone/issues/73) by **@sirsaeta**
+  * Closes issue [#80](https://github.com/Yuvaleros/material-ui-dropzone/issues/80) by **@mikiasmohamed**
+  * Closes issue [#125](https://github.com/Yuvaleros/material-ui-dropzone/issues/125) by **@suiaing**
+  * Closes issue [#146](https://github.com/Yuvaleros/material-ui-dropzone/issues/146) by **@mattcorner**
+
+#### :bug: Bugfixes
+
+* Avoid appending extension if present when loading external files (PR [#150](https://github.com/Yuvaleros/material-ui-dropzone/pull/150) by **@panz3r**, reported as [#135](https://github.com/Yuvaleros/material-ui-dropzone/issues/135) by **@mballeng91**)
+* Prevent control focus rubber band (PR [#156](https://github.com/Yuvaleros/material-ui-dropzone/pull/156) by **@max-carroll**, reported as [#145](https://github.com/Yuvaleros/material-ui-dropzone/issues/145) by **@topninja**)
+
 ## `v3.0.0`
 
 ###### April 25, 2020
@@ -12,6 +30,7 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 * Upgrade `react-dropzone` to version 10 (PR [#120](https://github.com/Yuvaleros/material-ui-dropzone/pull/120) by **@panz3r**)
 * Drop support for React `<16.8` and Material-UI `v3` (PR [#120](https://github.com/Yuvaleros/material-ui-dropzone/pull/120) by **@panz3r**)
+* After the code refactor of PR [#121](https://github.com/Yuvaleros/material-ui-dropzone/pull/121), the `onChange` handler is invoked also on component mount (with or without files depending on the value of the `initialFiles` prop) - see issue [#153](https://github.com/Yuvaleros/material-ui-dropzone/issues/153) for more details.
 
 #### :sparkles: New Features
 
