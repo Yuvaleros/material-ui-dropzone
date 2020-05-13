@@ -350,6 +350,7 @@ class DropzoneArea extends React.PureComponent {
                         <PreviewList
                             fileObjects={fileObjects}
                             handleRemove={this.handleRemove}
+                            getPreviewIcon={getPreviewIcon}
                             showFileNames={showFileNamesInPreview}
                             useChipsForPreview={useChipsForPreview}
                             previewChipProps={previewChipProps}
