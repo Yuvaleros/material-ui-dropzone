@@ -7,6 +7,15 @@ import { DropEvent, DropzoneProps } from 'react-dropzone';
 
 // DropzoneArea
 
+export interface FileObject {
+  readonly file: File;
+  readonly data: string | ArrayBuffer | null;
+}
+
+export interface PreviewIconProps {
+  readonly classes: string;
+}
+
 export interface DropzoneAreaProps {
   acceptedFiles?: string[];
   filesLimit?: number;
@@ -20,13 +29,13 @@ export interface DropzoneAreaProps {
   useChipsForPreview?: boolean;
   previewChipProps?: ChipProps;
   previewGridClasses?: {
-    container?: string,
-    item?: string,
-    image?: string
+    container?: string;
+    item?: string;
+    image?: string;
   };
   previewGridProps?: {
-    container?: GridProps,
-    item?: GridProps
+    container?: GridProps;
+    item?: GridProps;
   };
   showAlerts?: boolean;
   alertSnackbarProps?: SnackbarProps;
@@ -48,6 +57,7 @@ export interface DropzoneAreaProps {
     acceptedFiles: string[],
     maxFileSize: number,
   ) => string;
+  getPreviewIcon?: (file: FileObject, classes: PreviewIconProps) => React.ReactElement;
 }
 
 export const DropzoneArea: React.ComponentType<DropzoneAreaProps>;
