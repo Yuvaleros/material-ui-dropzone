@@ -749,6 +749,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       }, previewText), createElement(PreviewList$1, {
         fileObjects: fileObjects,
         handleRemove: this.handleRemove,
+        getPreviewIcon: getPreviewIcon,
         showFileNames: showFileNamesInPreview,
         useChipsForPreview: useChipsForPreview,
         previewChipProps: previewChipProps,
