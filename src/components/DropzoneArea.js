@@ -279,7 +279,6 @@ class DropzoneArea extends React.PureComponent {
             previewGridProps,
             previewText,
             showAlerts,
-            showAlertsOnError,
             showFileNames,
             showFileNamesInPreview,
             showPreviews,
@@ -361,7 +360,7 @@ class DropzoneArea extends React.PureComponent {
                     </Fragment>
                 }
 
-                {(showAlerts || (showAlertsOnError && snackbarVariant === 'error')) &&
+                {((typeof showAlerts === 'boolean' && showAlerts)  || (typeof showAlerts !== 'boolean' && showAlerts.includes(snackbarVariant))) &&
                     <Snackbar
                         anchorOrigin={defaultSnackbarAnchorOrigin}
                         autoHideDuration={6000}
@@ -397,7 +396,6 @@ DropzoneArea.defaultProps = {
     previewGridClasses: {},
     previewGridProps: {},
     showAlerts: true,
-    showAlertsOnError: false,
     alertSnackbarProps: {
         anchorOrigin: {
             horizontal: 'left',
@@ -473,11 +471,9 @@ DropzoneArea.propTypes = {
     /** The label for the file preview section. */
     previewText: PropTypes.string,
     /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
-    showAlerts: PropTypes.bool,
-/** Shows styled Material-UI Snackbar when files are rejected or maximum files exceeded. */
-    showAlertsOnError: PropTypes.bool,
+    showAlerts: PropTypes.oneOf([PropTypes.bool, PropTypes.arrayOf(PropTypes.string)]),
     /**
-     * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` or `showAlertsOnError` prop to be `true`.
+     * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
      *
      * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
      */
