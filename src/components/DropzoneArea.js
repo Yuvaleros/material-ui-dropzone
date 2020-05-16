@@ -360,7 +360,7 @@ class DropzoneArea extends React.PureComponent {
                     </Fragment>
                 }
 
-                {((typeof showAlerts === 'boolean' && showAlerts)  || (typeof showAlerts !== 'boolean' && showAlerts.includes(snackbarVariant))) &&
+                {((typeof showAlerts === 'boolean' && showAlerts)  || (Array.isArray(showAlerts) && showAlerts.includes(snackbarVariant))) &&
                     <Snackbar
                         anchorOrigin={defaultSnackbarAnchorOrigin}
                         autoHideDuration={6000}
