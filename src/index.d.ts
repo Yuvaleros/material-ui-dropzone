@@ -16,6 +16,8 @@ export interface PreviewIconProps {
   readonly classes: string;
 }
 
+export type AlertType = 'error' | 'success' | 'info';
+
 export interface DropzoneAreaProps {
   acceptedFiles?: string[];
   filesLimit?: number;
@@ -37,7 +39,7 @@ export interface DropzoneAreaProps {
     container?: GridProps;
     item?: GridProps;
   };
-  showAlerts?: boolean;
+  showAlerts?: boolean | AlertType[];
   alertSnackbarProps?: SnackbarProps;
   dropzoneProps?: DropzoneProps;
   inputProps?: React.HTMLProps<HTMLInputElement>;
