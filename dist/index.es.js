@@ -755,7 +755,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
         previewChipProps: previewChipProps,
         previewGridClasses: previewGridClasses,
         previewGridProps: previewGridProps
-      })), showAlerts && createElement(Snackbar, _extends({
+      })), (typeof showAlerts === 'boolean' && showAlerts || Array.isArray(showAlerts) && showAlerts.includes(snackbarVariant)) && createElement(Snackbar, _extends({
         anchorOrigin: defaultSnackbarAnchorOrigin,
         autoHideDuration: 6000
       }, alertSnackbarProps, {
@@ -889,7 +889,7 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
   previewText: PropTypes.string,
 
   /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
-  showAlerts: PropTypes.bool,
+  showAlerts: PropTypes.oneOf([PropTypes.bool, PropTypes.arrayOf(PropTypes.string)]),
 
   /**
    * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
