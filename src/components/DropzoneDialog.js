@@ -1,200 +1,181 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import {Fragment} from 'react';
 
-import DropzoneArea from './DropzoneArea';
+import {createFileFromUrl, readFile} from '../helpers';
 
-// Split props related to DropzoneDialog from DropzoneArea ones
-function splitDropzoneDialogProps(allProps) {
-    const {
-        cancelButtonText,
-        dialogProps,
-        dialogTitle,
-        fullWidth,
-        maxWidth,
-        onClose,
-        onSave,
-        open,
-        submitButtonText,
-        ...dropzoneAreaProps
-    } = allProps;
+import DropzoneDialogBase from './DropzoneDialogBase';
 
-    return [
-        {
-            cancelButtonText,
-            dialogProps,
-            dialogTitle,
-            fullWidth,
-            maxWidth,
-            onClose,
-            onSave,
-            open,
-            submitButtonText,
-        },
-        dropzoneAreaProps,
-    ];
-}
 
 /**
- * This component provides the DropzoneArea inside of a Material-UI Dialog.
+ * This component provides an uncontrolled version of the DropzoneDialogBase component.
  *
- * It supports all the Props and Methods from `DropzoneArea`.
+ * It supports all the Props and Methods from `DropzoneDialogBase` but keeps the files state internally.
+ *
+ * **Note** The `onSave` handler also returns `File[]` with all the accepted files.
  */
 class DropzoneDialog extends React.PureComponent {
     state = {
-        files: [],
-    };
+        fileObjects: [],
+    }
 
-    handleClose = (event) => {
-        const {onClose} = this.props;
-        // Notify onClose
-        if (onClose) {
-            onClose(event);
+    componentDidMount() {
+        this.loadInitialFiles();
+    }
+
+    componentWillUnmount() {
+        const {clearOnUnmount} = this.props;
+
+        if (clearOnUnmount) {
+            this.setState({
+                fileObjects: [],
+            }, this.notifyFileChange);
         }
     }
 
-    handleChange = (files) => {
+    notifyFileChange = () => {
         const {onChange} = this.props;
-
-        this.setState({
-            files,
-        });
+        const {fileObjects} = this.state;
 
         if (onChange) {
-            onChange(files);
+            onChange(fileObjects.map((fileObject) => fileObject.file));
         }
     }
 
-    handleSaveClick = () => {
-        const {onSave} = this.props;
-        const {files} = this.state;
+    loadInitialFiles = async() => {
+        const {initialFiles} = this.props;
+        try {
+            const fileObjs = await Promise.all(
+                initialFiles.map(async(url) => {
+                    const file = await createFileFromUrl(url);
+                    const data = await readFile(file);
+
+                    return {
+                        file,
+                        data,
+                    };
+                })
+            );
+
+            this.setState((state) => ({
+                fileObjects: [].concat(
+                    state.fileObjects,
+                    fileObjs
+                ),
+            }), this.notifyFileChange);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    addFiles = async(newFileObjects) => {
+        const {filesLimit} = this.props;
+        // Update component state
+        this.setState((state) => {
+            // Handle a single file
+            if (filesLimit <= 1) {
+                return {
+                    fileObjects: [].concat(newFileObjects[0]),
+                };
+            }
+
+            // Handle multiple files
+            return {
+                fileObjects: [].concat(
+                    state.fileObjects,
+                    newFileObjects
+                ),
+            };
+        }, this.notifyFileChange);
+    }
+
+    deleteFile = (removedFileObj, removedFileObjIdx) => {
+        event.stopPropagation();
+
+        const {onDelete} = this.props;
+        const {fileObjects} = this.state;
+
+        // Calculate remaining fileObjects array
+        const remainingFileObjs = fileObjects.filter((fileObject, i) => {
+            return i !== removedFileObjIdx;
+        });
+
+        // Notify removed file
+        if (onDelete) {
+            onDelete(removedFileObj.file);
+        }
+
+        // Update local state
+        this.setState({
+            fileObjects: remainingFileObjs,
+        }, this.notifyFileChange);
+    }
+
+    handleClose = (evt) => {
+        const {clearOnUnmount, onClose} = this.props;
+
+        if (onClose) {
+            onClose(evt);
+        }
+
+        if (clearOnUnmount) {
+            this.setState({
+                fileObjects: [],
+            }, this.notifyFileChange);
+        }
+    }
+
+    handleSave = (evt) => {
+        const {clearOnUnmount, onSave} = this.props;
+        const {fileObjects} = this.state;
 
         if (onSave) {
-            onSave(files);
+            onSave(fileObjects.map((fileObject) => fileObject.file), evt);
+        }
+
+        if (clearOnUnmount) {
+            this.setState({
+                fileObjects: [],
+            }, this.notifyFileChange);
         }
     }
 
     render() {
-        const [dropzoneDialogProps, dropzoneAreaProps] = splitDropzoneDialogProps(this.props);
-        const {
-            cancelButtonText,
-            dialogProps,
-            dialogTitle,
-            fullWidth,
-            maxWidth,
-            open,
-            submitButtonText,
-        } = dropzoneDialogProps;
-        const {files} = this.state;
-
-        // Submit button state
-        const submitDisabled = files.length === 0;
+        const {fileObjects} = this.state;
 
         return (
-            <Fragment>
-                <Dialog
-                    {...dialogProps}
-                    fullWidth={fullWidth}
-                    maxWidth={maxWidth}
-                    onClose={this.handleClose}
-                    open={open}
-                >
-                    <DialogTitle>{dialogTitle}</DialogTitle>
-
-                    <DialogContent>
-                        <DropzoneArea
-                            {...dropzoneAreaProps}
-                            onChange={this.handleChange}
-                        />
-                    </DialogContent>
-
-                    <DialogActions>
-                        <Button
-                            color="primary"
-                            onClick={this.handleClose}
-                        >
-                            {cancelButtonText}
-                        </Button>
-
-                        <Button
-                            color="primary"
-                            disabled={submitDisabled}
-                            onClick={this.handleSaveClick}
-                        >
-                            {submitButtonText}
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </Fragment>
+            <DropzoneDialogBase
+                {...this.props}
+                fileObjects={fileObjects}
+                onAdd={this.addFiles}
+                onDelete={this.deleteFile}
+                onClose={this.handleClose}
+                onSave={this.handleSave}
+            />
         );
     }
 }
 
 DropzoneDialog.defaultProps = {
-    ...DropzoneArea.defaultProps,
-    open: false,
-    dialogTitle: 'Upload file',
-    dialogProps: {},
-    fullWidth: true,
-    maxWidth: 'sm',
-    cancelButtonText: 'Cancel',
-    submitButtonText: 'Submit',
-    showPreviews: true,
-    showPreviewsInDropzone: false,
-    showFileNamesInPreview: true,
+    clearOnUnmount: true,
+    filesLimit: 3,
+    initialFiles: [],
 };
 
 DropzoneDialog.propTypes = {
-    ...DropzoneArea.propTypes,
-    /** Sets whether the dialog is open or closed. */
-    open: PropTypes.bool,
-    /** The Dialog title. */
-    dialogTitle: PropTypes.string,
-    /**
-     * Props to pass to the Material-UI Dialog components.
-     * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
-     */
-    dialogProps: PropTypes.object,
-    /**
-     * If `true`, the dialog stretches to `maxWidth`.<br/>
-     * Notice that the dialog width grow is limited by the default margin.
-     */
-    fullWidth: PropTypes.bool,
-    /**
-     * Determine the max-width of the dialog. The dialog width grows with the size of the screen.<br/>
-     * Set to `false` to disable `maxWidth`.
-     */
-    maxWidth: PropTypes.string,
-    /** Cancel button text in dialog. */
-    cancelButtonText: PropTypes.string,
-    /** Submit button text in dialog. */
-    submitButtonText: PropTypes.string,
-    /**
-     * Fired when the modal is closed
-     *
-     * @param {SyntheticEvent} event The react `SyntheticEvent`
-     */
-    onClose: PropTypes.func,
+    ...DropzoneDialogBase.propTypes,
+    /** Clear uploaded files when component is unmounted. */
+    clearOnUnmount: PropTypes.bool,
+    /** Maximum number of files that can be loaded into the dropzone. */
+    filesLimit: PropTypes.number,
+    /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
+    initialFiles: PropTypes.arrayOf(PropTypes.string),
     /**
      * Fired when the user clicks the Submit button.
      *
      * @param {File[]} files All the files currently inside the Dropzone.
+     * @param {SyntheticEvent} event The react `SyntheticEvent`.
      */
     onSave: PropTypes.func,
-    /**
-     * Shows previews **BELOW** the dropzone.<br/>
-     * **Note:** By default previews show up under in the Dialog and inside in the standalone.
-     */
-    showPreviews: PropTypes.bool,
-    /** Shows preview **INSIDE** the dropzone area. */
-    showPreviewsInDropzone: PropTypes.bool,
-    /** Shows file name under the image. */
-    showFileNamesInPreview: PropTypes.bool,
 };
 
 export default DropzoneDialog;
