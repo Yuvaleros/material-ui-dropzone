@@ -1,4 +1,5 @@
 import _extends from '@babel/runtime/helpers/extends';
+import _slicedToArray from '@babel/runtime/helpers/slicedToArray';
 import _regeneratorRuntime from '@babel/runtime/regenerator';
 import _asyncToGenerator from '@babel/runtime/helpers/asyncToGenerator';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
@@ -6,20 +7,20 @@ import _createClass from '@babel/runtime/helpers/createClass';
 import _possibleConstructorReturn from '@babel/runtime/helpers/possibleConstructorReturn';
 import _getPrototypeOf from '@babel/runtime/helpers/getPrototypeOf';
 import _inherits from '@babel/runtime/helpers/inherits';
+import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
+import PropTypes from 'prop-types';
+import { createElement, Fragment, PureComponent } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import { createElement, Fragment, PureComponent } from 'react';
 import Dropzone from 'react-dropzone';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
-import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -27,7 +28,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import WarningIcon from '@material-ui/icons/Warning';
-import _slicedToArray from '@babel/runtime/helpers/slicedToArray';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -366,124 +366,39 @@ var defaultGetPreviewIcon = function defaultGetPreviewIcon(fileObject, classes) 
  */
 
 
-var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
-  _inherits(DropzoneArea, _React$PureComponent);
+var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
+  _inherits(DropzoneAreaBase, _React$PureComponent);
 
-  function DropzoneArea() {
+  function DropzoneAreaBase() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, DropzoneArea);
+    _classCallCheck(this, DropzoneAreaBase);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneArea)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneAreaBase)).call.apply(_getPrototypeOf2, [this].concat(args)));
     _this.state = {
-      fileObjects: [],
       openSnackBar: false,
       snackbarMessage: '',
       snackbarVariant: 'success'
     };
 
-    _this.filesArray = /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(urls) {
-        var fileObjs;
+    _this.handleDropAccepted = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(acceptedFiles, evt) {
+        var _this$props, fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop, fileObjs, message;
+
         return _regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return Promise.all(urls.map( /*#__PURE__*/function () {
-                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
-                    var file, data;
-                    return _regeneratorRuntime.wrap(function _callee$(_context) {
-                      while (1) {
-                        switch (_context.prev = _context.next) {
-                          case 0:
-                            _context.next = 2;
-                            return createFileFromUrl(url);
-
-                          case 2:
-                            file = _context.sent;
-                            _context.next = 5;
-                            return readFile(file);
-
-                          case 5:
-                            data = _context.sent;
-                            return _context.abrupt("return", {
-                              file: file,
-                              data: data
-                            });
-
-                          case 7:
-                          case "end":
-                            return _context.stop();
-                        }
-                      }
-                    }, _callee);
-                  }));
-
-                  return function (_x2) {
-                    return _ref3.apply(this, arguments);
-                  };
-                }()));
-
-              case 3:
-                fileObjs = _context2.sent;
-
-                _this.setState(function (state) {
-                  return {
-                    fileObjects: [].concat(state.fileObjects, fileObjs)
-                  };
-                }, function () {
-                  var onChange = _this.props.onChange;
-                  var fileObjects = _this.state.fileObjects;
-
-                  if (onChange) {
-                    onChange(fileObjects.map(function (fileObject) {
-                      return fileObject.file;
-                    }));
-                  }
-                });
-
-                _context2.next = 10;
-                break;
-
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.log(_context2.t0);
-
-              case 10:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[0, 7]]);
-      }));
-
-      return function (_x) {
-        return _ref2.apply(this, arguments);
-      };
-    }();
-
-    _this.handleDropAccepted = /*#__PURE__*/function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(acceptedFiles, evt) {
-        var _this$props, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onDrop, fileObjects, fileObjs, message;
-
-        return _regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _this$props = _this.props, filesLimit = _this$props.filesLimit, getFileAddedMessage = _this$props.getFileAddedMessage, getFileLimitExceedMessage = _this$props.getFileLimitExceedMessage, onDrop = _this$props.onDrop;
-                fileObjects = _this.state.fileObjects;
+                _this$props = _this.props, fileObjects = _this$props.fileObjects, filesLimit = _this$props.filesLimit, getFileAddedMessage = _this$props.getFileAddedMessage, getFileLimitExceedMessage = _this$props.getFileLimitExceedMessage, onAdd = _this$props.onAdd, onDrop = _this$props.onDrop;
 
                 if (!(filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit)) {
-                  _context4.next = 5;
+                  _context2.next = 4;
                   break;
                 }
 
@@ -493,49 +408,55 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
                   snackbarVariant: 'error'
                 });
 
-                return _context4.abrupt("return");
+                return _context2.abrupt("return");
 
-              case 5:
+              case 4:
                 // Notify Drop event
                 if (onDrop) {
                   onDrop(acceptedFiles, evt);
                 } // Retrieve fileObjects data
 
 
-                _context4.next = 8;
+                _context2.next = 7;
                 return Promise.all(acceptedFiles.map( /*#__PURE__*/function () {
-                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(file) {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(file) {
                     var data;
-                    return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+                    return _regeneratorRuntime.wrap(function _callee$(_context) {
                       while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context.prev = _context.next) {
                           case 0:
-                            _context3.next = 2;
+                            _context.next = 2;
                             return readFile(file);
 
                           case 2:
-                            data = _context3.sent;
-                            return _context3.abrupt("return", {
+                            data = _context.sent;
+                            return _context.abrupt("return", {
                               file: file,
                               data: data
                             });
 
                           case 4:
                           case "end":
-                            return _context3.stop();
+                            return _context.stop();
                         }
                       }
-                    }, _callee3);
+                    }, _callee);
                   }));
 
-                  return function (_x5) {
-                    return _ref5.apply(this, arguments);
+                  return function (_x3) {
+                    return _ref3.apply(this, arguments);
                   };
                 }()));
 
-              case 8:
-                fileObjs = _context4.sent;
-                // Display message
+              case 7:
+                fileObjs = _context2.sent;
+
+                // Notify added files
+                if (onAdd) {
+                  onAdd(fileObjs);
+                } // Display message
+
+
                 message = fileObjs.reduce(function (msg, fileObj) {
                   return msg + getFileAddedMessage(fileObj.file.name);
                 }, '');
@@ -544,42 +465,18 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
                   openSnackBar: true,
                   snackbarMessage: message,
                   snackbarVariant: 'success'
-                }); // Update component state
-
-
-                _this.setState(function (state) {
-                  // Handle a single file
-                  if (filesLimit <= 1) {
-                    return {
-                      fileObjects: [].concat(fileObjs[0])
-                    };
-                  } // Handle multiple files
-
-
-                  return {
-                    fileObjects: [].concat(state.fileObjects, fileObjs)
-                  };
-                }, function () {
-                  var onChange = _this.props.onChange;
-                  var fileObjects = _this.state.fileObjects;
-
-                  if (onChange) {
-                    onChange(fileObjects.map(function (fileObject) {
-                      return fileObject.file;
-                    }));
-                  }
                 });
 
-              case 12:
+              case 11:
               case "end":
-                return _context4.stop();
+                return _context2.stop();
             }
           }
-        }, _callee4);
+        }, _callee2);
       }));
 
-      return function (_x3, _x4) {
-        return _ref4.apply(this, arguments);
+      return function (_x, _x2) {
+        return _ref2.apply(this, arguments);
       };
     }();
 
@@ -609,37 +506,20 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       return function (event) {
         event.stopPropagation();
         var _this$props3 = _this.props,
+            fileObjects = _this$props3.fileObjects,
             getFileRemovedMessage = _this$props3.getFileRemovedMessage,
-            onChange = _this$props3.onChange,
-            onDelete = _this$props3.onDelete;
-        var fileObjects = _this.state.fileObjects; // Find removed fileObject
+            onDelete = _this$props3.onDelete; // Find removed fileObject
 
-        var removedFileObj = fileObjects.filter(function (fileObject, i) {
-          return i === fileIndex;
-        })[0]; // Calculate remaining fileObjects array
+        var removedFileObj = fileObjects[fileIndex]; // Notify removed file
 
-        var remainingFileObjs = fileObjects.filter(function (fileObject, i) {
-          return i !== fileIndex;
-        });
+        if (onDelete) {
+          onDelete(removedFileObj, fileIndex);
+        }
 
         _this.setState({
-          fileObjects: remainingFileObjs
-        }, function () {
-          if (onDelete) {
-            onDelete(removedFileObj.file);
-          }
-
-          if (onChange) {
-            onChange(_this.state.fileObjects.map(function (fileObject) {
-              return fileObject.file;
-            }));
-          }
-
-          _this.setState({
-            openSnackBar: true,
-            snackbarMessage: getFileRemovedMessage(removedFileObj.file.name),
-            snackbarVariant: 'info'
-          });
+          openSnackBar: true,
+          snackbarMessage: getFileRemovedMessage(removedFileObj.file.name),
+          snackbarVariant: 'info'
         });
       };
     };
@@ -653,58 +533,36 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
     return _this;
   }
 
-  _createClass(DropzoneArea, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.filesArray(this.props.initialFiles);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      var _this$props4 = this.props,
-          clearOnUnmount = _this$props4.clearOnUnmount,
-          onChange = _this$props4.onChange;
-
-      if (clearOnUnmount) {
-        this.setState({
-          fileObjects: []
-        });
-
-        if (onChange) {
-          onChange([]);
-        }
-      }
-    }
-  }, {
+  _createClass(DropzoneAreaBase, [{
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      var _this$props5 = this.props,
-          acceptedFiles = _this$props5.acceptedFiles,
-          alertSnackbarProps = _this$props5.alertSnackbarProps,
-          classes = _this$props5.classes,
-          disableRejectionFeedback = _this$props5.disableRejectionFeedback,
-          dropzoneClass = _this$props5.dropzoneClass,
-          dropzoneParagraphClass = _this$props5.dropzoneParagraphClass,
-          dropzoneProps = _this$props5.dropzoneProps,
-          dropzoneText = _this$props5.dropzoneText,
-          filesLimit = _this$props5.filesLimit,
-          getPreviewIcon = _this$props5.getPreviewIcon,
-          inputProps = _this$props5.inputProps,
-          maxFileSize = _this$props5.maxFileSize,
-          previewChipProps = _this$props5.previewChipProps,
-          previewGridClasses = _this$props5.previewGridClasses,
-          previewGridProps = _this$props5.previewGridProps,
-          previewText = _this$props5.previewText,
-          showAlerts = _this$props5.showAlerts,
-          showFileNames = _this$props5.showFileNames,
-          showFileNamesInPreview = _this$props5.showFileNamesInPreview,
-          showPreviews = _this$props5.showPreviews,
-          showPreviewsInDropzone = _this$props5.showPreviewsInDropzone,
-          useChipsForPreview = _this$props5.useChipsForPreview;
+      var _this$props4 = this.props,
+          acceptedFiles = _this$props4.acceptedFiles,
+          alertSnackbarProps = _this$props4.alertSnackbarProps,
+          classes = _this$props4.classes,
+          disableRejectionFeedback = _this$props4.disableRejectionFeedback,
+          dropzoneClass = _this$props4.dropzoneClass,
+          dropzoneParagraphClass = _this$props4.dropzoneParagraphClass,
+          dropzoneProps = _this$props4.dropzoneProps,
+          dropzoneText = _this$props4.dropzoneText,
+          fileObjects = _this$props4.fileObjects,
+          filesLimit = _this$props4.filesLimit,
+          getPreviewIcon = _this$props4.getPreviewIcon,
+          inputProps = _this$props4.inputProps,
+          maxFileSize = _this$props4.maxFileSize,
+          previewChipProps = _this$props4.previewChipProps,
+          previewGridClasses = _this$props4.previewGridClasses,
+          previewGridProps = _this$props4.previewGridProps,
+          previewText = _this$props4.previewText,
+          showAlerts = _this$props4.showAlerts,
+          showFileNames = _this$props4.showFileNames,
+          showFileNamesInPreview = _this$props4.showFileNamesInPreview,
+          showPreviews = _this$props4.showPreviews,
+          showPreviewsInDropzone = _this$props4.showPreviewsInDropzone,
+          useChipsForPreview = _this$props4.useChipsForPreview;
       var _this$state = this.state,
-          fileObjects = _this$state.fileObjects,
           openSnackBar = _this$state.openSnackBar,
           snackbarMessage = _this$state.snackbarMessage,
           snackbarVariant = _this$state.snackbarVariant;
@@ -718,11 +576,11 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
         onDropRejected: this.handleDropRejected,
         maxSize: maxFileSize,
         multiple: isMultiple
-      }), function (_ref6) {
-        var getRootProps = _ref6.getRootProps,
-            getInputProps = _ref6.getInputProps,
-            isDragActive = _ref6.isDragActive,
-            isDragReject = _ref6.isDragReject;
+      }), function (_ref4) {
+        var getRootProps = _ref4.getRootProps,
+            getInputProps = _ref4.getInputProps,
+            isDragActive = _ref4.isDragActive,
+            isDragReject = _ref4.isDragReject;
         return createElement("div", _extends({}, getRootProps(), {
           className: clsx(classes.root, dropzoneClass, isDragActive && classes.active, !disableRejectionFeedback && isDragReject && classes.invalid)
         }), createElement("input", _extends({}, inputProps, getInputProps())), createElement("div", {
@@ -769,12 +627,13 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
     }
   }]);
 
-  return DropzoneArea;
+  return DropzoneAreaBase;
 }(PureComponent);
 
-DropzoneArea.defaultProps = {
+DropzoneAreaBase.defaultProps = {
   acceptedFiles: ['image/*', 'video/*', 'application/*'],
   filesLimit: 3,
+  fileObjects: [],
   maxFileSize: 3000000,
   dropzoneText: 'Drag and drop a file here or click',
   previewText: 'Preview:',
@@ -796,8 +655,6 @@ DropzoneArea.defaultProps = {
     },
     autoHideDuration: 6000
   },
-  clearOnUnmount: true,
-  initialFiles: [],
   getFileLimitExceedMessage: function getFileLimitExceedMessage(filesLimit) {
     return "Maximum allowed number of files exceeded. Only ".concat(filesLimit, " allowed");
   },
@@ -822,7 +679,11 @@ DropzoneArea.defaultProps = {
     return message;
   }
 };
-process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
+var FileObjectShape = PropTypes.shape({
+  file: PropTypes.object,
+  data: PropTypes.any
+});
+process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
   /** @ignore */
   classes: PropTypes.object.isRequired,
 
@@ -833,6 +694,9 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
 
   /** Maximum number of files that can be loaded into the dropzone. */
   filesLimit: PropTypes.number,
+
+  /** Currently loaded files. */
+  fileObjects: PropTypes.arrayOf(FileObjectShape),
 
   /** Maximum file size (in bytes) that the dropzone will accept. */
   maxFileSize: PropTypes.number,
@@ -888,7 +752,16 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
   /** The label for the file preview section. */
   previewText: PropTypes.string,
 
-  /** Shows styled Material-UI Snackbar when files are dropped, deleted or rejected. */
+  /**
+   * Shows styled Material-UI Snackbar when files are dropped, deleted or rejected.
+   *
+   * - can be a boolean ("global" `true` or `false` for all alerts).
+   * - can be an array, with values 'error', 'info', 'success' to select to view only certain alerts:
+   *  - showAlerts={['error']} for only errors.
+   *  - showAlerts={['error', 'info']} for both errors and info.
+   *  - showAlerts={['error', 'success', 'info']} is same as showAlerts={true}.
+   *  - showAlerts={[]} is same as showAlerts={false}.
+   */
   showAlerts: PropTypes.oneOf([PropTypes.bool, PropTypes.arrayOf(PropTypes.string)]),
 
   /**
@@ -911,12 +784,6 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
    * @see See [MDN Input File attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Additional_attributes) for available values.
    */
   inputProps: PropTypes.object,
-
-  /** Clear uploaded files when component is unmounted. */
-  clearOnUnmount: PropTypes.bool,
-
-  /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
-  initialFiles: PropTypes.arrayOf(PropTypes.string),
 
   /**
    * Get alert message to display when files limit is exceed.
@@ -961,10 +828,275 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
    *
    * *Default*: If its an image then displays a preview the image, otherwise it will display an attachment icon
    *
-   * @param {File} objectFile The file which the preview will belong to
+   * @param {FileObject} objectFile The file which the preview will belong to
    * @param {Object} classes The classes for the file preview icon, in the default case we use the 'image' className.
    */
   getPreviewIcon: PropTypes.func,
+
+  /**
+   * Fired when new files are added to dropzone.
+   *
+   * @param {FileObject[]} newFiles The new files added to the dropzone.
+   */
+  onAdd: PropTypes.func,
+
+  /**
+   * Fired when a file is deleted from the previews panel.
+   *
+   * @param {FileObject} deletedFileObject The file that was removed.
+   * @param {number} index The index of the removed file object.
+   */
+  onDelete: PropTypes.func,
+
+  /**
+   * Fired when the user drops files into the dropzone.
+   *
+   * @param {File[]} droppedFiles All the files dropped into the dropzone.
+   * @param {Event} event The react-dropzone drop event.
+   */
+  onDrop: PropTypes.func,
+
+  /**
+   * Fired when a file is rejected because of wrong file type, size or goes beyond the filesLimit.
+   *
+   * @param {File[]} rejectedFiles All the rejected files.
+   * @param {Event} event The react-dropzone drop event.
+   */
+  onDropRejected: PropTypes.func
+} : void 0;
+var DropzoneAreaBase$1 = withStyles(styles$2, {
+  name: 'MuiDropzoneArea'
+})(DropzoneAreaBase);
+
+var splitDropzoneAreaProps = function splitDropzoneAreaProps(props) {
+  var clearOnUnmount = props.clearOnUnmount,
+      initialFiles = props.initialFiles,
+      onChange = props.onChange,
+      onDelete = props.onDelete,
+      dropzoneAreaProps = _objectWithoutProperties(props, ["clearOnUnmount", "initialFiles", "onChange", "onDelete"]);
+
+  return [{
+    clearOnUnmount: clearOnUnmount,
+    initialFiles: initialFiles,
+    onChange: onChange,
+    onDelete: onDelete
+  }, dropzoneAreaProps];
+};
+/**
+ * This components creates an uncontrolled Material-UI Dropzone, with previews and snackbar notifications.
+ *
+ * It supports all props of `DropzoneAreaBase` but keeps the files state internally.
+ *
+ * **Note** To listen to file changes use `onChange` event handler and notice that `onDelete` returns a `File` instance instead of `FileObject`.
+ */
+
+
+var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
+  _inherits(DropzoneArea, _React$PureComponent);
+
+  function DropzoneArea() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, DropzoneArea);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneArea)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this.state = {
+      fileObjects: []
+    };
+
+    _this.notifyFileChange = function () {
+      var onChange = _this.props.onChange;
+      var fileObjects = _this.state.fileObjects;
+
+      if (onChange) {
+        onChange(fileObjects.map(function (fileObject) {
+          return fileObject.file;
+        }));
+      }
+    };
+
+    _this.loadInitialFiles = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
+      var initialFiles, fileObjs;
+      return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              initialFiles = _this.props.initialFiles;
+              _context2.prev = 1;
+              _context2.next = 4;
+              return Promise.all(initialFiles.map( /*#__PURE__*/function () {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
+                  var file, data;
+                  return _regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          _context.next = 2;
+                          return createFileFromUrl(url);
+
+                        case 2:
+                          file = _context.sent;
+                          _context.next = 5;
+                          return readFile(file);
+
+                        case 5:
+                          data = _context.sent;
+                          return _context.abrupt("return", {
+                            file: file,
+                            data: data
+                          });
+
+                        case 7:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                }));
+
+                return function (_x) {
+                  return _ref2.apply(this, arguments);
+                };
+              }()));
+
+            case 4:
+              fileObjs = _context2.sent;
+
+              _this.setState(function (state) {
+                return {
+                  fileObjects: [].concat(state.fileObjects, fileObjs)
+                };
+              }, _this.notifyFileChange);
+
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](1);
+              console.log(_context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[1, 8]]);
+    }));
+
+    _this.addFiles = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(newFileObjects) {
+        var filesLimit;
+        return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                filesLimit = _this.props.filesLimit; // Update component state
+
+                _this.setState(function (state) {
+                  // Handle a single file
+                  if (filesLimit <= 1) {
+                    return {
+                      fileObjects: [].concat(newFileObjects[0])
+                    };
+                  } // Handle multiple files
+
+
+                  return {
+                    fileObjects: [].concat(state.fileObjects, newFileObjects)
+                  };
+                }, _this.notifyFileChange);
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
+    _this.deleteFile = function (removedFileObj, removedFileObjIdx) {
+      event.stopPropagation();
+      var onDelete = _this.props.onDelete;
+      var fileObjects = _this.state.fileObjects; // Calculate remaining fileObjects array
+
+      var remainingFileObjs = fileObjects.filter(function (fileObject, i) {
+        return i !== removedFileObjIdx;
+      }); // Notify removed file
+
+      if (onDelete) {
+        onDelete(removedFileObj.file);
+      } // Update local state
+
+
+      _this.setState({
+        fileObjects: remainingFileObjs
+      }, _this.notifyFileChange);
+    };
+
+    return _this;
+  }
+
+  _createClass(DropzoneArea, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadInitialFiles();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      var clearOnUnmount = this.props.clearOnUnmount;
+
+      if (clearOnUnmount) {
+        this.setState({
+          fileObjects: []
+        }, this.notifyFileChange);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _splitDropzoneAreaPro = splitDropzoneAreaProps(this.props),
+          _splitDropzoneAreaPro2 = _slicedToArray(_splitDropzoneAreaPro, 2),
+          dropzoneAreaProps = _splitDropzoneAreaPro2[1];
+
+      var fileObjects = this.state.fileObjects;
+      return createElement(DropzoneAreaBase$1, _extends({}, dropzoneAreaProps, {
+        fileObjects: fileObjects,
+        onAdd: this.addFiles,
+        onDelete: this.deleteFile
+      }));
+    }
+  }]);
+
+  return DropzoneArea;
+}(PureComponent);
+
+DropzoneArea.defaultProps = {
+  clearOnUnmount: true,
+  filesLimit: 3,
+  initialFiles: []
+};
+process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, DropzoneAreaBase$1.propTypes, {
+  /** Clear uploaded files when component is unmounted. */
+  clearOnUnmount: PropTypes.bool,
+
+  /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
+  initialFiles: PropTypes.arrayOf(PropTypes.string),
+
+  /** Maximum number of files that can be loaded into the dropzone. */
+  filesLimit: PropTypes.number,
 
   /**
    * Fired when the files inside dropzone change.
@@ -974,29 +1106,12 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = {
   onChange: PropTypes.func,
 
   /**
-   * Fired when the user drops files into the dropzone.
-   *
-   * @param {File[]} droppedFiles All the files dropped into the dropzone.
-   */
-  onDrop: PropTypes.func,
-
-  /**
-   * Fired when a file is rejected because of wrong file type, size or goes beyond the filesLimit.
-   *
-   * @param {File[]} rejectedFiles All the rejected files.
-   */
-  onDropRejected: PropTypes.func,
-
-  /**
    * Fired when a file is deleted from the previews panel.
    *
    * @param {File} deletedFile The file that was removed.
    */
   onDelete: PropTypes.func
-} : void 0;
-var DropzoneArea$1 = withStyles(styles$2, {
-  name: 'MuiDropzoneArea'
-})(DropzoneArea);
+}) : void 0;
 
 function splitDropzoneDialogProps(allProps) {
   var cancelButtonText = allProps.cancelButtonText,
@@ -1025,62 +1140,20 @@ function splitDropzoneDialogProps(allProps) {
 /**
  * This component provides the DropzoneArea inside of a Material-UI Dialog.
  *
- * It supports all the Props and Methods from `DropzoneArea`.
+ * It supports all the Props and Methods from `DropzoneAreaBase`.
  */
 
 
-var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
-  _inherits(DropzoneDialog, _React$PureComponent);
+var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
+  _inherits(DropzoneDialogBase, _React$PureComponent);
 
-  function DropzoneDialog() {
-    var _getPrototypeOf2;
+  function DropzoneDialogBase() {
+    _classCallCheck(this, DropzoneDialogBase);
 
-    var _this;
-
-    _classCallCheck(this, DropzoneDialog);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneDialog)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    _this.state = {
-      files: []
-    };
-
-    _this.handleClose = function (event) {
-      var onClose = _this.props.onClose; // Notify onClose
-
-      if (onClose) {
-        onClose(event);
-      }
-    };
-
-    _this.handleChange = function (files) {
-      var onChange = _this.props.onChange;
-
-      _this.setState({
-        files: files
-      });
-
-      if (onChange) {
-        onChange(files);
-      }
-    };
-
-    _this.handleSaveClick = function () {
-      var onSave = _this.props.onSave;
-      var files = _this.state.files;
-
-      if (onSave) {
-        onSave(files);
-      }
-    };
-
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(DropzoneDialogBase).apply(this, arguments));
   }
 
-  _createClass(DropzoneDialog, [{
+  _createClass(DropzoneDialogBase, [{
     key: "render",
     value: function render() {
       var _splitDropzoneDialogP = splitDropzoneDialogProps(this.props),
@@ -1093,33 +1166,32 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
           dialogTitle = dropzoneDialogProps.dialogTitle,
           fullWidth = dropzoneDialogProps.fullWidth,
           maxWidth = dropzoneDialogProps.maxWidth,
+          onClose = dropzoneDialogProps.onClose,
+          onSave = dropzoneDialogProps.onSave,
           open = dropzoneDialogProps.open,
-          submitButtonText = dropzoneDialogProps.submitButtonText;
-      var files = this.state.files; // Submit button state
+          submitButtonText = dropzoneDialogProps.submitButtonText; // Submit button state
 
-      var submitDisabled = files.length === 0;
-      return createElement(Fragment, null, createElement(Dialog, _extends({}, dialogProps, {
+      var submitDisabled = dropzoneAreaProps.fileObjects.length === 0;
+      return createElement(Dialog, _extends({}, dialogProps, {
         fullWidth: fullWidth,
         maxWidth: maxWidth,
-        onClose: this.handleClose,
+        onClose: onClose,
         open: open
-      }), createElement(DialogTitle, null, dialogTitle), createElement(DialogContent, null, createElement(DropzoneArea$1, _extends({}, dropzoneAreaProps, {
-        onChange: this.handleChange
-      }))), createElement(DialogActions, null, createElement(Button, {
+      }), createElement(DialogTitle, null, dialogTitle), createElement(DialogContent, null, createElement(DropzoneAreaBase$1, dropzoneAreaProps)), createElement(DialogActions, null, createElement(Button, {
         color: "primary",
-        onClick: this.handleClose
+        onClick: onClose
       }, cancelButtonText), createElement(Button, {
         color: "primary",
         disabled: submitDisabled,
-        onClick: this.handleSaveClick
-      }, submitButtonText))));
+        onClick: onSave
+      }, submitButtonText)));
     }
   }]);
 
-  return DropzoneDialog;
+  return DropzoneDialogBase;
 }(PureComponent);
 
-DropzoneDialog.defaultProps = _extends({}, DropzoneArea$1.defaultProps, {
+DropzoneDialogBase.defaultProps = {
   open: false,
   dialogTitle: 'Upload file',
   dialogProps: {},
@@ -1130,8 +1202,8 @@ DropzoneDialog.defaultProps = _extends({}, DropzoneArea$1.defaultProps, {
   showPreviews: true,
   showPreviewsInDropzone: false,
   showFileNamesInPreview: true
-});
-process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, DropzoneArea$1.propTypes, {
+};
+process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends({}, DropzoneAreaBase$1.propTypes, {
   /** Sets whether the dialog is open or closed. */
   open: PropTypes.bool,
 
@@ -1163,7 +1235,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, 
   submitButtonText: PropTypes.string,
 
   /**
-   * Fired when the modal is closed
+   * Fired when the modal is closed.
    *
    * @param {SyntheticEvent} event The react `SyntheticEvent`
    */
@@ -1172,7 +1244,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, 
   /**
    * Fired when the user clicks the Submit button.
    *
-   * @param {File[]} files All the files currently inside the Dropzone.
+   * @param {SyntheticEvent} event The react `SyntheticEvent`
    */
   onSave: PropTypes.func,
 
@@ -1189,5 +1261,262 @@ process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, 
   showFileNamesInPreview: PropTypes.bool
 }) : void 0;
 
-export { DropzoneArea$1 as DropzoneArea, DropzoneDialog };
+/**
+ * This component provides an uncontrolled version of the DropzoneDialogBase component.
+ *
+ * It supports all the Props and Methods from `DropzoneDialogBase` but keeps the files state internally.
+ *
+ * **Note** The `onSave` handler also returns `File[]` with all the accepted files.
+ */
+
+var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
+  _inherits(DropzoneDialog, _React$PureComponent);
+
+  function DropzoneDialog() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, DropzoneDialog);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneDialog)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this.state = {
+      fileObjects: []
+    };
+
+    _this.notifyFileChange = function () {
+      var onChange = _this.props.onChange;
+      var fileObjects = _this.state.fileObjects;
+
+      if (onChange) {
+        onChange(fileObjects.map(function (fileObject) {
+          return fileObject.file;
+        }));
+      }
+    };
+
+    _this.loadInitialFiles = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
+      var initialFiles, fileObjs;
+      return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              initialFiles = _this.props.initialFiles;
+              _context2.prev = 1;
+              _context2.next = 4;
+              return Promise.all(initialFiles.map( /*#__PURE__*/function () {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
+                  var file, data;
+                  return _regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          _context.next = 2;
+                          return createFileFromUrl(url);
+
+                        case 2:
+                          file = _context.sent;
+                          _context.next = 5;
+                          return readFile(file);
+
+                        case 5:
+                          data = _context.sent;
+                          return _context.abrupt("return", {
+                            file: file,
+                            data: data
+                          });
+
+                        case 7:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                }));
+
+                return function (_x) {
+                  return _ref2.apply(this, arguments);
+                };
+              }()));
+
+            case 4:
+              fileObjs = _context2.sent;
+
+              _this.setState(function (state) {
+                return {
+                  fileObjects: [].concat(state.fileObjects, fileObjs)
+                };
+              }, _this.notifyFileChange);
+
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](1);
+              console.log(_context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[1, 8]]);
+    }));
+
+    _this.addFiles = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(newFileObjects) {
+        var filesLimit;
+        return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                filesLimit = _this.props.filesLimit; // Update component state
+
+                _this.setState(function (state) {
+                  // Handle a single file
+                  if (filesLimit <= 1) {
+                    return {
+                      fileObjects: [].concat(newFileObjects[0])
+                    };
+                  } // Handle multiple files
+
+
+                  return {
+                    fileObjects: [].concat(state.fileObjects, newFileObjects)
+                  };
+                }, _this.notifyFileChange);
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
+    _this.deleteFile = function (removedFileObj, removedFileObjIdx) {
+      event.stopPropagation();
+      var onDelete = _this.props.onDelete;
+      var fileObjects = _this.state.fileObjects; // Calculate remaining fileObjects array
+
+      var remainingFileObjs = fileObjects.filter(function (fileObject, i) {
+        return i !== removedFileObjIdx;
+      }); // Notify removed file
+
+      if (onDelete) {
+        onDelete(removedFileObj.file);
+      } // Update local state
+
+
+      _this.setState({
+        fileObjects: remainingFileObjs
+      }, _this.notifyFileChange);
+    };
+
+    _this.handleClose = function (evt) {
+      var _this$props = _this.props,
+          clearOnUnmount = _this$props.clearOnUnmount,
+          onClose = _this$props.onClose;
+
+      if (onClose) {
+        onClose(evt);
+      }
+
+      if (clearOnUnmount) {
+        _this.setState({
+          fileObjects: []
+        }, _this.notifyFileChange);
+      }
+    };
+
+    _this.handleSave = function (evt) {
+      var _this$props2 = _this.props,
+          clearOnUnmount = _this$props2.clearOnUnmount,
+          onSave = _this$props2.onSave;
+      var fileObjects = _this.state.fileObjects;
+
+      if (onSave) {
+        onSave(fileObjects.map(function (fileObject) {
+          return fileObject.file;
+        }), evt);
+      }
+
+      if (clearOnUnmount) {
+        _this.setState({
+          fileObjects: []
+        }, _this.notifyFileChange);
+      }
+    };
+
+    return _this;
+  }
+
+  _createClass(DropzoneDialog, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadInitialFiles();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      var clearOnUnmount = this.props.clearOnUnmount;
+
+      if (clearOnUnmount) {
+        this.setState({
+          fileObjects: []
+        }, this.notifyFileChange);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var fileObjects = this.state.fileObjects;
+      return createElement(DropzoneDialogBase, _extends({}, this.props, {
+        fileObjects: fileObjects,
+        onAdd: this.addFiles,
+        onDelete: this.deleteFile,
+        onClose: this.handleClose,
+        onSave: this.handleSave
+      }));
+    }
+  }]);
+
+  return DropzoneDialog;
+}(PureComponent);
+
+DropzoneDialog.defaultProps = {
+  clearOnUnmount: true,
+  filesLimit: 3,
+  initialFiles: []
+};
+process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, DropzoneDialogBase.propTypes, {
+  /** Clear uploaded files when component is unmounted. */
+  clearOnUnmount: PropTypes.bool,
+
+  /** Maximum number of files that can be loaded into the dropzone. */
+  filesLimit: PropTypes.number,
+
+  /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
+  initialFiles: PropTypes.arrayOf(PropTypes.string),
+
+  /**
+   * Fired when the user clicks the Submit button.
+   *
+   * @param {File[]} files All the files currently inside the Dropzone.
+   * @param {SyntheticEvent} event The react `SyntheticEvent`.
+   */
+  onSave: PropTypes.func
+}) : void 0;
+
+export { DropzoneArea, DropzoneAreaBase$1 as DropzoneAreaBase, DropzoneDialog, DropzoneDialogBase };
 //# sourceMappingURL=index.es.js.map
