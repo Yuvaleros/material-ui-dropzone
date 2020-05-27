@@ -4,6 +4,14 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
+## `v3.2.0`
+
+###### To be released
+
+#### :sparkles: New Features
+
+* Add `DropzoneAreaBase` and `DropzoneDialogBase` controlled components (PR [#175](https://github.com/Yuvaleros/material-ui-dropzone/pull/175) by **@panz3r**)
+
 ## `v3.1.0`
 
 ###### May 27, 2020
