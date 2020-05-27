@@ -6,7 +6,7 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 ## `v3.1.0`
 
-###### to be published
+###### May 27, 2020
 
 #### :sparkles: New Features
 
@@ -16,6 +16,13 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
   * Closes issue [#80](https://github.com/Yuvaleros/material-ui-dropzone/issues/80) by **@mikiasmohamed**
   * Closes issue [#125](https://github.com/Yuvaleros/material-ui-dropzone/issues/125) by **@suiaing**
   * Closes issue [#146](https://github.com/Yuvaleros/material-ui-dropzone/issues/146) by **@mattcorner**
+* Add `showAlerts` property to show alerts only on error (PR [#170](https://github.com/Yuvaleros/material-ui-dropzone/pull/170) by **@blouin**):
+  * `showAlerts` can be a boolean ("global" `true` or `false` for all alerts).
+  * `showAlerts` can be an array, with values `error`, `info`, `success`:
+    * `showAlerts={['error']}` for only `errors`
+    * `showAlerts={['error', 'info']}` for both `errors` and `info`
+    * `showAlerts={['error', 'success', 'info']}` is same as `showAlerts={true}`
+    * `showAlerts={[]}` is same as `showAlerts={false}`
 
 #### :bug: Bugfixes
 
