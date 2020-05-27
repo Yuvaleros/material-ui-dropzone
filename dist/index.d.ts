@@ -5,8 +5,6 @@ import { SnackbarProps } from '@material-ui/core/Snackbar';
 import * as React from 'react';
 import { DropEvent, DropzoneProps } from 'react-dropzone';
 
-// DropzoneArea
-
 export interface FileObject {
   readonly file: File;
   readonly data: string | ArrayBuffer | null;
@@ -18,8 +16,11 @@ export interface PreviewIconProps {
 
 export type AlertType = 'error' | 'success' | 'info';
 
-export interface DropzoneAreaProps {
+// DropzoneAreaBase
+
+export type DropzoneAreaBaseProps = {
   acceptedFiles?: string[];
+  fileObjects: FileObject[];
   filesLimit?: number;
   maxFileSize?: number;
   dropzoneText?: string;
@@ -46,8 +47,8 @@ export interface DropzoneAreaProps {
   clearOnUnmount?: boolean;
   dropzoneClass?: string;
   dropzoneParagraphClass?: string;
-  initialFiles?: string[];
-  onChange?: (files: File[]) => void;
+  onAdd?: (newFiles: FileObject[]) => void;
+  onDelete?: (deletedFileObject: FileObject, index: number) => void;
   onDrop?: (files: File[], event: DropEvent) => void;
   onDropRejected?: (files: File[], event: DropEvent) => void;
   onDelete?: (file: File) => void;
@@ -57,25 +58,49 @@ export interface DropzoneAreaProps {
   getDropRejectMessage?: (
     rejectedFile: File,
     acceptedFiles: string[],
-    maxFileSize: number,
+    maxFileSize: number
   ) => string;
-  getPreviewIcon?: (file: FileObject, classes: PreviewIconProps) => React.ReactElement;
-}
+  getPreviewIcon?: (
+    file: FileObject,
+    classes: PreviewIconProps
+  ) => React.ReactElement;
+};
+
+export const DrozponeAreaBase: React.ComponentType<DropzoneAreaBaseProps>;
+
+// DropzoneArea
+
+export type DropzoneAreaProps = DropzoneAreaBaseProps & {
+  clearOnUnmount?: boolean;
+  initialFiles?: string[];
+  onChange?: (files: File[]) => void;
+  onDelete?: (file: File) => void;
+};
 
 export const DropzoneArea: React.ComponentType<DropzoneAreaProps>;
 
-// DropzoneDialog
+// DropzoneDialogBase
 
-export interface DropzoneDialogProps extends DropzoneAreaProps {
+export type DropzoneDialogBaseProps = DropzoneAreaBaseProps & {
   cancelButtonText?: string;
   dialogProps?: DialogProps;
   dialogTitle?: string;
   fullWidth?: boolean;
   maxWidth?: string;
-  onClose?: () => void;
-  onSave?: (files: File[]) => void;
+  onClose?: (event: React.SyntheticEvent) => void;
+  onSave?: (event: React.SyntheticEvent) => void;
   open?: boolean;
   submitButtonText?: string;
-}
+};
+
+export const DropzoneDialogBase: React.ComponentType<DropzoneDialogBaseProps>;
+
+// DropzoneDialog
+
+export type DropzoneDialogProps = DropzoneDialogBaseProps & {
+  clearOnUnmount?: boolean;
+  initialFiles?: string[];
+  onSave?: (files: File[], event: React.SyntheticEvent) => void;
+};
 
 export const DropzoneDialog: React.ComponentType<DropzoneDialogProps>;
