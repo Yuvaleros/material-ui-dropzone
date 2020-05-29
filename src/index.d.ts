@@ -51,7 +51,6 @@ export type DropzoneAreaBaseProps = {
   onDelete?: (deletedFileObject: FileObject, index: number) => void;
   onDrop?: (files: File[], event: DropEvent) => void;
   onDropRejected?: (files: File[], event: DropEvent) => void;
-  onDelete?: (file: File) => void;
   getFileLimitExceedMessage?: (filesLimit: number) => string;
   getFileAddedMessage?: (fileName: string) => string;
   getFileRemovedMessage?: (fileName: string) => string;
