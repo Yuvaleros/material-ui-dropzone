@@ -402,9 +402,9 @@ DropzoneAreaBase.propTypes = {
      *  - showAlerts={['error', 'success', 'info']} is same as showAlerts={true}.
      *  - showAlerts={[]} is same as showAlerts={false}.
      */
-    showAlerts: PropTypes.oneOf([
+    showAlerts: PropTypes.oneOfType([
         PropTypes.bool,
-        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(PropTypes.oneOf(['error', 'success', 'info'])),
     ]),
     /**
      * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
