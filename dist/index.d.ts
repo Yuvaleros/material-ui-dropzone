@@ -65,7 +65,7 @@ export type DropzoneAreaBaseProps = {
   ) => React.ReactElement;
 };
 
-export const DrozponeAreaBase: React.ComponentType<DropzoneAreaBaseProps>;
+export const DropzoneAreaBase: React.ComponentType<DropzoneAreaBaseProps>;
 
 // DropzoneArea
 
