@@ -119,11 +119,12 @@ export const DropzoneDialogBase: React.ComponentType<DropzoneDialogBaseProps>;
 
 export type DropzoneDialogProps = Omit<
   DropzoneDialogBaseProps,
-  'fileObjects' | 'onAdd' | 'onDelete' | 'onClose' | 'onSave'
+  'fileObjects' | 'onAdd' | 'onDelete' | 'onSave'
 > & {
   clearOnUnmount?: boolean;
   initialFiles?: string[];
   onSave?: (files: File[], event: React.SyntheticEvent) => void;
+  onDelete?: (file: File) => void;
 };
 
 export const DropzoneDialog: React.ComponentType<DropzoneDialogProps>;
