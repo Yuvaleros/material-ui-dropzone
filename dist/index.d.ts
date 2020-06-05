@@ -5,6 +5,8 @@ import { SnackbarProps } from '@material-ui/core/Snackbar';
 import * as React from 'react';
 import { DropEvent, DropzoneProps } from 'react-dropzone';
 
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
 export interface FileObject {
   readonly file: File;
   readonly data: string | ArrayBuffer | null;
@@ -18,7 +20,23 @@ export type AlertType = 'error' | 'success' | 'info';
 
 // DropzoneAreaBase
 
+export type DropzoneAreaBaseClasses = {
+  /** CSS properties applied to the root Dropzone div */
+  root: React.CSSProperties;
+  /** CSS properties applied to the Dropzone when 'active' */
+  active: React.CSSProperties;
+  /** CSS properties applied to the Dropzone when 'invalid' */
+  invalid: React.CSSProperties;
+  /** CSS properties applied to the Dropzone text container div */
+  textContainer: React.CSSProperties;
+  /** CSS properties applied to the Dropzone text */
+  text: React.CSSProperties;
+  /** CSS properties applied to the Dropzone icon */
+  icon: React.CSSProperties;
+};
+
 export type DropzoneAreaBaseProps = {
+  classes?: Partial<DropzoneAreaBaseClasses>;
   acceptedFiles?: string[];
   fileObjects: FileObject[];
   filesLimit?: number;
@@ -69,7 +87,10 @@ export const DropzoneAreaBase: React.ComponentType<DropzoneAreaBaseProps>;
 
 // DropzoneArea
 
-export type DropzoneAreaProps = DropzoneAreaBaseProps & {
+export type DropzoneAreaProps = Omit<
+  DropzoneAreaBaseProps,
+  'fileObjects' | 'onAdd' | 'onDelete'
+> & {
   clearOnUnmount?: boolean;
   initialFiles?: string[];
   onChange?: (files: File[]) => void;
@@ -96,7 +117,10 @@ export const DropzoneDialogBase: React.ComponentType<DropzoneDialogBaseProps>;
 
 // DropzoneDialog
 
-export type DropzoneDialogProps = DropzoneDialogBaseProps & {
+export type DropzoneDialogProps = Omit<
+  DropzoneDialogBaseProps,
+  'fileObjects' | 'onAdd' | 'onDelete' | 'onClose' | 'onSave'
+> & {
   clearOnUnmount?: boolean;
   initialFiles?: string[];
   onSave?: (files: File[], event: React.SyntheticEvent) => void;
