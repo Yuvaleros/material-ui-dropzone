@@ -4,6 +4,16 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
+## `v3.2.1`
+
+###### To be released
+
+#### :label: Typings
+
+* Update Typescript typings
+  * Fixes issue [#172](https://github.com/Yuvaleros/material-ui-dropzone/issues/172) by **@amirmishani**
+  * Fixes issue [#184](https://github.com/Yuvaleros/material-ui-dropzone/issues/184) by **@zikaeroh**
+
 ## `v3.2.0`
 
 ###### June 03, 2020
