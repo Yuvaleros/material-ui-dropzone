@@ -68,8 +68,8 @@ export type DropzoneAreaBaseProps = {
 export const DropzoneAreaBase: React.ComponentType<DropzoneAreaBaseProps>;
 
 // DropzoneArea
-
-export type DropzoneAreaProps = DropzoneAreaBaseProps & {
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+export type DropzoneAreaProps = Omit<DropzoneAreaBaseProps, 'fileObjects'> & {
   clearOnUnmount?: boolean;
   initialFiles?: string[];
   onChange?: (files: File[]) => void;
@@ -80,7 +80,7 @@ export const DropzoneArea: React.ComponentType<DropzoneAreaProps>;
 
 // DropzoneDialogBase
 
-export type DropzoneDialogBaseProps = DropzoneAreaBaseProps & {
+export type DropzoneDialogBaseProps = Omit<DropzoneAreaBaseProps, 'fileObjects'> & {
   cancelButtonText?: string;
   dialogProps?: DialogProps;
   dialogTitle?: string;
