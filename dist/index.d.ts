@@ -21,18 +21,18 @@ export type AlertType = 'error' | 'success' | 'info';
 // DropzoneAreaBase
 
 export type DropzoneAreaBaseClasses = {
-  /** CSS properties applied to the root Dropzone div */
-  root: React.CSSProperties;
-  /** CSS properties applied to the Dropzone when 'active' */
-  active: React.CSSProperties;
-  /** CSS properties applied to the Dropzone when 'invalid' */
-  invalid: React.CSSProperties;
-  /** CSS properties applied to the Dropzone text container div */
-  textContainer: React.CSSProperties;
-  /** CSS properties applied to the Dropzone text */
-  text: React.CSSProperties;
-  /** CSS properties applied to the Dropzone icon */
-  icon: React.CSSProperties;
+  /** Material-UI class applied to the root Dropzone div */
+  root: string;
+  /** Material-UI class applied to the Dropzone when 'active' */
+  active: string;
+  /** Material-UI class applied to the Dropzone when 'invalid' */
+  invalid: string;
+  /** Material-UI class applied to the Dropzone text container div */
+  textContainer: string;
+  /** Material-UI class applied to the Dropzone text */
+  text: string;
+  /** Material-UI class applied to the Dropzone icon */
+  icon: string;
 };
 
 export type DropzoneAreaBaseProps = {
