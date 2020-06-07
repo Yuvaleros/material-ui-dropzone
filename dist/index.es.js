@@ -144,7 +144,10 @@ var styles = function styles(_ref) {
       top: spacing(-1),
       right: spacing(-1),
       width: 40,
-      height: 40
+      height: 40,
+      '&:focus': {
+        opacity: 1
+      }
     }
   };
 };
