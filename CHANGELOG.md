@@ -8,6 +8,10 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 ###### To be released
 
+#### :bug: Bugfixes
+
+* Show remove buttons when they have focus (PR [#191](https://github.com/Yuvaleros/material-ui-dropzone/pull/191) by **@MatthijsMud**, reported as [#190](https://github.com/Yuvaleros/material-ui-dropzone/issues/190) by **@MatthijsMud**)
+
 #### :label: Typings
 
 * Update Typescript typings
