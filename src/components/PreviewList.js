@@ -41,6 +41,9 @@ const styles = ({palette, shape, spacing}) => ({
         right: spacing(-1),
         width: 40,
         height: 40,
+        '&:focus': {
+            opacity: 1,
+        },
     },
 });
 
