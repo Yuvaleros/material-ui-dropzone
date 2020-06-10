@@ -27,7 +27,7 @@ const [open, setOpen] = React.useState(false);
       console.log('Files:', files);
       setOpen(false);
     }}
-    showPreviews={true}
+    previewType='below'
     showFileNamesInPreview={true}
   />
 </div>
