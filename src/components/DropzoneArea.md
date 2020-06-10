@@ -59,3 +59,17 @@ const handlePreviewIcon = (fileObject, classes) => {
   getPreviewIcon={handlePreviewIcon}
 />
 ```
+### Loading initial files
+
+```jsx
+import * as React from 'react';
+
+const file = new File(["foo"], "foo.txt", {
+  type: "text/plain",
+});
+
+<DropzoneArea
+  initialFiles = {[file]}
+  onChange={(files) => console.log('Files:', files)}
+/>
+```
