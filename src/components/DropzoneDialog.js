@@ -45,8 +45,10 @@ class DropzoneDialog extends React.PureComponent {
         const {initialFiles} = this.props;
         try {
             const fileObjs = await Promise.all(
-                initialFiles.map(async(url) => {
-                    const file = await createFileFromUrl(url);
+                initialFiles.map(async(file) => {
+                    if (typeof file === 'string' ) {
+                        file = await createFileFromUrl(file);
+                    }
                     const data = await readFile(file);
 
                     return {
@@ -167,8 +169,13 @@ DropzoneDialog.propTypes = {
     clearOnUnmount: PropTypes.bool,
     /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
-    /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
-    initialFiles: PropTypes.arrayOf(PropTypes.string),
+    /** List containing File objects or URL strings.<br/>
+     * **Note:** Please take care of CORS.
+    */
+    initialFiles: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.instanceOf(File)),
+        PropTypes.arrayOf(PropTypes.string),
+    ]),
     /**
      * Fired when the user clicks the Submit button.
      *
