@@ -49,9 +49,12 @@ class DropzoneArea extends React.PureComponent {
         const {initialFiles} = this.props;
         try {
             const fileObjs = await Promise.all(
-                initialFiles.map(async(file) => {
-                    if (typeof file === 'string' ) {
-                        file = await createFileFromUrl(file);
+                initialFiles.map(async(initialFile) => {
+                    let file;
+                    if (typeof initialFile === 'string' ) {
+                        file = await createFileFromUrl(initialFile);
+                    } else {
+                        file = initialFile;
                     }
                     const data = await readFile(file);
 
