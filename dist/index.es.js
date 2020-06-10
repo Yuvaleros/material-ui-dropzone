@@ -490,13 +490,21 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
     _this.handleDropRejected = function (rejectedFiles, evt) {
       var _this$props2 = _this.props,
           acceptedFiles = _this$props2.acceptedFiles,
+          filesLimit = _this$props2.filesLimit,
+          fileObjects = _this$props2.fileObjects,
           getDropRejectMessage = _this$props2.getDropRejectMessage,
+          getFileLimitExceedMessage = _this$props2.getFileLimitExceedMessage,
           maxFileSize = _this$props2.maxFileSize,
           onDropRejected = _this$props2.onDropRejected;
       var message = '';
-      rejectedFiles.forEach(function (rejectedFile) {
-        message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
-      });
+
+      if (fileObjects.length + rejectedFiles.length > filesLimit) {
+        message = getFileLimitExceedMessage(filesLimit);
+      } else {
+        rejectedFiles.forEach(function (rejectedFile) {
+          message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
+        });
+      }
 
       if (onDropRejected) {
         onDropRejected(rejectedFiles, evt);
