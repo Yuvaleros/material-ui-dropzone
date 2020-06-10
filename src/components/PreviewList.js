@@ -1,63 +1,60 @@
 import Chip from '@material-ui/core/Chip';
-import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
 import {withStyles} from '@material-ui/core/styles';
+import withWidth from '@material-ui/core/withWidth';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {isImage as isImageCheck} from '../helpers';
 import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
 const styles = ({palette, shape, spacing}) => ({
-    root: {},
-    imageContainer: {
-        position: 'relative',
-        zIndex: 10,
-        textAlign: 'center',
-        '&:hover $image': {
-            opacity: 0.3,
-        },
-        '&:hover $removeButton': {
-            opacity: 1,
-        },
-    },
-    image: {
-        height: 100,
-        width: 'initial',
-        maxWidth: '100%',
-        color: palette.text.primary,
-        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-        boxSizing: 'border-box',
-        boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-        borderRadius: shape.borderRadius,
-        zIndex: 5,
-        opacity: 1,
-    },
-    removeButton: {
-        transition: '.5s ease',
+    root: {
+        alignItems: 'center',
         position: 'absolute',
-        opacity: 0,
-        top: spacing(-1),
-        right: spacing(-1),
-        width: 40,
-        height: 40,
-        '&:focus': {
-            opacity: 1,
-        },
+        width: '100%',
+        height: '100%',
+        margin: 0,
+        backgroundColor: 'rgba(255,255,255,0.87)',
+    },
+    icon: {
+        color: 'rgba(255, 255, 255, 0.54)',
+    },
+    iconWrapper: {
+        height: '100%',
+        backgroundColor: '#f2f2f2',
+    },
+    fileIcon: {
+        flexGrow: 1,
+        height: '50%',
+        marginTop: spacing(3),
+    },
+    fileIconBottom: {
+        marginTop: spacing(9),
     },
 });
 
 function PreviewList({
     fileObjects,
+    filesLimit,
+    getCols,
     handleRemove,
     showFileNames,
     useChipsForPreview,
     previewChipProps,
     previewGridClasses,
     previewGridProps,
+    previewType,
     classes,
     getPreviewIcon,
+    width,
 }) {
+    const previewInside = previewType === 'inside';// extract to constants?
+    const cols = getCols(width, filesLimit, fileObjects.length);
+
     if (useChipsForPreview) {
         return (
             fileObjects.map((fileObject, i) => (
@@ -74,53 +71,61 @@ function PreviewList({
     }
 
     return (
-        <Grid
-            spacing={8}
-            {...previewGridProps.container}
-            container={true}
-            className={clsx(classes.root, previewGridClasses.container)}
-        >
+        <GridList cols={cols}
+            className={clsx({[classes.root]: previewInside}, previewGridClasses.container)}
+            {...previewGridProps?.gridList}>
             {fileObjects.map((fileObject, i) => {
-                return (
-                    <Grid
-                        xs={4}
-                        {...previewGridProps.item}
-                        item={true}
-                        key={`${fileObject.file?.name ?? 'file'}-${i}`}
-                        className={clsx(classes.imageContainer, previewGridClasses.item)}
-                    >
-                        {getPreviewIcon(fileObject, classes)}
+                const fileTitle = showFileNames && fileObject.file?.name;
+                const isImage = isImageCheck(fileObject.file);
 
-                        {showFileNames && (
-                            <Typography variant="body1" component="p">
-                                {fileObject.file.name}
-                            </Typography>
+                return (
+                    <GridListTile
+                        key={`${fileObject.file?.name ?? 'file'}-${i}`}
+                        className={clsx(previewGridClasses.gridListTile, {[classes.iconWrapper]: !isImage})}
+                        {...previewGridProps?.gridListTitle}
+                    >
+                        {getPreviewIcon(
+                            fileObject,
+                            classes,
+                            isImage,
+                            previewGridProps?.gridListTitleBar?.titlePosition === 'top'
                         )}
 
-                        <Fab
-                            onClick={handleRemove(i)}
-                            aria-label="Delete"
-                            className={classes.removeButton}
-                        >
-                            <DeleteIcon />
-                        </Fab>
-                    </Grid>
+                        <GridListTileBar
+                            title={fileTitle}
+                            actionIcon={
+                                <IconButton
+                                    onClick={handleRemove(i)}
+                                    aria-label={'Delete'}
+                                    className={clsx(previewGridClasses.removeIconButton, classes.icon)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            }
+                            {...previewGridProps?.gridListTitleBar}
+                        />
+
+                    </GridListTile>
                 );
             })}
-        </Grid>
+        </GridList>
     );
 }
 
 PreviewList.propTypes = {
     classes: PropTypes.object.isRequired,
     fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
+    filesLimit: PropTypes.number.isRequired,
+    getCols: PropTypes.func.isRequired,
     getPreviewIcon: PropTypes.func.isRequired,
     handleRemove: PropTypes.func.isRequired,
     previewChipProps: PropTypes.object,
     previewGridClasses: PropTypes.object,
     previewGridProps: PropTypes.object,
+    previewType: PropTypes.string.isRequired,
     showFileNames: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
+    width: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles, {name: 'MuiDropzonePreviewList'})(PreviewList);
+export default withWidth()(withStyles(styles, {name: 'MuiDropzonePreviewList', withTheme: true})(PreviewList));

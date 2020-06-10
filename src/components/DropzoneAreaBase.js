@@ -1,5 +1,6 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -22,6 +23,7 @@ const styles = ({palette, shape, spacing}) => ({
         },
     },
     root: {
+        display: 'flex',
         position: 'relative',
         width: '100%',
         minHeight: '250px',
@@ -32,6 +34,8 @@ const styles = ({palette, shape, spacing}) => ({
         boxSizing: 'border-box',
         cursor: 'pointer',
         overflow: 'hidden',
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
     active: {
         animation: '$progress 2s linear infinite !important',
@@ -47,7 +51,7 @@ const styles = ({palette, shape, spacing}) => ({
         borderColor: palette.error.main,
     },
     textContainer: {
-        textAlign: 'center',
+        display: 'flex',
     },
     text: {
         marginBottom: spacing(3),
@@ -60,13 +64,30 @@ const styles = ({palette, shape, spacing}) => ({
     },
 });
 
+const defaultGetCols = (width, filesLimit) => {
+    const returnBelowLimit = (number) => {
+        if (number < filesLimit) {
+            return number;
+        }
+        return filesLimit;
+    };
+
+    switch (width) {
+        case 'xs': return returnBelowLimit(1) ;
+        case 'sm': return returnBelowLimit(2);
+        case 'md': return returnBelowLimit(3);
+        case 'lg': return returnBelowLimit(4);
+        case 'xl' : return returnBelowLimit(5);
+    }
+};
+
 const defaultSnackbarAnchorOrigin = {
     horizontal: 'left',
     vertical: 'bottom',
 };
 
-const defaultGetPreviewIcon = (fileObject, classes) => {
-    if (isImage(fileObject.file)) {
+const defaultGetPreviewIcon = (fileObject, classes, isImage, titleBarTop) => {
+    if (isImage) {
         return (<img
             className={classes.image}
             role="presentation"
@@ -74,7 +95,9 @@ const defaultGetPreviewIcon = (fileObject, classes) => {
         />);
     }
 
-    return <AttachFileIcon className={classes.image} />;
+    return <Grid container className={classes.iconWrapper} justify="center" >
+        <AttachFileIcon className={clsx(classes.fileIcon, {[classes.fileIconBottom]: titleBarTop})} />
+    </Grid>;
 };
 
 /**
@@ -186,6 +209,7 @@ class DropzoneAreaBase extends React.PureComponent {
             dropzoneText,
             fileObjects,
             filesLimit,
+            getCols,
             getPreviewIcon,
             inputProps,
             maxFileSize,
@@ -193,19 +217,16 @@ class DropzoneAreaBase extends React.PureComponent {
             previewGridClasses,
             previewGridProps,
             previewText,
+            previewType,
             showAlerts,
             showFileNames,
-            showFileNamesInPreview,
-            showPreviews,
-            showPreviewsInDropzone,
             useChipsForPreview,
         } = this.props;
         const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
 
         const acceptFiles = acceptedFiles?.join(',');
         const isMultiple = filesLimit > 1;
-        const previewsVisible = showPreviews && fileObjects.length > 0;
-        const previewsInDropzoneVisible = showPreviewsInDropzone && fileObjects.length > 0;
+        const someFiles = fileObjects.length > 0;
 
         return (
             <Fragment>
@@ -229,7 +250,7 @@ class DropzoneAreaBase extends React.PureComponent {
                         >
                             <input {...inputProps} {...getInputProps()} />
 
-                            <div className={classes.textContainer}>
+                            <Grid container className={classes.textContainer} direction="column" justifyContent="center" alignItems="center">
                                 <Typography
                                     variant="h5"
                                     component="p"
@@ -238,11 +259,13 @@ class DropzoneAreaBase extends React.PureComponent {
                                     {dropzoneText}
                                 </Typography>
                                 <CloudUploadIcon className={classes.icon} />
-                            </div>
+                            </Grid>
 
-                            {previewsInDropzoneVisible &&
+                            {someFiles && previewType === 'inside' &&
                                 <PreviewList
                                     fileObjects={fileObjects}
+                                    filesLimit={filesLimit}
+                                    getCols={getCols}
                                     handleRemove={this.handleRemove}
                                     getPreviewIcon={getPreviewIcon}
                                     showFileNames={showFileNames}
@@ -250,13 +273,14 @@ class DropzoneAreaBase extends React.PureComponent {
                                     previewChipProps={previewChipProps}
                                     previewGridClasses={previewGridClasses}
                                     previewGridProps={previewGridProps}
+                                    previewType={previewType}
                                 />
                             }
                         </div>
                     )}
                 </Dropzone>
 
-                {previewsVisible &&
+                {someFiles && previewType === 'below' &&
                     <Fragment>
                         <Typography variant="subtitle1" component="span">
                             {previewText}
@@ -264,13 +288,16 @@ class DropzoneAreaBase extends React.PureComponent {
 
                         <PreviewList
                             fileObjects={fileObjects}
+                            filesLimit={filesLimit}
+                            getCols={getCols}
                             handleRemove={this.handleRemove}
                             getPreviewIcon={getPreviewIcon}
-                            showFileNames={showFileNamesInPreview}
+                            showFileNames={showFileNames}
                             useChipsForPreview={useChipsForPreview}
                             previewChipProps={previewChipProps}
                             previewGridClasses={previewGridClasses}
                             previewGridProps={previewGridProps}
+                            previewType={previewType}
                         />
                     </Fragment>
                 }
@@ -303,11 +330,9 @@ DropzoneAreaBase.defaultProps = {
     maxFileSize: 3000000,
     dropzoneText: 'Drag and drop a file here or click',
     previewText: 'Preview:',
+    previewType: 'inside',
     disableRejectionFeedback: false,
-    showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
-    showPreviewsInDropzone: true,
-    showFileNames: false,
-    showFileNamesInPreview: false,
+    showFileNames: true,
     useChipsForPreview: false,
     previewChipProps: {},
     previewGridClasses: {},
@@ -320,6 +345,7 @@ DropzoneAreaBase.defaultProps = {
         },
         autoHideDuration: 6000,
     },
+    getCols: defaultGetCols,
     getFileLimitExceedMessage: (filesLimit) => (`Maximum allowed number of files exceeded. Only ${filesLimit} allowed`),
     getFileAddedMessage: (fileName) => (`File ${fileName} successfully added.`),
     getPreviewIcon: defaultGetPreviewIcon,
@@ -362,15 +388,9 @@ DropzoneAreaBase.propTypes = {
     dropzoneParagraphClass: PropTypes.string,
     /** Disable feedback effect when dropping rejected files. */
     disableRejectionFeedback: PropTypes.bool,
-    /** Shows previews **BELOW** the dropzone. */
-    showPreviews: PropTypes.bool,
-    /** Shows preview **INSIDE** the dropzone area. */
-    showPreviewsInDropzone: PropTypes.bool,
     /** Shows file name under the dropzone image. */
     showFileNames: PropTypes.bool,
     /** Shows file name under the image. */
-    showFileNamesInPreview: PropTypes.bool,
-    /** Uses deletable Material-UI Chip components to display file names. */
     useChipsForPreview: PropTypes.bool,
     /**
      * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
@@ -392,6 +412,8 @@ DropzoneAreaBase.propTypes = {
     previewGridProps: PropTypes.object,
     /** The label for the file preview section. */
     previewText: PropTypes.string,
+    /** Determines whether previews are shown inside the dropzone area, below, or not at all. Acceptable values are 'inside', 'below', 'none'. */
+    previewType: PropTypes.string,
     /**
      * Shows styled Material-UI Snackbar when files are dropped, deleted or rejected.
      *
@@ -424,6 +446,16 @@ DropzoneAreaBase.propTypes = {
      * @see See [MDN Input File attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Additional_attributes) for available values.
      */
     inputProps: PropTypes.object,
+    /**
+     * A function which determines which the number of columns to display in the preview list
+     *
+     * *Default*: Returns a sensible number of columns depending on the screen size (i.e. xs=1, sm=2, md=3, lg=4, xl=5) without exceeding the filesLimit (e.g. There would be no point displaying 4 columns if the filesLimit is 3)
+     *
+     * @param {string} width Width prop from withWidth, this will be one of ['xs','sm','md','lg','xl'] depending on the current screen size
+     * @param {number} filesLimit The `filesLimit` prop
+     * @param {number} currentNumberOfFiles The number of files in the `state.fileObjects`
+     */
+    getCols: PropTypes.func,
     /**
      * Get alert message to display when files limit is exceed.
      *
