@@ -18,16 +18,16 @@ const variantIcon = {
 };
 
 const styles = (theme) => ({
-    success: {
+    successAlert: {
         backgroundColor: theme.palette.success.main,
     },
-    error: {
+    errorAlert: {
         backgroundColor: theme.palette.error.main,
     },
-    info: {
+    infoAlert: {
         backgroundColor: theme.palette.info.main,
     },
-    warning: {
+    warningAlert: {
         backgroundColor: theme.palette.warning.main,
     },
     message: {
@@ -48,7 +48,7 @@ function SnackbarContentWrapper(props) {
 
     return (
         <SnackbarContent
-            className={clsx(classes[variant], className)}
+            className={clsx(classes[`${variant}Alert`], className)}
             aria-describedby="client-snackbar"
             message={
                 <span id="client-snackbar" className={classes.message}>
