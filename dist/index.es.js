@@ -227,16 +227,16 @@ var variantIcon = {
 
 var styles$1 = function styles(theme) {
   return {
-    success: {
+    successAlert: {
       backgroundColor: theme.palette.success.main
     },
-    error: {
+    errorAlert: {
       backgroundColor: theme.palette.error.main
     },
-    info: {
+    infoAlert: {
       backgroundColor: theme.palette.info.main
     },
-    warning: {
+    warningAlert: {
       backgroundColor: theme.palette.warning.main
     },
     message: {
@@ -262,7 +262,7 @@ function SnackbarContentWrapper(props) {
 
   var Icon = variantIcon[variant];
   return /*#__PURE__*/createElement(SnackbarContent, _extends({
-    className: clsx(classes[variant], className),
+    className: clsx(classes["".concat(variant, "Alert")], className),
     "aria-describedby": "client-snackbar",
     message: /*#__PURE__*/createElement("span", {
       id: "client-snackbar",
