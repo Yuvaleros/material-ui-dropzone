@@ -92,7 +92,7 @@ export type DropzoneAreaProps = Omit<
   'fileObjects' | 'onAdd' | 'onDelete'
 > & {
   clearOnUnmount?: boolean;
-  initialFiles?: File[] | string[];
+  initialFiles?: (File | string)[];
   onChange?: (files: File[]) => void;
   onDelete?: (file: File) => void;
 };
@@ -122,7 +122,7 @@ export type DropzoneDialogProps = Omit<
   'fileObjects' | 'onAdd' | 'onDelete' | 'onSave'
 > & {
   clearOnUnmount?: boolean;
-  initialFiles?: File[] | string[];
+  initialFiles?: (File | string)[];
   onSave?: (files: File[], event: React.SyntheticEvent) => void;
   onDelete?: (file: File) => void;
 };

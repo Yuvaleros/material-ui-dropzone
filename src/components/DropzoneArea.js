@@ -144,10 +144,12 @@ DropzoneArea.propTypes = {
     /** List containing File objects or URL strings.<br/>
      * **Note:** Please take care of CORS.
     */
-    initialFiles: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.instanceOf(File)),
-        PropTypes.arrayOf(PropTypes.string),
-    ]),
+    initialFiles: PropTypes.arrayOf(
+        PropTypes.oneOfType([
+            PropTypes.instanceOf(File),
+            PropTypes.string,
+        ])
+    ),
     /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
     /**
