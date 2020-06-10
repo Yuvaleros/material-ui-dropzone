@@ -130,12 +130,24 @@ class DropzoneAreaBase extends React.PureComponent {
     }
 
     handleDropRejected = (rejectedFiles, evt) => {
-        const {acceptedFiles, getDropRejectMessage, maxFileSize, onDropRejected} = this.props;
+        const {
+            acceptedFiles,
+            filesLimit,
+            fileObjects,
+            getDropRejectMessage,
+            getFileLimitExceedMessage,
+            maxFileSize,
+            onDropRejected,
+        } = this.props;
 
         let message = '';
-        rejectedFiles.forEach((rejectedFile) => {
-            message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
-        });
+        if (fileObjects.length + rejectedFiles.length > filesLimit) {
+            message = getFileLimitExceedMessage(filesLimit);
+        } else {
+            rejectedFiles.forEach((rejectedFile) => {
+                message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
+            });
+        }
 
         if (onDropRejected) {
             onDropRejected(rejectedFiles, evt);
