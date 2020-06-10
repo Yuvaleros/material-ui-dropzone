@@ -3,15 +3,15 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
-import {withStyles} from '@material-ui/core/styles';
-import withWidth from '@material-ui/core/withWidth';
+import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {isImage as isImageCheck} from '../helpers';
 import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import {useWidth} from '../hooks/useWidth';
 
-const styles = ({palette, shape, spacing}) => ({
+const useStyles = makeStyles(({spacing}) => ({
     root: {
         alignItems: 'center',
         position: 'absolute',
@@ -35,9 +35,10 @@ const styles = ({palette, shape, spacing}) => ({
     fileIconBottom: {
         marginTop: spacing(9),
     },
-});
+}
+), {name: 'MuiDropzonePreviewList'});
 
-function PreviewList({
+const PreviewList = ({
     fileObjects,
     filesLimit,
     getCols,
@@ -48,12 +49,12 @@ function PreviewList({
     previewGridClasses,
     previewGridProps,
     previewType,
-    classes,
     getPreviewIcon,
-    width,
-}) {
-    const previewInside = previewType === 'inside';// extract to constants?
+}) => {
+    const classes = useStyles();
+    const width = useWidth();
     const cols = getCols(width, filesLimit, fileObjects.length);
+    const previewInside = previewType === 'inside';
 
     if (useChipsForPreview) {
         return (
@@ -110,10 +111,9 @@ function PreviewList({
             })}
         </GridList>
     );
-}
+};
 
 PreviewList.propTypes = {
-    classes: PropTypes.object.isRequired,
     fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
     filesLimit: PropTypes.number.isRequired,
     getCols: PropTypes.func.isRequired,
@@ -125,7 +125,6 @@ PreviewList.propTypes = {
     previewType: PropTypes.string.isRequired,
     showFileNames: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
-    width: PropTypes.string.isRequired,
 };
 
-export default withWidth()(withStyles(styles, {name: 'MuiDropzonePreviewList', withTheme: true})(PreviewList));
+export default PreviewList;

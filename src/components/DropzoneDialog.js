@@ -14,145 +14,145 @@ import DropzoneDialogBase from './DropzoneDialogBase';
  * **Note** The `onSave` handler also returns `File[]` with all the accepted files.
  */
 class DropzoneDialog extends React.PureComponent {
-    state = {
-        fileObjects: [],
-    }
+  state = {
+      fileObjects: [],
+  }
 
-    componentDidMount() {
-        this.loadInitialFiles();
-    }
+  componentDidMount() {
+      this.loadInitialFiles();
+  }
 
-    componentWillUnmount() {
-        const {clearOnUnmount} = this.props;
+  componentWillUnmount() {
+      const {clearOnUnmount} = this.props;
 
-        if (clearOnUnmount) {
-            this.setState({
-                fileObjects: [],
-            }, this.notifyFileChange);
-        }
-    }
+      if (clearOnUnmount) {
+          this.setState({
+              fileObjects: [],
+          }, this.notifyFileChange);
+      }
+  }
 
-    notifyFileChange = () => {
-        const {onChange} = this.props;
-        const {fileObjects} = this.state;
+  notifyFileChange = () => {
+      const {onChange} = this.props;
+      const {fileObjects} = this.state;
 
-        if (onChange) {
-            onChange(fileObjects.map((fileObject) => fileObject.file));
-        }
-    }
+      if (onChange) {
+          onChange(fileObjects.map((fileObject) => fileObject.file));
+      }
+  }
 
-    loadInitialFiles = async() => {
-        const {initialFiles} = this.props;
-        try {
-            const fileObjs = await Promise.all(
-                initialFiles.map(async(url) => {
-                    const file = await createFileFromUrl(url);
-                    const data = await readFile(file);
+  loadInitialFiles = async() => {
+      const {initialFiles} = this.props;
+      try {
+          const fileObjs = await Promise.all(
+              initialFiles.map(async(url) => {
+                  const file = await createFileFromUrl(url);
+                  const data = await readFile(file);
 
-                    return {
-                        file,
-                        data,
-                    };
-                })
-            );
+                  return {
+                      file,
+                      data,
+                  };
+              })
+          );
 
-            this.setState((state) => ({
-                fileObjects: [].concat(
-                    state.fileObjects,
-                    fileObjs
-                ),
-            }), this.notifyFileChange);
-        } catch (err) {
-            console.log(err);
-        }
-    }
+          this.setState((state) => ({
+              fileObjects: [].concat(
+                  state.fileObjects,
+                  fileObjs
+              ),
+          }), this.notifyFileChange);
+      } catch (err) {
+          console.log(err);
+      }
+  }
 
-    addFiles = async(newFileObjects) => {
-        const {filesLimit} = this.props;
-        // Update component state
-        this.setState((state) => {
-            // Handle a single file
-            if (filesLimit <= 1) {
-                return {
-                    fileObjects: [].concat(newFileObjects[0]),
-                };
-            }
+  addFiles = async(newFileObjects) => {
+      const {filesLimit} = this.props;
+      // Update component state
+      this.setState((state) => {
+      // Handle a single file
+          if (filesLimit <= 1) {
+              return {
+                  fileObjects: [].concat(newFileObjects[0]),
+              };
+          }
 
-            // Handle multiple files
-            return {
-                fileObjects: [].concat(
-                    state.fileObjects,
-                    newFileObjects
-                ),
-            };
-        }, this.notifyFileChange);
-    }
+          // Handle multiple files
+          return {
+              fileObjects: [].concat(
+                  state.fileObjects,
+                  newFileObjects
+              ),
+          };
+      }, this.notifyFileChange);
+  }
 
-    deleteFile = (removedFileObj, removedFileObjIdx) => {
-        event.stopPropagation();
+  deleteFile = (removedFileObj, removedFileObjIdx) => {
+      event.stopPropagation();
 
-        const {onDelete} = this.props;
-        const {fileObjects} = this.state;
+      const {onDelete} = this.props;
+      const {fileObjects} = this.state;
 
-        // Calculate remaining fileObjects array
-        const remainingFileObjs = fileObjects.filter((fileObject, i) => {
-            return i !== removedFileObjIdx;
-        });
+      // Calculate remaining fileObjects array
+      const remainingFileObjs = fileObjects.filter((fileObject, i) => {
+          return i !== removedFileObjIdx;
+      });
 
-        // Notify removed file
-        if (onDelete) {
-            onDelete(removedFileObj.file);
-        }
+      // Notify removed file
+      if (onDelete) {
+          onDelete(removedFileObj.file);
+      }
 
-        // Update local state
-        this.setState({
-            fileObjects: remainingFileObjs,
-        }, this.notifyFileChange);
-    }
+      // Update local state
+      this.setState({
+          fileObjects: remainingFileObjs,
+      }, this.notifyFileChange);
+  }
 
-    handleClose = (evt) => {
-        const {clearOnUnmount, onClose} = this.props;
+  handleClose = (evt) => {
+      const {clearOnUnmount, onClose} = this.props;
 
-        if (onClose) {
-            onClose(evt);
-        }
+      if (onClose) {
+          onClose(evt);
+      }
 
-        if (clearOnUnmount) {
-            this.setState({
-                fileObjects: [],
-            }, this.notifyFileChange);
-        }
-    }
+      if (clearOnUnmount) {
+          this.setState({
+              fileObjects: [],
+          }, this.notifyFileChange);
+      }
+  }
 
-    handleSave = (evt) => {
-        const {clearOnUnmount, onSave} = this.props;
-        const {fileObjects} = this.state;
+  handleSave = (evt) => {
+      const {clearOnUnmount, onSave} = this.props;
+      const {fileObjects} = this.state;
 
-        if (onSave) {
-            onSave(fileObjects.map((fileObject) => fileObject.file), evt);
-        }
+      if (onSave) {
+          onSave(fileObjects.map((fileObject) => fileObject.file), evt);
+      }
 
-        if (clearOnUnmount) {
-            this.setState({
-                fileObjects: [],
-            }, this.notifyFileChange);
-        }
-    }
+      if (clearOnUnmount) {
+          this.setState({
+              fileObjects: [],
+          }, this.notifyFileChange);
+      }
+  }
 
-    render() {
-        const {fileObjects} = this.state;
+  render() {
+      const {fileObjects} = this.state;
 
-        return (
-            <DropzoneDialogBase
-                {...this.props}
-                fileObjects={fileObjects}
-                onAdd={this.addFiles}
-                onDelete={this.deleteFile}
-                onClose={this.handleClose}
-                onSave={this.handleSave}
-            />
-        );
-    }
+      return (
+          <DropzoneDialogBase
+              {...this.props}
+              fileObjects={fileObjects}
+              onAdd={this.addFiles}
+              onDelete={this.deleteFile}
+              onClose={this.handleClose}
+              onSave={this.handleSave}
+          />
+      );
+  }
 }
 
 DropzoneDialog.defaultProps = {
@@ -170,11 +170,11 @@ DropzoneDialog.propTypes = {
     /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
     initialFiles: PropTypes.arrayOf(PropTypes.string),
     /**
-     * Fired when the user clicks the Submit button.
-     *
-     * @param {File[]} files All the files currently inside the Dropzone.
-     * @param {SyntheticEvent} event The react `SyntheticEvent`.
-     */
+   * Fired when the user clicks the Submit button.
+   *
+   * @param {File[]} files All the files currently inside the Dropzone.
+   * @param {SyntheticEvent} event The react `SyntheticEvent`.
+   */
     onSave: PropTypes.func,
 };
 
