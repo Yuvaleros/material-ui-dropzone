@@ -11,12 +11,19 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 #### :bug: Bugfixes
 
 * Show remove buttons when they have focus (PR [#191](https://github.com/Yuvaleros/material-ui-dropzone/pull/191) by **@MatthijsMud**, reported as [#190](https://github.com/Yuvaleros/material-ui-dropzone/issues/190) by **@MatthijsMud**)
+* Change `SnackbarContentWrapper` class names for variants to avoid conflicts with Material UI internals (PR [#198](https://github.com/Yuvaleros/material-ui-dropzone/pull/198) by **@panz3r**, reported as [#183](https://github.com/Yuvaleros/material-ui-dropzone/issues/183) by **@mattcorner**)
+* Fix error message when dropping more than `filesLimit` files (PR [#199](https://github.com/Yuvaleros/material-ui-dropzone/pull/199) by **@panz3r**, reported as [#196](https://github.com/Yuvaleros/material-ui-dropzone/issues/196) by **@edricwu**)
 
 #### :label: Typings
 
 * Update Typescript typings
   * Fixes issue [#172](https://github.com/Yuvaleros/material-ui-dropzone/issues/172) by **@amirmishani**
   * Fixes issue [#184](https://github.com/Yuvaleros/material-ui-dropzone/issues/184) by **@zikaeroh**
+
+#### :arrow_up: Dependencies Update
+
+* Bump `websocket-extensions` from `0.1.3` to `0.1.4`
+* Bump `@babel/*` devDeps to `7.10.x`
 
 ## `v3.2.0`
 
