@@ -166,16 +166,26 @@ function PreviewList(_ref2) {
       getPreviewIcon = _ref2.getPreviewIcon;
 
   if (useChipsForPreview) {
-    return fileObjects.map(function (fileObject, i) {
-      return /*#__PURE__*/createElement("div", {
-        key: i
-      }, /*#__PURE__*/createElement(Chip, _extends({
+    return /*#__PURE__*/createElement(Grid, _extends({
+      spacing: 1,
+      direction: "row"
+    }, previewGridProps.container, {
+      container: true,
+      className: clsx(classes.root, previewGridClasses.container)
+    }), fileObjects.map(function (fileObject, i) {
+      var _fileObject$file$name, _fileObject$file;
+
+      return /*#__PURE__*/createElement(Grid, _extends({}, previewGridProps.item, {
+        item: true,
+        key: "".concat((_fileObject$file$name = (_fileObject$file = fileObject.file) === null || _fileObject$file === void 0 ? void 0 : _fileObject$file.name) !== null && _fileObject$file$name !== void 0 ? _fileObject$file$name : 'file', "-").concat(i),
+        className: classes.imageContainer
+      }), /*#__PURE__*/createElement(Chip, _extends({
         variant: "outlined"
       }, previewChipProps, {
         label: fileObject.file.name,
         onDelete: handleRemove(i)
       })));
-    });
+    }));
   }
 
   return /*#__PURE__*/createElement(Grid, _extends({
@@ -184,13 +194,13 @@ function PreviewList(_ref2) {
     container: true,
     className: clsx(classes.root, previewGridClasses.container)
   }), fileObjects.map(function (fileObject, i) {
-    var _fileObject$file$name, _fileObject$file;
+    var _fileObject$file$name2, _fileObject$file2;
 
     return /*#__PURE__*/createElement(Grid, _extends({
       xs: 4
     }, previewGridProps.item, {
       item: true,
-      key: "".concat((_fileObject$file$name = (_fileObject$file = fileObject.file) === null || _fileObject$file === void 0 ? void 0 : _fileObject$file.name) !== null && _fileObject$file$name !== void 0 ? _fileObject$file$name : 'file', "-").concat(i),
+      key: "".concat((_fileObject$file$name2 = (_fileObject$file2 = fileObject.file) === null || _fileObject$file2 === void 0 ? void 0 : _fileObject$file2.name) !== null && _fileObject$file$name2 !== void 0 ? _fileObject$file$name2 : 'file', "-").concat(i),
       className: clsx(classes.imageContainer, previewGridClasses.item)
     }), getPreviewIcon(fileObject, classes), showFileNames && /*#__PURE__*/createElement(Typography, {
       variant: "body1",
