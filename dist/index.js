@@ -966,28 +966,40 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
               _context2.prev = 1;
               _context2.next = 4;
               return Promise.all(initialFiles.map( /*#__PURE__*/function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(initialFile) {
                   var file, data;
                   return _regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
-                          _context.next = 2;
-                          return createFileFromUrl(url);
+                          if (!(typeof initialFile === 'string')) {
+                            _context.next = 6;
+                            break;
+                          }
 
-                        case 2:
+                          _context.next = 3;
+                          return createFileFromUrl(initialFile);
+
+                        case 3:
                           file = _context.sent;
-                          _context.next = 5;
+                          _context.next = 7;
+                          break;
+
+                        case 6:
+                          file = initialFile;
+
+                        case 7:
+                          _context.next = 9;
                           return readFile(file);
 
-                        case 5:
+                        case 9:
                           data = _context.sent;
                           return _context.abrupt("return", {
                             file: file,
                             data: data
                           });
 
-                        case 7:
+                        case 11:
                         case "end":
                           return _context.stop();
                       }
@@ -1127,8 +1139,10 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, Dr
   /** Clear uploaded files when component is unmounted. */
   clearOnUnmount: PropTypes.bool,
 
-  /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
-  initialFiles: PropTypes.arrayOf(PropTypes.string),
+  /** List containing File objects or URL strings.<br/>
+   * **Note:** Please take care of CORS.
+  */
+  initialFiles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.instanceOf(File), PropTypes.string])),
 
   /** Maximum number of files that can be loaded into the dropzone. */
   filesLimit: PropTypes.number,
@@ -1353,28 +1367,40 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
               _context2.prev = 1;
               _context2.next = 4;
               return Promise.all(initialFiles.map( /*#__PURE__*/function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(initialFile) {
                   var file, data;
                   return _regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
-                          _context.next = 2;
-                          return createFileFromUrl(url);
+                          if (!(typeof initialFile === 'string')) {
+                            _context.next = 6;
+                            break;
+                          }
 
-                        case 2:
+                          _context.next = 3;
+                          return createFileFromUrl(initialFile);
+
+                        case 3:
                           file = _context.sent;
-                          _context.next = 5;
+                          _context.next = 7;
+                          break;
+
+                        case 6:
+                          file = initialFile;
+
+                        case 7:
+                          _context.next = 9;
                           return readFile(file);
 
-                        case 5:
+                        case 9:
                           data = _context.sent;
                           return _context.abrupt("return", {
                             file: file,
                             data: data
                           });
 
-                        case 7:
+                        case 11:
                         case "end":
                           return _context.stop();
                       }
@@ -1550,8 +1576,10 @@ process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, 
   /** Maximum number of files that can be loaded into the dropzone. */
   filesLimit: PropTypes.number,
 
-  /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
-  initialFiles: PropTypes.arrayOf(PropTypes.string),
+  /** List containing File objects or URL strings.<br/>
+   * **Note:** Please take care of CORS.
+  */
+  initialFiles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.instanceOf(File), PropTypes.string])),
 
   /**
    * Fired when the user clicks the Submit button.
