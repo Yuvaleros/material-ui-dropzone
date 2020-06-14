@@ -49,8 +49,13 @@ class DropzoneArea extends React.PureComponent {
         const {initialFiles} = this.props;
         try {
             const fileObjs = await Promise.all(
-                initialFiles.map(async(url) => {
-                    const file = await createFileFromUrl(url);
+                initialFiles.map(async(initialFile) => {
+                    let file;
+                    if (typeof initialFile === 'string' ) {
+                        file = await createFileFromUrl(initialFile);
+                    } else {
+                        file = initialFile;
+                    }
                     const data = await readFile(file);
 
                     return {
@@ -139,8 +144,15 @@ DropzoneArea.propTypes = {
     ...DropzoneAreaBase.propTypes,
     /** Clear uploaded files when component is unmounted. */
     clearOnUnmount: PropTypes.bool,
-    /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
-    initialFiles: PropTypes.arrayOf(PropTypes.string),
+    /** List containing File objects or URL strings.<br/>
+     * **Note:** Please take care of CORS.
+    */
+    initialFiles: PropTypes.arrayOf(
+        PropTypes.oneOfType([
+            PropTypes.instanceOf(File),
+            PropTypes.string,
+        ])
+    ),
     /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
     /**
