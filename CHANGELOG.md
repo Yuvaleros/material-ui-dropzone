@@ -4,6 +4,15 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
+## `v3.3.0`
+
+###### To be released
+
+#### :sparkles: New Features
+
+* Make `previewChips` use the grid system as well (PR [#173](https://github.com/Yuvaleros/material-ui-dropzone/pull/173) by **@anthonyraymond**)
+* Set `initialFiles` with `File` or `URL string` (PR [#194](https://github.com/Yuvaleros/material-ui-dropzone/pull/194) by **@isaacbuckman**, reported as [#192](https://github.com/Yuvaleros/material-ui-dropzone/issues/192) by **@isaacbuckman**)
+
 ## `v3.2.1`
 
 ###### To be released
