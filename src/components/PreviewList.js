@@ -61,8 +61,8 @@ function PreviewList({
     if (useChipsForPreview) {
         return (
             <Grid
-                spacing: 1
-                direction: 'row'
+                spacing={1}
+                direction="row"
                 {...previewGridProps.container}
                 container={true}
                 className={clsx(classes.root, previewGridClasses.container)}
