@@ -4,9 +4,9 @@ import _regeneratorRuntime from '@babel/runtime/regenerator';
 import _asyncToGenerator from '@babel/runtime/helpers/asyncToGenerator';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
+import _inherits from '@babel/runtime/helpers/inherits';
 import _possibleConstructorReturn from '@babel/runtime/helpers/possibleConstructorReturn';
 import _getPrototypeOf from '@babel/runtime/helpers/getPrototypeOf';
-import _inherits from '@babel/runtime/helpers/inherits';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import PropTypes from 'prop-types';
 import { createElement, Fragment, PureComponent } from 'react';
@@ -152,7 +152,7 @@ var styles = function styles(_ref) {
   };
 };
 
-var _ref4 = /*#__PURE__*/createElement(DeleteIcon, null);
+var _ref3 = /*#__PURE__*/createElement(DeleteIcon, null);
 
 function PreviewList(_ref2) {
   var fileObjects = _ref2.fileObjects,
@@ -166,40 +166,50 @@ function PreviewList(_ref2) {
       getPreviewIcon = _ref2.getPreviewIcon;
 
   if (useChipsForPreview) {
-    return fileObjects.map(function (fileObject, i) {
-      return createElement("div", {
-        key: i
-      }, createElement(Chip, _extends({
+    return /*#__PURE__*/createElement(Grid, _extends({
+      spacing: 1,
+      direction: "row"
+    }, previewGridProps.container, {
+      container: true,
+      className: clsx(classes.root, previewGridClasses.container)
+    }), fileObjects.map(function (fileObject, i) {
+      var _fileObject$file$name, _fileObject$file;
+
+      return /*#__PURE__*/createElement(Grid, _extends({}, previewGridProps.item, {
+        item: true,
+        key: "".concat((_fileObject$file$name = (_fileObject$file = fileObject.file) === null || _fileObject$file === void 0 ? void 0 : _fileObject$file.name) !== null && _fileObject$file$name !== void 0 ? _fileObject$file$name : 'file', "-").concat(i),
+        className: classes.imageContainer
+      }), /*#__PURE__*/createElement(Chip, _extends({
         variant: "outlined"
       }, previewChipProps, {
         label: fileObject.file.name,
         onDelete: handleRemove(i)
       })));
-    });
+    }));
   }
 
-  return createElement(Grid, _extends({
+  return /*#__PURE__*/createElement(Grid, _extends({
     spacing: 8
   }, previewGridProps.container, {
     container: true,
     className: clsx(classes.root, previewGridClasses.container)
   }), fileObjects.map(function (fileObject, i) {
-    var _ref3, _fileObject$file;
+    var _fileObject$file$name2, _fileObject$file2;
 
-    return createElement(Grid, _extends({
+    return /*#__PURE__*/createElement(Grid, _extends({
       xs: 4
     }, previewGridProps.item, {
       item: true,
-      key: "".concat((_ref3 = (_fileObject$file = fileObject.file) === null || _fileObject$file === void 0 ? void 0 : _fileObject$file.name) !== null && _ref3 !== void 0 ? _ref3 : 'file', "-").concat(i),
+      key: "".concat((_fileObject$file$name2 = (_fileObject$file2 = fileObject.file) === null || _fileObject$file2 === void 0 ? void 0 : _fileObject$file2.name) !== null && _fileObject$file$name2 !== void 0 ? _fileObject$file$name2 : 'file', "-").concat(i),
       className: clsx(classes.imageContainer, previewGridClasses.item)
-    }), getPreviewIcon(fileObject, classes), showFileNames && createElement(Typography, {
+    }), getPreviewIcon(fileObject, classes), showFileNames && /*#__PURE__*/createElement(Typography, {
       variant: "body1",
       component: "p"
-    }, fileObject.file.name), createElement(Fab, {
+    }, fileObject.file.name), /*#__PURE__*/createElement(Fab, {
       onClick: handleRemove(i),
       "aria-label": "Delete",
       className: classes.removeButton
-    }, _ref4));
+    }, _ref3));
   }));
 }
 
@@ -227,16 +237,16 @@ var variantIcon = {
 
 var styles$1 = function styles(theme) {
   return {
-    success: {
+    successAlert: {
       backgroundColor: theme.palette.success.main
     },
-    error: {
+    errorAlert: {
       backgroundColor: theme.palette.error.main
     },
-    info: {
+    infoAlert: {
       backgroundColor: theme.palette.info.main
     },
-    warning: {
+    warningAlert: {
       backgroundColor: theme.palette.warning.main
     },
     message: {
@@ -261,22 +271,22 @@ function SnackbarContentWrapper(props) {
       other = _objectWithoutProperties(props, ["classes", "className", "message", "onClose", "variant"]);
 
   var Icon = variantIcon[variant];
-  return createElement(SnackbarContent, _extends({
-    className: clsx(classes[variant], className),
+  return /*#__PURE__*/createElement(SnackbarContent, _extends({
+    className: clsx(classes["".concat(variant, "Alert")], className),
     "aria-describedby": "client-snackbar",
-    message: createElement("span", {
+    message: /*#__PURE__*/createElement("span", {
       id: "client-snackbar",
       className: classes.message
-    }, createElement(Icon, {
+    }, /*#__PURE__*/createElement(Icon, {
       className: classes.icon
     }), message),
-    action: [createElement(IconButton, {
+    action: [/*#__PURE__*/createElement(IconButton, {
       key: "close",
       "aria-label": "Close",
       color: "inherit",
       className: classes.closeButton,
       onClick: onClose
-    }, createElement(CloseIcon, {
+    }, /*#__PURE__*/createElement(CloseIcon, {
       className: classes.icon
     }))]
   }, other));
@@ -292,6 +302,10 @@ process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
 var SnackbarContentWrapper$1 = withStyles(styles$1, {
   name: 'MuiDropzoneSnackbar'
 })(SnackbarContentWrapper);
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 var styles$2 = function styles(_ref) {
   var palette = _ref.palette,
@@ -353,14 +367,14 @@ var defaultSnackbarAnchorOrigin = {
 
 var defaultGetPreviewIcon = function defaultGetPreviewIcon(fileObject, classes) {
   if (isImage(fileObject.file)) {
-    return createElement("img", {
+    return /*#__PURE__*/createElement("img", {
       className: classes.image,
       role: "presentation",
       src: fileObject.data
     });
   }
 
-  return createElement(AttachFileIcon, {
+  return /*#__PURE__*/createElement(AttachFileIcon, {
     className: classes.image
   });
 };
@@ -372,9 +386,9 @@ var defaultGetPreviewIcon = function defaultGetPreviewIcon(fileObject, classes) 
 var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
   _inherits(DropzoneAreaBase, _React$PureComponent);
 
-  function DropzoneAreaBase() {
-    var _getPrototypeOf2;
+  var _super = _createSuper(DropzoneAreaBase);
 
+  function DropzoneAreaBase() {
     var _this;
 
     _classCallCheck(this, DropzoneAreaBase);
@@ -383,7 +397,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneAreaBase)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _super.call.apply(_super, [this].concat(args));
     _this.state = {
       openSnackBar: false,
       snackbarMessage: '',
@@ -486,13 +500,21 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
     _this.handleDropRejected = function (rejectedFiles, evt) {
       var _this$props2 = _this.props,
           acceptedFiles = _this$props2.acceptedFiles,
+          filesLimit = _this$props2.filesLimit,
+          fileObjects = _this$props2.fileObjects,
           getDropRejectMessage = _this$props2.getDropRejectMessage,
+          getFileLimitExceedMessage = _this$props2.getFileLimitExceedMessage,
           maxFileSize = _this$props2.maxFileSize,
           onDropRejected = _this$props2.onDropRejected;
       var message = '';
-      rejectedFiles.forEach(function (rejectedFile) {
-        message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
-      });
+
+      if (fileObjects.length + rejectedFiles.length > filesLimit) {
+        message = getFileLimitExceedMessage(filesLimit);
+      } else {
+        rejectedFiles.forEach(function (rejectedFile) {
+          message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
+        });
+      }
 
       if (onDropRejected) {
         onDropRejected(rejectedFiles, evt);
@@ -573,7 +595,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
       var isMultiple = filesLimit > 1;
       var previewsVisible = showPreviews && fileObjects.length > 0;
       var previewsInDropzoneVisible = showPreviewsInDropzone && fileObjects.length > 0;
-      return createElement(Fragment, null, createElement(Dropzone, _extends({}, dropzoneProps, {
+      return /*#__PURE__*/createElement(Fragment, null, /*#__PURE__*/createElement(Dropzone, _extends({}, dropzoneProps, {
         accept: acceptFiles,
         onDropAccepted: this.handleDropAccepted,
         onDropRejected: this.handleDropRejected,
@@ -584,17 +606,17 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
             getInputProps = _ref4.getInputProps,
             isDragActive = _ref4.isDragActive,
             isDragReject = _ref4.isDragReject;
-        return createElement("div", _extends({}, getRootProps(), {
+        return /*#__PURE__*/createElement("div", _extends({}, getRootProps(), {
           className: clsx(classes.root, dropzoneClass, isDragActive && classes.active, !disableRejectionFeedback && isDragReject && classes.invalid)
-        }), createElement("input", _extends({}, inputProps, getInputProps())), createElement("div", {
+        }), /*#__PURE__*/createElement("input", _extends({}, inputProps, getInputProps())), /*#__PURE__*/createElement("div", {
           className: classes.textContainer
-        }, createElement(Typography, {
+        }, /*#__PURE__*/createElement(Typography, {
           variant: "h5",
           component: "p",
           className: clsx(classes.text, dropzoneParagraphClass)
-        }, dropzoneText), createElement(CloudUploadIcon, {
+        }, dropzoneText), /*#__PURE__*/createElement(CloudUploadIcon, {
           className: classes.icon
-        })), previewsInDropzoneVisible && createElement(PreviewList$1, {
+        })), previewsInDropzoneVisible && /*#__PURE__*/createElement(PreviewList$1, {
           fileObjects: fileObjects,
           handleRemove: _this2.handleRemove,
           getPreviewIcon: getPreviewIcon,
@@ -604,10 +626,10 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           previewGridClasses: previewGridClasses,
           previewGridProps: previewGridProps
         }));
-      }), previewsVisible && createElement(Fragment, null, createElement(Typography, {
+      }), previewsVisible && /*#__PURE__*/createElement(Fragment, null, /*#__PURE__*/createElement(Typography, {
         variant: "subtitle1",
         component: "span"
-      }, previewText), createElement(PreviewList$1, {
+      }, previewText), /*#__PURE__*/createElement(PreviewList$1, {
         fileObjects: fileObjects,
         handleRemove: this.handleRemove,
         getPreviewIcon: getPreviewIcon,
@@ -616,13 +638,13 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
         previewChipProps: previewChipProps,
         previewGridClasses: previewGridClasses,
         previewGridProps: previewGridProps
-      })), (typeof showAlerts === 'boolean' && showAlerts || Array.isArray(showAlerts) && showAlerts.includes(snackbarVariant)) && createElement(Snackbar, _extends({
+      })), (typeof showAlerts === 'boolean' && showAlerts || Array.isArray(showAlerts) && showAlerts.includes(snackbarVariant)) && /*#__PURE__*/createElement(Snackbar, _extends({
         anchorOrigin: defaultSnackbarAnchorOrigin,
         autoHideDuration: 6000
       }, alertSnackbarProps, {
         open: openSnackBar,
         onClose: this.handleCloseSnackbar
-      }), createElement(SnackbarContentWrapper$1, {
+      }), /*#__PURE__*/createElement(SnackbarContentWrapper$1, {
         onClose: this.handleCloseSnackbar,
         variant: snackbarVariant,
         message: snackbarMessage
@@ -871,6 +893,10 @@ var DropzoneAreaBase$1 = withStyles(styles$2, {
   name: 'MuiDropzoneArea'
 })(DropzoneAreaBase);
 
+function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var splitDropzoneAreaProps = function splitDropzoneAreaProps(props) {
   var clearOnUnmount = props.clearOnUnmount,
       initialFiles = props.initialFiles,
@@ -897,9 +923,9 @@ var splitDropzoneAreaProps = function splitDropzoneAreaProps(props) {
 var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
   _inherits(DropzoneArea, _React$PureComponent);
 
-  function DropzoneArea() {
-    var _getPrototypeOf2;
+  var _super = _createSuper$1(DropzoneArea);
 
+  function DropzoneArea() {
     var _this;
 
     _classCallCheck(this, DropzoneArea);
@@ -908,7 +934,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneArea)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _super.call.apply(_super, [this].concat(args));
     _this.state = {
       fileObjects: []
     };
@@ -1075,7 +1101,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
           dropzoneAreaProps = _splitDropzoneAreaPro2[1];
 
       var fileObjects = this.state.fileObjects;
-      return createElement(DropzoneAreaBase$1, _extends({}, dropzoneAreaProps, {
+      return /*#__PURE__*/createElement(DropzoneAreaBase$1, _extends({}, dropzoneAreaProps, {
         fileObjects: fileObjects,
         onAdd: this.addFiles,
         onDelete: this.deleteFile
@@ -1116,6 +1142,10 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, Dr
   onDelete: PropTypes.func
 }) : void 0;
 
+function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 function splitDropzoneDialogProps(allProps) {
   var cancelButtonText = allProps.cancelButtonText,
       dialogProps = allProps.dialogProps,
@@ -1150,10 +1180,12 @@ function splitDropzoneDialogProps(allProps) {
 var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
   _inherits(DropzoneDialogBase, _React$PureComponent);
 
+  var _super = _createSuper$2(DropzoneDialogBase);
+
   function DropzoneDialogBase() {
     _classCallCheck(this, DropzoneDialogBase);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(DropzoneDialogBase).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   _createClass(DropzoneDialogBase, [{
@@ -1175,15 +1207,15 @@ var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
           submitButtonText = dropzoneDialogProps.submitButtonText; // Submit button state
 
       var submitDisabled = dropzoneAreaProps.fileObjects.length === 0;
-      return createElement(Dialog, _extends({}, dialogProps, {
+      return /*#__PURE__*/createElement(Dialog, _extends({}, dialogProps, {
         fullWidth: fullWidth,
         maxWidth: maxWidth,
         onClose: onClose,
         open: open
-      }), createElement(DialogTitle, null, dialogTitle), createElement(DialogContent, null, createElement(DropzoneAreaBase$1, dropzoneAreaProps)), createElement(DialogActions, null, createElement(Button, {
+      }), /*#__PURE__*/createElement(DialogTitle, null, dialogTitle), /*#__PURE__*/createElement(DialogContent, null, /*#__PURE__*/createElement(DropzoneAreaBase$1, dropzoneAreaProps)), /*#__PURE__*/createElement(DialogActions, null, /*#__PURE__*/createElement(Button, {
         color: "primary",
         onClick: onClose
-      }, cancelButtonText), createElement(Button, {
+      }, cancelButtonText), /*#__PURE__*/createElement(Button, {
         color: "primary",
         disabled: submitDisabled,
         onClick: onSave
@@ -1264,6 +1296,9 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
   showFileNamesInPreview: PropTypes.bool
 }) : void 0;
 
+function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * This component provides an uncontrolled version of the DropzoneDialogBase component.
  *
@@ -1275,9 +1310,9 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
 var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
   _inherits(DropzoneDialog, _React$PureComponent);
 
-  function DropzoneDialog() {
-    var _getPrototypeOf2;
+  var _super = _createSuper$3(DropzoneDialog);
 
+  function DropzoneDialog() {
     var _this;
 
     _classCallCheck(this, DropzoneDialog);
@@ -1286,7 +1321,7 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DropzoneDialog)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _super.call.apply(_super, [this].concat(args));
     _this.state = {
       fileObjects: []
     };
@@ -1484,7 +1519,7 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
     key: "render",
     value: function render() {
       var fileObjects = this.state.fileObjects;
-      return createElement(DropzoneDialogBase, _extends({}, this.props, {
+      return /*#__PURE__*/createElement(DropzoneDialogBase, _extends({}, this.props, {
         fileObjects: fileObjects,
         onAdd: this.addFiles,
         onDelete: this.deleteFile,

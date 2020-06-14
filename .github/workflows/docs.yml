@@ -2,8 +2,8 @@ name: Update Docs
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*'
 
 env:
   CI: true

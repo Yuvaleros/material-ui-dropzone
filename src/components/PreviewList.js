@@ -60,16 +60,31 @@ function PreviewList({
 }) {
     if (useChipsForPreview) {
         return (
-            fileObjects.map((fileObject, i) => (
-                <div key={i}>
-                    <Chip
-                        variant="outlined"
-                        {...previewChipProps}
-                        label={fileObject.file.name}
-                        onDelete={handleRemove(i)}
-                    />
-                </div>
-            ))
+            <Grid
+                spacing={1}
+                direction="row"
+                {...previewGridProps.container}
+                container={true}
+                className={clsx(classes.root, previewGridClasses.container)}
+            >
+                {fileObjects.map((fileObject, i) => {
+                    return (
+                        <Grid
+                            {...previewGridProps.item}
+                            item={true}
+                            key={`${fileObject.file?.name ?? 'file'}-${i}`}
+                            className={classes.imageContainer}
+                        >
+                            <Chip
+                                variant="outlined"
+                                {...previewChipProps}
+                                label={fileObject.file.name}
+                                onDelete={handleRemove(i)}
+                            />
+                        </Grid>
+                    );
+                })}
+            </Grid>
         );
     }
 
