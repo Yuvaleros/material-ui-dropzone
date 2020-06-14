@@ -59,3 +59,30 @@ const handlePreviewIcon = (fileObject, classes) => {
   getPreviewIcon={handlePreviewIcon}
 />
 ```
+### Using chips for preview
+
+Chips use the Grid system as well, so you can customize the way they appears and benefit from the Material-UI grid customizations
+
+```jsx
+import * as React from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    previewChip: {
+      minWidth: 160,
+      maxWidth: 210
+    }
+  }),
+)
+
+const classes = useStyles()
+
+<DropzoneArea
+  showPreviews={true}
+  showPreviewsInDropzone={false}
+  useChipsForPreview
+  previewGridProps={{container: { spacing: 1, direction: 'row' }}}
+  previewChipProps={{classes: { root: classes.previewChip } }}
+  previewText="Selected files"
+/>
+```
