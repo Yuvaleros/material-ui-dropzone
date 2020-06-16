@@ -10,6 +10,7 @@ import { DropzoneAreaBase } from 'material-ui-dropzone';
 <DropzoneAreaBase
   onAdd={(fileObjs) => console.log('Added Files:', fileObjs)}
   onDelete={(fileObj) => console.log('Removed File:', fileObj)}
+  onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
 />
 ```
 
@@ -20,6 +21,7 @@ import { DropzoneAreaBase } from 'material-ui-dropzone';
   acceptedFiles={['image/*']}
   dropzoneText={"Drag and drop an image here or click"}
   onChange={(files) => console.log('Files:', files)}
+  onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
 />
 ```
 

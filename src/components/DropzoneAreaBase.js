@@ -87,6 +87,14 @@ class DropzoneAreaBase extends React.PureComponent {
         snackbarVariant: 'success',
     };
 
+    componentDidUpdate() {
+        const {onAlert} = this.props;
+        const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
+        if (openSnackBar && onAlert) {
+            onAlert(snackbarMessage, snackbarVariant);
+        }
+    }
+
     handleDropAccepted = async(acceptedFiles, evt) => {
         const {fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop} = this.props;
 
@@ -506,6 +514,13 @@ DropzoneAreaBase.propTypes = {
      * @param {Event} event The react-dropzone drop event.
      */
     onDropRejected: PropTypes.func,
+    /**
+     * Fired when an alert is triggered.
+     *
+     * @param {string} message Alert message.
+     * @param {string} variant One of "error", "info", "success".
+     */
+    onAlert: PropTypes.func,
 };
 
 export default withStyles(styles, {name: 'MuiDropzoneArea'})(DropzoneAreaBase);
