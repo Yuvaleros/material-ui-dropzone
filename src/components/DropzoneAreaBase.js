@@ -87,7 +87,7 @@ class DropzoneAreaBase extends React.PureComponent {
         snackbarVariant: 'success',
     };
 
-    componentDidUpdate() {
+    notifyAlert() {
         const {onAlert} = this.props;
         const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
         if (openSnackBar && onAlert) {
@@ -103,7 +103,7 @@ class DropzoneAreaBase extends React.PureComponent {
                 openSnackBar: true,
                 snackbarMessage: getFileLimitExceedMessage(filesLimit),
                 snackbarVariant: 'error',
-            });
+            }, this.notifyAlert);
             return;
         }
 
@@ -134,7 +134,7 @@ class DropzoneAreaBase extends React.PureComponent {
             openSnackBar: true,
             snackbarMessage: message,
             snackbarVariant: 'success',
-        });
+        }, this.notifyAlert);
     }
 
     handleDropRejected = (rejectedFiles, evt) => {
@@ -165,7 +165,7 @@ class DropzoneAreaBase extends React.PureComponent {
             openSnackBar: true,
             snackbarMessage: message,
             snackbarVariant: 'error',
-        });
+        }, this.notifyAlert);
     }
 
     handleRemove = (fileIndex) => (event) => {
@@ -185,7 +185,7 @@ class DropzoneAreaBase extends React.PureComponent {
             openSnackBar: true,
             snackbarMessage: getFileRemovedMessage(removedFileObj.file.name),
             snackbarVariant: 'info',
-        });
+        }, this.notifyAlert);
     };
 
     handleCloseSnackbar = () => {
