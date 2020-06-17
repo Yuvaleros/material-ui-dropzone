@@ -57,6 +57,17 @@
       ]
     },
     {
+      "login": "mattcorner",
+      "name": "Matthew Corner",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/27866636?v=4",
+      "profile": "https://github.com/mattcorner",
+      "contributions": [
+        "bug",
+        "ideas",
+        "code"
+      ]
+    },
+    {
       "login": "loongyh",
       "name": "Barry Loong",
       "avatar_url": "https://avatars3.githubusercontent.com/u/20846761?v=4",
@@ -64,16 +75,6 @@
       "contributions": [
         "ideas",
         "code"
-      ]
-    },
-    {
-      "login": "mattcorner",
-      "name": "Matthew Corner",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/27866636?v=4",
-      "profile": "https://github.com/mattcorner",
-      "contributions": [
-        "bug",
-        "ideas"
       ]
     },
     {
