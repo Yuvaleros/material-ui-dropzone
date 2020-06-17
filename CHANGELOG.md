@@ -12,6 +12,7 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 * Make `previewChips` use the grid system as well (PR [#173](https://github.com/Yuvaleros/material-ui-dropzone/pull/173) by **@anthonyraymond**)
 * Set `initialFiles` with `File` or `URL string` (PR [#194](https://github.com/Yuvaleros/material-ui-dropzone/pull/194) by **@isaacbuckman**, reported as [#192](https://github.com/Yuvaleros/material-ui-dropzone/issues/192) by **@isaacbuckman**)
+* Add `onAlert` callback prop to hook into Snackbar messaging (PR [#205](https://github.com/Yuvaleros/material-ui-dropzone/pull/205) by **@mattcorner**, reported as [#200](https://github.com/Yuvaleros/material-ui-dropzone/issues/200) by **@mattcorner**)
 
 ## `v3.2.1`
 
