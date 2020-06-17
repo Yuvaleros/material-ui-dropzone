@@ -87,6 +87,14 @@ class DropzoneAreaBase extends React.PureComponent {
         snackbarVariant: 'success',
     };
 
+    notifyAlert() {
+        const {onAlert} = this.props;
+        const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
+        if (openSnackBar && onAlert) {
+            onAlert(snackbarMessage, snackbarVariant);
+        }
+    }
+
     handleDropAccepted = async(acceptedFiles, evt) => {
         const {fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop} = this.props;
 
@@ -95,7 +103,7 @@ class DropzoneAreaBase extends React.PureComponent {
                 openSnackBar: true,
                 snackbarMessage: getFileLimitExceedMessage(filesLimit),
                 snackbarVariant: 'error',
-            });
+            }, this.notifyAlert);
             return;
         }
 
@@ -126,7 +134,7 @@ class DropzoneAreaBase extends React.PureComponent {
             openSnackBar: true,
             snackbarMessage: message,
             snackbarVariant: 'success',
-        });
+        }, this.notifyAlert);
     }
 
     handleDropRejected = (rejectedFiles, evt) => {
@@ -157,7 +165,7 @@ class DropzoneAreaBase extends React.PureComponent {
             openSnackBar: true,
             snackbarMessage: message,
             snackbarVariant: 'error',
-        });
+        }, this.notifyAlert);
     }
 
     handleRemove = (fileIndex) => (event) => {
@@ -177,7 +185,7 @@ class DropzoneAreaBase extends React.PureComponent {
             openSnackBar: true,
             snackbarMessage: getFileRemovedMessage(removedFileObj.file.name),
             snackbarVariant: 'info',
-        });
+        }, this.notifyAlert);
     };
 
     handleCloseSnackbar = () => {
@@ -506,6 +514,13 @@ DropzoneAreaBase.propTypes = {
      * @param {Event} event The react-dropzone drop event.
      */
     onDropRejected: PropTypes.func,
+    /**
+     * Fired when an alert is triggered.
+     *
+     * @param {string} message Alert message.
+     * @param {string} variant One of "error", "info", "success".
+     */
+    onAlert: PropTypes.func,
 };
 
 export default withStyles(styles, {name: 'MuiDropzoneArea'})(DropzoneAreaBase);
