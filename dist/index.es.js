@@ -423,7 +423,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
                   openSnackBar: true,
                   snackbarMessage: getFileLimitExceedMessage(filesLimit),
                   snackbarVariant: 'error'
-                });
+                }, _this.notifyAlert);
 
                 return _context2.abrupt("return");
 
@@ -482,7 +482,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
                   openSnackBar: true,
                   snackbarMessage: message,
                   snackbarVariant: 'success'
-                });
+                }, _this.notifyAlert);
 
               case 11:
               case "end":
@@ -524,7 +524,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
         openSnackBar: true,
         snackbarMessage: message,
         snackbarVariant: 'error'
-      });
+      }, _this.notifyAlert);
     };
 
     _this.handleRemove = function (fileIndex) {
@@ -545,7 +545,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           openSnackBar: true,
           snackbarMessage: getFileRemovedMessage(removedFileObj.file.name),
           snackbarVariant: 'info'
-        });
+        }, _this.notifyAlert);
       };
     };
 
@@ -559,6 +559,19 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
   }
 
   _createClass(DropzoneAreaBase, [{
+    key: "notifyAlert",
+    value: function notifyAlert() {
+      var onAlert = this.props.onAlert;
+      var _this$state = this.state,
+          openSnackBar = _this$state.openSnackBar,
+          snackbarMessage = _this$state.snackbarMessage,
+          snackbarVariant = _this$state.snackbarVariant;
+
+      if (openSnackBar && onAlert) {
+        onAlert(snackbarMessage, snackbarVariant);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -587,10 +600,10 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           showPreviews = _this$props4.showPreviews,
           showPreviewsInDropzone = _this$props4.showPreviewsInDropzone,
           useChipsForPreview = _this$props4.useChipsForPreview;
-      var _this$state = this.state,
-          openSnackBar = _this$state.openSnackBar,
-          snackbarMessage = _this$state.snackbarMessage,
-          snackbarVariant = _this$state.snackbarVariant;
+      var _this$state2 = this.state,
+          openSnackBar = _this$state2.openSnackBar,
+          snackbarMessage = _this$state2.snackbarMessage,
+          snackbarVariant = _this$state2.snackbarVariant;
       var acceptFiles = acceptedFiles === null || acceptedFiles === void 0 ? void 0 : acceptedFiles.join(',');
       var isMultiple = filesLimit > 1;
       var previewsVisible = showPreviews && fileObjects.length > 0;
@@ -887,7 +900,15 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    * @param {File[]} rejectedFiles All the rejected files.
    * @param {Event} event The react-dropzone drop event.
    */
-  onDropRejected: PropTypes.func
+  onDropRejected: PropTypes.func,
+
+  /**
+   * Fired when an alert is triggered.
+   *
+   * @param {string} message Alert message.
+   * @param {string} variant One of "error", "info", "success".
+   */
+  onAlert: PropTypes.func
 } : void 0;
 var DropzoneAreaBase$1 = withStyles(styles$2, {
   name: 'MuiDropzoneArea'
