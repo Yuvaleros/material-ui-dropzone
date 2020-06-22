@@ -6,7 +6,7 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 ## `v3.3.0`
 
-###### To be released
+###### June 20, 2020
 
 #### :sparkles: New Features
 
