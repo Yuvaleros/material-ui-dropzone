@@ -23,6 +23,66 @@ const DropzoneArea = ({
     ...dropzoneAreaBaseProps
 
 }) => {
+    const {
+        handleDeleteFile,
+        handleAddFiles,
+        fileObjects,
+    } = useFiles({
+        onChange,
+        clearOnUnmount,
+        initialFiles,
+        filesLimit,
+        onDelete,
+    });
+
+    return (
+        <DropzoneAreaBase
+            {...dropzoneAreaBaseProps}
+            fileObjects={fileObjects}
+            onAdd={handleAddFiles}
+            onDelete={handleDeleteFile}
+
+        />
+    );
+};
+
+DropzoneArea.defaultProps = {
+    clearOnUnmount: true,
+    filesLimit: 3,
+    initialFiles: [],
+};
+
+DropzoneArea.propTypes = {
+    ...DropzoneAreaBase.propTypes,
+    /** Clear uploaded files when component is unmounted. */
+    clearOnUnmount: PropTypes.bool,
+    /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
+    initialFiles: PropTypes.arrayOf(PropTypes.string),
+    /** Maximum number of files that can be loaded into the dropzone. */
+    filesLimit: PropTypes.number,
+    /**
+     * Fired when the files inside dropzone change.
+     *
+     * @param {File[]} loadedFiles All the files currently loaded into the dropzone.
+     */
+    onChange: PropTypes.func,
+    /**
+     * Fired when a file is deleted from the previews panel.
+     *
+     * @param {File} deletedFile The file that was removed.
+     */
+    onDelete: PropTypes.func,
+};
+
+export default DropzoneArea;
+
+const useFiles = ({
+    onChange,
+    clearOnUnmount,
+    initialFiles,
+    filesLimit,
+    onDelete,
+}) => {
     const [fileObjects, setFileObjects] = useState([]);
 
     useEffect(() => {
@@ -88,43 +148,9 @@ const DropzoneArea = ({
         setFileObjects(remainingFileObjs);
     }, [onDelete, fileObjects]);
 
-    return (
-        <DropzoneAreaBase
-            {...dropzoneAreaBaseProps}
-            fileObjects={fileObjects}
-            onAdd={handleAddFiles}
-            onDelete={handleDeleteFile}
-
-        />
-    );
+    return {
+        handleDeleteFile,
+        handleAddFiles,
+        fileObjects,
+    };
 };
-
-DropzoneArea.defaultProps = {
-    clearOnUnmount: true,
-    filesLimit: 3,
-    initialFiles: [],
-};
-
-DropzoneArea.propTypes = {
-    ...DropzoneAreaBase.propTypes,
-    /** Clear uploaded files when component is unmounted. */
-    clearOnUnmount: PropTypes.bool,
-    /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
-    initialFiles: PropTypes.arrayOf(PropTypes.string),
-    /** Maximum number of files that can be loaded into the dropzone. */
-    filesLimit: PropTypes.number,
-    /**
-     * Fired when the files inside dropzone change.
-     *
-     * @param {File[]} loadedFiles All the files currently loaded into the dropzone.
-     */
-    onChange: PropTypes.func,
-    /**
-     * Fired when a file is deleted from the previews panel.
-     *
-     * @param {File} deletedFile The file that was removed.
-     */
-    onDelete: PropTypes.func,
-};
-
-export default DropzoneArea;
