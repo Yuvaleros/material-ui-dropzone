@@ -40,15 +40,21 @@ const useStyles = makeStyles(({spacing, palette, shape}) => ({
     },
     active: {
         animation: '$progress 2s linear infinite !important',
-        // eslint-disable-next-line max-len
-        backgroundImage: `repeating-linear-gradient(-45deg, ${palette.background.paper}, ${palette.background.paper} 25px, ${palette.divider} 25px, ${palette.divider} 50px)`,
+        backgroundImage: `repeating-linear-gradient(-45deg, 
+            ${palette.background.paper}, 
+            ${palette.background.paper} 25px, 
+            ${palette.divider} 25px, 
+            ${palette.divider} 50px)`,
         backgroundSize: '150% 100%',
         border: 'solid',
         borderColor: palette.primary.light,
     },
     invalid: {
-        // eslint-disable-next-line max-len
-        backgroundImage: `repeating-linear-gradient(-45deg, ${palette.error.light}, ${palette.error.light} 25px, ${palette.error.dark} 25px, ${palette.error.dark} 50px)`,
+        backgroundImage: `repeating-linear-gradient(-45deg, 
+            ${palette.error.light},
+            ${palette.error.light} 25px,
+            ${palette.error.dark} 25px,
+            ${palette.error.dark} 50px)`,
         borderColor: palette.error.main,
     },
     textContainer: {
@@ -243,61 +249,61 @@ const DropzoneAreaBase = ({
                         </Grid>
 
                         {someFiles && previewType === 'inside' &&
-                            <PreviewList
-                                fileObjects={fileObjects}
-                                filesLimit={filesLimit}
-                                getCols={getCols}
-                                handleRemove={handleRemove}
-                                getPreviewIcon={getPreviewIcon}
-                                showFileNames={showFileNames}
-                                useChipsForPreview={useChipsForPreview}
-                                previewChipProps={previewChipProps}
-                                previewGridClasses={previewGridClasses}
-                                previewGridProps={previewGridProps}
-                                previewType={previewType}
-                            />
+              <PreviewList
+                  fileObjects={fileObjects}
+                  filesLimit={filesLimit}
+                  getCols={getCols}
+                  handleRemove={handleRemove}
+                  getPreviewIcon={getPreviewIcon}
+                  showFileNames={showFileNames}
+                  useChipsForPreview={useChipsForPreview}
+                  previewChipProps={previewChipProps}
+                  previewGridClasses={previewGridClasses}
+                  previewGridProps={previewGridProps}
+                  previewType={previewType}
+              />
                         }
                     </div>
                 )}
             </Dropzone>
 
             {someFiles && previewType === 'below' &&
-                <Fragment>
-                    <Typography variant="subtitle1" component="span">
-                        {previewText}
-                    </Typography>
+        <Fragment>
+            <Typography variant="subtitle1" component="span">
+                {previewText}
+            </Typography>
 
-                    <PreviewList
-                        fileObjects={fileObjects}
-                        filesLimit={filesLimit}
-                        getCols={getCols}
-                        handleRemove={handleRemove}
-                        getPreviewIcon={getPreviewIcon}
-                        showFileNames={showFileNames}
-                        useChipsForPreview={useChipsForPreview}
-                        previewChipProps={previewChipProps}
-                        previewGridClasses={previewGridClasses}
-                        previewGridProps={previewGridProps}
-                        previewType={previewType}
-                    />
-                </Fragment>
+            <PreviewList
+                fileObjects={fileObjects}
+                filesLimit={filesLimit}
+                getCols={getCols}
+                handleRemove={handleRemove}
+                getPreviewIcon={getPreviewIcon}
+                showFileNames={showFileNames}
+                useChipsForPreview={useChipsForPreview}
+                previewChipProps={previewChipProps}
+                previewGridClasses={previewGridClasses}
+                previewGridProps={previewGridProps}
+                previewType={previewType}
+            />
+        </Fragment>
             }
 
             {((typeof showAlerts === 'boolean' && showAlerts) ||
-                (Array.isArray(showAlerts) && showAlerts.includes(snackbarVariant))) &&
-                <Snackbar
-                    anchorOrigin={defaultSnackbarAnchorOrigin}
-                    autoHideDuration={6000}
-                    {...alertSnackbarProps}
-                    open={snackbarOpen}
-                    onClose={handleCloseSnackbar}
-                >
-                    <SnackbarContentWrapper
-                        onClose={handleCloseSnackbar}
-                        variant={snackbarVariant}
-                        message={snackbarMessage}
-                    />
-                </Snackbar>
+        (Array.isArray(showAlerts) && showAlerts.includes(snackbarVariant))) &&
+        <Snackbar
+            anchorOrigin={defaultSnackbarAnchorOrigin}
+            autoHideDuration={6000}
+            {...alertSnackbarProps}
+            open={snackbarOpen}
+            onClose={handleCloseSnackbar}
+        >
+            <SnackbarContentWrapper
+                onClose={handleCloseSnackbar}
+                variant={snackbarVariant}
+                message={snackbarMessage}
+            />
+        </Snackbar>
             }
         </>
     );
@@ -349,7 +355,7 @@ export const FileObjectShape = PropTypes.shape({
 
 DropzoneAreaBase.propTypes = {
     /** A list of file types to accept.
-  * @see See [here](https://react-dropzone.js.org/#section-accepting-specific-file-types) for more details.
+ * @see See [here](https://react-dropzone.js.org/#section-accepting-specific-file-types) for more details.
  */
     acceptedFiles: PropTypes.arrayOf(PropTypes.string),
     /** Maximum number of files that can be loaded into the dropzone. */
