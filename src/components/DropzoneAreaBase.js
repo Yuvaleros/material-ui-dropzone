@@ -6,7 +6,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import {Fragment} from 'react';
+import {Fragment, useCallback} from 'react';
 import Dropzone from 'react-dropzone';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import {convertBytesToMbsOrKbs, readFile} from '../helpers';
@@ -147,7 +147,7 @@ const DropzoneAreaBase = ({
         snackbarVariant,
     } = useSnackbar(onAlert);
 
-    const handleDropAccepted = async(acceptedFiles, evt) => {
+    const handleDropAccepted = useCallback(async(acceptedFiles, evt) => {
         if (filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit) {
             const message = getFileLimitExceedMessage(filesLimit);
             sendMessage(message, 'error');
@@ -177,9 +177,9 @@ const DropzoneAreaBase = ({
 
         const successMessage = fileObjs.reduce((msg, fileObj) => msg + getFileAddedMessage(fileObj.file.name), '');
         sendMessage(successMessage, 'success');
-    };
+    }, [filesLimit, fileObjects, onDrop]);
 
-    const handleDropRejected = (rejectedFiles, evt) => {
+    const handleDropRejected = useCallback((rejectedFiles, evt) => {
         let message = '';
         rejectedFiles.forEach((rejectedFile) => {
             message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
@@ -189,9 +189,9 @@ const DropzoneAreaBase = ({
             onDropRejected(rejectedFiles, evt);
         }
         sendMessage(message, 'error');
-    };
+    }, [acceptedFiles, maxFileSize, onDropRejected]);
 
-    const handleRemove = (fileIndex) => (event) => {
+    const handleRemove = useCallback((fileIndex) => (event) => {
         event.stopPropagation();
 
         // Find removed fileObject
@@ -203,7 +203,7 @@ const DropzoneAreaBase = ({
         }
         const message = getFileRemovedMessage(removedFileObj.file.name);
         sendMessage(message, 'info');
-    };
+    }, [fileObjects, onDelete, getFileRemovedMessage]);
 
     const acceptFiles = acceptedFiles?.join(',');
     const isMultiple = filesLimit > 1;

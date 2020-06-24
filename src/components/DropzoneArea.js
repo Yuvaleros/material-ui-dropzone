@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import * as React from 'react';
+import {useState, useEffect, useCallback} from 'react';
 
 import {createFileFromUrl, readFile} from '../helpers';
 
@@ -38,9 +39,9 @@ const DropzoneArea = ({
                 setFileObjects([]);
             }
         };
-    }, []);
+    }, [loadInitialFiles]);
 
-    const loadInitialFiles = async() => {
+    const loadInitialFiles = useCallback(async() => {
         try {
             const fileObjs = await Promise.all(
                 initialFiles.map(async(url) => {
@@ -57,9 +58,9 @@ const DropzoneArea = ({
         } catch (err) {
             console.log(err);
         }
-    };
+    }, [initialFiles]);
 
-    const handleAddFiles = async(newFileObjects) => {
+    const handleAddFiles = useCallback( async(newFileObjects) => {
         // Update component state
         setFileObjects((prev) => {
             if (filesLimit <= 1) {
@@ -68,9 +69,9 @@ const DropzoneArea = ({
 
             return [...prev, ...newFileObjects];
         });
-    };
+    }, [filesLimit]);
 
-    const handleDeleteFile = (removedFileObj, removedFileObjIdx) => {
+    const handleDeleteFile = useCallback((removedFileObj, removedFileObjIdx) => {
         event.stopPropagation();
 
         // Calculate remaining fileObjects array
@@ -85,7 +86,7 @@ const DropzoneArea = ({
 
         // Update local state
         setFileObjects(remainingFileObjs);
-    };
+    }, [onDelete, fileObjects]);
 
     return (
         <DropzoneAreaBase
