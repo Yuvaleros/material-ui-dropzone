@@ -35,7 +35,7 @@ const styles = ({palette, shape, spacing}) => ({
         cursor: 'pointer',
         overflow: 'hidden',
         flexDirection: 'column',
-        justify: 'center',
+        justifyContent: 'center',
     },
     active: {
         animation: '$progress 2s linear infinite !important',
