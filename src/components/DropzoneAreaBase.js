@@ -35,7 +35,7 @@ const styles = ({palette, shape, spacing}) => ({
         cursor: 'pointer',
         overflow: 'hidden',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justify: 'center',
     },
     active: {
         animation: '$progress 2s linear infinite !important',
@@ -250,7 +250,7 @@ class DropzoneAreaBase extends React.PureComponent {
                         >
                             <input {...inputProps} {...getInputProps()} />
 
-                            <Grid container className={classes.textContainer} direction="column" justifyContent="center" alignItems="center">
+                            <Grid container className={classes.textContainer} direction="column" justify="center" alignItems="center">
                                 <Typography
                                     variant="h5"
                                     component="p"
