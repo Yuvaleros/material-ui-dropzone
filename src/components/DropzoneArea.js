@@ -149,8 +149,8 @@ DropzoneArea.propTypes = {
     */
     initialFiles: PropTypes.arrayOf(
         PropTypes.oneOfType([
-            PropTypes.instanceOf(File),
             PropTypes.string,
+            PropTypes.any,
         ])
     ),
     /** Maximum number of files that can be loaded into the dropzone. */

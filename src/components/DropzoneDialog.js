@@ -177,8 +177,8 @@ DropzoneDialog.propTypes = {
     */
     initialFiles: PropTypes.arrayOf(
         PropTypes.oneOfType([
-            PropTypes.instanceOf(File),
             PropTypes.string,
+            PropTypes.any,
         ])
     ),
     /**
