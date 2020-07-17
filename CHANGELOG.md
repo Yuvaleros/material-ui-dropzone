@@ -4,6 +4,14 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
+## `v3.3.1`
+
+###### To be released
+
+#### :label: Typings
+
+* Update PropTypes for `initialFiles` to avoid issues with `NextJS` (Fixes [#208](https://github.com/Yuvaleros/material-ui-dropzone/issues/208))
+
 ## `v3.3.0`
 
 ###### June 20, 2020
@@ -16,7 +24,7 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 ## `v3.2.1`
 
-###### To be released
+###### Unreleased
 
 #### :bug: Bugfixes
 
