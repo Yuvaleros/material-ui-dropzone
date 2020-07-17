@@ -1163,7 +1163,7 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, Dr
   /** List containing File objects or URL strings.<br/>
    * **Note:** Please take care of CORS.
   */
-  initialFiles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.instanceOf(File), PropTypes.string])),
+  initialFiles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.any])),
 
   /** Maximum number of files that can be loaded into the dropzone. */
   filesLimit: PropTypes.number,
@@ -1600,7 +1600,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialog.propTypes = _extends({}, 
   /** List containing File objects or URL strings.<br/>
    * **Note:** Please take care of CORS.
   */
-  initialFiles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.instanceOf(File), PropTypes.string])),
+  initialFiles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.any])),
 
   /**
    * Fired when the user clicks the Submit button.
