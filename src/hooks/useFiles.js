@@ -77,9 +77,12 @@ export const useFiles = ({
         setFileObjects(remainingFileObjs);
     }, [onDelete, fileObjects]);
 
+    const handleResetFiles = () => setFileObjects([]);
+
     return {
-        handleDeleteFile,
         handleAddFiles,
+        handleDeleteFile,
+        handleResetFiles,
         fileObjects,
     };
 };

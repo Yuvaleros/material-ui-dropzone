@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import {useState, useEffect, useCallback} from 'react';
 import DropzoneAreaBase from './DropzoneAreaBase';
 import {useFiles} from '../hooks/useFiles';
 
