@@ -9,7 +9,7 @@ import {isImage as isImageCheck} from '../helpers';
 import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {useWidth} from '../hooks/useWidth';
+import {useColumns} from '../hooks/useColumns';
 
 const useStyles = makeStyles(({spacing}) => ({
     root: {
@@ -52,8 +52,7 @@ const PreviewList = ({
     getPreviewIcon,
 }) => {
     const classes = useStyles();
-    const width = useWidth();
-    const cols = getCols(width, filesLimit, fileObjects.length);
+    const cols = useColumns(getCols, filesLimit, fileObjects.length);
     const previewInside = previewType === 'inside';
 
     if (useChipsForPreview) {
