@@ -1,6 +1,9 @@
 import {useState, useEffect, useCallback} from 'react';
 import {createFileFromUrl, readFile} from '../helpers';
 
+/**
+ * holds files in its state and provides some handler methods to add and remove from that state
+ */
 export const useFiles = ({
     onChange,
     clearOnUnmount,
@@ -9,12 +12,14 @@ export const useFiles = ({
     onDelete}) => {
     const [fileObjects, setFileObjects] = useState([]);
 
+    // When the fileObjects change, fire the onChange method if it's defined
     useEffect(() => {
         if (onChange) {
             onChange(fileObjects.map((fileObject) => fileObject.file));
         }
     }, [fileObjects, onChange]);
 
+    // Initialize the files when the hook is loaded
     useEffect(() => {
         loadInitialFiles();
 
