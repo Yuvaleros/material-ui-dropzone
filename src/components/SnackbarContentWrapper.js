@@ -1,6 +1,6 @@
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import {withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -17,7 +17,7 @@ const variantIcon = {
     info: InfoIcon,
 };
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
     success: {
         backgroundColor: theme.palette.success.main,
     },
@@ -40,10 +40,18 @@ const styles = (theme) => ({
         marginRight: theme.spacing(1),
     },
     closeButton: {},
-});
 
-function SnackbarContentWrapper(props) {
-    const {classes, className, message, onClose, variant, ...other} = props;
+}), {name: 'MuiDropzoneSnackbar'});
+
+
+function SnackbarContentWrapper({
+    className,
+    message,
+    onClose,
+    variant,
+    ...other
+}) {
+    const classes = useStyles();
     const Icon = variantIcon[variant];
 
     return (
@@ -80,4 +88,4 @@ SnackbarContentWrapper.propTypes = {
     variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-export default withStyles(styles, {name: 'MuiDropzoneSnackbar'})(SnackbarContentWrapper);
+export default SnackbarContentWrapper;
