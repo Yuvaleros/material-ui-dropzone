@@ -4,9 +4,17 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
-## `v3.3.1`
+## `v3.4.0`
 
 ###### To be released
+
+#### :lipstick: UI Changes
+
+* Fix Snackbar icons margins (PR [#223](https://github.com/Yuvaleros/material-ui-dropzone/pull/223) by **@Armanio**)
+
+## `v3.3.1`
+
+###### July 24, 2020
 
 #### :label: Typings
 
