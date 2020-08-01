@@ -257,12 +257,14 @@ var styles$1 = function styles(theme) {
     },
     message: {
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      '& > svg': {
+        marginRight: theme.spacing(1)
+      }
     },
     icon: {
       fontSize: 20,
-      opacity: 0.9,
-      marginRight: theme.spacing(1)
+      opacity: 0.9
     },
     closeButton: {}
   };
