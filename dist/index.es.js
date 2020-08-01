@@ -671,7 +671,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
 }(PureComponent);
 
 DropzoneAreaBase.defaultProps = {
-  acceptedFiles: ['image/*', 'video/*', 'application/*'],
+  acceptedFiles: [],
   filesLimit: 3,
   fileObjects: [],
   maxFileSize: 3000000,
