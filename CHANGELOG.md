@@ -8,6 +8,10 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 
 ###### To be released
 
+#### :sparkles: New Features
+
+* Allow all filetypes by default (PR [#226](https://github.com/Yuvaleros/material-ui-dropzone/pull/226) by **@panz3r**, fixes [#214](https://github.com/Yuvaleros/material-ui-dropzone/issues/214) by **@FilipeCosta06**)
+
 #### :lipstick: UI Changes
 
 * Fix Snackbar icons margins (PR [#223](https://github.com/Yuvaleros/material-ui-dropzone/pull/223) by **@Armanio**)
