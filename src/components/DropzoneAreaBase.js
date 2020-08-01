@@ -310,7 +310,7 @@ const DropzoneAreaBase = ({
 };
 
 DropzoneAreaBase.defaultProps = {
-    acceptedFiles: ['image/*', 'video/*', 'application/*'],
+    acceptedFiles: [],
     filesLimit: 3,
     fileObjects: [],
     maxFileSize: 3000000,
