@@ -11,6 +11,7 @@ This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific
 #### :sparkles: New Features
 
 * Allow all filetypes by default (PR [#226](https://github.com/Yuvaleros/material-ui-dropzone/pull/226) by **@panz3r**, fixes [#214](https://github.com/Yuvaleros/material-ui-dropzone/issues/214) by **@FilipeCosta06**)
+* Allow passing a custom Icon to be displayed inside Dropzone area (PR [#227](https://github.com/Yuvaleros/material-ui-dropzone/pull/227) by **@panz3r**, closes [#48](https://github.com/Yuvaleros/material-ui-dropzone/issues/48) by **@N4Design**)
 
 #### :lipstick: UI Changes
 
