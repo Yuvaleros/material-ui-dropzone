@@ -596,6 +596,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           fileObjects = _this$props4.fileObjects,
           filesLimit = _this$props4.filesLimit,
           getPreviewIcon = _this$props4.getPreviewIcon,
+          Icon = _this$props4.Icon,
           inputProps = _this$props4.inputProps,
           maxFileSize = _this$props4.maxFileSize,
           previewChipProps = _this$props4.previewChipProps,
@@ -635,7 +636,9 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           variant: "h5",
           component: "p",
           className: clsx(classes.text, dropzoneParagraphClass)
-        }, dropzoneText), /*#__PURE__*/React.createElement(CloudUploadIcon, {
+        }, dropzoneText), Icon ? /*#__PURE__*/React.createElement(Icon, {
+          className: classes.icon
+        }) : /*#__PURE__*/React.createElement(CloudUploadIcon, {
           className: classes.icon
         })), previewsInDropzoneVisible && /*#__PURE__*/React.createElement(PreviewList$1, {
           fileObjects: fileObjects,
@@ -740,6 +743,9 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
 
   /** Maximum number of files that can be loaded into the dropzone. */
   filesLimit: PropTypes.number,
+
+  /** Icon to be displayed inside the dropzone area. */
+  Icon: PropTypes.elementType,
 
   /** Currently loaded files. */
   fileObjects: PropTypes.arrayOf(FileObjectShape),
