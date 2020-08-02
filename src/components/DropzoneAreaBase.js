@@ -207,6 +207,7 @@ class DropzoneAreaBase extends React.PureComponent {
             fileObjects,
             filesLimit,
             getPreviewIcon,
+            Icon,
             inputProps,
             maxFileSize,
             previewChipProps,
@@ -257,7 +258,11 @@ class DropzoneAreaBase extends React.PureComponent {
                                 >
                                     {dropzoneText}
                                 </Typography>
-                                <CloudUploadIcon className={classes.icon} />
+                                {Icon ? (
+                                    <Icon className={classes.icon} />
+                                ) : (
+                                    <CloudUploadIcon className={classes.icon} />
+                                )}
                             </div>
 
                             {previewsInDropzoneVisible &&
@@ -370,6 +375,8 @@ DropzoneAreaBase.propTypes = {
     acceptedFiles: PropTypes.arrayOf(PropTypes.string),
     /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
+    /** Icon to be displayed inside the dropzone area. */
+    Icon: PropTypes.elementType,
     /** Currently loaded files. */
     fileObjects: PropTypes.arrayOf(FileObjectShape),
     /** Maximum file size (in bytes) that the dropzone will accept. */

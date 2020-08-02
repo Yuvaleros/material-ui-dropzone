@@ -25,6 +25,19 @@ import { DropzoneAreaBase } from 'material-ui-dropzone';
 />
 ```
 
+### Custom Dropzone Icon
+
+```jsx
+import { AttachFile } from '@material-ui/icons';
+
+<DropzoneAreaBase
+  Icon={AttachFile}
+  dropzoneText={"Drag and drop an image here or click"}
+  onChange={(files) => console.log('Files:', files)}
+  onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
+/>
+```
+
 ### Custom Preview Icon
 
 Demonstration of how to customize the preview icon for:
