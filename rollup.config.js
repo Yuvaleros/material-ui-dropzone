@@ -30,12 +30,12 @@ export default {
       // We are using @babel/plugin-transform-runtime
       runtimeHelpers: true,
     }),
+    resolve(),
+    commonjs(),
     copy({
       files: ['src/index.d.ts'],
       dest: 'dist',
     }),
-    resolve(),
-    commonjs(),
     sizeSnapshot(),
   ],
 };
