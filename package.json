@@ -62,8 +62,8 @@
     "@babel/preset-react": "^7.10.1",
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "babel-eslint": "10.x",
@@ -72,7 +72,6 @@
     "babel-plugin-transform-dev-warning": "^0.1.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "eslint": "6.x",
-    "eslint-config-prettier": "^6.11.0",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "4.x",
     "eslint-plugin-import": "2.x",
@@ -85,12 +84,12 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-styleguidist": "^11.0.4",
-    "rollup": "^1.32.0",
+    "rollup": "^2.26.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-cpy": "^2.0.1",
-    "rollup-plugin-peer-deps-external": "2.2.2",
-    "rollup-plugin-size-snapshot": "^0.11.0",
+    "rollup-plugin-peer-deps-external": "2.2.3",
+    "rollup-plugin-size-snapshot": "^0.12.0",
     "typescript": "^3.9.7",
-    "webpack": "^4.42.1"
+    "webpack": "^4.44.1"
   }
 }
