@@ -236,7 +236,7 @@ const DropzoneAreaBase = ({
                             (!disableRejectionFeedback && isDragReject) && classes.invalid,
                         )}
                     >
-                        <input {...inputProps} {...getInputProps()} />
+                        <input {...getInputProps(inputProps)} />
 
                         <Grid container className={classes.textContainer} direction="column" justify="center" alignItems="center">
                             <Typography
