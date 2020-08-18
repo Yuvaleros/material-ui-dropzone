@@ -72,6 +72,7 @@
     "babel-plugin-transform-dev-warning": "^0.1.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "eslint": "6.x",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "4.x",
     "eslint-plugin-import": "2.x",
