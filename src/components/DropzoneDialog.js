@@ -81,8 +81,15 @@ DropzoneDialog.propTypes = {
     clearOnUnmount: PropTypes.bool,
     /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
-    /** List of URLs of already uploaded images.<br/>**Note:** Please take care of CORS. */
-    initialFiles: PropTypes.arrayOf(PropTypes.string),
+    /** List containing File objects or URL strings.<br/>
+     * **Note:** Please take care of CORS.
+    */
+    initialFiles: PropTypes.arrayOf(
+        PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.any,
+        ])
+    ),
     /**
    * Fired when the user clicks the Submit button.
    *

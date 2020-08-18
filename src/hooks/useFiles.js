@@ -33,9 +33,15 @@ export const useFiles = ({
     const loadInitialFiles = useCallback(async() => {
         try {
             const fileObjs = await Promise.all(
-                initialFiles.map(async(url) => {
-                    const file = await createFileFromUrl(url);
+                initialFiles.map(async(initialFile) => {
+                    let file;
+                    if (typeof initialFile === 'string' ) {
+                        file = await createFileFromUrl(initialFile);
+                    } else {
+                        file = initialFile;
+                    }
                     const data = await readFile(file);
+
                     return {
                         file,
                         data,
