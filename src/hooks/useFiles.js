@@ -55,7 +55,7 @@ export const useFiles = ({
         }
     }, [initialFiles]);
 
-    const handleAddFiles = useCallback(async(newFileObjects) => {
+    const handleAddFiles = useCallback((newFileObjects) => {
     // Update component state
         setFileObjects((prev) => {
             if (filesLimit <= 1) {
