@@ -248,7 +248,7 @@ class DropzoneAreaBase extends React.PureComponent {
                                 (!disableRejectionFeedback && isDragReject) && classes.invalid,
                             )}
                         >
-                            <input {...inputProps} {...getInputProps()} />
+                            <input {...getInputProps(inputProps)} />
 
                             <div className={classes.textContainer}>
                                 <Typography
