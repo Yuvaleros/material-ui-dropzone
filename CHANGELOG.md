@@ -4,9 +4,17 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
-## `v3.4.0`
+## `v3.4.1`
 
 ###### To be released
+
+#### :bug: Bugfixes
+
+* Fix `react-dropzone` props not being passed properly (PR [#239](https://github.com/Yuvaleros/material-ui-dropzone/pull/239) by **@panz3r**, fixes [#235](https://github.com/Yuvaleros/material-ui-dropzone/issues/235) by **@grahamlangford**)
+
+## `v3.4.0`
+
+###### August 18, 2020
 
 #### :sparkles: New Features
 
