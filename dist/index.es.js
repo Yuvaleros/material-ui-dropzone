@@ -622,9 +622,9 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
             getInputProps = _ref4.getInputProps,
             isDragActive = _ref4.isDragActive,
             isDragReject = _ref4.isDragReject;
-        return /*#__PURE__*/createElement("div", _extends({}, getRootProps(), {
+        return /*#__PURE__*/createElement("div", getRootProps({
           className: clsx(classes.root, dropzoneClass, isDragActive && classes.active, !disableRejectionFeedback && isDragReject && classes.invalid)
-        }), /*#__PURE__*/createElement("input", _extends({}, inputProps, getInputProps())), /*#__PURE__*/createElement("div", {
+        }), /*#__PURE__*/createElement("input", getInputProps(inputProps)), /*#__PURE__*/createElement("div", {
           className: classes.textContainer
         }, /*#__PURE__*/createElement(Typography, {
           variant: "h5",
