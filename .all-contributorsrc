@@ -1,0 +1,123 @@
+{
+  "projectName": "material-ui-dropzone",
+  "projectOwner": "Yuvaleros",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 80,
+  "commit": false,
+  "commitConvention": "gitmoji",
+  "contributors": [
+    {
+      "login": "Yuvaleros",
+      "name": "Yuvaleros",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3898166?v=4",
+      "profile": "https://github.com/Yuvaleros",
+      "contributions": [
+        "ideas",
+        "code",
+        "design",
+        "doc",
+        "question",
+        "review",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "panz3r",
+      "name": "Mattia Panzeri",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1754457?v=4",
+      "profile": "https://github.com/panz3r",
+      "contributions": [
+        "ideas",
+        "code",
+        "design",
+        "doc",
+        "example",
+        "infra",
+        "bug",
+        "question",
+        "review",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "max-carroll",
+      "name": "Max Carroll",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/13512675?v=4",
+      "profile": "https://github.com/max-carroll",
+      "contributions": [
+        "ideas",
+        "code",
+        "design",
+        "example",
+        "review"
+      ]
+    },
+    {
+      "login": "mattcorner",
+      "name": "Matthew Corner",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/27866636?v=4",
+      "profile": "https://github.com/mattcorner",
+      "contributions": [
+        "bug",
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "loongyh",
+      "name": "Barry Loong",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/20846761?v=4",
+      "profile": "https://github.com/loongyh",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "blouin",
+      "name": "JF Blouin",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/20212446?v=4",
+      "profile": "https://github.com/blouin",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "anthonyraymond",
+      "name": "Anthony Raymond",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7503585?v=4",
+      "profile": "http://stackoverflow.com/users/2275818/anthony-raymond",
+      "contributions": [
+        "code",
+        "example"
+      ]
+    },
+    {
+      "login": "isaacbuckman",
+      "name": "isaacbuckman",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/34870239?v=4",
+      "profile": "https://github.com/isaacbuckman",
+      "contributions": [
+        "bug",
+        "code",
+        "example"
+      ]
+    },
+    {
+      "login": "MatthijsMud",
+      "name": "MatthijsMud",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11519728?v=4",
+      "profile": "https://github.com/MatthijsMud",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 3
+}

@@ -3,6 +3,7 @@ export function isImage(file) {
         return true;
     }
 }
+
 export function convertBytesToMbsOrKbs(filesize) {
     let size = '';
     // I know, not technically correct...
@@ -21,6 +22,19 @@ export async function createFileFromUrl(url) {
     const data = await response.blob();
     const metadata = {type: data.type};
     const filename = url.replace(/\?.+/, '').split('/').pop();
-    const ext = data.type.split('/').pop();
-    return new File([data], `${filename}.${ext}`, metadata);
+    return new File([data], filename, metadata);
+}
+
+export function readFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            resolve(event?.target?.result);
+        };
+        reader.onerror = (event) => {
+            reader.abort();
+            reject(event);
+        };
+        reader.readAsDataURL(file);
+    });
 }
