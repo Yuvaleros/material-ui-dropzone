@@ -46,12 +46,12 @@ function isImage(file) {
   }
 }
 function convertBytesToMbsOrKbs(filesize) {
-  var size = ''; // I know, not technically correct...
+  var size = '';
 
-  if (filesize >= 1000000) {
-    size = filesize / 1000000 + ' megabytes';
-  } else if (filesize >= 1000) {
-    size = filesize / 1000 + ' kilobytes';
+  if (filesize >= 1048576) {
+    size = filesize / 1048576 + ' megabytes';
+  } else if (filesize >= 1024) {
+    size = filesize / 1024 + ' kilobytes';
   } else {
     size = filesize + ' bytes';
   }
