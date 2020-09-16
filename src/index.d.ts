@@ -66,6 +66,7 @@ export type DropzoneAreaBaseProps = {
   clearOnUnmount?: boolean;
   dropzoneClass?: string;
   dropzoneParagraphClass?: string;
+  disableRejectionFeedback?: boolean;
   onAdd?: (newFiles: FileObject[]) => void;
   onDelete?: (deletedFileObject: FileObject, index: number) => void;
   onDrop?: (files: File[], event: DropEvent) => void;
