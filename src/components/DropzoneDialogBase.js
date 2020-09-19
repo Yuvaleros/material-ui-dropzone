@@ -117,7 +117,10 @@ DropzoneDialogBase.propTypes = {
     /** Sets whether the dialog is open or closed. */
     open: PropTypes.bool,
     /** The Dialog title. */
-    dialogTitle: PropTypes.string,
+    dialogTitle: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+    ]),
     /**
      * Props to pass to the Material-UI Dialog components.
      * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
