@@ -107,7 +107,7 @@ export const DropzoneArea: React.ComponentType<DropzoneAreaProps>;
 export type DropzoneDialogBaseProps = DropzoneAreaBaseProps & {
   cancelButtonText?: string;
   dialogProps?: DialogProps;
-  dialogTitle?: string;
+  dialogTitle?: string | JSX.Element;
   fullWidth?: boolean;
   maxWidth?: string;
   onClose?: (event: React.SyntheticEvent) => void;
