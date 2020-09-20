@@ -1286,7 +1286,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
   open: PropTypes.bool,
 
   /** The Dialog title. */
-  dialogTitle: PropTypes.string,
+  dialogTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
   /**
    * Props to pass to the Material-UI Dialog components.
