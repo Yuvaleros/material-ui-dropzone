@@ -4,9 +4,25 @@ Thanks to all contributers who improved **material-ui-dropzone** by opening an i
 
 This changelog refers to `master` branch (currently `v3.x`), for `v2.x`-specific changelog see [`v2.x CHANGELOG.md`](https://github.com/Yuvaleros/material-ui-dropzone/blob/v2.x/CHANGELOG.md).
 
-## `v3.4.1`
+## `v3.5.0`
 
 ###### To be released
+
+#### :sparkles: Features
+
+* Update DropzoneDialog to allow for a custom dialog title (PR [#234](https://github.com/Yuvaleros/material-ui-dropzone/pull/234) by **@4-Eyes**)
+
+#### :bug: Bugfixes
+
+* Use binary system instead of decimal for size error (PR [#245](https://github.com/Yuvaleros/material-ui-dropzone/pull/245) by **@AntoineGrandchamp**)
+
+#### :label: Typings
+
+* Add disableRejectionFeedback to DropzoneAreaBaseProps type (PR [#247](https://github.com/Yuvaleros/material-ui-dropzone/pull/247) by **@Parya-Jafari**, related to issue [#141](https://github.com/Yuvaleros/material-ui-dropzone/issues/141) by **@PabloCanalSuarez**)
+
+## `v3.4.1`
+
+###### Unreleased
 
 #### :bug: Bugfixes
 
