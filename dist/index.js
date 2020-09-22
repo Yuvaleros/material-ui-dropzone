@@ -25,6 +25,7 @@ var GridListTileBar = require('@material-ui/core/GridListTileBar');
 var IconButton = require('@material-ui/core/IconButton');
 var styles = require('@material-ui/core/styles');
 var DeleteIcon = require('@material-ui/icons/Delete');
+require('@material-ui/icons/Visibility');
 var matchMediaQuery = require('@material-ui/core/useMediaQuery');
 var SnackbarContent = require('@material-ui/core/SnackbarContent');
 var CheckCircleIcon = require('@material-ui/icons/CheckCircle');
@@ -415,7 +416,8 @@ var PreviewList = function PreviewList(_ref2) {
       previewGridClasses = _ref2.previewGridClasses,
       previewGridProps = _ref2.previewGridProps,
       previewType = _ref2.previewType,
-      getPreviewIcon = _ref2.getPreviewIcon;
+      getPreviewIcon = _ref2.getPreviewIcon,
+      handlePreviewClick = _ref2.handlePreviewClick;
   var classes = useStyles();
   var cols = useColumns(getCols, filesLimit, fileObjects.length);
   var previewInside = previewType === 'inside';
@@ -436,14 +438,16 @@ var PreviewList = function PreviewList(_ref2) {
   return /*#__PURE__*/React.createElement(GridList__default['default'], _extends__default['default']({
     cols: cols,
     className: clsx__default['default'](previewGridClasses.container, previewInside && classes.root)
-  }, previewGridProps === null || previewGridProps === void 0 ? void 0 : previewGridProps.gridList), ">", fileObjects.map(function (fileObject, i) {
+  }, previewGridProps === null || previewGridProps === void 0 ? void 0 : previewGridProps.gridList), fileObjects.map(function (fileObject, i) {
     var _fileObject$file, _fileObject$file$name, _fileObject$file2, _previewGridProps$gri;
 
     var fileTitle = showFileNames && ((_fileObject$file = fileObject.file) === null || _fileObject$file === void 0 ? void 0 : _fileObject$file.name);
     var isImage$1 = isImage(fileObject.file);
     return /*#__PURE__*/React.createElement(GridListTile__default['default'], _extends__default['default']({
       key: "".concat((_fileObject$file$name = (_fileObject$file2 = fileObject.file) === null || _fileObject$file2 === void 0 ? void 0 : _fileObject$file2.name) !== null && _fileObject$file$name !== void 0 ? _fileObject$file$name : 'file', "-").concat(i),
-      className: clsx__default['default'](previewGridClasses.gridListTile, !isImage$1 && classes.iconWrapper)
+      className: clsx__default['default'](previewGridClasses.gridListTile, !isImage$1 && classes.iconWrapper),
+      onClick: handlePreviewClick(i),
+      onKeyDown: handlePreviewClick(i)
     }, previewGridProps === null || previewGridProps === void 0 ? void 0 : previewGridProps.gridListTitle), getPreviewIcon(fileObject, classes, isImage$1, (previewGridProps === null || previewGridProps === void 0 ? void 0 : (_previewGridProps$gri = previewGridProps.gridListTitleBar) === null || _previewGridProps$gri === void 0 ? void 0 : _previewGridProps$gri.titlePosition) === 'top'), /*#__PURE__*/React.createElement(GridListTileBar__default['default'], _extends__default['default']({
       title: fileTitle,
       actionIcon: /*#__PURE__*/React.createElement(IconButton__default['default'], {
@@ -461,6 +465,7 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   getCols: PropTypes__default['default'].func.isRequired,
   getPreviewIcon: PropTypes__default['default'].func.isRequired,
   handleRemove: PropTypes__default['default'].func.isRequired,
+  handlePreviewClick: PropTypes__default['default'].func.isRequired,
   previewChipProps: PropTypes__default['default'].object,
   previewGridClasses: PropTypes__default['default'].object,
   previewGridProps: PropTypes__default['default'].object,
@@ -676,6 +681,7 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
       onDrop = _ref2.onDrop,
       onDropRejected = _ref2.onDropRejected,
       onDelete = _ref2.onDelete,
+      onPreviewClick = _ref2.onPreviewClick,
       acceptedFiles = _ref2.acceptedFiles,
       alertSnackbarProps = _ref2.alertSnackbarProps,
       disableRejectionFeedback = _ref2.disableRejectionFeedback,
@@ -810,6 +816,14 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
       sendMessage(message, 'info');
     };
   }, [fileObjects, onDelete, getFileRemovedMessage, sendMessage]);
+  var handlePreviewClick = React.useCallback(function (fileIndex) {
+    return function (event) {
+      event.stopPropagation(); // Find previewed fileObject
+
+      var previewedFileObj = fileObjects[fileIndex];
+      onPreviewClick(previewedFileObj, fileIndex);
+    };
+  }, [fileObjects, onPreviewClick]);
   var acceptFiles = acceptedFiles === null || acceptedFiles === void 0 ? void 0 : acceptedFiles.join(',');
   var isMultiple = filesLimit > 1;
   var someFiles = fileObjects.length > 0;
@@ -827,7 +841,8 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
     previewChipProps: previewChipProps,
     previewGridClasses: previewGridClasses,
     previewGridProps: previewGridProps,
-    previewType: previewType
+    previewType: previewType,
+    handlePreviewClick: handlePreviewClick
   });
 
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Dropzone__default['default'], _extends__default['default']({}, dropzoneProps, {
@@ -872,7 +887,8 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
     previewChipProps: previewChipProps,
     previewGridClasses: previewGridClasses,
     previewGridProps: previewGridProps,
-    previewType: previewType
+    previewType: previewType,
+    handlePreviewClick: handlePreviewClick
   })) : null, alertsEnabled ? /*#__PURE__*/React.createElement(Snackbar__default['default'], _extends__default['default']({
     anchorOrigin: defaultSnackbarAnchorOrigin,
     autoHideDuration: 6000
@@ -931,7 +947,8 @@ DropzoneAreaBase.defaultProps = {
     }
 
     return message;
-  }
+  },
+  onPreviewClick: function onPreviewClick() {}
 };
 var FileObjectShape = PropTypes__default['default'].shape({
   file: PropTypes__default['default'].object,
@@ -1129,7 +1146,15 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    * @param {File[]} rejectedFiles All the rejected files.
    * @param {Event} event The react-dropzone drop event.
    */
-  onDropRejected: PropTypes__default['default'].func
+  onDropRejected: PropTypes__default['default'].func,
+
+  /**
+   * Fired when the user click que preview icon in the image. If this props was not informed, the preview icon doesn't appears.
+   *
+   * @param {File} clickedFile File was clicked.
+   * @param {number} index The index of clicked file object.
+   */
+  onPreviewClick: PropTypes__default['default'].func
 } : void 0;
 
 /**

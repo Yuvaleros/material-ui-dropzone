@@ -21,6 +21,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import '@material-ui/icons/Visibility';
 import matchMediaQuery from '@material-ui/core/useMediaQuery';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -375,7 +376,8 @@ var PreviewList = function PreviewList(_ref2) {
       previewGridClasses = _ref2.previewGridClasses,
       previewGridProps = _ref2.previewGridProps,
       previewType = _ref2.previewType,
-      getPreviewIcon = _ref2.getPreviewIcon;
+      getPreviewIcon = _ref2.getPreviewIcon,
+      handlePreviewClick = _ref2.handlePreviewClick;
   var classes = useStyles();
   var cols = useColumns(getCols, filesLimit, fileObjects.length);
   var previewInside = previewType === 'inside';
@@ -396,14 +398,16 @@ var PreviewList = function PreviewList(_ref2) {
   return /*#__PURE__*/createElement(GridList, _extends({
     cols: cols,
     className: clsx(previewGridClasses.container, previewInside && classes.root)
-  }, previewGridProps === null || previewGridProps === void 0 ? void 0 : previewGridProps.gridList), ">", fileObjects.map(function (fileObject, i) {
+  }, previewGridProps === null || previewGridProps === void 0 ? void 0 : previewGridProps.gridList), fileObjects.map(function (fileObject, i) {
     var _fileObject$file, _fileObject$file$name, _fileObject$file2, _previewGridProps$gri;
 
     var fileTitle = showFileNames && ((_fileObject$file = fileObject.file) === null || _fileObject$file === void 0 ? void 0 : _fileObject$file.name);
     var isImage$1 = isImage(fileObject.file);
     return /*#__PURE__*/createElement(GridListTile, _extends({
       key: "".concat((_fileObject$file$name = (_fileObject$file2 = fileObject.file) === null || _fileObject$file2 === void 0 ? void 0 : _fileObject$file2.name) !== null && _fileObject$file$name !== void 0 ? _fileObject$file$name : 'file', "-").concat(i),
-      className: clsx(previewGridClasses.gridListTile, !isImage$1 && classes.iconWrapper)
+      className: clsx(previewGridClasses.gridListTile, !isImage$1 && classes.iconWrapper),
+      onClick: handlePreviewClick(i),
+      onKeyDown: handlePreviewClick(i)
     }, previewGridProps === null || previewGridProps === void 0 ? void 0 : previewGridProps.gridListTitle), getPreviewIcon(fileObject, classes, isImage$1, (previewGridProps === null || previewGridProps === void 0 ? void 0 : (_previewGridProps$gri = previewGridProps.gridListTitleBar) === null || _previewGridProps$gri === void 0 ? void 0 : _previewGridProps$gri.titlePosition) === 'top'), /*#__PURE__*/createElement(GridListTileBar, _extends({
       title: fileTitle,
       actionIcon: /*#__PURE__*/createElement(IconButton, {
@@ -421,6 +425,7 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   getCols: PropTypes.func.isRequired,
   getPreviewIcon: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
+  handlePreviewClick: PropTypes.func.isRequired,
   previewChipProps: PropTypes.object,
   previewGridClasses: PropTypes.object,
   previewGridProps: PropTypes.object,
@@ -636,6 +641,7 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
       onDrop = _ref2.onDrop,
       onDropRejected = _ref2.onDropRejected,
       onDelete = _ref2.onDelete,
+      onPreviewClick = _ref2.onPreviewClick,
       acceptedFiles = _ref2.acceptedFiles,
       alertSnackbarProps = _ref2.alertSnackbarProps,
       disableRejectionFeedback = _ref2.disableRejectionFeedback,
@@ -770,6 +776,14 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
       sendMessage(message, 'info');
     };
   }, [fileObjects, onDelete, getFileRemovedMessage, sendMessage]);
+  var handlePreviewClick = useCallback(function (fileIndex) {
+    return function (event) {
+      event.stopPropagation(); // Find previewed fileObject
+
+      var previewedFileObj = fileObjects[fileIndex];
+      onPreviewClick(previewedFileObj, fileIndex);
+    };
+  }, [fileObjects, onPreviewClick]);
   var acceptFiles = acceptedFiles === null || acceptedFiles === void 0 ? void 0 : acceptedFiles.join(',');
   var isMultiple = filesLimit > 1;
   var someFiles = fileObjects.length > 0;
@@ -787,7 +801,8 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
     previewChipProps: previewChipProps,
     previewGridClasses: previewGridClasses,
     previewGridProps: previewGridProps,
-    previewType: previewType
+    previewType: previewType,
+    handlePreviewClick: handlePreviewClick
   });
 
   return /*#__PURE__*/createElement(Fragment, null, /*#__PURE__*/createElement(Dropzone, _extends({}, dropzoneProps, {
@@ -832,7 +847,8 @@ var DropzoneAreaBase = function DropzoneAreaBase(_ref2) {
     previewChipProps: previewChipProps,
     previewGridClasses: previewGridClasses,
     previewGridProps: previewGridProps,
-    previewType: previewType
+    previewType: previewType,
+    handlePreviewClick: handlePreviewClick
   })) : null, alertsEnabled ? /*#__PURE__*/createElement(Snackbar, _extends({
     anchorOrigin: defaultSnackbarAnchorOrigin,
     autoHideDuration: 6000
@@ -891,7 +907,8 @@ DropzoneAreaBase.defaultProps = {
     }
 
     return message;
-  }
+  },
+  onPreviewClick: function onPreviewClick() {}
 };
 var FileObjectShape = PropTypes.shape({
   file: PropTypes.object,
@@ -1089,7 +1106,15 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    * @param {File[]} rejectedFiles All the rejected files.
    * @param {Event} event The react-dropzone drop event.
    */
-  onDropRejected: PropTypes.func
+  onDropRejected: PropTypes.func,
+
+  /**
+   * Fired when the user click que preview icon in the image. If this props was not informed, the preview icon doesn't appears.
+   *
+   * @param {File} clickedFile File was clicked.
+   * @param {number} index The index of clicked file object.
+   */
+  onPreviewClick: PropTypes.func
 } : void 0;
 
 /**
