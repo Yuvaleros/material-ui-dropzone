@@ -143,6 +143,7 @@ const DropzoneAreaBase = ({
   onDrop,
   onDropRejected,
   onDelete,
+  onPreviewClick,
   acceptedFiles,
   alertSnackbarProps,
   disableRejectionFeedback,
@@ -265,6 +266,18 @@ const DropzoneAreaBase = ({
     [fileObjects, onDelete, getFileRemovedMessage, sendMessage],
   );
 
+  const handlePreviewClick = useCallback(
+    (fileIndex) => (event) => {
+      event.stopPropagation();
+
+      // Find previewed fileObject
+      const previewedFileObj = fileObjects[fileIndex];
+
+      onPreviewClick(previewedFileObj, fileIndex);
+    },
+    [fileObjects, onPreviewClick],
+  );
+
   const acceptFiles = acceptedFiles?.join(',');
   const isMultiple = filesLimit > 1;
   const someFiles = fileObjects.length > 0;
@@ -333,6 +346,7 @@ const DropzoneAreaBase = ({
                 previewGridClasses={previewGridClasses}
                 previewGridProps={previewGridProps}
                 previewType={previewType}
+                handlePreviewClick={handlePreviewClick}
               />
             ) : null}
           </div>
@@ -357,6 +371,7 @@ const DropzoneAreaBase = ({
             previewGridClasses={previewGridClasses}
             previewGridProps={previewGridProps}
             previewType={previewType}
+            handlePreviewClick={handlePreviewClick}
           />
         </>
       ) : null}
@@ -420,6 +435,7 @@ DropzoneAreaBase.defaultProps = {
     }
     return message;
   },
+  onPreviewClick: () => {},
 };
 
 export const FileObjectShape = PropTypes.shape({
@@ -593,6 +609,13 @@ DropzoneAreaBase.propTypes = {
    * @param {Event} event The react-dropzone drop event.
    */
   onDropRejected: PropTypes.func,
+  /**
+   * Fired when the user click que preview icon in the image. If this props was not informed, the preview icon doesn't appears.
+   *
+   * @param {File} clickedFile File was clicked.
+   * @param {number} index The index of clicked file object.
+   */
+  onPreviewClick: PropTypes.func,
 };
 
 export default DropzoneAreaBase;

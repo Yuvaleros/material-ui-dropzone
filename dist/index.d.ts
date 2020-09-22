@@ -1,6 +1,7 @@
 import { ChipProps } from '@material-ui/core/Chip';
 import { DialogProps } from '@material-ui/core/Dialog';
-import { GridProps } from '@material-ui/core/Grid';
+import { GridListProps  } from '@material-ui/core/GridListProps';
+import { GridListTileBarProps  } from '@material-ui/core/GridListTileBarProps';
 import { SnackbarProps } from '@material-ui/core/Snackbar';
 import * as React from 'react';
 import { DropEvent, DropzoneProps } from 'react-dropzone';
@@ -17,6 +18,8 @@ export interface PreviewIconProps {
 }
 
 export type AlertType = 'error' | 'success' | 'info';
+
+export type PreviewType = 'inside' | 'below' | 'none'
 
 // DropzoneAreaBase
 
@@ -40,23 +43,23 @@ export type DropzoneAreaBaseProps = {
   acceptedFiles?: string[];
   fileObjects: FileObject[];
   filesLimit?: number;
+  Icon?: React.ReactElement;
   maxFileSize?: number;
   dropzoneText?: string;
   previewText?: string;
-  showPreviews?: boolean;
-  showPreviewsInDropzone?: boolean;
-  showFileNamesInPreview?: boolean;
+  previewType: PreviewType  
   showFileNames?: boolean;
   useChipsForPreview?: boolean;
   previewChipProps?: ChipProps;
   previewGridClasses?: {
     container?: string;
-    item?: string;
-    image?: string;
+    gridListTile?: string;
+    removeIconButton?: string;
   };
   previewGridProps?: {
-    container?: GridProps;
-    item?: GridProps;
+    gridList?: GridListProps;
+    gridListTile?: GridListTileProps;
+    gridListTileBar: GridListTileBarProps
   };
   showAlerts?: boolean | AlertType[];
   alertSnackbarProps?: SnackbarProps;
@@ -69,6 +72,7 @@ export type DropzoneAreaBaseProps = {
   onDelete?: (deletedFileObject: FileObject, index: number) => void;
   onDrop?: (files: File[], event: DropEvent) => void;
   onDropRejected?: (files: File[], event: DropEvent) => void;
+  getCols : (width: string, filesLimit: number, currentNumberOfFiles: number?) => number
   getFileLimitExceedMessage?: (filesLimit: number) => string;
   getFileAddedMessage?: (fileName: string) => string;
   getFileRemovedMessage?: (fileName: string) => string;
