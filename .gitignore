@@ -4,4 +4,3 @@ build/
 node_modules/
 styleguide/
 .eslintcache
-dist/
