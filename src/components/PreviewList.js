@@ -53,6 +53,7 @@ const PreviewList = ({
   previewGridProps,
   previewType,
   getPreviewIcon,
+  handlePreviewClick,
 }) => {
   const classes = useStyles();
   const cols = useColumns(getCols, filesLimit, fileObjects.length);
@@ -80,7 +81,6 @@ const PreviewList = ({
       )}
       {...previewGridProps?.gridList}
     >
-      >
       {fileObjects.map((fileObject, i) => {
         const fileTitle = showFileNames && fileObject.file?.name;
         const isImage = isImageCheck(fileObject.file);
@@ -91,6 +91,8 @@ const PreviewList = ({
             className={clsx(previewGridClasses.gridListTile, {
               [classes.iconWrapper]: !isImage,
             })}
+            onClick={handlePreviewClick(i)}
+            onKeyDown={handlePreviewClick(i)}
             {...previewGridProps?.gridListTitle}
           >
             {getPreviewIcon(
@@ -129,6 +131,7 @@ PreviewList.propTypes = {
   getCols: PropTypes.func.isRequired,
   getPreviewIcon: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
+  handlePreviewClick: PropTypes.func.isRequired,
   previewChipProps: PropTypes.object,
   previewGridClasses: PropTypes.object,
   previewGridProps: PropTypes.object,

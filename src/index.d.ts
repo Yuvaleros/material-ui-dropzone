@@ -1,10 +1,10 @@
-import { ChipProps } from '@material-ui/core/Chip';
-import { DialogProps } from '@material-ui/core/Dialog';
-import { GridListProps  } from '@material-ui/core/GridListProps';
-import { GridListTileBarProps  } from '@material-ui/core/GridListTileBarProps';
-import { SnackbarProps } from '@material-ui/core/Snackbar';
-import * as React from 'react';
-import { DropEvent, DropzoneProps } from 'react-dropzone';
+import { ChipProps } from "@material-ui/core/Chip";
+import { DialogProps } from "@material-ui/core/Dialog";
+import { GridListProps } from "@material-ui/core/GridListProps";
+import { GridListTileBarProps } from "@material-ui/core/GridListTileBarProps";
+import { SnackbarProps } from "@material-ui/core/Snackbar";
+import * as React from "react";
+import { DropEvent, DropzoneProps } from "react-dropzone";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -17,9 +17,9 @@ export interface PreviewIconProps {
   readonly classes: string;
 }
 
-export type AlertType = 'error' | 'success' | 'info';
+export type AlertType = "error" | "success" | "info";
 
-export type PreviewType = 'inside' | 'below' | 'none'
+export type PreviewType = "inside" | "below" | "none";
 
 // DropzoneAreaBase
 
@@ -47,7 +47,7 @@ export type DropzoneAreaBaseProps = {
   maxFileSize?: number;
   dropzoneText?: string;
   previewText?: string;
-  previewType: PreviewType  
+  previewType: PreviewType;
   showFileNames?: boolean;
   useChipsForPreview?: boolean;
   previewChipProps?: ChipProps;
@@ -55,11 +55,12 @@ export type DropzoneAreaBaseProps = {
     container?: string;
     gridListTile?: string;
     removeIconButton?: string;
+    previewIconButton?: string;
   };
   previewGridProps?: {
     gridList?: GridListProps;
     gridListTile?: GridListTileProps;
-    gridListTileBar: GridListTileBarProps
+    gridListTileBar: GridListTileBarProps;
   };
   showAlerts?: boolean | AlertType[];
   alertSnackbarProps?: SnackbarProps;
@@ -72,7 +73,11 @@ export type DropzoneAreaBaseProps = {
   onDelete?: (deletedFileObject: FileObject, index: number) => void;
   onDrop?: (files: File[], event: DropEvent) => void;
   onDropRejected?: (files: File[], event: DropEvent) => void;
-  getCols : (width: string, filesLimit: number, currentNumberOfFiles: number?) => number
+  getCols: (
+    width: string,
+    filesLimit: number,
+    currentNumberOfFiles: ?number
+  ) => number;
   getFileLimitExceedMessage?: (filesLimit: number) => string;
   getFileAddedMessage?: (fileName: string) => string;
   getFileRemovedMessage?: (fileName: string) => string;
@@ -93,7 +98,7 @@ export const DropzoneAreaBase: React.ComponentType<DropzoneAreaBaseProps>;
 
 export type DropzoneAreaProps = Omit<
   DropzoneAreaBaseProps,
-  'fileObjects' | 'onAdd' | 'onDelete'
+  "fileObjects" | "onAdd" | "onDelete"
 > & {
   clearOnUnmount?: boolean;
   initialFiles?: string[];
@@ -123,7 +128,7 @@ export const DropzoneDialogBase: React.ComponentType<DropzoneDialogBaseProps>;
 
 export type DropzoneDialogProps = Omit<
   DropzoneDialogBaseProps,
-  'fileObjects' | 'onAdd' | 'onDelete' | 'onSave'
+  "fileObjects" | "onAdd" | "onDelete" | "onSave"
 > & {
   clearOnUnmount?: boolean;
   initialFiles?: string[];
