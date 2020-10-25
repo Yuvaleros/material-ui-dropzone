@@ -72,13 +72,13 @@ function PreviewList({
                         <Grid
                             {...previewGridProps.item}
                             item={true}
-                            key={`${fileObject.file?.name ?? 'file'}-${i}`}
+                            key={`${fileObject?.name ?? 'file'}-${i}`}
                             className={classes.imageContainer}
                         >
                             <Chip
                                 variant="outlined"
                                 {...previewChipProps}
-                                label={fileObject.file.name}
+                                label={fileObject.name}
                                 onDelete={handleRemove(i)}
                             />
                         </Grid>
@@ -101,14 +101,14 @@ function PreviewList({
                         xs={4}
                         {...previewGridProps.item}
                         item={true}
-                        key={`${fileObject.file?.name ?? 'file'}-${i}`}
+                        key={`${fileObject?.name ?? 'file'}-${i}`}
                         className={clsx(classes.imageContainer, previewGridClasses.item)}
                     >
                         {getPreviewIcon(fileObject, classes)}
 
                         {showFileNames && (
                             <Typography variant="body1" component="p">
-                                {fileObject.file.name}
+                                {fileObject.name}
                             </Typography>
                         )}
 

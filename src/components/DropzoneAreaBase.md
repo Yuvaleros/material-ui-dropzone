@@ -52,7 +52,7 @@ import React, { useState } from 'react';
 import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@material-ui/icons';
 
 const handlePreviewIcon = (fileObject, classes) => {
-  const {type} = fileObject.file
+  const {type} = fileObject
   const iconProps = {
     className : classes.image,
   }
