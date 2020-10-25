@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
 
-import {createFileFromUrl, readFile} from '../helpers';
+import {createFileFromUrl} from '../helpers';
 
 import DropzoneAreaBase from './DropzoneAreaBase';
 
@@ -41,7 +41,7 @@ class DropzoneArea extends React.PureComponent {
         const {fileObjects} = this.state;
 
         if (onChange) {
-            onChange(fileObjects.map((fileObject) => fileObject.file));
+            onChange(fileObjects.map((fileObject) => fileObject));
         }
     }
 
@@ -56,12 +56,8 @@ class DropzoneArea extends React.PureComponent {
                     } else {
                         file = initialFile;
                     }
-                    const data = await readFile(file);
 
-                    return {
-                        file,
-                        data,
-                    };
+                    return file;
                 })
             );
 
@@ -110,7 +106,7 @@ class DropzoneArea extends React.PureComponent {
 
         // Notify removed file
         if (onDelete) {
-            onDelete(removedFileObj.file);
+            onDelete(removedFileObj);
         }
 
         // Update local state

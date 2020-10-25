@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
 
-import {createFileFromUrl, readFile} from '../helpers';
+import {createFileFromUrl} from '../helpers';
 
 import DropzoneDialogBase from './DropzoneDialogBase';
 
@@ -52,12 +52,8 @@ class DropzoneDialog extends React.PureComponent {
                     } else {
                         file = initialFile;
                     }
-                    const data = await readFile(file);
 
-                    return {
-                        file,
-                        data,
-                    };
+                    return file;
                 })
             );
 

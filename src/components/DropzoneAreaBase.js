@@ -65,13 +65,26 @@ const defaultSnackbarAnchorOrigin = {
     vertical: 'bottom',
 };
 
+const ImagePreviewIcon = ({file, className}) => {
+    const [src, setSrc] = React.useState(undefined);
+
+    React.useEffect(() => {
+        readFile(file).then((data) => setSrc(data));
+    }, [file]);
+
+    return (
+        <img className={className} role="presentation" src={src} />
+    );
+};
+
+ImagePreviewIcon.propTypes = {
+    file: PropTypes.object,
+    className: PropTypes.string,
+};
+
 const defaultGetPreviewIcon = (fileObject, classes) => {
-    if (isImage(fileObject.file)) {
-        return (<img
-            className={classes.image}
-            role="presentation"
-            src={fileObject.data}
-        />);
+    if (isImage(fileObject)) {
+        return <ImagePreviewIcon file={fileObject} className={classes.image} />;
     }
 
     return <AttachFileIcon className={classes.image} />;
@@ -115,11 +128,7 @@ class DropzoneAreaBase extends React.PureComponent {
         // Retrieve fileObjects data
         const fileObjs = await Promise.all(
             acceptedFiles.map(async(file) => {
-                const data = await readFile(file);
-                return {
-                    file,
-                    data,
-                };
+                return file;
             })
         );
 
@@ -129,7 +138,7 @@ class DropzoneAreaBase extends React.PureComponent {
         }
 
         // Display message
-        const message = fileObjs.reduce((msg, fileObj) => msg + getFileAddedMessage(fileObj.file.name), '');
+        const message = fileObjs.reduce((msg, fileObj) => msg + getFileAddedMessage(fileObj.name), '');
         this.setState({
             openSnackBar: true,
             snackbarMessage: message,
@@ -183,7 +192,7 @@ class DropzoneAreaBase extends React.PureComponent {
 
         this.setState({
             openSnackBar: true,
-            snackbarMessage: getFileRemovedMessage(removedFileObj.file.name),
+            snackbarMessage: getFileRemovedMessage(removedFileObj.name),
             snackbarVariant: 'info',
         }, this.notifyAlert);
     };
@@ -362,10 +371,7 @@ DropzoneAreaBase.defaultProps = {
     },
 };
 
-export const FileObjectShape = PropTypes.shape({
-    file: PropTypes.object,
-    data: PropTypes.any,
-});
+export const FileObjectShape = PropTypes.object;
 
 DropzoneAreaBase.propTypes = {
     /** @ignore */
