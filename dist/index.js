@@ -1048,7 +1048,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
                 return {
                   fileObjects: [].concat(state.fileObjects, fileObjs)
                 };
-              }, _this.notifyFileChange);
+              });
 
               _context2.next = 11;
               break;

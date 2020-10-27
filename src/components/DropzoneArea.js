@@ -70,7 +70,7 @@ class DropzoneArea extends React.PureComponent {
                     state.fileObjects,
                     fileObjs
                 ),
-            }), this.notifyFileChange);
+            }));
         } catch (err) {
             console.log(err);
         }
