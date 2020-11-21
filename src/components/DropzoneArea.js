@@ -110,7 +110,7 @@ class DropzoneArea extends React.PureComponent {
 
         // Notify removed file
         if (onDelete) {
-            onDelete(removedFileObj.file);
+            onDelete(removedFileObj.file, removedFileObjIdx);
         }
 
         // Update local state
@@ -165,6 +165,7 @@ DropzoneArea.propTypes = {
      * Fired when a file is deleted from the previews panel.
      *
      * @param {File} deletedFile The file that was removed.
+     * @param {number} index The index of the removed file object.
      */
     onDelete: PropTypes.func,
 };
