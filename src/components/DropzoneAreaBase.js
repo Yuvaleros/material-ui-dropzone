@@ -320,6 +320,8 @@ class DropzoneAreaBase extends React.PureComponent {
             </Fragment>
         );
     }
+                                  classes={classes}
+                          classes={classes}
 }
 
 DropzoneAreaBase.defaultProps = {
