@@ -168,6 +168,19 @@ class DropzoneAreaBase extends React.PureComponent {
         }, this.notifyAlert);
     }
 
+    handleChipClick = (fileIndex) => (event) =>{
+        event.stopPropagation();
+        
+        const { fileObjects, onChipClick } = this.props;
+
+        // Find clicked fileObject
+        const clickedObject = fileObjects[fileIndex];
+
+        if (onChipClick) {
+          onChipClick(clickedObject, fileIndex);
+        }
+    }
+
     handleRemove = (fileIndex) => (event) => {
         event.stopPropagation();
 
@@ -270,6 +283,7 @@ class DropzoneAreaBase extends React.PureComponent {
                                 <PreviewList
                                     fileObjects={fileObjects}
                                     handleRemove={this.handleRemove}
+                                    handleChipClick={this.handleChipClick}
                                     getPreviewIcon={getPreviewIcon}
                                     showFileNames={showFileNames}
                                     useChipsForPreview={useChipsForPreview}
@@ -508,6 +522,12 @@ DropzoneAreaBase.propTypes = {
      * @param {number} index The index of the removed file object.
      */
     onDelete: PropTypes.func,
+    /**
+     * 
+     * @param {FileObject} clickedFileObject The file that was removed.
+     * @param {number} index The index of the removed file object.
+     */
+    onChipClick: propTypes.func,
     /**
      * Fired when the user drops files into the dropzone.
      *
