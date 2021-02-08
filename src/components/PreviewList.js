@@ -55,6 +55,7 @@ function PreviewList({
     previewChipProps,
     previewGridClasses,
     previewGridProps,
+    handlePreviewChipClick,
     classes,
     getPreviewIcon,
 }) {
@@ -78,6 +79,7 @@ function PreviewList({
                             <Chip
                                 variant="outlined"
                                 {...previewChipProps}
+                                onClick={handlePreviewChipClick(i)}
                                 label={fileObject.file.name}
                                 onDelete={handleRemove(i)}
                             />
@@ -134,6 +136,7 @@ PreviewList.propTypes = {
     previewChipProps: PropTypes.object,
     previewGridClasses: PropTypes.object,
     previewGridProps: PropTypes.object,
+    handlePreviewChipClick: PropTypes.func,
     showFileNames: PropTypes.bool,
     useChipsForPreview: PropTypes.bool,
 };
