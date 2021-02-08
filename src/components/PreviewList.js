@@ -79,7 +79,7 @@ function PreviewList({
                             <Chip
                                 variant="outlined"
                                 {...previewChipProps}
-                                onClick={(event)=>handlePreviewChipClick(event,i)}
+                                onClick={()=>handlePreviewChipClick(i)}
                                 label={fileObject.file.name}
                                 onDelete={handleRemove(i)}
                             />

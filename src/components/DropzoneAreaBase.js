@@ -168,7 +168,7 @@ class DropzoneAreaBase extends React.PureComponent {
         }, this.notifyAlert);
     }
 
-    handleChipClick = (fileIndex) => (event) =>{
+    handlePreviewChipClick = (fileIndex) => (event) =>{
         event.stopPropagation();
         
         const { fileObjects, onChipClick } = this.props;
@@ -283,7 +283,7 @@ class DropzoneAreaBase extends React.PureComponent {
                                 <PreviewList
                                     fileObjects={fileObjects}
                                     handleRemove={this.handleRemove}
-                                    handleChipClick={this.handleChipClick}
+                                    handlePreviewChipClick={this.handlePreviewChipClick}
                                     getPreviewIcon={getPreviewIcon}
                                     showFileNames={showFileNames}
                                     useChipsForPreview={useChipsForPreview}
