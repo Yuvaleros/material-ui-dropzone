@@ -72,6 +72,7 @@ export type DropzoneAreaBaseProps = {
   onDrop?: (files: File[], event: DropEvent) => void;
   onDropRejected?: (files: File[], event: DropEvent) => void;
   onAlert?: (message: string, variant: AlertType) => void;
+  onPreviewChipClick?:(clickedFile: FileObject, index: number) => void;
   getFileLimitExceedMessage?: (filesLimit: number) => string;
   getFileAddedMessage?: (fileName: string) => string;
   getFileRemovedMessage?: (fileName: string) => string;
