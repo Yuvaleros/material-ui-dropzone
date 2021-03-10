@@ -131,19 +131,19 @@ function PreviewList({
 }
 
 PreviewList.propTypes = {
-  classes: PropTypes.object.isRequired,
-  fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
-  getPreviewIcon: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired,
-  previewChipProps: PropTypes.object,
-  previewGridClasses: PropTypes.object,
-  previewGridProps: PropTypes.object,
-  handlePreviewChipClick: PropTypes.func,
-  showFileNames: PropTypes.bool,
-  useChipsForPreview: PropTypes.bool,
-  loading: PropTypes.bool,
-  loadingComponent: PropTypes.object,
-  disable: PropTypes.bool,
+    classes: PropTypes.object.isRequired,
+    fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
+    getPreviewIcon: PropTypes.func.isRequired,
+    handleRemove: PropTypes.func.isRequired,
+    previewChipProps: PropTypes.object,
+    previewGridClasses: PropTypes.object,
+    previewGridProps: PropTypes.object,
+    handlePreviewChipClick: PropTypes.func,
+    showFileNames: PropTypes.bool,
+    useChipsForPreview: PropTypes.bool,
+    loading: PropTypes.bool,
+    loadingComponent: PropTypes.object,
+    disable: PropTypes.bool,
 };
 
 export default withStyles(styles, {name: 'MuiDropzonePreviewList'})(PreviewList);
