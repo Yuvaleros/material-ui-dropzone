@@ -162,6 +162,7 @@ function PreviewList(_ref2) {
       previewChipProps = _ref2.previewChipProps,
       previewGridClasses = _ref2.previewGridClasses,
       previewGridProps = _ref2.previewGridProps,
+      handlePreviewChipClick = _ref2.handlePreviewChipClick,
       classes = _ref2.classes,
       getPreviewIcon = _ref2.getPreviewIcon;
 
@@ -182,6 +183,7 @@ function PreviewList(_ref2) {
       }), /*#__PURE__*/createElement(Chip, _extends({
         variant: "outlined"
       }, previewChipProps, {
+        onClick: handlePreviewChipClick(i),
         label: fileObject.file.name,
         onDelete: handleRemove(i)
       })));
@@ -221,6 +223,7 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   previewChipProps: PropTypes.object,
   previewGridClasses: PropTypes.object,
   previewGridProps: PropTypes.object,
+  handlePreviewChipClick: PropTypes.func,
   showFileNames: PropTypes.bool,
   useChipsForPreview: PropTypes.bool
 } : void 0;
@@ -529,13 +532,28 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
       }, _this.notifyAlert);
     };
 
-    _this.handleRemove = function (fileIndex) {
+    _this.handlePreviewChipClick = function (fileIndex) {
       return function (event) {
         event.stopPropagation();
         var _this$props3 = _this.props,
             fileObjects = _this$props3.fileObjects,
-            getFileRemovedMessage = _this$props3.getFileRemovedMessage,
-            onDelete = _this$props3.onDelete; // Find removed fileObject
+            onPreviewChipClick = _this$props3.onPreviewChipClick; // Find clicked fileObject
+
+        var clickedObject = fileObjects[fileIndex];
+
+        if (onPreviewChipClick) {
+          onPreviewChipClick(clickedObject, fileIndex);
+        }
+      };
+    };
+
+    _this.handleRemove = function (fileIndex) {
+      return function (event) {
+        event.stopPropagation();
+        var _this$props4 = _this.props,
+            fileObjects = _this$props4.fileObjects,
+            getFileRemovedMessage = _this$props4.getFileRemovedMessage,
+            onDelete = _this$props4.onDelete; // Find removed fileObject
 
         var removedFileObj = fileObjects[fileIndex]; // Notify removed file
 
@@ -578,31 +596,31 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
     value: function render() {
       var _this2 = this;
 
-      var _this$props4 = this.props,
-          acceptedFiles = _this$props4.acceptedFiles,
-          alertSnackbarProps = _this$props4.alertSnackbarProps,
-          classes = _this$props4.classes,
-          disableRejectionFeedback = _this$props4.disableRejectionFeedback,
-          dropzoneClass = _this$props4.dropzoneClass,
-          dropzoneParagraphClass = _this$props4.dropzoneParagraphClass,
-          dropzoneProps = _this$props4.dropzoneProps,
-          dropzoneText = _this$props4.dropzoneText,
-          fileObjects = _this$props4.fileObjects,
-          filesLimit = _this$props4.filesLimit,
-          getPreviewIcon = _this$props4.getPreviewIcon,
-          Icon = _this$props4.Icon,
-          inputProps = _this$props4.inputProps,
-          maxFileSize = _this$props4.maxFileSize,
-          previewChipProps = _this$props4.previewChipProps,
-          previewGridClasses = _this$props4.previewGridClasses,
-          previewGridProps = _this$props4.previewGridProps,
-          previewText = _this$props4.previewText,
-          showAlerts = _this$props4.showAlerts,
-          showFileNames = _this$props4.showFileNames,
-          showFileNamesInPreview = _this$props4.showFileNamesInPreview,
-          showPreviews = _this$props4.showPreviews,
-          showPreviewsInDropzone = _this$props4.showPreviewsInDropzone,
-          useChipsForPreview = _this$props4.useChipsForPreview;
+      var _this$props5 = this.props,
+          acceptedFiles = _this$props5.acceptedFiles,
+          alertSnackbarProps = _this$props5.alertSnackbarProps,
+          classes = _this$props5.classes,
+          disableRejectionFeedback = _this$props5.disableRejectionFeedback,
+          dropzoneClass = _this$props5.dropzoneClass,
+          dropzoneParagraphClass = _this$props5.dropzoneParagraphClass,
+          dropzoneProps = _this$props5.dropzoneProps,
+          dropzoneText = _this$props5.dropzoneText,
+          fileObjects = _this$props5.fileObjects,
+          filesLimit = _this$props5.filesLimit,
+          getPreviewIcon = _this$props5.getPreviewIcon,
+          Icon = _this$props5.Icon,
+          inputProps = _this$props5.inputProps,
+          maxFileSize = _this$props5.maxFileSize,
+          previewChipProps = _this$props5.previewChipProps,
+          previewGridClasses = _this$props5.previewGridClasses,
+          previewGridProps = _this$props5.previewGridProps,
+          previewText = _this$props5.previewText,
+          showAlerts = _this$props5.showAlerts,
+          showFileNames = _this$props5.showFileNames,
+          showFileNamesInPreview = _this$props5.showFileNamesInPreview,
+          showPreviews = _this$props5.showPreviews,
+          showPreviewsInDropzone = _this$props5.showPreviewsInDropzone,
+          useChipsForPreview = _this$props5.useChipsForPreview;
       var _this$state2 = this.state,
           openSnackBar = _this$state2.openSnackBar,
           snackbarMessage = _this$state2.snackbarMessage,
@@ -637,6 +655,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
         })), previewsInDropzoneVisible && /*#__PURE__*/createElement(PreviewList$1, {
           fileObjects: fileObjects,
           handleRemove: _this2.handleRemove,
+          handlePreviewChipClick: _this2.handlePreviewChipClick,
           getPreviewIcon: getPreviewIcon,
           showFileNames: showFileNames,
           useChipsForPreview: useChipsForPreview,
@@ -650,6 +669,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
       }, previewText), /*#__PURE__*/createElement(PreviewList$1, {
         fileObjects: fileObjects,
         handleRemove: this.handleRemove,
+        handlePreviewChipClick: this.handlePreviewChipClick,
         getPreviewIcon: getPreviewIcon,
         showFileNames: showFileNamesInPreview,
         useChipsForPreview: useChipsForPreview,
@@ -893,6 +913,13 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    * @param {number} index The index of the removed file object.
    */
   onDelete: PropTypes.func,
+
+  /**
+   *
+   * @param {FileObject} clickedFileObject The file that was clicked.
+   * @param {number} index The index of the clicked file object.
+   */
+  onPreviewChipClick: PropTypes.func,
 
   /**
    * Fired when the user drops files into the dropzone.

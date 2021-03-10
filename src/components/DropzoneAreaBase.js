@@ -1,8 +1,10 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
@@ -168,6 +170,19 @@ class DropzoneAreaBase extends React.PureComponent {
         }, this.notifyAlert);
     }
 
+    handlePreviewChipClick = (fileIndex) => (event) => {
+        event.stopPropagation();
+
+        const {fileObjects, onPreviewChipClick} = this.props;
+
+        // Find clicked fileObject
+        const clickedObject = fileObjects[fileIndex];
+
+        if (onPreviewChipClick) {
+            onPreviewChipClick(clickedObject, fileIndex);
+        }
+    }
+
     handleRemove = (fileIndex) => (event) => {
         event.stopPropagation();
 
@@ -220,6 +235,9 @@ class DropzoneAreaBase extends React.PureComponent {
             showPreviews,
             showPreviewsInDropzone,
             useChipsForPreview,
+            loading,
+            loadingComponent,
+            disable,
         } = this.props;
         const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
 
@@ -237,6 +255,7 @@ class DropzoneAreaBase extends React.PureComponent {
                     onDropRejected={this.handleDropRejected}
                     maxSize={maxFileSize}
                     multiple={isMultiple}
+                    disable={true}
                 >
                     {({getRootProps, getInputProps, isDragActive, isDragReject}) => (
                         <div
@@ -249,7 +268,7 @@ class DropzoneAreaBase extends React.PureComponent {
                                 ),
                             })}
                         >
-                            <input {...getInputProps(inputProps)} />
+                            {!disable && <input {...getInputProps(inputProps)} />}
 
                             <div className={classes.textContainer}>
                                 <Typography
@@ -268,8 +287,12 @@ class DropzoneAreaBase extends React.PureComponent {
 
                             {previewsInDropzoneVisible &&
                                 <PreviewList
+                                    loading={loading}
+                                    loadingComponent={loadingComponent}
+                                    disable={disable}
                                     fileObjects={fileObjects}
                                     handleRemove={this.handleRemove}
+                                    handlePreviewChipClick={this.handlePreviewChipClick}
                                     getPreviewIcon={getPreviewIcon}
                                     showFileNames={showFileNames}
                                     useChipsForPreview={useChipsForPreview}
@@ -289,8 +312,12 @@ class DropzoneAreaBase extends React.PureComponent {
                         </Typography>
 
                         <PreviewList
+                            loading={loading}
+                            loadingComponent={loadingComponent}
+                            disable={disable}
                             fileObjects={fileObjects}
                             handleRemove={this.handleRemove}
+                            handlePreviewChipClick={this.handlePreviewChipClick}
                             getPreviewIcon={getPreviewIcon}
                             showFileNames={showFileNamesInPreview}
                             useChipsForPreview={useChipsForPreview}
@@ -339,6 +366,9 @@ DropzoneAreaBase.defaultProps = {
     previewGridClasses: {},
     previewGridProps: {},
     showAlerts: true,
+    loading: false,
+    loadingComponent: (<Box justifyContent="center" display="flex" width={'100%'}><CircularProgress /></Box>),
+    disable: false,
     alertSnackbarProps: {
         anchorOrigin: {
             horizontal: 'left',
@@ -400,6 +430,12 @@ DropzoneAreaBase.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     /** Uses deletable Material-UI Chip components to display file names. */
     useChipsForPreview: PropTypes.bool,
+    /** Shows progress bar if processing. */
+    loading: PropTypes.bool,
+    /** Custom progress bar component. */
+    loadingComponent: PropTypes.object,
+    /** Set whether is disable. */
+    disable: PropTypes.bool,
     /**
      * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
      *
@@ -495,6 +531,13 @@ DropzoneAreaBase.propTypes = {
      * @param {Object} classes The classes for the file preview icon, in the default case we use the 'image' className.
      */
     getPreviewIcon: PropTypes.func,
+    /**
+     * Fired when a chip is clicked from previews panel.
+     *
+     * @param {FileObject} clickedFileObject The file that was clicked.
+     * @param {number} index The index of the clicked file object.
+     */
+    onPreviewChipClick: PropTypes.func,
     /**
      * Fired when new files are added to dropzone.
      *
