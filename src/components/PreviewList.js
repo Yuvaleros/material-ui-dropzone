@@ -58,6 +58,9 @@ function PreviewList({
     handlePreviewChipClick,
     classes,
     getPreviewIcon,
+    loading,
+    loadingComponent,
+    disable,
 }) {
     if (useChipsForPreview) {
         return (
@@ -68,7 +71,7 @@ function PreviewList({
                 container={true}
                 className={clsx(classes.root, previewGridClasses.container)}
             >
-                {fileObjects.map((fileObject, i) => {
+                {loading ? loadingComponent : fileObjects.map((fileObject, i) => {
                     return (
                         <Grid
                             {...previewGridProps.item}
@@ -81,7 +84,7 @@ function PreviewList({
                                 {...previewChipProps}
                                 onClick={handlePreviewChipClick(i)}
                                 label={fileObject.file.name}
-                                onDelete={handleRemove(i)}
+                                onDelete={disable ? undefined : handleRemove(i)}
                             />
                         </Grid>
                     );
@@ -89,7 +92,6 @@ function PreviewList({
             </Grid>
         );
     }
-
     return (
         <Grid
             spacing={8}
@@ -97,7 +99,7 @@ function PreviewList({
             container={true}
             className={clsx(classes.root, previewGridClasses.container)}
         >
-            {fileObjects.map((fileObject, i) => {
+            {loading ? loadingComponent : fileObjects.map((fileObject, i) => {
                 return (
                     <Grid
                         xs={4}
@@ -114,13 +116,13 @@ function PreviewList({
                             </Typography>
                         )}
 
-                        <Fab
+                        {!disable && <Fab
                             onClick={handleRemove(i)}
                             aria-label="Delete"
                             className={classes.removeButton}
                         >
                             <DeleteIcon />
-                        </Fab>
+                        </Fab>}
                     </Grid>
                 );
             })}
@@ -129,16 +131,19 @@ function PreviewList({
 }
 
 PreviewList.propTypes = {
-    classes: PropTypes.object.isRequired,
-    fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
-    getPreviewIcon: PropTypes.func.isRequired,
-    handleRemove: PropTypes.func.isRequired,
-    previewChipProps: PropTypes.object,
-    previewGridClasses: PropTypes.object,
-    previewGridProps: PropTypes.object,
-    handlePreviewChipClick: PropTypes.func,
-    showFileNames: PropTypes.bool,
-    useChipsForPreview: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
+  fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getPreviewIcon: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
+  previewChipProps: PropTypes.object,
+  previewGridClasses: PropTypes.object,
+  previewGridProps: PropTypes.object,
+  handlePreviewChipClick: PropTypes.func,
+  showFileNames: PropTypes.bool,
+  useChipsForPreview: PropTypes.bool,
+  loading: PropTypes.bool,
+  loadingComponent: PropTypes.object,
+  disable: PropTypes.bool,
 };
 
 export default withStyles(styles, {name: 'MuiDropzonePreviewList'})(PreviewList);

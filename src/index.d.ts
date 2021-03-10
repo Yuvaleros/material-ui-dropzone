@@ -59,6 +59,9 @@ export type DropzoneAreaBaseProps = {
     container?: GridProps;
     item?: GridProps;
   };
+  loading?: boolean;
+  loadingComponent?: JSX.Element;
+  disable?: boolean;
   showAlerts?: boolean | AlertType[];
   alertSnackbarProps?: SnackbarProps;
   dropzoneProps?: DropzoneProps;

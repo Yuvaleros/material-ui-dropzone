@@ -1,8 +1,10 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
@@ -209,16 +211,16 @@ class DropzoneAreaBase extends React.PureComponent {
     }
   };
 
-    handlePreviewChipClick = (fileIndex) => (event) =>{
+    handlePreviewChipClick = (fileIndex) => (event) => {
         event.stopPropagation();
-        
-        const { fileObjects, onPreviewChipClick } = this.props;
+
+        const {fileObjects, onPreviewChipClick} = this.props;
 
         // Find clicked fileObject
         const clickedObject = fileObjects[fileIndex];
 
         if (onPreviewChipClick) {
-          onPreviewChipClick(clickedObject, fileIndex);
+            onPreviewChipClick(clickedObject, fileIndex);
         }
     }
 
@@ -274,6 +276,9 @@ class DropzoneAreaBase extends React.PureComponent {
             showPreviews,
             showPreviewsInDropzone,
             useChipsForPreview,
+            loading,
+            loadingComponent,
+            disable,
         } = this.props;
         const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
 
@@ -322,6 +327,9 @@ class DropzoneAreaBase extends React.PureComponent {
 
                             {previewsInDropzoneVisible &&
                                 <PreviewList
+                                    loading={loading}
+                                    loadingComponent={loadingComponent}
+                                    disable={disable}
                                     fileObjects={fileObjects}
                                     handleRemove={this.handleRemove}
                                     handlePreviewChipClick={this.handlePreviewChipClick}
@@ -344,6 +352,9 @@ class DropzoneAreaBase extends React.PureComponent {
                         </Typography>
 
                         <PreviewList
+                            loading={loading}
+                            loadingComponent={loadingComponent}
+                            disable={disable}
                             fileObjects={fileObjects}
                             handleRemove={this.handleRemove}
                             getPreviewIcon={getPreviewIcon}
@@ -525,46 +536,45 @@ class DropzoneAreaBase extends React.PureComponent {
 }
 
 DropzoneAreaBase.defaultProps = {
-  acceptedFiles: [],
-  filesLimit: 3,
-  fileObjects: [],
-  maxFileSize: 3000000,
-  dropzoneText: 'Drag and drop a file here or click',
-  previewText: 'Preview:',
-  disableRejectionFeedback: false,
-  showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
-  showPreviewsInDropzone: true,
-  showFileNames: false,
-  showFileNamesInPreview: false,
-  useChipsForPreview: false,
-  previewChipProps: {},
-  previewGridClasses: {},
-  previewGridProps: {},
-  showAlerts: true,
-  alertSnackbarProps: {
-    anchorOrigin: {
-      horizontal: 'left',
-      vertical: 'bottom',
+    acceptedFiles: [],
+    filesLimit: 3,
+    fileObjects: [],
+    maxFileSize: 3000000,
+    dropzoneText: 'Drag and drop a file here or click',
+    previewText: 'Preview:',
+    disableRejectionFeedback: false,
+    showPreviews: false, // By default previews show up under in the dialog and inside in the standalone
+    showPreviewsInDropzone: true,
+    showFileNames: false,
+    showFileNamesInPreview: false,
+    useChipsForPreview: false,
+    previewChipProps: {},
+    previewGridClasses: {},
+    previewGridProps: {},
+    showAlerts: true,
+    loading: false,
+    loadingComponent: (<Box justifyContent="center" display="flex" width={'100%'}><CircularProgress /></Box>),
+    disable: false,
+    alertSnackbarProps: {
+        anchorOrigin: {
+            horizontal: 'left',
+            vertical: 'bottom',
+        },
+        autoHideDuration: 6000,
     },
-    autoHideDuration: 6000,
-  },
-  getFileLimitExceedMessage: (filesLimit) =>
-    `Maximum allowed number of files exceeded. Only ${filesLimit} allowed`,
-  getFileAddedMessage: (fileName) => `File ${fileName} successfully added.`,
-  getPreviewIcon: defaultGetPreviewIcon,
-  getFileRemovedMessage: (fileName) => `File ${fileName} removed.`,
-  getDropRejectMessage: (rejectedFile, acceptedFiles, maxFileSize) => {
-    let message = `File ${rejectedFile.name} was rejected. `;
-    if (!acceptedFiles.includes(rejectedFile.type)) {
-      message += 'File type not supported. ';
-    }
-    if (rejectedFile.size > maxFileSize) {
-      message +=
-        'File is too big. Size limit is ' +
-        convertBytesToMbsOrKbs(maxFileSize) +
-        '. ';
-    }
-    return message;
+    getFileLimitExceedMessage: (filesLimit) => (`Maximum allowed number of files exceeded. Only ${filesLimit} allowed`),
+    getFileAddedMessage: (fileName) => (`File ${fileName} successfully added.`),
+    getPreviewIcon: defaultGetPreviewIcon,
+    getFileRemovedMessage: (fileName) => (`File ${fileName} removed.`),
+    getDropRejectMessage: (rejectedFile, acceptedFiles, maxFileSize) => {
+        let message = `File ${rejectedFile.name} was rejected. `;
+        if (!acceptedFiles.includes(rejectedFile.type)) {
+            message += 'File type not supported. ';
+        }
+        if (rejectedFile.size > maxFileSize) {
+            message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(maxFileSize) + '. ';
+        }
+        return message;
   },
 };
 
@@ -606,6 +616,13 @@ DropzoneAreaBase.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     /** Uses deletable Material-UI Chip components to display file names. */
     useChipsForPreview: PropTypes.bool,
+
+    /** Shows progress bar if processing. */
+    loading: PropTypes.bool,
+    /** Custom progress bar component. */
+    loadingComponent: PropTypes.object,
+    /** Set whether is disable. */
+    disable: Protypes.bool,
     /**
      * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
      *
