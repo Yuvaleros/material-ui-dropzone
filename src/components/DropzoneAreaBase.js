@@ -8,13 +8,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import Dropzone from 'react-dropzone';
-import { convertBytesToMbsOrKbs, isImage, readFile } from '../helpers';
+import {convertBytesToMbsOrKbs, isImage, readFile} from '../helpers';
 import PreviewList from './PreviewList';
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 
-const styles = ({ palette, shape, spacing }) => ({
+const styles = ({palette, shape, spacing}) => ({
     '@keyframes progress': {
         '0%': {
             backgroundPosition: '0 0',
@@ -22,7 +22,7 @@ const styles = ({ palette, shape, spacing }) => ({
         '100%': {
             backgroundPosition: '-70px 0',
         },
-      },
+    },
     root: {
         position: 'relative',
         width: '100%',
@@ -69,13 +69,11 @@ const defaultSnackbarAnchorOrigin = {
 
 const defaultGetPreviewIcon = (fileObject, classes) => {
     if (isImage(fileObject.file)) {
-        return (
-            <img
-                className={classes.image}
-                role="presentation"
-                src={fileObject.data}
-            />
-        );
+        return (<img
+            className={classes.image}
+            role="presentation"
+            src={fileObject.data}
+        />);
     }
 
     return <AttachFileIcon className={classes.image} />;
@@ -86,130 +84,91 @@ const defaultGetPreviewIcon = (fileObject, classes) => {
  */
 class DropzoneAreaBase extends React.PureComponent {
     state = {
-      openSnackBar: false,
-      snackbarMessage: '',
-      snackbarVariant: 'success',
+        openSnackBar: false,
+        snackbarMessage: '',
+        snackbarVariant: 'success',
     };
 
     notifyAlert() {
-      const { onAlert } = this.props;
-      const { openSnackBar, snackbarMessage, snackbarVariant } = this.state;
-      if (openSnackBar && onAlert) {
-        onAlert(snackbarMessage, snackbarVariant);
-      }
+        const {onAlert} = this.props;
+        const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
+        if (openSnackBar && onAlert) {
+            onAlert(snackbarMessage, snackbarVariant);
+        }
     }
 
-    handleDropAccepted = async (acceptedFiles, evt) => {
-      const {
-        fileObjects,
-        filesLimit,
-        getFileAddedMessage,
-        getFileLimitExceedMessage,
-        onAdd,
-        onDrop,
-    } = this.props;
+    handleDropAccepted = async(acceptedFiles, evt) => {
+        const {fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop} = this.props;
 
-    if (
-      filesLimit > 1 &&
-      fileObjects.length + acceptedFiles.length > filesLimit
-    ) {
-      this.setState(
-        {
-          openSnackBar: true,
-          snackbarMessage: getFileLimitExceedMessage(filesLimit),
-          snackbarVariant: 'error',
-        },
-        this.notifyAlert
-      );
-      return;
-    }
+        if (filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit) {
+            this.setState({
+                openSnackBar: true,
+                snackbarMessage: getFileLimitExceedMessage(filesLimit),
+                snackbarVariant: 'error',
+            }, this.notifyAlert);
+            return;
+        }
 
-    // Notify Drop event
-    if (onDrop) {
-      onDrop(acceptedFiles, evt);
-    }
+        // Notify Drop event
+        if (onDrop) {
+            onDrop(acceptedFiles, evt);
+        }
 
-    // Retrieve fileObjects data
-    const fileObjs = await Promise.all(
-      acceptedFiles.map(async (file) => {
-        const data = await readFile(file);
-        return {
-          file,
-          data,
-        };
-      })
-    );
-
-    // Notify added files
-    if (onAdd) {
-      onAdd(fileObjs);
-    }
-
-    // Display message
-    const message = fileObjs.reduce(
-      (msg, fileObj) => msg + getFileAddedMessage(fileObj.file.name),
-      ''
-    );
-    this.setState(
-      {
-        openSnackBar: true,
-        snackbarMessage: message,
-        snackbarVariant: 'success',
-      },
-      this.notifyAlert
-    );
-  };
-
-  handleDropRejected = (rejectedFiles, evt) => {
-    const {
-      acceptedFiles,
-      filesLimit,
-      fileObjects,
-      getDropRejectMessage,
-      getFileLimitExceedMessage,
-      maxFileSize,
-      onDropRejected,
-    } = this.props;
-
-    let message = '';
-    if (fileObjects.length + rejectedFiles.length > filesLimit) {
-      message = getFileLimitExceedMessage(filesLimit);
-    } else {
-      rejectedFiles.forEach((rejectedFile) => {
-        message = getDropRejectMessage(
-          rejectedFile,
-          acceptedFiles,
-          maxFileSize
+        // Retrieve fileObjects data
+        const fileObjs = await Promise.all(
+            acceptedFiles.map(async(file) => {
+                const data = await readFile(file);
+                return {
+                    file,
+                    data,
+                };
+            })
         );
-      });
+
+        // Notify added files
+        if (onAdd) {
+            onAdd(fileObjs);
+        }
+
+        // Display message
+        const message = fileObjs.reduce((msg, fileObj) => msg + getFileAddedMessage(fileObj.file.name), '');
+        this.setState({
+            openSnackBar: true,
+            snackbarMessage: message,
+            snackbarVariant: 'success',
+        }, this.notifyAlert);
     }
 
-    if (onDropRejected) {
-      onDropRejected(rejectedFiles, evt);
+    handleDropRejected = (rejectedFiles, evt) => {
+        const {
+            acceptedFiles,
+            filesLimit,
+            fileObjects,
+            getDropRejectMessage,
+            getFileLimitExceedMessage,
+            maxFileSize,
+            onDropRejected,
+        } = this.props;
+
+        let message = '';
+        if (fileObjects.length + rejectedFiles.length > filesLimit) {
+            message = getFileLimitExceedMessage(filesLimit);
+        } else {
+            rejectedFiles.forEach((rejectedFile) => {
+                message = getDropRejectMessage(rejectedFile, acceptedFiles, maxFileSize);
+            });
+        }
+
+        if (onDropRejected) {
+            onDropRejected(rejectedFiles, evt);
+        }
+
+        this.setState({
+            openSnackBar: true,
+            snackbarMessage: message,
+            snackbarVariant: 'error',
+        }, this.notifyAlert);
     }
-
-    this.setState(
-      {
-        openSnackBar: true,
-        snackbarMessage: message,
-        snackbarVariant: 'error',
-      },
-      this.notifyAlert
-    );
-  };
-
-  handlePreviewChipClick = (fileIndex) => (event) => {
-    event.stopPropagation();
-
-    const { fileObjects, onPreviewChipClick } = this.props;
-
-    // Find clicked fileObject
-    const clickedObject = fileObjects[fileIndex];
-
-    if (onPreviewChipClick) {
-      onPreviewChipClick(clickedObject, fileIndex);
-    }
-  };
 
     handlePreviewChipClick = (fileIndex) => (event) => {
         event.stopPropagation();
@@ -332,7 +291,6 @@ class DropzoneAreaBase extends React.PureComponent {
                                     disable={disable}
                                     fileObjects={fileObjects}
                                     handleRemove={this.handleRemove}
-                                    handlePreviewChipClick={this.handlePreviewChipClick}
                                     getPreviewIcon={getPreviewIcon}
                                     showFileNames={showFileNames}
                                     useChipsForPreview={useChipsForPreview}
@@ -386,153 +344,6 @@ class DropzoneAreaBase extends React.PureComponent {
             </Fragment>
         );
     }
-
-    this.setState(
-      {
-        openSnackBar: true,
-        snackbarMessage: getFileRemovedMessage(removedFileObj.file.name),
-        snackbarVariant: 'info',
-      },
-      this.notifyAlert
-    );
-  };
-
-  handleCloseSnackbar = () => {
-    this.setState({
-      openSnackBar: false,
-    });
-  };
-
-  render() {
-    const {
-      acceptedFiles,
-      alertSnackbarProps,
-      classes,
-      disableRejectionFeedback,
-      dropzoneClass,
-      dropzoneParagraphClass,
-      dropzoneProps,
-      dropzoneText,
-      fileObjects,
-      filesLimit,
-      getPreviewIcon,
-      Icon,
-      inputProps,
-      maxFileSize,
-      previewChipProps,
-      previewGridClasses,
-      previewGridProps,
-      previewText,
-      showAlerts,
-      showFileNames,
-      showFileNamesInPreview,
-      showPreviews,
-      showPreviewsInDropzone,
-      useChipsForPreview,
-    } = this.props;
-    const { openSnackBar, snackbarMessage, snackbarVariant } = this.state;
-
-    const acceptFiles = acceptedFiles?.join(',');
-    const isMultiple = filesLimit > 1;
-    const previewsVisible = showPreviews && fileObjects.length > 0;
-    const previewsInDropzoneVisible =
-      showPreviewsInDropzone && fileObjects.length > 0;
-
-    return (
-      <Fragment>
-        <Dropzone
-          {...dropzoneProps}
-          accept={acceptFiles}
-          onDropAccepted={this.handleDropAccepted}
-          onDropRejected={this.handleDropRejected}
-          maxSize={maxFileSize}
-          multiple={isMultiple}
-        >
-          {({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
-            <div
-              {...getRootProps({
-                className: clsx(
-                  classes.root,
-                  dropzoneClass,
-                  isDragActive && classes.active,
-                  !disableRejectionFeedback && isDragReject && classes.invalid
-                ),
-              })}
-            >
-              <input {...getInputProps(inputProps)} />
-
-              <div className={classes.textContainer}>
-                <Typography
-                  variant="h5"
-                  component="p"
-                  className={clsx(classes.text, dropzoneParagraphClass)}
-                >
-                  {dropzoneText}
-                </Typography>
-                {Icon ? (
-                  <Icon className={classes.icon} />
-                ) : (
-                  <CloudUploadIcon className={classes.icon} />
-                )}
-              </div>
-
-              {previewsInDropzoneVisible && (
-                <PreviewList
-                  fileObjects={fileObjects}
-                  handleRemove={this.handleRemove}
-                  handlePreviewChipClick={this.handlePreviewChipClick}
-                  getPreviewIcon={getPreviewIcon}
-                  showFileNames={showFileNames}
-                  useChipsForPreview={useChipsForPreview}
-                  previewChipProps={previewChipProps}
-                  previewGridClasses={previewGridClasses}
-                  previewGridProps={previewGridProps}
-                />
-              )}
-            </div>
-          )}
-        </Dropzone>
-
-        {previewsVisible && (
-          <Fragment>
-            <Typography variant="subtitle1" component="span">
-              {previewText}
-            </Typography>
-
-            <PreviewList
-              fileObjects={fileObjects}
-              handleRemove={this.handleRemove}
-              handlePreviewChipClick={this.handlePreviewChipClick}
-              getPreviewIcon={getPreviewIcon}
-              showFileNames={showFileNamesInPreview}
-              useChipsForPreview={useChipsForPreview}
-              previewChipProps={previewChipProps}
-              previewGridClasses={previewGridClasses}
-              previewGridProps={previewGridProps}
-            />
-          </Fragment>
-        )}
-
-        {((typeof showAlerts === 'boolean' && showAlerts) ||
-          (Array.isArray(showAlerts) &&
-            showAlerts.includes(snackbarVariant))) && (
-          <Snackbar
-            anchorOrigin={defaultSnackbarAnchorOrigin}
-            autoHideDuration={6000}
-            {...alertSnackbarProps}
-            open={openSnackBar}
-            onClose={this.handleCloseSnackbar}
-          >
-            <SnackbarContentWrapper
-              onClose={this.handleCloseSnackbar}
-              variant={snackbarVariant}
-              message={snackbarMessage}
-            />
-          </Snackbar>
-        )}
-      </Fragment>
-    );
-  }
 }
 
 DropzoneAreaBase.defaultProps = {
@@ -575,12 +386,12 @@ DropzoneAreaBase.defaultProps = {
             message += 'File is too big. Size limit is ' + convertBytesToMbsOrKbs(maxFileSize) + '. ';
         }
         return message;
-  },
+    },
 };
 
 export const FileObjectShape = PropTypes.shape({
-  file: PropTypes.object,
-  data: PropTypes.any,
+    file: PropTypes.object,
+    data: PropTypes.any,
 });
 
 DropzoneAreaBase.propTypes = {
@@ -616,13 +427,12 @@ DropzoneAreaBase.propTypes = {
     showFileNamesInPreview: PropTypes.bool,
     /** Uses deletable Material-UI Chip components to display file names. */
     useChipsForPreview: PropTypes.bool,
-
     /** Shows progress bar if processing. */
     loading: PropTypes.bool,
     /** Custom progress bar component. */
     loadingComponent: PropTypes.object,
     /** Set whether is disable. */
-    disable: Protypes.bool,
+    disable: PropTypes.bool,
     /**
      * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
      *
@@ -719,6 +529,13 @@ DropzoneAreaBase.propTypes = {
      */
     getPreviewIcon: PropTypes.func,
     /**
+     * Fired when a chip is clicked from previews panel.
+     *
+     * @param {FileObject} clickedFileObject The file that was clicked.
+     * @param {number} index The index of the clicked file object.
+     */
+    onPreviewChipClick: PropTypes.func,
+    /**
      * Fired when new files are added to dropzone.
      *
      * @param {FileObject[]} newFiles The new files added to the dropzone.
@@ -731,13 +548,6 @@ DropzoneAreaBase.propTypes = {
      * @param {number} index The index of the removed file object.
      */
     onDelete: PropTypes.func,
-    /**
-     * Fired when a chip is clicked from previews panel.
-     *
-     * @param {FileObject} clickedFileObject The file that was clicked.
-     * @param {number} index The index of the clicked file object.
-     */
-    onPreviewChipClick: PropTypes.func,
     /**
      * Fired when the user drops files into the dropzone.
      *
@@ -761,6 +571,4 @@ DropzoneAreaBase.propTypes = {
     onAlert: PropTypes.func,
 };
 
-export default withStyles(styles, { name: 'MuiDropzoneArea' })(
-  DropzoneAreaBase
-);
+export default withStyles(styles, {name: 'MuiDropzoneArea'})(DropzoneAreaBase);
