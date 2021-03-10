@@ -255,6 +255,7 @@ class DropzoneAreaBase extends React.PureComponent {
                     onDropRejected={this.handleDropRejected}
                     maxSize={maxFileSize}
                     multiple={isMultiple}
+                    disable={true}
                 >
                     {({getRootProps, getInputProps, isDragActive, isDragReject}) => (
                         <div
@@ -267,7 +268,7 @@ class DropzoneAreaBase extends React.PureComponent {
                                 ),
                             })}
                         >
-                            <input {...getInputProps(inputProps)} />
+                            {!disable && <input {...getInputProps(inputProps)} />}
 
                             <div className={classes.textContainer}>
                                 <Typography
@@ -291,6 +292,7 @@ class DropzoneAreaBase extends React.PureComponent {
                                     disable={disable}
                                     fileObjects={fileObjects}
                                     handleRemove={this.handleRemove}
+                                    handlePreviewChipClick={this.handlePreviewChipClick}
                                     getPreviewIcon={getPreviewIcon}
                                     showFileNames={showFileNames}
                                     useChipsForPreview={useChipsForPreview}
@@ -315,6 +317,7 @@ class DropzoneAreaBase extends React.PureComponent {
                             disable={disable}
                             fileObjects={fileObjects}
                             handleRemove={this.handleRemove}
+                            handlePreviewChipClick={this.handlePreviewChipClick}
                             getPreviewIcon={getPreviewIcon}
                             showFileNames={showFileNamesInPreview}
                             useChipsForPreview={useChipsForPreview}
