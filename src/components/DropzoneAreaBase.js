@@ -15,67 +15,67 @@ import PreviewList from './PreviewList';
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 
 const styles = ({ palette, shape, spacing }) => ({
-  '@keyframes progress': {
-    '0%': {
-      backgroundPosition: '0 0',
+    '@keyframes progress': {
+      '0%': {
+        backgroundPosition: '0 0',
+      },
+      '100%': {
+        backgroundPosition: '-70px 0',
+      },
     },
-    '100%': {
-      backgroundPosition: '-70px 0',
+    root: {
+      position: 'relative',
+      width: '100%',
+      minHeight: '250px',
+      backgroundColor: palette.background.paper,
+      border: 'dashed',
+      borderColor: palette.divider,
+      borderRadius: shape.borderRadius,
+      boxSizing: 'border-box',
+      cursor: 'pointer',
+      overflow: 'hidden',
     },
-  },
-  root: {
-    position: 'relative',
-    width: '100%',
-    minHeight: '250px',
-    backgroundColor: palette.background.paper,
-    border: 'dashed',
-    borderColor: palette.divider,
-    borderRadius: shape.borderRadius,
-    boxSizing: 'border-box',
-    cursor: 'pointer',
-    overflow: 'hidden',
-  },
-  active: {
-    animation: '$progress 2s linear infinite !important',
-    // eslint-disable-next-line max-len
-    backgroundImage: `repeating-linear-gradient(-45deg, ${palette.background.paper}, ${palette.background.paper} 25px, ${palette.divider} 25px, ${palette.divider} 50px)`,
-    backgroundSize: '150% 100%',
-    border: 'solid',
-    borderColor: palette.primary.light,
-  },
-  invalid: {
-    // eslint-disable-next-line max-len
-    backgroundImage: `repeating-linear-gradient(-45deg, ${palette.error.light}, ${palette.error.light} 25px, ${palette.error.dark} 25px, ${palette.error.dark} 50px)`,
-    borderColor: palette.error.main,
-  },
-  textContainer: {
-    textAlign: 'center',
-  },
-  text: {
-    marginBottom: spacing(3),
-    marginTop: spacing(3),
-  },
-  icon: {
-    width: 51,
-    height: 51,
-    color: palette.text.primary,
-  },
+    active: {
+      animation: '$progress 2s linear infinite !important',
+      // eslint-disable-next-line max-len
+      backgroundImage: `repeating-linear-gradient(-45deg, ${palette.background.paper}, ${palette.background.paper} 25px, ${palette.divider} 25px, ${palette.divider} 50px)`,
+      backgroundSize: '150% 100%',
+      border: 'solid',
+      borderColor: palette.primary.light,
+    },
+    invalid: {
+      // eslint-disable-next-line max-len
+      backgroundImage: `repeating-linear-gradient(-45deg, ${palette.error.light}, ${palette.error.light} 25px, ${palette.error.dark} 25px, ${palette.error.dark} 50px)`,
+      borderColor: palette.error.main,
+    },
+    textContainer: {
+      textAlign: 'center',
+    },
+    text: {
+      marginBottom: spacing(3),
+      marginTop: spacing(3),
+    },
+    icon: {
+      width: 51,
+      height: 51,
+      color: palette.text.primary,
+    },
 });
 
 const defaultSnackbarAnchorOrigin = {
-  horizontal: 'left',
-  vertical: 'bottom',
+    horizontal: 'left',
+    vertical: 'bottom',
 };
 
 const defaultGetPreviewIcon = (fileObject, classes) => {
-  if (isImage(fileObject.file)) {
-    return (
-      <img
-        className={classes.image}
-        role="presentation"
-        src={fileObject.data}
-      />
-    );
+    if (isImage(fileObject.file)) {
+      return (
+        <img
+          className={classes.image}
+          role="presentation"
+          src={fileObject.data}
+        />
+      );
   }
 
   return <AttachFileIcon className={classes.image} />;
@@ -85,28 +85,28 @@ const defaultGetPreviewIcon = (fileObject, classes) => {
  * This components creates a Material-UI Dropzone, with previews and snackbar notifications.
  */
 class DropzoneAreaBase extends React.PureComponent {
-  state = {
-    openSnackBar: false,
-    snackbarMessage: '',
-    snackbarVariant: 'success',
-  };
+    state = {
+      openSnackBar: false,
+      snackbarMessage: '',
+      snackbarVariant: 'success',
+    };
 
-  notifyAlert() {
-    const { onAlert } = this.props;
-    const { openSnackBar, snackbarMessage, snackbarVariant } = this.state;
-    if (openSnackBar && onAlert) {
-      onAlert(snackbarMessage, snackbarVariant);
+    notifyAlert() {
+      const { onAlert } = this.props;
+      const { openSnackBar, snackbarMessage, snackbarVariant } = this.state;
+      if (openSnackBar && onAlert) {
+        onAlert(snackbarMessage, snackbarVariant);
+      }
     }
-  }
 
-  handleDropAccepted = async (acceptedFiles, evt) => {
-    const {
-      fileObjects,
-      filesLimit,
-      getFileAddedMessage,
-      getFileLimitExceedMessage,
-      onAdd,
-      onDrop,
+    handleDropAccepted = async (acceptedFiles, evt) => {
+      const {
+        fileObjects,
+        filesLimit,
+        getFileAddedMessage,
+        getFileLimitExceedMessage,
+        onAdd,
+        onDrop,
     } = this.props;
 
     if (
