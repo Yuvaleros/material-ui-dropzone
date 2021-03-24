@@ -1,5 +1,6 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import {withStyles} from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -57,6 +58,10 @@ const styles = ({palette, shape, spacing}) => ({
         width: 51,
         height: 51,
         color: palette.text.primary,
+    },
+    resetButton: {
+        display: 'block',
+        margin: '10px 0',
     },
 });
 
@@ -220,6 +225,7 @@ class DropzoneAreaBase extends React.PureComponent {
             showPreviews,
             showPreviewsInDropzone,
             useChipsForPreview,
+            reset,
         } = this.props;
         const {openSnackBar, snackbarMessage, snackbarVariant} = this.state;
 
@@ -282,6 +288,20 @@ class DropzoneAreaBase extends React.PureComponent {
                     )}
                 </Dropzone>
 
+                {
+                    reset && (
+                        React.isValidElement(reset) ?
+                            reset :
+                            <Button
+                                onClick={reset.onClick}
+                                variant="outlined"
+                                className={classes.resetButton}
+                            >
+                                {reset.text || 'reset'}
+                            </Button>
+                    )
+                }
+
                 {previewsVisible &&
                     <Fragment>
                         <Typography variant="subtitle1" component="span">
@@ -338,6 +358,7 @@ DropzoneAreaBase.defaultProps = {
     previewChipProps: {},
     previewGridClasses: {},
     previewGridProps: {},
+    reset: undefined,
     showAlerts: true,
     alertSnackbarProps: {
         anchorOrigin: {
@@ -420,6 +441,21 @@ DropzoneAreaBase.propTypes = {
     previewGridProps: PropTypes.object,
     /** The label for the file preview section. */
     previewText: PropTypes.string,
+    /**
+     * The node of button to clear dropzone.
+     *
+     * - can be a node to mount in a placeholder.
+     * - can be an object:
+     *  - text (string) - text of the button
+     *  - onClick (function) - callback fired when reset button clicked
+     */
+    reset: PropTypes.oneOfType([
+        PropTypes.node,
+        PropTypes.shape({
+            text: PropTypes.string,
+            onClick: PropTypes.func,
+        }),
+    ]),
     /**
      * Shows styled Material-UI Snackbar when files are dropped, deleted or rejected.
      *
