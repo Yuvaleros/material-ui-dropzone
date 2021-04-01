@@ -405,7 +405,7 @@ DropzoneAreaBase.propTypes = {
      *
      * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
      */
-    previewChipProps: PropTypes.object,
+    previewChipProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     /**
      * Custom CSS classNames for preview Grid components.<br/>
      * Should be in the form {container: string, item: string, image: string}.
