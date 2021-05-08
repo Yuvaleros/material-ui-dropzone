@@ -42,11 +42,12 @@
   "dependencies": {
     "@babel/runtime": "^7.4.4",
     "clsx": "^1.0.2",
-    "react-dropzone": "^10.2.1"
+    "react-dropzone": "^10.2.1",
+    "@material-ui/lab": "^4.0.0-alpha.58"
   },
   "peerDependencies": {
-    "@material-ui/core": "^4.0.0",
-    "@material-ui/icons": "^4.0.0",
+    "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.10",
     "prop-types": "^15.7.2",
     "react": ">= 16.8",
     "react-dom": ">= 16.8"
