@@ -80,14 +80,12 @@ class DropzoneDialogBase extends React.PureComponent {
 
                 <DialogActions>
                     <Button
-                        color="primary"
                         onClick={onClose}
                     >
                         {cancelButtonText}
                     </Button>
 
                     <Button
-                        color="primary"
                         disabled={submitDisabled}
                         onClick={onSave}
                     >

@@ -2,7 +2,7 @@ import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx';
 import * as React from 'react';

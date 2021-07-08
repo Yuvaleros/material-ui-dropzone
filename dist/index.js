@@ -18,10 +18,10 @@ var PropTypes = _interopDefault(require('prop-types'));
 var React = require('react');
 var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
 var Typography = _interopDefault(require('@material-ui/core/Typography'));
-var styles$2 = require('@material-ui/core/styles');
+var styles$2 = require('@material-ui/styles');
 var AttachFileIcon = _interopDefault(require('@material-ui/icons/AttachFile'));
 var CloudUploadIcon = _interopDefault(require('@material-ui/icons/CloudUpload'));
-var Alert = _interopDefault(require('@material-ui/lab/Alert'));
+var Alert = _interopDefault(require('@material-ui/core/Alert'));
 var clsx = _interopDefault(require('clsx'));
 var Dropzone = _interopDefault(require('react-dropzone'));
 var Chip = _interopDefault(require('@material-ui/core/Chip'));
@@ -1178,10 +1178,8 @@ var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
         onClose: onClose,
         open: open
       }), /*#__PURE__*/React.createElement(DialogTitle, null, dialogTitle), /*#__PURE__*/React.createElement(DialogContent, null, /*#__PURE__*/React.createElement(DropzoneAreaBase$1, dropzoneAreaProps)), /*#__PURE__*/React.createElement(DialogActions, null, /*#__PURE__*/React.createElement(Button, {
-        color: "primary",
         onClick: onClose
       }, cancelButtonText), /*#__PURE__*/React.createElement(Button, {
-        color: "primary",
         disabled: submitDisabled,
         onClick: onSave
       }, submitButtonText)));
