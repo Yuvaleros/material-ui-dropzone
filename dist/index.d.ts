@@ -1,7 +1,7 @@
-import { ChipProps } from '@material-ui/core/Chip';
-import { DialogProps } from '@material-ui/core/Dialog';
-import { GridProps } from '@material-ui/core/Grid';
-import { SnackbarProps } from '@material-ui/core/Snackbar';
+import { ChipProps } from '@mui/material/Chip';
+import { DialogProps } from '@mui/material/Dialog';
+import { GridProps } from '@mui/material/Grid';
+import { SnackbarProps } from '@mui/material/Snackbar';
 import * as React from 'react';
 import { DropEvent, DropzoneProps } from 'react-dropzone';
 

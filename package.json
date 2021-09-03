@@ -41,14 +41,14 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
+    "@mui/lab": "^5.0.0-alpha.45",
     "clsx": "^1.0.2",
-    "react-dropzone": "^10.2.1",
-    "@material-ui/lab": "^5.0.0-alpha.39"
+    "react-dropzone": "^10.2.1"
   },
   "peerDependencies": {
-    "@material-ui/core": "^5.0.0-beta.0",
-    "@material-ui/icons": "^5.0.0-beta.0",
-    "@material-ui/styles": "^5.0.0-beta.0",
+    "@mui/material": "^5.0.0-rc.0",
+    "@mui/icons-material": "^5.0.0-rc.0",
+    "@mui/styles": "^5.0.0-rc.0",
     "prop-types": "^15.7.2",
     "react": ">= 17.0.2",
     "react-dom": ">= 17.0.2"
@@ -62,9 +62,10 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
-    "@material-ui/core": "^5.0.0-beta.0",
-    "@material-ui/icons": "^5.0.0-beta.0",
-    "@material-ui/styles": "^5.0.0-beta.0",
+    "@mui/material": "^5.0.0-rc.0",
+    "@mui/icons-material": "^5.0.0-rc.0",
+    "@mui/styles": "^5.0.0-rc.0",
+    "@mui/codemod": "^5.0.0-rc.0",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "babel-eslint": "^10.1.0",
