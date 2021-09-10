@@ -23,7 +23,7 @@ These steps will guide you through contributing to this project:
 
 - Make and commit your changes
 - Make sure the command `yarn build` is working
-- Finally send a [GitHub Pull Request](https://github.com/Yuvaleros/material-ui-dropzone/compare) with a clear list of what you've done (read more [about pull requests](https://help.github.com/articles/about-pull-requests/))
+- Finally send a [GitHub Pull Request](https://github.com/ShotSkydiver/material-ui-dropzone/compare) with a clear list of what you've done (read more [about pull requests](https://help.github.com/articles/about-pull-requests/))
 
 ### Notes
 

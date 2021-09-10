@@ -1,7 +1,7 @@
 ### Import
 
 ```jsx static
-import { DropzoneDialogBase } from 'material-ui-dropzone';
+import { DropzoneDialogBase } from 'mui-dropzone';
 ```
 
 ### Basic usage

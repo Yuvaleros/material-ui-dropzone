@@ -1,18 +1,20 @@
 {
-  "name": "material-ui-dropzone",
-  "version": "3.5.0",
-  "description": "A Material-UI file-upload dropzone",
+  "name": "mui-dropzone",
+  "version": "4.0.0",
+  "description": "React file-upload dropzone component built atop Material-UI v5",
   "license": "MIT",
-  "author": "Yuval",
+  "author": "ShotSkydiver",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yuvaleros/material-ui-dropzone.git"
+    "url": "https://github.com/ShotSkydiver/material-ui-dropzone.git"
   },
   "keywords": [
     "react",
+    "javascript",
     "react-component",
     "material design",
     "material-ui",
+    "mui",
     "dropzone",
     "upload",
     "react upload"
@@ -41,7 +43,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "@mui/lab": "^5.0.0-alpha.45",
+    "@mui/lab": "^5.0.0-alpha.46",
     "clsx": "^1.0.2",
     "react-dropzone": "^10.2.1"
   },
@@ -62,10 +64,10 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
-    "@mui/material": "^5.0.0-rc.0",
-    "@mui/icons-material": "^5.0.0-rc.0",
-    "@mui/styles": "^5.0.0-rc.0",
-    "@mui/codemod": "^5.0.0-rc.0",
+    "@mui/material": "^5.0.0-rc.1",
+    "@mui/icons-material": "^5.0.0-rc.1",
+    "@mui/styles": "^5.0.0-rc.1",
+    "@mui/codemod": "^5.0.0-rc.1",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "babel-eslint": "^10.1.0",

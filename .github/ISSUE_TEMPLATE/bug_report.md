@@ -43,7 +43,7 @@ If applicable, add screenshots to help explain your problem.
 - OS: [e.g. iOS]
 - Browser: [e.g. chrome, safari]
 - `@material-ui/core` version: [e.g. 4.9.2]
-- `material-ui-dropzone` version: [e.g. 3.0.1]
+- `mui-dropzone` version: [e.g. 3.0.1]
 
 ### Additional context
 
