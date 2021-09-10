@@ -408,13 +408,13 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
 
     _this.handleDropAccepted = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(acceptedFiles, evt) {
-        var _this$props, fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop, fileObjs, message;
+        var _this$props, fileObjects, filesLimit, getFileAddedMessage, getFileErrorMessage, getFileLimitExceedMessage, onAdd, onDrop, allFileObjs, unreadableFiles, _message, validFileObjs, message;
 
         return _regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this$props = _this.props, fileObjects = _this$props.fileObjects, filesLimit = _this$props.filesLimit, getFileAddedMessage = _this$props.getFileAddedMessage, getFileLimitExceedMessage = _this$props.getFileLimitExceedMessage, onAdd = _this$props.onAdd, onDrop = _this$props.onDrop;
+                _this$props = _this.props, fileObjects = _this$props.fileObjects, filesLimit = _this$props.filesLimit, getFileAddedMessage = _this$props.getFileAddedMessage, getFileErrorMessage = _this$props.getFileErrorMessage, getFileLimitExceedMessage = _this$props.getFileLimitExceedMessage, onAdd = _this$props.onAdd, onDrop = _this$props.onDrop;
 
                 if (!(filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit)) {
                   _context2.next = 4;
@@ -439,27 +439,40 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
                 _context2.next = 7;
                 return Promise.all(acceptedFiles.map( /*#__PURE__*/function () {
                   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(file) {
-                    var data;
+                    var data, target, actualError;
                     return _regeneratorRuntime.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            _context.next = 2;
+                            _context.prev = 0;
+                            _context.next = 3;
                             return readFile(file);
 
-                          case 2:
+                          case 3:
                             data = _context.sent;
                             return _context.abrupt("return", {
                               file: file,
                               data: data
                             });
 
-                          case 4:
+                          case 7:
+                            _context.prev = 7;
+                            _context.t0 = _context["catch"](0);
+                            // native errors may happen, e.g. file not readable, ...
+                            target = _context.t0.target; // If the error originates from FileReader, lookup the actual error from the FileReader
+
+                            actualError = target instanceof FileReader ? target.error : _context.t0;
+                            return _context.abrupt("return", {
+                              file: file,
+                              error: actualError
+                            });
+
+                          case 12:
                           case "end":
                             return _context.stop();
                         }
                       }
-                    }, _callee);
+                    }, _callee, null, [[0, 7]]);
                   }));
 
                   return function (_x3) {
@@ -468,15 +481,42 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
                 }()));
 
               case 7:
-                fileObjs = _context2.sent;
+                allFileObjs = _context2.sent;
+                unreadableFiles = allFileObjs.filter(function (obj) {
+                  return obj.error != null;
+                });
 
+                if (unreadableFiles.length > 0) {
+                  _message = unreadableFiles.reduce(function (msg, fileObj) {
+                    return msg + getFileErrorMessage(fileObj.file, fileObj.error);
+                  }, '');
+
+                  _this.setState({
+                    openSnackBar: true,
+                    snackbarMessage: _message,
+                    snackbarVariant: 'error'
+                  }, _this.notifyAlert);
+                }
+
+                validFileObjs = allFileObjs.filter(function (obj) {
+                  return obj.error == null;
+                });
+
+                if (!(validFileObjs.length <= 0)) {
+                  _context2.next = 13;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 13:
                 // Notify added files
                 if (onAdd) {
-                  onAdd(fileObjs);
+                  onAdd(validFileObjs);
                 } // Display message
 
 
-                message = fileObjs.reduce(function (msg, fileObj) {
+                message = validFileObjs.reduce(function (msg, fileObj) {
                   return msg + getFileAddedMessage(fileObj.file.name);
                 }, '');
 
@@ -486,7 +526,7 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
                   snackbarVariant: 'success'
                 }, _this.notifyAlert);
 
-              case 11:
+              case 16:
               case "end":
                 return _context2.stop();
             }
@@ -704,6 +744,9 @@ DropzoneAreaBase.defaultProps = {
   getFileAddedMessage: function getFileAddedMessage(fileName) {
     return "File ".concat(fileName, " successfully added.");
   },
+  getFileErrorMessage: function getFileErrorMessage(file, error) {
+    return "Error opening file ".concat(file.name);
+  },
   getPreviewIcon: defaultGetPreviewIcon,
   getFileRemovedMessage: function getFileRemovedMessage(fileName) {
     return "File ".concat(fileName, " removed.");
@@ -848,6 +891,18 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    * @param {string} fileName The newly added file name.
    */
   getFileAddedMessage: PropTypes.func,
+
+  /**
+   * Get alert message to display when an added file cannot be read.
+   * 
+   * Basically all errors that might be thrown by FileReader API, e.g. when file is not accessible.
+   *
+   * *Default*: "Error opening file ${file.name}"
+   *
+   * @param {File} file The newly added file.
+   * @param {Error} error The error thrown by FileReader API
+   */
+  getFileErrorMessage: PropTypes.func,
 
   /**
    * Get alert message to display when a file is removed.

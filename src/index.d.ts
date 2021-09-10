@@ -74,6 +74,7 @@ export type DropzoneAreaBaseProps = {
   onAlert?: (message: string, variant: AlertType) => void;
   getFileLimitExceedMessage?: (filesLimit: number) => string;
   getFileAddedMessage?: (fileName: string) => string;
+  getFileErrorMessage?: (file: File, error: Error) => string;
   getFileRemovedMessage?: (fileName: string) => string;
   getDropRejectMessage?: (
     rejectedFile: File,
