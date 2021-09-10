@@ -96,7 +96,15 @@ class DropzoneAreaBase extends React.PureComponent {
     }
 
     handleDropAccepted = async(acceptedFiles, evt) => {
-        const {fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop} = this.props;
+        const {
+            fileObjects,
+            filesLimit,
+            getFileAddedMessage,
+            getFileErrorMessage,
+            getFileLimitExceedMessage,
+            onAdd,
+            onDrop,
+        } = this.props;
 
         if (filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit) {
             this.setState({
@@ -113,23 +121,53 @@ class DropzoneAreaBase extends React.PureComponent {
         }
 
         // Retrieve fileObjects data
-        const fileObjs = await Promise.all(
+        const allFileObjs = await Promise.all(
             acceptedFiles.map(async(file) => {
-                const data = await readFile(file);
-                return {
-                    file,
-                    data,
-                };
+                try {
+                    const data = await readFile(file);
+                    return {
+                        file,
+                        data,
+                    };
+                } catch (error) {
+                    // native errors may happen, e.g. file not readable, ...
+                    const {target} = error;
+                    // If the error originates from FileReader, lookup the actual error from the FileReader
+                    const actualError = target instanceof FileReader ? target.error : error;
+                    return {
+                        file,
+                        error: actualError,
+                    };
+                }
             })
         );
 
+        const unreadableFiles = allFileObjs.filter((obj) => obj.error != null);
+        if (unreadableFiles.length > 0) {
+            const message = unreadableFiles.reduce(
+                (msg, fileObj) => msg + getFileErrorMessage(fileObj.file, fileObj.error),
+                '',
+            );
+            this.setState({
+                openSnackBar: true,
+                snackbarMessage: message,
+                snackbarVariant: 'error',
+            }, this.notifyAlert);
+        }
+
+        const validFileObjs = allFileObjs.filter((obj) => obj.error == null);
+
+        if (validFileObjs.length <= 0) {
+            return;
+        }
+
         // Notify added files
         if (onAdd) {
-            onAdd(fileObjs);
+            onAdd(validFileObjs);
         }
 
         // Display message
-        const message = fileObjs.reduce((msg, fileObj) => msg + getFileAddedMessage(fileObj.file.name), '');
+        const message = validFileObjs.reduce((msg, fileObj) => msg + getFileAddedMessage(fileObj.file.name), '');
         this.setState({
             openSnackBar: true,
             snackbarMessage: message,
@@ -348,6 +386,7 @@ DropzoneAreaBase.defaultProps = {
     },
     getFileLimitExceedMessage: (filesLimit) => (`Maximum allowed number of files exceeded. Only ${filesLimit} allowed`),
     getFileAddedMessage: (fileName) => (`File ${fileName} successfully added.`),
+    getFileErrorMessage: (file) => (`Error opening file ${file.name}`),
     getPreviewIcon: defaultGetPreviewIcon,
     getFileRemovedMessage: (fileName) => (`File ${fileName} removed.`),
     getDropRejectMessage: (rejectedFile, acceptedFiles, maxFileSize) => {
@@ -468,6 +507,17 @@ DropzoneAreaBase.propTypes = {
      * @param {string} fileName The newly added file name.
      */
     getFileAddedMessage: PropTypes.func,
+    /**
+     * Get alert message to display when an added file cannot be read.
+     *
+     * Basically all errors that might be thrown by FileReader API, e.g. when file is not accessible.
+     *
+     * *Default*: "Error opening file ${file.name}"
+     *
+     * @param {File} file The newly added file.
+     * @param {Error} error The error thrown by FileReader API
+     */
+    getFileErrorMessage: PropTypes.func,
     /**
      * Get alert message to display when a file is removed.
      *
