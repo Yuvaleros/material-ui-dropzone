@@ -1,5 +1,5 @@
 
-`mui-dropzone` complies to the following support matrix.
+`material-ui-dropzone` complies to the following support matrix.
 
 | version | React            | Material-UI    |
 | ------- | ---------------- | -------------- |

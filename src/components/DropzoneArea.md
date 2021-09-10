@@ -1,7 +1,7 @@
 ### Import
 
 ```jsx static
-import { DropzoneArea } from 'mui-dropzone';
+import { DropzoneArea } from '@shotskydiver/material-ui-dropzone';
 ```
 
 ### Basic usage

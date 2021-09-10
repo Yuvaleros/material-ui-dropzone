@@ -1,5 +1,5 @@
 {
-  "name": "mui-dropzone",
+  "name": "@shotskydiver/material-ui-dropzone",
   "version": "4.0.0",
   "description": "React file-upload dropzone component built atop Material-UI v5",
   "license": "MIT",
@@ -7,6 +7,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ShotSkydiver/material-ui-dropzone.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "react",

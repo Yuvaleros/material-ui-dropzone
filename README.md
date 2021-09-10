@@ -16,13 +16,13 @@ The file-upload dropzone features some snazzy "File Allowed/Not Allowed" effects
 ## Installation
 
 ```shell
-npm install --save material-ui-dropzone
+npm install --save @shotskydiver/material-ui-dropzone
 ```
 
 or
 
 ```shell
-yarn add material-ui-dropzone
+yarn add @shotskydiver/material-ui-dropzone
 ```
 
 ## Support
@@ -63,7 +63,7 @@ This components creates the dropzone, previews and snackbar notifications withou
 
 ```jsx static
 import React, {Component} from 'react'
-import {DropzoneArea} from 'material-ui-dropzone'
+import {DropzoneArea} from '@shotskydiver/material-ui-dropzone'
 
 class DropzoneAreaExample extends Component{
   constructor(props){
@@ -95,7 +95,7 @@ This component provides the DropzoneArea inside of a MaterialUI Dialog.
 
 ```jsx static
 import React, { Component } from 'react'
-import {DropzoneDialog} from 'material-ui-dropzone'
+import {DropzoneDialog} from '@shotskydiver/material-ui-dropzone'
 import Button from '@material-ui/core/Button';
 
 export default class DropzoneDialogExample extends Component {
