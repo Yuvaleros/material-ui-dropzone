@@ -684,7 +684,7 @@ DropzoneAreaBase.defaultProps = {
   filesLimit: 3,
   fileObjects: [],
   maxFileSize: 3000000,
-  dropzoneText: /*#__PURE__*/React.createElement(React.Fragment, null, "Drag and drop a file here or ", /*#__PURE__*/React.createElement("a", null, "click")),
+  dropzoneText: 'Drag and drop a file here or click',
   previewText: 'Preview:',
   disableRejectionFeedback: false,
   showPreviews: false,

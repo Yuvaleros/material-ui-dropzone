@@ -678,7 +678,7 @@ DropzoneAreaBase.defaultProps = {
   filesLimit: 3,
   fileObjects: [],
   maxFileSize: 3000000,
-  dropzoneText: /*#__PURE__*/createElement(Fragment, null, "Drag and drop a file here or ", /*#__PURE__*/createElement("a", null, "click")),
+  dropzoneText: 'Drag and drop a file here or click',
   previewText: 'Preview:',
   disableRejectionFeedback: false,
   showPreviews: false,
