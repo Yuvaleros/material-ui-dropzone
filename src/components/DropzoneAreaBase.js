@@ -252,13 +252,15 @@ class DropzoneAreaBase extends React.PureComponent {
                             <input {...getInputProps(inputProps)} />
 
                             <div className={classes.textContainer}>
-                                <Typography
-                                    variant="h5"
-                                    component="p"
-                                    className={clsx(classes.text, dropzoneParagraphClass)}
-                                >
-                                    {dropzoneText}
-                                </Typography>
+                                { typeof dropzoneText === 'string' ?
+                                    <Typography
+                                        variant="h5"
+                                        component="p"
+                                        className={clsx(classes.text, dropzoneParagraphClass)}>
+                                        {dropzoneText}
+                                    </Typography> :
+                                    dropzoneText
+                                }
                                 {Icon ? (
                                     <Icon className={classes.icon} />
                                 ) : (
@@ -382,8 +384,8 @@ DropzoneAreaBase.propTypes = {
     fileObjects: PropTypes.arrayOf(FileObjectShape),
     /** Maximum file size (in bytes) that the dropzone will accept. */
     maxFileSize: PropTypes.number,
-    /** Text inside the dropzone. */
-    dropzoneText: PropTypes.string,
+    /** Text or Element inside the dropzone. */
+    dropzoneText: PropTypes.string | PropTypes.element,
     /** Custom CSS class name for dropzone container. */
     dropzoneClass: PropTypes.string,
     /** Custom CSS class name for text inside the container. */

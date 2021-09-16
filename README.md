@@ -1,17 +1,17 @@
 # material-ui-dropzone
 
-> Material-UI-dropzone is a [React](https://github.com/facebook/react) component using [Material-UI](https://github.com/mui-org/material-ui) and is based on the excellent [react-dropzone](https://github.com/react-dropzone/react-dropzone) library.
+[![License](https://img.shields.io/github/license/yuvaleros/material-ui-dropzone)](https://github.com/Yuvaleros/material-ui-dropzone/blob/master/LICENSE) [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg)](#contributors) [![Rebuild Dist Workflow Status](https://img.shields.io/github/workflow/status/yuvaleros/material-ui-dropzone/Rebuild%20Dist?label=build)](https://github.com/Yuvaleros/material-ui-dropzone/actions?query=workflow%3A%22Rebuild+Dist%22) [![Update Docs Workflow Status](https://img.shields.io/github/workflow/status/yuvaleros/material-ui-dropzone/Update%20Docs?label=docs)](https://github.com/Yuvaleros/material-ui-dropzone/actions?query=workflow%3A%22Update+Docs%22) [![npm package](https://img.shields.io/npm/v/material-ui-dropzone)](https://www.npmjs.com/package/material-ui-dropzone) [![npm downloads](https://img.shields.io/npm/dm/material-ui-dropzone.svg)](https://www.npmjs.com/package/material-ui-dropzone)
 
-[![License](https://img.shields.io/github/license/yuvaleros/material-ui-dropzone)](https://github.com/Yuvaleros/material-ui-dropzone/blob/master/LICENSE) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg)](#contributors)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Rebuild Dist Workflow Status](https://img.shields.io/github/workflow/status/yuvaleros/material-ui-dropzone/Rebuild%20Dist?label=build)](https://github.com/Yuvaleros/material-ui-dropzone/actions?query=workflow%3A%22Rebuild+Dist%22) [![Update Docs Workflow Status](https://img.shields.io/github/workflow/status/yuvaleros/material-ui-dropzone/Update%20Docs?label=docs)](https://github.com/Yuvaleros/material-ui-dropzone/actions?query=workflow%3A%22Update+Docs%22)
+**Material-UI-Dropzone** is a set of [React](https://github.com/facebook/react) components using [Material-UI](https://github.com/mui-org/material-ui) and is based on the excellent [react-dropzone](https://github.com/react-dropzone/react-dropzone) library.
 
-[![npm package](https://img.shields.io/npm/v/material-ui-dropzone)](https://www.npmjs.com/package/material-ui-dropzone) [![npm downloads](https://img.shields.io/npm/dm/material-ui-dropzone.svg)](https://www.npmjs.com/package/material-ui-dropzone)
+These components provide: 
 
-This components provide either a file-upload dropzone or a file-upload dropzone inside of a dialog.
+- File Upload Dropzone
+- File Upload Dropzone inside of a Dialog
 
-The file-upload dropzone features some snazzy "File Allowed/Not Allowed" effects, previews and alerts.
+Additionally, the File Upload Dropzone features some snazzy "File Allowed/Not Allowed" effects, previews and alerts.
+
 
 ## Installation
 
@@ -34,26 +34,17 @@ yarn add material-ui-dropzone
 | `3.x`   | `16.8+`          | `4.x`          |
 | `2.x`   | `15.x` or `16.x` | `3.x` or `4.x` |
 
-## Screenshots
+## Demo
 
-This is the Dialog component:
+Full documentation and samples are available here [https://yuvaleros.github.io/material-ui-dropzone](https://yuvaleros.github.io/material-ui-dropzone).
 
-![Dialog](https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic.jpg)
-![Dialog with Previews](https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic5.JPG)
+**Preview: Dialog Component** with drag'n'drop effects for accepted and rejected files.
 
-When you drag a file onto the dropzone, you get a neat effect:
+<img src="pics/dropzone.gif" alt="drawing" width="100%"/>
+<br>
+<br>
 
-![Drag Overlay](https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic2.JPG)
-
-And if you drag in a wrong type of file, you'll get yelled at:
-
-![Drag Error Overlay](https://raw.githubusercontent.com/Yuvaleros/material-ui-dropzone/master/pics/demo_pic4.JPG)
-
-**N.B. This has some limitations (see [here](https://github.com/react-dropzone/react-dropzone/tree/master/examples/accept#browser-limitations) for more details).**
-
-## Documentation and Examples
-
-See [https://yuvaleros.github.io/material-ui-dropzone](https://yuvaleros.github.io/material-ui-dropzone) for Documentation and Examples.
+**Disclaimer:** Drag'n'drop handling has some known limitations, see [here](https://github.com/react-dropzone/react-dropzone/tree/master/examples/accept#browser-limitations) for more details.
 
 ## Components
 

@@ -626,11 +626,11 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           className: clsx(classes.root, dropzoneClass, isDragActive && classes.active, !disableRejectionFeedback && isDragReject && classes.invalid)
         }), /*#__PURE__*/createElement("input", getInputProps(inputProps)), /*#__PURE__*/createElement("div", {
           className: classes.textContainer
-        }, /*#__PURE__*/createElement(Typography, {
+        }, typeof dropzoneText === 'string' ? /*#__PURE__*/createElement(Typography, {
           variant: "h5",
           component: "p",
           className: clsx(classes.text, dropzoneParagraphClass)
-        }, dropzoneText), Icon ? /*#__PURE__*/createElement(Icon, {
+        }, dropzoneText) : dropzoneText, Icon ? /*#__PURE__*/createElement(Icon, {
           className: classes.icon
         }) : /*#__PURE__*/createElement(CloudUploadIcon, {
           className: classes.icon
@@ -747,8 +747,8 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
   /** Maximum file size (in bytes) that the dropzone will accept. */
   maxFileSize: PropTypes.number,
 
-  /** Text inside the dropzone. */
-  dropzoneText: PropTypes.string,
+  /** Text or Element inside the dropzone. */
+  dropzoneText: PropTypes.string | PropTypes.element,
 
   /** Custom CSS class name for dropzone container. */
   dropzoneClass: PropTypes.string,
@@ -1106,7 +1106,7 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       }); // Notify removed file
 
       if (onDelete) {
-        onDelete(removedFileObj.file);
+        onDelete(removedFileObj.file, removedFileObjIdx);
       } // Update local state
 
 
@@ -1181,6 +1181,7 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, Dr
    * Fired when a file is deleted from the previews panel.
    *
    * @param {File} deletedFile The file that was removed.
+   * @param {number} deletedFileIndex The index of the file that was removed.
    */
   onDelete: PropTypes.func
 }) : void 0;

@@ -15,7 +15,7 @@ module.exports = {
       content: './docs/support.md',
     },
     {
-      name: 'Screenshots',
+      name: 'Demo',
       content: './docs/screenshots.md',
     },
     {
