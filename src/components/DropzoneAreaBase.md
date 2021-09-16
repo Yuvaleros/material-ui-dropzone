@@ -9,7 +9,7 @@ import { DropzoneAreaBase } from 'material-ui-dropzone';
 ```jsx
 <DropzoneAreaBase
   onAdd={(fileObjs) => console.log('Added Files:', fileObjs)}
-  onDelete={(fileObj) => console.log('Removed File:', fileObj)}
+  onDelete={(fileObj, index) => console.log('Removed File:', fileObj, 'at index', index)}
   onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
 />
 ```
