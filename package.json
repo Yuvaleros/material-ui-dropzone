@@ -45,8 +45,9 @@
     "react-dropzone": "^10.2.1"
   },
   "peerDependencies": {
-    "@mui/material": "^5.0.0",
     "@mui/icons-material": "^5.0.0",
+    "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.0.1",
     "prop-types": "^15.7.2",
     "react": ">= 17.0",
     "react-dom": ">= 17.0"
@@ -60,8 +61,8 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
-    "@mui/material": "^5.0.2",
     "@mui/icons-material": "^5.0.1",
+    "@mui/material": "^5.0.2",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "babel-eslint": "^10.1.0",

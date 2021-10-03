@@ -78,7 +78,7 @@ const file = new File(["foo"], "foo.txt", {
 Chips use the Grid system as well, so you can customize the way they appears and benefit from the Material-UI grid customizations
 
 ```jsx
-import { createStyles, makeStyles } from '@material-ui/styles';
+import { createStyles, makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(theme => createStyles({
   previewChip: {
