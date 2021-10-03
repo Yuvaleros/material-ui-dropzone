@@ -28,8 +28,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
-import '@mui/material/Alert';
-import '@material-ui/core';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -781,7 +779,7 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
   /**
    * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
    *
-   * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
+   * @see See [Material-UI Chip](https://mui.com/api/chip/#props) for available values.
    */
   previewChipProps: PropTypes.object,
 
@@ -795,7 +793,7 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    * Props to pass to the Material-UI Grid components.<br/>
    * Should be in the form {container: GridProps, item: GridProps}.
    *
-   * @see See [Material-UI Grid](https://material-ui.com/api/grid/#props) for available GridProps values.
+   * @see See [Material-UI Grid](https://mui.com/api/grid/#props) for available GridProps values.
    */
   previewGridProps: PropTypes.object,
 
@@ -817,7 +815,7 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
   /**
    * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
    *
-   * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+   * @see See [Material-UI Snackbar](https://mui.com/api/snackbar/#props) for available values.
    */
   alertSnackbarProps: PropTypes.object,
 
@@ -1298,7 +1296,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
 
   /**
    * Props to pass to the Material-UI Dialog components.
-   * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
+   * @see See [Material-UI Dialog](https://mui.com/api/dialog/#props) for available values.
    */
   dialogProps: PropTypes.object,
 

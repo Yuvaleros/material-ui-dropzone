@@ -123,7 +123,7 @@ DropzoneDialogBase.propTypes = {
     ]),
     /**
      * Props to pass to the Material-UI Dialog components.
-     * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
+     * @see See [Material-UI Dialog](https://mui.com/api/dialog/#props) for available values.
      */
     dialogProps: PropTypes.object,
     /**

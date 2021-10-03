@@ -402,7 +402,7 @@ DropzoneAreaBase.propTypes = {
     /**
      * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
      *
-     * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
+     * @see See [Material-UI Chip](https://mui.com/api/chip/#props) for available values.
      */
     previewChipProps: PropTypes.object,
     /**
@@ -414,7 +414,7 @@ DropzoneAreaBase.propTypes = {
      * Props to pass to the Material-UI Grid components.<br/>
      * Should be in the form {container: GridProps, item: GridProps}.
      *
-     * @see See [Material-UI Grid](https://material-ui.com/api/grid/#props) for available GridProps values.
+     * @see See [Material-UI Grid](https://mui.com/api/grid/#props) for available GridProps values.
      */
     previewGridProps: PropTypes.object,
     /** The label for the file preview section. */
@@ -436,7 +436,7 @@ DropzoneAreaBase.propTypes = {
     /**
      * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
      *
-     * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+     * @see See [Material-UI Snackbar](https://mui.com/api/snackbar/#props) for available values.
      */
     alertSnackbarProps: PropTypes.object,
     /**
