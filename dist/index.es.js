@@ -9,30 +9,32 @@ import _getPrototypeOf from '@babel/runtime/helpers/getPrototypeOf';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import _regeneratorRuntime from '@babel/runtime/regenerator';
 import PropTypes from 'prop-types';
-import { createElement, Fragment, PureComponent } from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { createElement, forwardRef, Fragment, PureComponent } from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import Typography from '@mui/material/Typography';
+import withStyles from '@mui/styles/withStyles';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import clsx from 'clsx';
 import Dropzone from 'react-dropzone';
-import Chip from '@material-ui/core/Chip';
-import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CloseIcon from '@material-ui/icons/Close';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import WarningIcon from '@material-ui/icons/Warning';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Chip from '@mui/material/Chip';
+import Fab from '@mui/material/Fab';
+import Grid from '@mui/material/Grid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import ErrorIcon from '@mui/icons-material/Error';
+import InfoIcon from '@mui/icons-material/Info';
+import WarningIcon from '@mui/icons-material/Warning';
+import '@mui/material/Alert';
+import '@material-ui/core';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function isImage(file) {
   if (file.type.split('/')[0] === 'image') {
@@ -265,7 +267,7 @@ var styles$1 = function styles(theme) {
   };
 };
 
-function SnackbarContentWrapper(props) {
+var SnackbarContentWrapper = /*#__PURE__*/forwardRef(function SnackbarContentWrapper(props, ref) {
   var classes = props.classes,
       className = props.className,
       message = props.message,
@@ -275,6 +277,7 @@ function SnackbarContentWrapper(props) {
 
   var Icon = variantIcon[variant];
   return /*#__PURE__*/createElement(SnackbarContent, _extends({
+    ref: ref,
     className: clsx(classes["".concat(variant, "Alert")], className),
     "aria-describedby": "client-snackbar",
     message: /*#__PURE__*/createElement("span", {
@@ -288,13 +291,13 @@ function SnackbarContentWrapper(props) {
       "aria-label": "Close",
       color: "inherit",
       className: classes.closeButton,
-      onClick: onClose
+      onClick: onClose,
+      size: "large"
     }, /*#__PURE__*/createElement(CloseIcon, {
       className: classes.icon
     }))]
   }, other));
-}
-
+});
 process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,

@@ -1,11 +1,11 @@
-import IconButton from '@material-ui/core/IconButton';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import {withStyles} from '@material-ui/core/styles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CloseIcon from '@material-ui/icons/Close';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import WarningIcon from '@material-ui/icons/Warning';
+import IconButton from '@mui/material/IconButton';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import withStyles from '@mui/styles/withStyles';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import ErrorIcon from '@mui/icons-material/Error';
+import InfoIcon from '@mui/icons-material/Info';
+import WarningIcon from '@mui/icons-material/Warning';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
@@ -44,12 +44,13 @@ const styles = (theme) => ({
     closeButton: {},
 });
 
-function SnackbarContentWrapper(props) {
+const SnackbarContentWrapper = React.forwardRef(function SnackbarContentWrapper(props, ref) {
     const {classes, className, message, onClose, variant, ...other} = props;
     const Icon = variantIcon[variant];
 
     return (
         <SnackbarContent
+            ref={ref}
             className={clsx(classes[`${variant}Alert`], className)}
             aria-describedby="client-snackbar"
             message={
@@ -65,14 +66,14 @@ function SnackbarContentWrapper(props) {
                     color="inherit"
                     className={classes.closeButton}
                     onClick={onClose}
-                >
+                    size="large">
                     <CloseIcon className={classes.icon} />
                 </IconButton>,
             ]}
             {...other}
         />
     );
-}
+});
 
 SnackbarContentWrapper.propTypes = {
     classes: PropTypes.object.isRequired,

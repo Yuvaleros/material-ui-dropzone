@@ -16,29 +16,31 @@ var _objectWithoutProperties = _interopDefault(require('@babel/runtime/helpers/o
 var _regeneratorRuntime = _interopDefault(require('@babel/runtime/regenerator'));
 var PropTypes = _interopDefault(require('prop-types'));
 var React = require('react');
-var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
-var Typography = _interopDefault(require('@material-ui/core/Typography'));
-var styles$3 = require('@material-ui/core/styles');
-var AttachFileIcon = _interopDefault(require('@material-ui/icons/AttachFile'));
-var CloudUploadIcon = _interopDefault(require('@material-ui/icons/CloudUpload'));
+var Snackbar = _interopDefault(require('@mui/material/Snackbar'));
+var Typography = _interopDefault(require('@mui/material/Typography'));
+var withStyles = _interopDefault(require('@mui/styles/withStyles'));
+var AttachFileIcon = _interopDefault(require('@mui/icons-material/AttachFile'));
+var CloudUploadIcon = _interopDefault(require('@mui/icons-material/CloudUpload'));
 var clsx = _interopDefault(require('clsx'));
 var Dropzone = _interopDefault(require('react-dropzone'));
-var Chip = _interopDefault(require('@material-ui/core/Chip'));
-var Fab = _interopDefault(require('@material-ui/core/Fab'));
-var Grid = _interopDefault(require('@material-ui/core/Grid'));
-var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
-var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
-var SnackbarContent = _interopDefault(require('@material-ui/core/SnackbarContent'));
-var CheckCircleIcon = _interopDefault(require('@material-ui/icons/CheckCircle'));
-var CloseIcon = _interopDefault(require('@material-ui/icons/Close'));
-var ErrorIcon = _interopDefault(require('@material-ui/icons/Error'));
-var InfoIcon = _interopDefault(require('@material-ui/icons/Info'));
-var WarningIcon = _interopDefault(require('@material-ui/icons/Warning'));
-var Button = _interopDefault(require('@material-ui/core/Button'));
-var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
-var DialogActions = _interopDefault(require('@material-ui/core/DialogActions'));
-var DialogContent = _interopDefault(require('@material-ui/core/DialogContent'));
-var DialogTitle = _interopDefault(require('@material-ui/core/DialogTitle'));
+var Chip = _interopDefault(require('@mui/material/Chip'));
+var Fab = _interopDefault(require('@mui/material/Fab'));
+var Grid = _interopDefault(require('@mui/material/Grid'));
+var DeleteIcon = _interopDefault(require('@mui/icons-material/Delete'));
+var IconButton = _interopDefault(require('@mui/material/IconButton'));
+var SnackbarContent = _interopDefault(require('@mui/material/SnackbarContent'));
+var CheckCircleIcon = _interopDefault(require('@mui/icons-material/CheckCircle'));
+var CloseIcon = _interopDefault(require('@mui/icons-material/Close'));
+var ErrorIcon = _interopDefault(require('@mui/icons-material/Error'));
+var InfoIcon = _interopDefault(require('@mui/icons-material/Info'));
+var WarningIcon = _interopDefault(require('@mui/icons-material/Warning'));
+require('@mui/material/Alert');
+require('@material-ui/core');
+var Button = _interopDefault(require('@mui/material/Button'));
+var Dialog = _interopDefault(require('@mui/material/Dialog'));
+var DialogActions = _interopDefault(require('@mui/material/DialogActions'));
+var DialogContent = _interopDefault(require('@mui/material/DialogContent'));
+var DialogTitle = _interopDefault(require('@mui/material/DialogTitle'));
 
 function isImage(file) {
   if (file.type.split('/')[0] === 'image') {
@@ -230,7 +232,7 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   showFileNames: PropTypes.bool,
   useChipsForPreview: PropTypes.bool
 } : void 0;
-var PreviewList$1 = styles$3.withStyles(styles, {
+var PreviewList$1 = withStyles(styles, {
   name: 'MuiDropzonePreviewList'
 })(PreviewList);
 
@@ -271,7 +273,7 @@ var styles$1 = function styles(theme) {
   };
 };
 
-function SnackbarContentWrapper(props) {
+var SnackbarContentWrapper = /*#__PURE__*/React.forwardRef(function SnackbarContentWrapper(props, ref) {
   var classes = props.classes,
       className = props.className,
       message = props.message,
@@ -281,6 +283,7 @@ function SnackbarContentWrapper(props) {
 
   var Icon = variantIcon[variant];
   return /*#__PURE__*/React.createElement(SnackbarContent, _extends({
+    ref: ref,
     className: clsx(classes["".concat(variant, "Alert")], className),
     "aria-describedby": "client-snackbar",
     message: /*#__PURE__*/React.createElement("span", {
@@ -294,13 +297,13 @@ function SnackbarContentWrapper(props) {
       "aria-label": "Close",
       color: "inherit",
       className: classes.closeButton,
-      onClick: onClose
+      onClick: onClose,
+      size: "large"
     }, /*#__PURE__*/React.createElement(CloseIcon, {
       className: classes.icon
     }))]
   }, other));
-}
-
+});
 process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
@@ -308,7 +311,7 @@ process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
 } : void 0;
-var SnackbarContentWrapper$1 = styles$3.withStyles(styles$1, {
+var SnackbarContentWrapper$1 = withStyles(styles$1, {
   name: 'MuiDropzoneSnackbar'
 })(SnackbarContentWrapper);
 
@@ -925,7 +928,7 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    */
   onAlert: PropTypes.func
 } : void 0;
-var DropzoneAreaBase$1 = styles$3.withStyles(styles$2, {
+var DropzoneAreaBase$1 = withStyles(styles$2, {
   name: 'MuiDropzoneArea'
 })(DropzoneAreaBase);
 
