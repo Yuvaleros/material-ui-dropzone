@@ -1,8 +1,8 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 
@@ -123,7 +123,7 @@ DropzoneDialogBase.propTypes = {
     ]),
     /**
      * Props to pass to the Material-UI Dialog components.
-     * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
+     * @see See [Material-UI Dialog](https://mui.com/api/dialog/#props) for available values.
      */
     dialogProps: PropTypes.object,
     /**

@@ -1,9 +1,9 @@
-import Chip from '@material-ui/core/Chip';
-import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Chip from '@mui/material/Chip';
+import Fab from '@mui/material/Fab';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import withStyles from '@mui/styles/withStyles';
+import DeleteIcon from '@mui/icons-material/Delete';
 import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -25,11 +25,11 @@ const styles = ({palette, shape, spacing}) => ({
         height: 100,
         width: 'initial',
         maxWidth: '100%',
-        color: palette.text.primary,
+        color: palette?.text.primary,
         transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
         boxSizing: 'border-box',
         boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-        borderRadius: shape.borderRadius,
+        borderRadius: shape?.borderRadius,
         zIndex: 5,
         opacity: 1,
     },
@@ -37,8 +37,8 @@ const styles = ({palette, shape, spacing}) => ({
         transition: '.5s ease',
         position: 'absolute',
         opacity: 0,
-        top: spacing(-1),
-        right: spacing(-1),
+        top: spacing?.(-1),
+        right: spacing?.(-1),
         width: 40,
         height: 40,
         '&:focus': {

@@ -1,8 +1,8 @@
-import Snackbar from '@material-ui/core/Snackbar';
-import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Snackbar from '@mui/material/Snackbar';
+import Typography from '@mui/material/Typography';
+import withStyles from '@mui/styles/withStyles';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import * as React from 'react';
@@ -11,7 +11,6 @@ import Dropzone from 'react-dropzone';
 import {convertBytesToMbsOrKbs, isImage, readFile} from '../helpers';
 import PreviewList from './PreviewList';
 import SnackbarContentWrapper from './SnackbarContentWrapper';
-
 const styles = ({palette, shape, spacing}) => ({
     '@keyframes progress': {
         '0%': {
@@ -25,10 +24,10 @@ const styles = ({palette, shape, spacing}) => ({
         position: 'relative',
         width: '100%',
         minHeight: '250px',
-        backgroundColor: palette.background.paper,
+        backgroundColor: palette?.background.paper,
         border: 'dashed',
-        borderColor: palette.divider,
-        borderRadius: shape.borderRadius,
+        borderColor: palette?.divider,
+        borderRadius: shape?.borderRadius,
         boxSizing: 'border-box',
         cursor: 'pointer',
         overflow: 'hidden',
@@ -36,27 +35,27 @@ const styles = ({palette, shape, spacing}) => ({
     active: {
         animation: '$progress 2s linear infinite !important',
         // eslint-disable-next-line max-len
-        backgroundImage: `repeating-linear-gradient(-45deg, ${palette.background.paper}, ${palette.background.paper} 25px, ${palette.divider} 25px, ${palette.divider} 50px)`,
+        backgroundImage: `repeating-linear-gradient(-45deg, ${palette?.background.paper}, ${palette?.background.paper} 25px, ${palette?.divider} 25px, ${palette?.divider} 50px)`,
         backgroundSize: '150% 100%',
         border: 'solid',
-        borderColor: palette.primary.light,
+        borderColor: palette?.primary.light,
     },
     invalid: {
         // eslint-disable-next-line max-len
-        backgroundImage: `repeating-linear-gradient(-45deg, ${palette.error.light}, ${palette.error.light} 25px, ${palette.error.dark} 25px, ${palette.error.dark} 50px)`,
-        borderColor: palette.error.main,
+        backgroundImage: `repeating-linear-gradient(-45deg, ${palette?.error.light}, ${palette?.error.light} 25px, ${palette?.error.dark} 25px, ${palette?.error.dark} 50px)`,
+        borderColor: palette?.error.main,
     },
     textContainer: {
         textAlign: 'center',
     },
     text: {
-        marginBottom: spacing(3),
-        marginTop: spacing(3),
+        marginBottom: spacing?.(3),
+        marginTop: spacing?.(3),
     },
     icon: {
         width: 51,
         height: 51,
-        color: palette.text.primary,
+        color: palette?.text.primary,
     },
 });
 
@@ -403,7 +402,7 @@ DropzoneAreaBase.propTypes = {
     /**
      * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
      *
-     * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
+     * @see See [Material-UI Chip](https://mui.com/api/chip/#props) for available values.
      */
     previewChipProps: PropTypes.object,
     /**
@@ -415,7 +414,7 @@ DropzoneAreaBase.propTypes = {
      * Props to pass to the Material-UI Grid components.<br/>
      * Should be in the form {container: GridProps, item: GridProps}.
      *
-     * @see See [Material-UI Grid](https://material-ui.com/api/grid/#props) for available GridProps values.
+     * @see See [Material-UI Grid](https://mui.com/api/grid/#props) for available GridProps values.
      */
     previewGridProps: PropTypes.object,
     /** The label for the file preview section. */
@@ -437,7 +436,7 @@ DropzoneAreaBase.propTypes = {
     /**
      * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
      *
-     * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+     * @see See [Material-UI Snackbar](https://mui.com/api/snackbar/#props) for available values.
      */
     alertSnackbarProps: PropTypes.object,
     /**

@@ -6,7 +6,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _extends = _interopDefault(require('@babel/runtime/helpers/extends'));
 var _slicedToArray = _interopDefault(require('@babel/runtime/helpers/slicedToArray'));
-var _regeneratorRuntime = _interopDefault(require('@babel/runtime/regenerator'));
 var _asyncToGenerator = _interopDefault(require('@babel/runtime/helpers/asyncToGenerator'));
 var _classCallCheck = _interopDefault(require('@babel/runtime/helpers/classCallCheck'));
 var _createClass = _interopDefault(require('@babel/runtime/helpers/createClass'));
@@ -14,31 +13,32 @@ var _inherits = _interopDefault(require('@babel/runtime/helpers/inherits'));
 var _possibleConstructorReturn = _interopDefault(require('@babel/runtime/helpers/possibleConstructorReturn'));
 var _getPrototypeOf = _interopDefault(require('@babel/runtime/helpers/getPrototypeOf'));
 var _objectWithoutProperties = _interopDefault(require('@babel/runtime/helpers/objectWithoutProperties'));
+var _regeneratorRuntime = _interopDefault(require('@babel/runtime/regenerator'));
 var PropTypes = _interopDefault(require('prop-types'));
 var React = require('react');
-var Snackbar = _interopDefault(require('@material-ui/core/Snackbar'));
-var Typography = _interopDefault(require('@material-ui/core/Typography'));
-var styles$3 = require('@material-ui/core/styles');
-var AttachFileIcon = _interopDefault(require('@material-ui/icons/AttachFile'));
-var CloudUploadIcon = _interopDefault(require('@material-ui/icons/CloudUpload'));
+var Snackbar = _interopDefault(require('@mui/material/Snackbar'));
+var Typography = _interopDefault(require('@mui/material/Typography'));
+var withStyles = _interopDefault(require('@mui/styles/withStyles'));
+var AttachFileIcon = _interopDefault(require('@mui/icons-material/AttachFile'));
+var CloudUploadIcon = _interopDefault(require('@mui/icons-material/CloudUpload'));
 var clsx = _interopDefault(require('clsx'));
 var Dropzone = _interopDefault(require('react-dropzone'));
-var Chip = _interopDefault(require('@material-ui/core/Chip'));
-var Fab = _interopDefault(require('@material-ui/core/Fab'));
-var Grid = _interopDefault(require('@material-ui/core/Grid'));
-var DeleteIcon = _interopDefault(require('@material-ui/icons/Delete'));
-var IconButton = _interopDefault(require('@material-ui/core/IconButton'));
-var SnackbarContent = _interopDefault(require('@material-ui/core/SnackbarContent'));
-var CheckCircleIcon = _interopDefault(require('@material-ui/icons/CheckCircle'));
-var CloseIcon = _interopDefault(require('@material-ui/icons/Close'));
-var ErrorIcon = _interopDefault(require('@material-ui/icons/Error'));
-var InfoIcon = _interopDefault(require('@material-ui/icons/Info'));
-var WarningIcon = _interopDefault(require('@material-ui/icons/Warning'));
-var Button = _interopDefault(require('@material-ui/core/Button'));
-var Dialog = _interopDefault(require('@material-ui/core/Dialog'));
-var DialogActions = _interopDefault(require('@material-ui/core/DialogActions'));
-var DialogContent = _interopDefault(require('@material-ui/core/DialogContent'));
-var DialogTitle = _interopDefault(require('@material-ui/core/DialogTitle'));
+var Chip = _interopDefault(require('@mui/material/Chip'));
+var Fab = _interopDefault(require('@mui/material/Fab'));
+var Grid = _interopDefault(require('@mui/material/Grid'));
+var DeleteIcon = _interopDefault(require('@mui/icons-material/Delete'));
+var IconButton = _interopDefault(require('@mui/material/IconButton'));
+var SnackbarContent = _interopDefault(require('@mui/material/SnackbarContent'));
+var CheckCircleIcon = _interopDefault(require('@mui/icons-material/CheckCircle'));
+var CloseIcon = _interopDefault(require('@mui/icons-material/Close'));
+var ErrorIcon = _interopDefault(require('@mui/icons-material/Error'));
+var InfoIcon = _interopDefault(require('@mui/icons-material/Info'));
+var WarningIcon = _interopDefault(require('@mui/icons-material/Warning'));
+var Button = _interopDefault(require('@mui/material/Button'));
+var Dialog = _interopDefault(require('@mui/material/Dialog'));
+var DialogActions = _interopDefault(require('@mui/material/DialogActions'));
+var DialogContent = _interopDefault(require('@mui/material/DialogContent'));
+var DialogTitle = _interopDefault(require('@mui/material/DialogTitle'));
 
 function isImage(file) {
   if (file.type.split('/')[0] === 'image') {
@@ -114,6 +114,8 @@ function readFile(file) {
   });
 }
 
+var _DeleteIcon;
+
 var styles = function styles(_ref) {
   var palette = _ref.palette,
       shape = _ref.shape,
@@ -135,11 +137,11 @@ var styles = function styles(_ref) {
       height: 100,
       width: 'initial',
       maxWidth: '100%',
-      color: palette.text.primary,
+      color: palette === null || palette === void 0 ? void 0 : palette.text.primary,
       transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
       boxSizing: 'border-box',
       boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-      borderRadius: shape.borderRadius,
+      borderRadius: shape === null || shape === void 0 ? void 0 : shape.borderRadius,
       zIndex: 5,
       opacity: 1
     },
@@ -147,8 +149,8 @@ var styles = function styles(_ref) {
       transition: '.5s ease',
       position: 'absolute',
       opacity: 0,
-      top: spacing(-1),
-      right: spacing(-1),
+      top: spacing === null || spacing === void 0 ? void 0 : spacing(-1),
+      right: spacing === null || spacing === void 0 ? void 0 : spacing(-1),
       width: 40,
       height: 40,
       '&:focus': {
@@ -157,8 +159,6 @@ var styles = function styles(_ref) {
     }
   };
 };
-
-var _ref3 = /*#__PURE__*/React.createElement(DeleteIcon, null);
 
 function PreviewList(_ref2) {
   var fileObjects = _ref2.fileObjects,
@@ -215,7 +215,7 @@ function PreviewList(_ref2) {
       onClick: handleRemove(i),
       "aria-label": "Delete",
       className: classes.removeButton
-    }, _ref3));
+    }, _DeleteIcon || (_DeleteIcon = /*#__PURE__*/React.createElement(DeleteIcon, null))));
   }));
 }
 
@@ -230,10 +230,11 @@ process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
   showFileNames: PropTypes.bool,
   useChipsForPreview: PropTypes.bool
 } : void 0;
-var PreviewList$1 = styles$3.withStyles(styles, {
+var PreviewList$1 = withStyles(styles, {
   name: 'MuiDropzonePreviewList'
 })(PreviewList);
 
+var _excluded = ["classes", "className", "message", "onClose", "variant"];
 var variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
@@ -242,24 +243,26 @@ var variantIcon = {
 };
 
 var styles$1 = function styles(theme) {
+  var _theme$palette, _theme$palette2, _theme$palette3, _theme$palette4, _theme$spacing;
+
   return {
     successAlert: {
-      backgroundColor: theme.palette.success.main
+      backgroundColor: (_theme$palette = theme.palette) === null || _theme$palette === void 0 ? void 0 : _theme$palette.success.main
     },
     errorAlert: {
-      backgroundColor: theme.palette.error.main
+      backgroundColor: (_theme$palette2 = theme.palette) === null || _theme$palette2 === void 0 ? void 0 : _theme$palette2.error.main
     },
     infoAlert: {
-      backgroundColor: theme.palette.info.main
+      backgroundColor: (_theme$palette3 = theme.palette) === null || _theme$palette3 === void 0 ? void 0 : _theme$palette3.info.main
     },
     warningAlert: {
-      backgroundColor: theme.palette.warning.main
+      backgroundColor: (_theme$palette4 = theme.palette) === null || _theme$palette4 === void 0 ? void 0 : _theme$palette4.warning.main
     },
     message: {
       display: 'flex',
       alignItems: 'center',
       '& > svg': {
-        marginRight: theme.spacing(1)
+        marginRight: (_theme$spacing = theme.spacing) === null || _theme$spacing === void 0 ? void 0 : _theme$spacing.call(theme, 1)
       }
     },
     icon: {
@@ -270,16 +273,17 @@ var styles$1 = function styles(theme) {
   };
 };
 
-function SnackbarContentWrapper(props) {
+var SnackbarContentWrapper = /*#__PURE__*/React.forwardRef(function SnackbarContentWrapper(props, ref) {
   var classes = props.classes,
       className = props.className,
       message = props.message,
       onClose = props.onClose,
       variant = props.variant,
-      other = _objectWithoutProperties(props, ["classes", "className", "message", "onClose", "variant"]);
+      other = _objectWithoutProperties(props, _excluded);
 
   var Icon = variantIcon[variant];
   return /*#__PURE__*/React.createElement(SnackbarContent, _extends({
+    ref: ref,
     className: clsx(classes["".concat(variant, "Alert")], className),
     "aria-describedby": "client-snackbar",
     message: /*#__PURE__*/React.createElement("span", {
@@ -293,13 +297,13 @@ function SnackbarContentWrapper(props) {
       "aria-label": "Close",
       color: "inherit",
       className: classes.closeButton,
-      onClick: onClose
+      onClick: onClose,
+      size: "large"
     }, /*#__PURE__*/React.createElement(CloseIcon, {
       className: classes.icon
     }))]
   }, other));
-}
-
+});
 process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
@@ -307,13 +311,13 @@ process.env.NODE_ENV !== "production" ? SnackbarContentWrapper.propTypes = {
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
 } : void 0;
-var SnackbarContentWrapper$1 = styles$3.withStyles(styles$1, {
+var SnackbarContentWrapper$1 = withStyles(styles$1, {
   name: 'MuiDropzoneSnackbar'
 })(SnackbarContentWrapper);
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var styles$2 = function styles(_ref) {
   var palette = _ref.palette,
@@ -332,10 +336,10 @@ var styles$2 = function styles(_ref) {
       position: 'relative',
       width: '100%',
       minHeight: '250px',
-      backgroundColor: palette.background.paper,
+      backgroundColor: palette === null || palette === void 0 ? void 0 : palette.background.paper,
       border: 'dashed',
-      borderColor: palette.divider,
-      borderRadius: shape.borderRadius,
+      borderColor: palette === null || palette === void 0 ? void 0 : palette.divider,
+      borderRadius: shape === null || shape === void 0 ? void 0 : shape.borderRadius,
       boxSizing: 'border-box',
       cursor: 'pointer',
       overflow: 'hidden'
@@ -343,27 +347,27 @@ var styles$2 = function styles(_ref) {
     active: {
       animation: '$progress 2s linear infinite !important',
       // eslint-disable-next-line max-len
-      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette.background.paper, ", ").concat(palette.background.paper, " 25px, ").concat(palette.divider, " 25px, ").concat(palette.divider, " 50px)"),
+      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette === null || palette === void 0 ? void 0 : palette.background.paper, ", ").concat(palette === null || palette === void 0 ? void 0 : palette.background.paper, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.divider, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.divider, " 50px)"),
       backgroundSize: '150% 100%',
       border: 'solid',
-      borderColor: palette.primary.light
+      borderColor: palette === null || palette === void 0 ? void 0 : palette.primary.light
     },
     invalid: {
       // eslint-disable-next-line max-len
-      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette.error.light, ", ").concat(palette.error.light, " 25px, ").concat(palette.error.dark, " 25px, ").concat(palette.error.dark, " 50px)"),
-      borderColor: palette.error.main
+      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette === null || palette === void 0 ? void 0 : palette.error.light, ", ").concat(palette === null || palette === void 0 ? void 0 : palette.error.light, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.error.dark, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.error.dark, " 50px)"),
+      borderColor: palette === null || palette === void 0 ? void 0 : palette.error.main
     },
     textContainer: {
       textAlign: 'center'
     },
     text: {
-      marginBottom: spacing(3),
-      marginTop: spacing(3)
+      marginBottom: spacing === null || spacing === void 0 ? void 0 : spacing(3),
+      marginTop: spacing === null || spacing === void 0 ? void 0 : spacing(3)
     },
     icon: {
       width: 51,
       height: 51,
-      color: palette.text.primary
+      color: palette === null || palette === void 0 ? void 0 : palette.text.primary
     }
   };
 };
@@ -783,7 +787,7 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
   /**
    * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
    *
-   * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
+   * @see See [Material-UI Chip](https://mui.com/api/chip/#props) for available values.
    */
   previewChipProps: PropTypes.object,
 
@@ -797,7 +801,7 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    * Props to pass to the Material-UI Grid components.<br/>
    * Should be in the form {container: GridProps, item: GridProps}.
    *
-   * @see See [Material-UI Grid](https://material-ui.com/api/grid/#props) for available GridProps values.
+   * @see See [Material-UI Grid](https://mui.com/api/grid/#props) for available GridProps values.
    */
   previewGridProps: PropTypes.object,
 
@@ -819,7 +823,7 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
   /**
    * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
    *
-   * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+   * @see See [Material-UI Snackbar](https://mui.com/api/snackbar/#props) for available values.
    */
   alertSnackbarProps: PropTypes.object,
 
@@ -924,20 +928,22 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
    */
   onAlert: PropTypes.func
 } : void 0;
-var DropzoneAreaBase$1 = styles$3.withStyles(styles$2, {
+var DropzoneAreaBase$1 = withStyles(styles$2, {
   name: 'MuiDropzoneArea'
 })(DropzoneAreaBase);
 
+var _excluded$1 = ["clearOnUnmount", "initialFiles", "onChange", "onDelete"];
+
 function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var splitDropzoneAreaProps = function splitDropzoneAreaProps(props) {
   var clearOnUnmount = props.clearOnUnmount,
       initialFiles = props.initialFiles,
       onChange = props.onChange,
       onDelete = props.onDelete,
-      dropzoneAreaProps = _objectWithoutProperties(props, ["clearOnUnmount", "initialFiles", "onChange", "onDelete"]);
+      dropzoneAreaProps = _objectWithoutProperties(props, _excluded$1);
 
   return [{
     clearOnUnmount: clearOnUnmount,
@@ -1191,9 +1197,11 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, Dr
   onDelete: PropTypes.func
 }) : void 0;
 
+var _excluded$2 = ["cancelButtonText", "dialogProps", "dialogTitle", "fullWidth", "maxWidth", "onClose", "onSave", "open", "submitButtonText"];
+
 function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function splitDropzoneDialogProps(allProps) {
   var cancelButtonText = allProps.cancelButtonText,
@@ -1205,7 +1213,7 @@ function splitDropzoneDialogProps(allProps) {
       onSave = allProps.onSave,
       open = allProps.open,
       submitButtonText = allProps.submitButtonText,
-      dropzoneAreaProps = _objectWithoutProperties(allProps, ["cancelButtonText", "dialogProps", "dialogTitle", "fullWidth", "maxWidth", "onClose", "onSave", "open", "submitButtonText"]);
+      dropzoneAreaProps = _objectWithoutProperties(allProps, _excluded$2);
 
   return [{
     cancelButtonText: cancelButtonText,
@@ -1296,7 +1304,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
 
   /**
    * Props to pass to the Material-UI Dialog components.
-   * @see See [Material-UI Dialog](https://material-ui.com/api/dialog/#props) for available values.
+   * @see See [Material-UI Dialog](https://mui.com/api/dialog/#props) for available values.
    */
   dialogProps: PropTypes.object,
 
@@ -1347,7 +1355,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
 
 function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * This component provides an uncontrolled version of the DropzoneDialogBase component.
  *
