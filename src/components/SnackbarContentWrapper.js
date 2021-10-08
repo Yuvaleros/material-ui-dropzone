@@ -19,22 +19,22 @@ const variantIcon = {
 
 const styles = (theme) => ({
     successAlert: {
-        backgroundColor: theme.palette.success.main,
+        backgroundColor: theme.palette?.success.main,
     },
     errorAlert: {
-        backgroundColor: theme.palette.error.main,
+        backgroundColor: theme.palette?.error.main,
     },
     infoAlert: {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette?.info.main,
     },
     warningAlert: {
-        backgroundColor: theme.palette.warning.main,
+        backgroundColor: theme.palette?.warning.main,
     },
     message: {
         display: 'flex',
         alignItems: 'center',
         '& > svg': {
-            marginRight: theme.spacing(1),
+            marginRight: theme.spacing?.(1),
         },
     },
     icon: {

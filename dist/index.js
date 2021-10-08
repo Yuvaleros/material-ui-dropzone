@@ -137,11 +137,11 @@ var styles = function styles(_ref) {
       height: 100,
       width: 'initial',
       maxWidth: '100%',
-      color: palette.text.primary,
+      color: palette === null || palette === void 0 ? void 0 : palette.text.primary,
       transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
       boxSizing: 'border-box',
       boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-      borderRadius: shape.borderRadius,
+      borderRadius: shape === null || shape === void 0 ? void 0 : shape.borderRadius,
       zIndex: 5,
       opacity: 1
     },
@@ -149,8 +149,8 @@ var styles = function styles(_ref) {
       transition: '.5s ease',
       position: 'absolute',
       opacity: 0,
-      top: spacing(-1),
-      right: spacing(-1),
+      top: spacing === null || spacing === void 0 ? void 0 : spacing(-1),
+      right: spacing === null || spacing === void 0 ? void 0 : spacing(-1),
       width: 40,
       height: 40,
       '&:focus': {
@@ -243,24 +243,26 @@ var variantIcon = {
 };
 
 var styles$1 = function styles(theme) {
+  var _theme$palette, _theme$palette2, _theme$palette3, _theme$palette4, _theme$spacing;
+
   return {
     successAlert: {
-      backgroundColor: theme.palette.success.main
+      backgroundColor: (_theme$palette = theme.palette) === null || _theme$palette === void 0 ? void 0 : _theme$palette.success.main
     },
     errorAlert: {
-      backgroundColor: theme.palette.error.main
+      backgroundColor: (_theme$palette2 = theme.palette) === null || _theme$palette2 === void 0 ? void 0 : _theme$palette2.error.main
     },
     infoAlert: {
-      backgroundColor: theme.palette.info.main
+      backgroundColor: (_theme$palette3 = theme.palette) === null || _theme$palette3 === void 0 ? void 0 : _theme$palette3.info.main
     },
     warningAlert: {
-      backgroundColor: theme.palette.warning.main
+      backgroundColor: (_theme$palette4 = theme.palette) === null || _theme$palette4 === void 0 ? void 0 : _theme$palette4.warning.main
     },
     message: {
       display: 'flex',
       alignItems: 'center',
       '& > svg': {
-        marginRight: theme.spacing(1)
+        marginRight: (_theme$spacing = theme.spacing) === null || _theme$spacing === void 0 ? void 0 : _theme$spacing.call(theme, 1)
       }
     },
     icon: {
@@ -334,10 +336,10 @@ var styles$2 = function styles(_ref) {
       position: 'relative',
       width: '100%',
       minHeight: '250px',
-      backgroundColor: palette.background.paper,
+      backgroundColor: palette === null || palette === void 0 ? void 0 : palette.background.paper,
       border: 'dashed',
-      borderColor: palette.divider,
-      borderRadius: shape.borderRadius,
+      borderColor: palette === null || palette === void 0 ? void 0 : palette.divider,
+      borderRadius: shape === null || shape === void 0 ? void 0 : shape.borderRadius,
       boxSizing: 'border-box',
       cursor: 'pointer',
       overflow: 'hidden'
@@ -345,27 +347,27 @@ var styles$2 = function styles(_ref) {
     active: {
       animation: '$progress 2s linear infinite !important',
       // eslint-disable-next-line max-len
-      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette.background.paper, ", ").concat(palette.background.paper, " 25px, ").concat(palette.divider, " 25px, ").concat(palette.divider, " 50px)"),
+      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette === null || palette === void 0 ? void 0 : palette.background.paper, ", ").concat(palette === null || palette === void 0 ? void 0 : palette.background.paper, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.divider, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.divider, " 50px)"),
       backgroundSize: '150% 100%',
       border: 'solid',
-      borderColor: palette.primary.light
+      borderColor: palette === null || palette === void 0 ? void 0 : palette.primary.light
     },
     invalid: {
       // eslint-disable-next-line max-len
-      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette.error.light, ", ").concat(palette.error.light, " 25px, ").concat(palette.error.dark, " 25px, ").concat(palette.error.dark, " 50px)"),
-      borderColor: palette.error.main
+      backgroundImage: "repeating-linear-gradient(-45deg, ".concat(palette === null || palette === void 0 ? void 0 : palette.error.light, ", ").concat(palette === null || palette === void 0 ? void 0 : palette.error.light, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.error.dark, " 25px, ").concat(palette === null || palette === void 0 ? void 0 : palette.error.dark, " 50px)"),
+      borderColor: palette === null || palette === void 0 ? void 0 : palette.error.main
     },
     textContainer: {
       textAlign: 'center'
     },
     text: {
-      marginBottom: spacing(3),
-      marginTop: spacing(3)
+      marginBottom: spacing === null || spacing === void 0 ? void 0 : spacing(3),
+      marginTop: spacing === null || spacing === void 0 ? void 0 : spacing(3)
     },
     icon: {
       width: 51,
       height: 51,
-      color: palette.text.primary
+      color: palette === null || palette === void 0 ? void 0 : palette.text.primary
     }
   };
 };
