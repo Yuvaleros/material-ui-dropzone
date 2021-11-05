@@ -1,7 +1,28 @@
 export function isImage(file) {
-    if (file.type.split('/')[0] === 'image') {
-        return true;
+    var reader = new FileReader();
+    reader.onloadend = (event) => {
+        var arr = (new Uint8Array(event.target.result)).subarray(0, 4);
+        var header = "";
+        for (var i = 0; i < arr.length; i++) {
+            header += arr[i].toString(16);
+        }
+
+        switch (header) {
+            case "47494638": // GIF
+            case "52494646": // WEBP
+            case "89504e47": // PNG
+            case "ffd8ffe0": // JPEG
+            case "ffd8ffe1": // JPEG
+            case "ffd8ffe2": // JPEG
+            case "ffd8ffe3": // JPEG
+            case "ffd8ffe8": // JPEG
+                return true;
+            default:
+                return false;
+        }
+
     }
+    fileReader.readAsArrayBuffer(file);
 }
 
 export function convertBytesToMbsOrKbs(filesize) {
