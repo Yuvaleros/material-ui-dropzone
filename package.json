@@ -42,7 +42,8 @@
   "dependencies": {
     "@babel/runtime": "^7.4.4",
     "clsx": "^1.0.2",
-    "react-dropzone": "^10.2.1"
+    "react-dropzone": "^10.2.1",
+    "yarn": "^1.22.17"
   },
   "peerDependencies": {
     "@material-ui/core": "^4.0.0",
