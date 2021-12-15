@@ -1,9 +1,9 @@
-import { ChipProps } from '@mui/material/Chip';
-import { DialogProps } from '@mui/material/Dialog';
-import { GridProps } from '@mui/material/Grid';
-import { SnackbarProps } from '@mui/material/Snackbar';
-import * as React from 'react';
-import { DropEvent, DropzoneProps } from 'react-dropzone';
+import { ChipProps } from "@mui/material/Chip";
+import { DialogProps } from "@mui/material/Dialog";
+import { GridProps } from "@mui/material/Grid";
+import { SnackbarProps } from "@mui/material/Snackbar";
+import * as React from "react";
+import { DropEvent, DropzoneProps } from "react-dropzone";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -16,7 +16,7 @@ export interface PreviewIconProps {
   readonly classes: string;
 }
 
-export type AlertType = 'error' | 'success' | 'info';
+export type AlertType = "error" | "success" | "info";
 
 // DropzoneAreaBase
 
@@ -92,10 +92,10 @@ export const DropzoneAreaBase: React.ComponentType<DropzoneAreaBaseProps>;
 
 export type DropzoneAreaProps = Omit<
   DropzoneAreaBaseProps,
-  'fileObjects' | 'onAdd' | 'onDelete'
+  "fileObjects" | "onAdd" | "onDelete"
 > & {
   clearOnUnmount?: boolean;
-  initialFiles?: (File | string)[];
+  initialFiles?: FileObject[];
   onChange?: (files: File[]) => void;
   onDelete?: (file: File) => void;
 };
@@ -122,10 +122,10 @@ export const DropzoneDialogBase: React.ComponentType<DropzoneDialogBaseProps>;
 
 export type DropzoneDialogProps = Omit<
   DropzoneDialogBaseProps,
-  'fileObjects' | 'onAdd' | 'onDelete' | 'onSave'
+  "fileObjects" | "onAdd" | "onDelete" | "onSave"
 > & {
   clearOnUnmount?: boolean;
-  initialFiles?: (File | string)[];
+  initialFiles?: FileObject[];
   onSave?: (files: File[], event: React.SyntheticEvent) => void;
   onDelete?: (file: File) => void;
 };
