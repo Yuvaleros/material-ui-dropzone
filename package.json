@@ -31,8 +31,8 @@
   "scripts": {
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "build": "rollup -c",
-    "start": "rollup -c -w",
+    "build": "tsc -b",
+    "start": "tsc -b --watch",
     "prepare": "yarn build",
     "docs:dev": "styleguidist server",
     "docs:build": "styleguidist build",
@@ -63,8 +63,6 @@
     "@babel/preset-react": "^7.10.1",
     "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.2",
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-optimize-clsx": "^2.6.0",
@@ -77,11 +75,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-styleguidist": "^11.0.4",
-    "rollup": "^1.32.0",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-cpy": "^2.0.1",
-    "rollup-plugin-peer-deps-external": "2.2.2",
-    "rollup-plugin-size-snapshot": "^0.11.0",
+    "typescript": "^4.5.4",
     "webpack": "^4.42.1"
   }
 }
