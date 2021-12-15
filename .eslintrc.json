@@ -15,9 +15,15 @@
     }
   },
   "globals": {
-    "React": true
+    "React": true,
+    "JSX": true
   },
   "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".d.ts", ".ts", ".tsx"]
+      }
+    },
     "react": {
       "version": "detect"
     }

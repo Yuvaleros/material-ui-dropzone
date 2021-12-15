@@ -1,82 +1,67 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import Chip from '@mui/material/Chip';
-import Fab from '@mui/material/Fab';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { withStyles } from '@mui/styles';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import * as React from 'react';
+import DeleteIcon from "@mui/icons-material/Delete";
+import Chip, { ChipProps } from "@mui/material/Chip";
+import Fab from "@mui/material/Fab";
+import Grid, { GridProps } from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { withStyles } from "@mui/styles";
+import clsx from "clsx";
+import PropTypes from "prop-types";
+import React from "react";
 
-const styles = ({ palette, shape, spacing }) => ({
-  root: {},
-  imageContainer: {
-    position: 'relative',
-    zIndex: 10,
-    textAlign: 'center',
-    '&:hover $image': {
-      opacity: 0.3,
-    },
-    '&:hover $removeButton': {
-      opacity: 1,
-    },
-  },
-  image: {
-    height: 100,
-    width: 'initial',
-    maxWidth: '100%',
-    color: palette.text.primary,
-    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-    boxSizing: 'border-box',
-    boxShadow: 'rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px',
-    borderRadius: shape.borderRadius,
-    zIndex: 5,
-    opacity: 1,
-  },
-  removeButton: {
-    transition: '.5s ease',
-    position: 'absolute',
-    opacity: 0,
-    top: spacing(-1),
-    right: spacing(-1),
-    width: 40,
-    height: 40,
-    '&:focus': {
-      opacity: 1,
-    },
-  },
-});
+import { FileObject } from "../types";
 
-function PreviewList({
-  fileObjects,
-  handleRemove,
-  showFileNames,
-  useChipsForPreview,
-  previewChipProps,
-  previewGridClasses,
-  previewGridProps,
-  classes,
-  getPreviewIcon,
-}) {
+export interface PreviewListProps {
+  classes?: {
+    image?: string;
+    imageContainer?: string;
+    removeButton?: string;
+    root?: string;
+  };
+  fileObjects: FileObject[];
+  getPreviewIcon: (
+    fileObject: FileObject,
+    classes: PreviewListProps["classes"]
+  ) => JSX.Element;
+  handleRemove: (index: number) => ChipProps["onDelete"];
+  previewChipProps?: ChipProps;
+  previewGridClasses?: { container?: string; item?: string };
+  previewGridProps?: { container?: GridProps; item?: GridProps };
+  showFileNames?: boolean;
+  useChipsForPreview?: boolean;
+}
+
+function PreviewList(props: PreviewListProps) {
+  const {
+    fileObjects,
+    handleRemove,
+    showFileNames,
+    useChipsForPreview,
+    previewChipProps,
+    previewGridClasses,
+    previewGridProps,
+    classes,
+    getPreviewIcon,
+  } = props;
+
   if (useChipsForPreview) {
     return (
       <Grid
         spacing={1}
-        direction='row'
-        {...previewGridProps.container}
+        direction="row"
+        {...previewGridProps?.container}
         container={true}
-        className={clsx(classes.root, previewGridClasses.container)}
+        className={clsx(classes?.root, previewGridClasses?.container)}
       >
         {fileObjects.map((fileObject, i) => {
           return (
             <Grid
-              {...previewGridProps.item}
+              {...previewGridProps?.item}
               item={true}
-              key={`${fileObject.file?.name ?? 'file'}-${i}`}
-              className={classes.imageContainer}
+              key={i}
+              className={classes?.imageContainer}
             >
               <Chip
-                variant='outlined'
+                variant="outlined"
                 {...previewChipProps}
                 label={fileObject.file.name}
                 onDelete={handleRemove(i)}
@@ -91,31 +76,29 @@ function PreviewList({
   return (
     <Grid
       spacing={8}
-      {...previewGridProps.container}
-      container={true}
-      className={clsx(classes.root, previewGridClasses.container)}
+      {...previewGridProps?.container}
+      container
+      className={clsx(classes?.root, previewGridClasses?.container)}
     >
       {fileObjects.map((fileObject, i) => {
         return (
           <Grid
             xs={4}
-            {...previewGridProps.item}
+            {...previewGridProps?.item}
             item={true}
-            key={`${fileObject.file?.name ?? 'file'}-${i}`}
-            className={clsx(classes.imageContainer, previewGridClasses.item)}
+            key={i}
+            className={clsx(classes?.imageContainer, previewGridClasses?.item)}
           >
             {getPreviewIcon(fileObject, classes)}
 
-            {showFileNames && (
-              <Typography variant='body1' component='p'>
-                {fileObject.file.name}
-              </Typography>
-            )}
+            {showFileNames ? (
+              <Typography component="p">{fileObject.file.name}</Typography>
+            ) : null}
 
             <Fab
               onClick={handleRemove(i)}
-              aria-label='Delete'
-              className={classes.removeButton}
+              aria-label="Delete"
+              className={classes?.removeButton}
             >
               <DeleteIcon />
             </Fab>
@@ -138,6 +121,46 @@ PreviewList.propTypes = {
   useChipsForPreview: PropTypes.bool,
 };
 
-export default withStyles(styles, { name: 'MuiDropzonePreviewList' })(
-  PreviewList
-);
+const StyledPreviewList = withStyles(
+  ({ palette, shape, spacing }) => ({
+    root: {},
+    imageContainer: {
+      position: "relative",
+      zIndex: 10,
+      textAlign: "center",
+      "&:hover $image": {
+        opacity: 0.3,
+      },
+      "&:hover $removeButton": {
+        opacity: 1,
+      },
+    },
+    image: {
+      height: 100,
+      width: "initial",
+      maxWidth: "100%",
+      color: palette.text.primary,
+      transition: "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+      boxSizing: "border-box",
+      boxShadow: "rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px",
+      borderRadius: shape.borderRadius,
+      zIndex: 5,
+      opacity: 1,
+    },
+    removeButton: {
+      transition: ".5s ease",
+      position: "absolute",
+      opacity: 0,
+      top: spacing(-1),
+      right: spacing(-1),
+      width: 40,
+      height: 40,
+      "&:focus": {
+        opacity: 1,
+      },
+    },
+  }),
+  { name: "MuiDropzonePreviewList" }
+)(PreviewList);
+
+export default StyledPreviewList;
