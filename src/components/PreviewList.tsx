@@ -1,12 +1,11 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import Box, { BoxProps } from "@mui/material/Box";
 import Chip, { ChipProps } from "@mui/material/Chip";
-import Fab from "@mui/material/Fab";
-import Grid, { GridProps } from "@mui/material/Grid";
+import Fab, { FabProps } from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/system";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useMemo } from "react";
 
 import { FileObject } from "../types";
 
@@ -25,7 +24,7 @@ export interface PreviewListProps {
   handleRemove: (index: number) => ChipProps["onDelete"];
   previewChipProps?: ChipProps;
   previewGridClasses?: { container?: string; item?: string };
-  previewGridProps?: { container?: GridProps; item?: GridProps };
+  previewGridProps?: { container?: BoxProps; item?: BoxProps };
   showFileNames?: boolean;
   useChipsForPreview?: boolean;
 }
@@ -43,21 +42,73 @@ function PreviewList(props: PreviewListProps) {
     getPreviewIcon,
   } = props;
 
+  const sxGridContainer = useMemo<BoxProps["sx"]>(
+    () => ({
+      display: "flex",
+      flexWrap: "wrap",
+      width: "100%",
+      gap: useChipsForPreview ? 1 : 8,
+    }),
+    [useChipsForPreview]
+  );
+
+  const sxImageContainer = useMemo<BoxProps["sx"]>(
+    () => ({
+      position: "relative",
+      zIndex: 10,
+      textAlign: "center",
+      "& img": {
+        height: 100,
+        width: "initial",
+        maxWidth: "100%",
+        color: "text.primary",
+        transition: "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+        boxSizing: "border-box",
+        boxShadow:
+          "rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px",
+        borderRadius: 1,
+        zIndex: 5,
+        opacity: 1,
+      },
+      "&:hover svg": {
+        opacity: 0.3,
+      },
+      "&:hover button": {
+        opacity: 1,
+      },
+    }),
+    []
+  );
+
+  const sxRemoveButton = useMemo<FabProps["sx"]>(
+    () => ({
+      transition: ".5s ease",
+      position: "absolute",
+      opacity: 0,
+      top: -16,
+      right: -16,
+      width: 40,
+      height: 40,
+      "&:focus": {
+        opacity: 1,
+      },
+    }),
+    []
+  );
+
   if (useChipsForPreview) {
     return (
-      <Grid
-        spacing={1}
-        direction="row"
+      <Box
+        sx={sxGridContainer}
         {...previewGridProps?.container}
-        container={true}
         className={clsx(classes?.root, previewGridClasses?.container)}
       >
         {fileObjects.map((fileObject, i) => {
           return (
-            <Grid
+            <Box
               {...previewGridProps?.item}
-              item={true}
               key={i}
+              sx={sxImageContainer}
               className={classes?.imageContainer}
             >
               <Chip
@@ -66,27 +117,25 @@ function PreviewList(props: PreviewListProps) {
                 label={fileObject.file.name}
                 onDelete={handleRemove(i)}
               />
-            </Grid>
+            </Box>
           );
         })}
-      </Grid>
+      </Box>
     );
   }
 
   return (
-    <Grid
-      spacing={8}
+    <Box
+      sx={sxGridContainer}
       {...previewGridProps?.container}
-      container
       className={clsx(classes?.root, previewGridClasses?.container)}
     >
       {fileObjects.map((fileObject, i) => {
         return (
-          <Grid
-            xs={4}
+          <Box
             {...previewGridProps?.item}
-            item={true}
             key={i}
+            sx={sxImageContainer}
             className={clsx(classes?.imageContainer, previewGridClasses?.item)}
           >
             {getPreviewIcon(fileObject, classes)}
@@ -98,19 +147,20 @@ function PreviewList(props: PreviewListProps) {
             <Fab
               onClick={handleRemove(i)}
               aria-label="Delete"
+              sx={sxRemoveButton}
               className={classes?.removeButton}
             >
               <DeleteIcon />
             </Fab>
-          </Grid>
+          </Box>
         );
       })}
-    </Grid>
+    </Box>
   );
 }
 
 PreviewList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
   getPreviewIcon: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
@@ -121,51 +171,4 @@ PreviewList.propTypes = {
   useChipsForPreview: PropTypes.bool,
 };
 
-const StyledPreviewList = styled(PreviewList, {
-  name: "MuiDropzonePreviewList",
-})((combinedProps) => {
-  const {
-    theme: { palette, shape, spacing },
-  } = combinedProps;
-
-  return {
-    root: {},
-    imageContainer: {
-      position: "relative",
-      zIndex: 10,
-      textAlign: "center",
-      "&:hover $image": {
-        opacity: 0.3,
-      },
-      "&:hover $removeButton": {
-        opacity: 1,
-      },
-    },
-    image: {
-      height: 100,
-      width: "initial",
-      maxWidth: "100%",
-      color: palette.text.primary,
-      transition: "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
-      boxSizing: "border-box",
-      boxShadow: "rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px",
-      borderRadius: shape.borderRadius,
-      zIndex: 5,
-      opacity: 1,
-    },
-    removeButton: {
-      transition: ".5s ease",
-      position: "absolute",
-      opacity: 0,
-      top: spacing(-1),
-      right: spacing(-1),
-      width: 40,
-      height: 40,
-      "&:focus": {
-        opacity: 1,
-      },
-    },
-  };
-});
-
-export default StyledPreviewList;
+export default PreviewList;

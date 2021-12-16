@@ -8,3 +8,4 @@ export { default as DropzoneDialogBase } from "./components/DropzoneDialogBase";
 export * from "./components/DropzoneDialogBase";
 export * from "./helpers";
 export * from "./types";
+export * from "./withTheme";

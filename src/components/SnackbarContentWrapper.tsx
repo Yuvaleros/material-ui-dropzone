@@ -4,14 +4,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import ErrorIcon from "@mui/icons-material/Error";
 import InfoIcon from "@mui/icons-material/Info";
 import WarningIcon from "@mui/icons-material/Warning";
+import { Box, BoxProps, SvgIconProps } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SnackbarContent, {
   SnackbarContentProps,
 } from "@mui/material/SnackbarContent";
-import { styled } from "@mui/system";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { forwardRef, useMemo } from "react";
 
 import { AlertType } from "../types";
 
@@ -30,22 +30,61 @@ export interface SnackbarContentWrapperProps
     message?: string;
   } & Partial<Record<AlertType, string>>;
   onClose?: () => void;
-  variant: AlertType;
+  variant?: AlertType;
 }
 
-function SnackbarContentWrapper(props: SnackbarContentWrapperProps) {
-  const { classes, className, message, onClose, variant, ...other } = props;
+const SnackbarContentWrapper = forwardRef(function SnackbarContentWrapper(
+  props: SnackbarContentWrapperProps,
+  ref: SnackbarContentProps["ref"]
+) {
+  const {
+    classes,
+    className,
+    message,
+    onClose,
+    variant = "info",
+    ...other
+  } = props;
   const Icon = variantIcon[variant];
+
+  const sx = useMemo(
+    () => ({
+      icon: {
+        fontSize: 20,
+        opacity: 0.9,
+      } as SvgIconProps["sx"],
+      message: {
+        display: "flex",
+        alignItems: "center",
+        "& > svg": {
+          marginRight: 1,
+        },
+      } as BoxProps["sx"],
+    }),
+    []
+  );
+
+  const sxVariant = useMemo<SnackbarContentProps["sx"]>(
+    () => ({ backgroundColor: `${variant}.main` }),
+    [variant]
+  );
 
   return (
     <SnackbarContent
+      ref={ref}
+      sx={sxVariant}
       className={clsx(classes?.[variant], className)}
       aria-describedby="client-snackbar"
       message={
-        <span id="client-snackbar" className={classes?.message}>
-          <Icon className={classes?.icon} />
+        <Box
+          component="span"
+          id="client-snackbar"
+          sx={sx.message}
+          className={classes?.message}
+        >
+          <Icon sx={sx.icon} className={classes?.icon} />
           {message}
-        </span>
+        </Box>
       }
       action={
         <IconButton
@@ -55,13 +94,13 @@ function SnackbarContentWrapper(props: SnackbarContentWrapperProps) {
           className={classes?.closeButton}
           onClick={onClose}
         >
-          <CloseIcon className={classes?.icon} />
+          <CloseIcon sx={sx.icon} className={classes?.icon} />
         </IconButton>
       }
       {...other}
     />
   );
-}
+});
 
 SnackbarContentWrapper.propTypes = {
   classes: PropTypes.object,
@@ -71,37 +110,4 @@ SnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(["success", "warning", "error", "info"]),
 };
 
-const StyledSnackbarContentWrapper = styled(SnackbarContentWrapper, {
-  name: "MuiDropzoneSnackbar",
-})((combinedProps) => {
-  const { theme } = combinedProps;
-
-  return {
-    successAlert: {
-      backgroundColor: theme.palette.success.main,
-    },
-    errorAlert: {
-      backgroundColor: theme.palette.error.main,
-    },
-    infoAlert: {
-      backgroundColor: theme.palette.info.main,
-    },
-    warningAlert: {
-      backgroundColor: theme.palette.warning.main,
-    },
-    message: {
-      display: "flex",
-      alignItems: "center",
-      "& > svg": {
-        marginRight: theme.spacing(1),
-      },
-    },
-    icon: {
-      fontSize: 20,
-      opacity: 0.9,
-    },
-    closeButton: {},
-  };
-});
-
-export default StyledSnackbarContentWrapper;
+export default SnackbarContentWrapper;

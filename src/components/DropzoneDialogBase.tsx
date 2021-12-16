@@ -168,7 +168,11 @@ class DropzoneDialogBase extends PureComponent<DropzoneDialogBaseProps> {
         <DialogActions>
           <Button onClick={this.handlePressClose}>{cancelButtonText}</Button>
 
-          <Button disabled={submitDisabled} onClick={onSave}>
+          <Button
+            variant="contained"
+            disabled={submitDisabled}
+            onClick={onSave}
+          >
             {submitButtonText}
           </Button>
         </DialogActions>

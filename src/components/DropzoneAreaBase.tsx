@@ -1,17 +1,19 @@
+import { SvgIconComponent } from "@mui/icons-material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { Box, Theme } from "@mui/material";
+import { BoxProps } from "@mui/material/Box";
 import { ChipProps } from "@mui/material/Chip";
 import { GridProps } from "@mui/material/Grid";
 import Snackbar, {
   SnackbarOrigin,
   SnackbarProps,
 } from "@mui/material/Snackbar";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/system";
+import Typography, { TypographyProps } from "@mui/material/Typography";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import React, {
-  ComponentType,
+  ComponentProps,
   Fragment,
   HTMLProps,
   PureComponent,
@@ -20,6 +22,7 @@ import Dropzone, { DropEvent, DropzoneProps } from "react-dropzone";
 
 import { convertBytesToMbsOrKbs, isImage, readFile } from "../helpers";
 import { AlertType, FileObject } from "../types";
+import { withTheme } from "../withTheme";
 import PreviewList, { PreviewListProps } from "./PreviewList";
 import SnackbarContentWrapper from "./SnackbarContentWrapper";
 
@@ -39,7 +42,24 @@ const defaultGetPreviewIcon: PreviewListProps["getPreviewIcon"] = (
     return <img className={classes?.image} role="presentation" src={src} />;
   }
 
-  return <AttachFileIcon className={classes?.image} />;
+  return (
+    <AttachFileIcon
+      sx={{
+        height: 100,
+        width: "initial",
+        maxWidth: "100%",
+        color: "text.primary",
+        transition: "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+        boxSizing: "border-box",
+        boxShadow:
+          "rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px",
+        borderRadius: 1,
+        zIndex: 5,
+        opacity: 1,
+      }}
+      className={classes?.image}
+    />
+  );
 };
 
 export const FileObjectShape = PropTypes.shape({
@@ -74,7 +94,7 @@ export type DropzoneAreaBaseProps = {
   /** Currently loaded files. */
   fileObjects: FileObject[];
   /** Icon to be displayed inside the dropzone area. */
-  Icon?: ComponentType<{ className?: string }>;
+  Icon?: SvgIconComponent;
   /** Maximum file size (in bytes) that the dropzone will accept. */
   maxFileSize?: number;
   /** Text inside the dropzone. */
@@ -250,12 +270,11 @@ type DropzoneAreaBaseState = {
  * This components creates a Material-UI Dropzone, with previews and snackbar notifications.
  */
 class DropzoneAreaBase extends PureComponent<
-  DropzoneAreaBaseProps,
+  DropzoneAreaBaseProps & { theme: Theme },
   DropzoneAreaBaseState
 > {
   static propTypes = {
-    /** @ignore */
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     acceptedFiles: PropTypes.arrayOf(PropTypes.string),
     filesLimit: PropTypes.number,
     Icon: PropTypes.elementType,
@@ -502,6 +521,52 @@ class DropzoneAreaBase extends PureComponent<
     });
   };
 
+  defaultSx = {
+    root: {
+      "@keyframes progress": {
+        "0%": {
+          backgroundPosition: "0 0",
+        },
+        "100%": {
+          backgroundPosition: "-70px 0",
+        },
+      },
+      position: "relative",
+      width: "100%",
+      minHeight: "250px",
+      backgroundColor: "background.paper",
+      border: "dashed",
+      borderColor: "divider",
+      borderRadius: 1,
+      boxSizing: "border-box",
+      cursor: "pointer",
+      overflow: "hidden",
+    } as BoxProps["sx"],
+    active: {
+      animation: "$progress 2s linear infinite !important",
+      backgroundImage: `repeating-linear-gradient(-45deg, ${this.props.theme.palette.background.paper}, ${this.props.theme.palette.background.paper} 25px, ${this.props.theme.palette.divider} 25px, ${this.props.theme.palette.divider} 50px)`,
+      backgroundSize: "150% 100%",
+      border: "solid",
+      borderColor: "primary.light",
+    } as BoxProps["sx"],
+    invalid: {
+      backgroundImage: `repeating-linear-gradient(-45deg, ${this.props.theme.palette.error.light}, ${this.props.theme.palette.error.light} 25px, ${this.props.theme.palette.error.dark} 25px, ${this.props.theme.palette.error.dark} 50px)`,
+      borderColor: "error.main",
+    } as BoxProps["sx"],
+    textContainer: {
+      textAlign: "center",
+    } as BoxProps["sx"],
+    text: {
+      marginBottom: 3,
+      marginTop: 3,
+    } as TypographyProps["sx"],
+    icon: {
+      width: 51,
+      height: 51,
+      color: "text.primary",
+    } as ComponentProps<SvgIconComponent>["sx"],
+  };
+
   render() {
     const {
       acceptedFiles,
@@ -547,48 +612,67 @@ class DropzoneAreaBase extends PureComponent<
           maxSize={maxFileSize}
           multiple={isMultiple}
         >
-          {({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
-            <div
-              {...getRootProps({
-                className: clsx(
-                  classes.root,
-                  dropzoneClass,
-                  isDragActive && classes.active,
-                  !disableRejectionFeedback && isDragReject && classes.invalid
-                ),
-              })}
-            >
-              <input {...getInputProps(inputProps)} />
+          {({ getRootProps, getInputProps, isDragActive, isDragReject }) => {
+            const isActive = isDragActive;
+            const isInvalid = !disableRejectionFeedback && isDragReject;
 
-              <div className={classes.textContainer}>
-                <Typography
-                  variant="h5"
-                  component="p"
-                  className={clsx(classes.text, dropzoneParagraphClass)}
+            return (
+              <Box
+                sx={
+                  {
+                    ...this.defaultSx.root,
+                    ...(isActive ? this.defaultSx.active : {}),
+                    ...(isInvalid ? this.defaultSx.invalid : {}),
+                  } as BoxProps["sx"]
+                }
+                {...getRootProps({
+                  className: clsx(
+                    classes.root,
+                    dropzoneClass,
+                    isActive && classes.active,
+                    isInvalid && classes.invalid
+                  ),
+                })}
+              >
+                <input {...getInputProps(inputProps)} />
+
+                <Box
+                  sx={this.defaultSx.textContainer}
+                  className={classes.textContainer}
                 >
-                  {dropzoneText}
-                </Typography>
-                {Icon ? (
-                  <Icon className={classes.icon} />
-                ) : (
-                  <CloudUploadIcon className={classes.icon} />
-                )}
-              </div>
+                  <Typography
+                    variant="h5"
+                    component="p"
+                    sx={this.defaultSx.text}
+                    className={clsx(classes.text, dropzoneParagraphClass)}
+                  >
+                    {dropzoneText}
+                  </Typography>
+                  {Icon ? (
+                    <Icon sx={this.defaultSx.icon} className={classes.icon} />
+                  ) : (
+                    <CloudUploadIcon
+                      sx={this.defaultSx.icon}
+                      className={classes.icon}
+                    />
+                  )}
+                </Box>
 
-              {previewsInDropzoneVisible ? (
-                <PreviewList
-                  fileObjects={fileObjects}
-                  handleRemove={this.handleRemove}
-                  getPreviewIcon={getPreviewIcon}
-                  showFileNames={showFileNames}
-                  useChipsForPreview={useChipsForPreview}
-                  previewChipProps={previewChipProps}
-                  previewGridClasses={previewGridClasses}
-                  previewGridProps={previewGridProps}
-                />
-              ) : null}
-            </div>
-          )}
+                {previewsInDropzoneVisible ? (
+                  <PreviewList
+                    fileObjects={fileObjects}
+                    handleRemove={this.handleRemove}
+                    getPreviewIcon={getPreviewIcon}
+                    showFileNames={showFileNames}
+                    useChipsForPreview={useChipsForPreview}
+                    previewChipProps={previewChipProps}
+                    previewGridClasses={previewGridClasses}
+                    previewGridProps={previewGridProps}
+                  />
+                ) : null}
+              </Box>
+            );
+          }}
         </Dropzone>
 
         {previewsVisible ? (
@@ -631,60 +715,7 @@ class DropzoneAreaBase extends PureComponent<
   }
 }
 
-const StyledDropzoneAreaBase = styled(DropzoneAreaBase, {
-  name: "MuiDropzoneArea",
-})((combinedProps) => {
-  const {
-    theme: { palette, shape, spacing },
-  } = combinedProps;
+// @ts-expect-error
+const ThemedDropzoneAreaBase = withTheme(DropzoneAreaBase);
 
-  return {
-    "@keyframes progress": {
-      "0%": {
-        backgroundPosition: "0 0",
-      },
-      "100%": {
-        backgroundPosition: "-70px 0",
-      },
-    },
-    root: {
-      position: "relative",
-      width: "100%",
-      minHeight: "250px",
-      backgroundColor: palette.background.paper,
-      border: "dashed",
-      borderColor: palette.divider,
-      borderRadius: shape.borderRadius,
-      boxSizing: "border-box",
-      cursor: "pointer",
-      overflow: "hidden",
-    },
-    active: {
-      animation: "$progress 2s linear infinite !important",
-      // eslint-disable-next-line max-len
-      backgroundImage: `repeating-linear-gradient(-45deg, ${palette.background.paper}, ${palette.background.paper} 25px, ${palette.divider} 25px, ${palette.divider} 50px)`,
-      backgroundSize: "150% 100%",
-      border: "solid",
-      borderColor: palette.primary.light,
-    },
-    invalid: {
-      // eslint-disable-next-line max-len
-      backgroundImage: `repeating-linear-gradient(-45deg, ${palette.error.light}, ${palette.error.light} 25px, ${palette.error.dark} 25px, ${palette.error.dark} 50px)`,
-      borderColor: palette.error.main,
-    },
-    textContainer: {
-      textAlign: "center",
-    },
-    text: {
-      marginBottom: spacing(3),
-      marginTop: spacing(3),
-    },
-    icon: {
-      width: 51,
-      height: 51,
-      color: palette.text.primary,
-    },
-  };
-});
-
-export default StyledDropzoneAreaBase;
+export default ThemedDropzoneAreaBase;
