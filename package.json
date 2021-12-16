@@ -33,7 +33,8 @@
     "docs:dev": "styleguidist server",
     "docs:build": "styleguidist build",
     "predocs:deploy": "yarn docs:build",
-    "docs:deploy": "gh-pages -d styleguide"
+    "docs:deploy": "gh-pages -d styleguide",
+    "prepublish": "npx tsc"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
