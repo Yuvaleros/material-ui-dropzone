@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "lib": ["dom", "es2017"],
     "module": "CommonJS",
     "moduleResolution": "node",
