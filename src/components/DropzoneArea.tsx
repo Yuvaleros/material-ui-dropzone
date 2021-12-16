@@ -11,22 +11,46 @@ const splitDropzoneAreaProps = (props: DropzoneAreaProps) => {
     initialFiles,
     onChange,
     onDelete,
-    ...dropzoneAreaProps
+    ...dropzoneAreaBaseProps
   } = props;
-  return [
-    { clearOnUnmount, initialFiles, onChange, onDelete },
+
+  const dropzoneAreaProps = {
+    clearOnUnmount,
+    initialFiles,
+    onChange,
+    onDelete,
+  };
+
+  const splitProps: [typeof dropzoneAreaProps, typeof dropzoneAreaBaseProps] = [
     dropzoneAreaProps,
+    dropzoneAreaBaseProps,
   ];
+  return splitProps;
 };
 
 export type DropzoneAreaProps = Omit<
   DropzoneAreaBaseProps,
   "fileObjects" | "onAdd" | "onDelete"
 > & {
+  /** Clear uploaded files when component is unmounted. */
   clearOnUnmount?: boolean;
+  /** List containing File objects or URL strings.
+   *
+   * **Note:** Please take care of CORS.
+   */
   initialFiles?: (File | string)[];
-  onChange?: (files: File[]) => void;
-  onDelete?: (file: File) => void;
+  /**
+   * Fired when the files inside dropzone change.
+   *
+   * @param {File[]} loadedFiles All the files currently loaded into the dropzone.
+   */
+  onChange?: (loadedFiles: File[]) => void;
+  /**
+   * Fired when a file is deleted from the previews panel.
+   *
+   * @param {File} deletedFile The file that was removed.
+   */
+  onDelete?: (deletedFile: File) => void;
 };
 
 type DropzoneAreaState = {
@@ -44,27 +68,12 @@ class DropzoneArea extends PureComponent<DropzoneAreaProps, DropzoneAreaState> {
   static propTypes = {
     // @ts-ignore
     ...DropzoneAreaBase.propTypes,
-    /** Clear uploaded files when component is unmounted. */
     clearOnUnmount: PropTypes.bool,
-    /** List containing File objects or URL strings.<br/>
-     * **Note:** Please take care of CORS.
-     */
     initialFiles: PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.string, PropTypes.any])
     ),
-    /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
-    /**
-     * Fired when the files inside dropzone change.
-     *
-     * @param {File[]} loadedFiles All the files currently loaded into the dropzone.
-     */
     onChange: PropTypes.func,
-    /**
-     * Fired when a file is deleted from the previews panel.
-     *
-     * @param {File} deletedFile The file that was removed.
-     */
     onDelete: PropTypes.func,
   };
 
@@ -86,12 +95,7 @@ class DropzoneArea extends PureComponent<DropzoneAreaProps, DropzoneAreaState> {
     const { clearOnUnmount } = this.props;
 
     if (clearOnUnmount) {
-      this.setState(
-        {
-          fileObjects: [],
-        },
-        this.notifyFileChange
-      );
+      this.setState({ fileObjects: [] }, this.notifyFileChange);
     }
   }
 
@@ -175,21 +179,16 @@ class DropzoneArea extends PureComponent<DropzoneAreaProps, DropzoneAreaState> {
     }
 
     // Update local state
-    this.setState(
-      {
-        fileObjects: remainingFileObjs,
-      },
-      this.notifyFileChange
-    );
+    this.setState({ fileObjects: remainingFileObjs }, this.notifyFileChange);
   };
 
   render() {
-    const [, dropzoneAreaProps] = splitDropzoneAreaProps(this.props);
+    const [, dropzoneAreaBaseProps] = splitDropzoneAreaProps(this.props);
     const { fileObjects } = this.state;
 
     return (
       <DropzoneAreaBase
-        {...dropzoneAreaProps}
+        {...dropzoneAreaBaseProps}
         fileObjects={fileObjects}
         onAdd={this.addFiles}
         onDelete={this.deleteFile}

@@ -11,11 +11,34 @@ export type DropzoneDialogProps = Omit<
   DropzoneDialogBaseProps,
   "fileObjects" | "onAdd" | "onDelete" | "onSave"
 > & {
+  /** Clear uploaded files when component is unmounted. */
   clearOnUnmount?: boolean;
+  /** Maximum number of files that can be loaded into the dropzone. */
+  filesLimit?: number;
+  /** List containing File objects or URL strings.
+   *
+   * **Note:** Please take care of CORS.
+   */
   initialFiles?: (File | string)[];
-  onChange?: (files: File[]) => void;
+  /**
+   * Fired when the files inside dropzone change.
+   *
+   * @param {File[]} loadedFiles All the files currently loaded into the dropzone.
+   */
+  onChange?: (loadedFiles: File[]) => void;
+  /**
+   * Fired when the user clicks the Submit button.
+   *
+   * @param {File[]} files All the files currently inside the Dropzone.
+   * @param {SyntheticEvent} event The react `SyntheticEvent`.
+   */
   onSave?: (files: File[], event: SyntheticEvent) => void;
-  onDelete?: (file: File) => void;
+  /**
+   * Fired when a file is deleted from the previews panel.
+   *
+   * @param {File} deletedFile The file that was removed.
+   */
+  onDelete?: (deletedFile: File) => void;
 };
 
 type DropzoneDialogState = {
@@ -35,22 +58,11 @@ class DropzoneDialog extends PureComponent<
 > {
   static propTypes = {
     ...DropzoneDialogBase.propTypes,
-    /** Clear uploaded files when component is unmounted. */
     clearOnUnmount: PropTypes.bool,
-    /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
-    /** List containing File objects or URL strings.<br/>
-     * **Note:** Please take care of CORS.
-     */
     initialFiles: PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.string, PropTypes.any])
     ),
-    /**
-     * Fired when the user clicks the Submit button.
-     *
-     * @param {File[]} files All the files currently inside the Dropzone.
-     * @param {SyntheticEvent} event The react `SyntheticEvent`.
-     */
     onSave: PropTypes.func,
   };
 
@@ -72,12 +84,7 @@ class DropzoneDialog extends PureComponent<
     const { clearOnUnmount } = this.props;
 
     if (clearOnUnmount) {
-      this.setState(
-        {
-          fileObjects: [],
-        },
-        this.notifyFileChange
-      );
+      this.setState({ fileObjects: [] }, this.notifyFileChange);
     }
   }
 
@@ -160,12 +167,7 @@ class DropzoneDialog extends PureComponent<
     }
 
     // Update local state
-    this.setState(
-      {
-        fileObjects: remainingFileObjs,
-      },
-      this.notifyFileChange
-    );
+    this.setState({ fileObjects: remainingFileObjs }, this.notifyFileChange);
   };
 
   handleClose: DropzoneDialogBaseProps["onClose"] = (evt, reason) => {
@@ -176,12 +178,7 @@ class DropzoneDialog extends PureComponent<
     }
 
     if (clearOnUnmount) {
-      this.setState(
-        {
-          fileObjects: [],
-        },
-        this.notifyFileChange
-      );
+      this.setState({ fileObjects: [] }, this.notifyFileChange);
     }
   };
 
@@ -197,12 +194,7 @@ class DropzoneDialog extends PureComponent<
     }
 
     if (clearOnUnmount) {
-      this.setState(
-        {
-          fileObjects: [],
-        },
-        this.notifyFileChange
-      );
+      this.setState({ fileObjects: [] }, this.notifyFileChange);
     }
   };
 

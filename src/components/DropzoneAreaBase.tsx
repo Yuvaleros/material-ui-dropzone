@@ -64,49 +64,179 @@ export type DropzoneAreaBaseClasses = {
 
 export type DropzoneAreaBaseProps = {
   classes?: Partial<DropzoneAreaBaseClasses>;
+  /** A list of file types to accept.
+   *
+   * @see See [here](https://react-dropzone.js.org/#section-accepting-specific-file-types) for more details.
+   */
   acceptedFiles?: string[];
-  fileObjects: FileObject[];
+  /** Maximum number of files that can be loaded into the dropzone. */
   filesLimit?: number;
+  /** Currently loaded files. */
+  fileObjects: FileObject[];
+  /** Icon to be displayed inside the dropzone area. */
   Icon?: ComponentType<{ className?: string }>;
+  /** Maximum file size (in bytes) that the dropzone will accept. */
   maxFileSize?: number;
+  /** Text inside the dropzone. */
   dropzoneText?: string;
+  /** The label for the file preview section. */
   previewText?: string;
+  /** Shows previews **BELOW** the dropzone. */
   showPreviews?: boolean;
+  /** Shows preview **INSIDE** the dropzone area. */
   showPreviewsInDropzone?: boolean;
+  /** Shows file name under the image. */
   showFileNamesInPreview?: boolean;
+  /** Shows file name under the dropzone image. */
   showFileNames?: boolean;
+  /** Uses deletable Material-UI Chip components to display file names. */
   useChipsForPreview?: boolean;
+  /**
+   * Props to pass to the Material-UI Chip components.
+   *
+   * Requires `useChipsForPreview` prop to be `true`.
+   *
+   * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
+   */
   previewChipProps?: ChipProps;
+  /**
+   * Custom CSS classNames for preview Grid components.
+   *
+   * Should be in the form {container: string, item: string, image: string}.
+   */
   previewGridClasses?: {
     container?: string;
     item?: string;
     image?: string;
   };
+  /**
+   * Props to pass to the Material-UI Grid components.
+   *
+   * Should be in the form {container: GridProps, item: GridProps}.
+   *
+   * @see See [Material-UI Grid](https://material-ui.com/api/grid/#props) for available GridProps values.
+   */
   previewGridProps?: {
     container?: GridProps;
     item?: GridProps;
   };
+  /**
+   * Shows styled Material-UI Snackbar when files are dropped, deleted or rejected.
+   *
+   * - can be a boolean ("global" `true` or `false` for all alerts).
+   * - can be an array, with values 'error', 'info', 'success', 'warning' to select to view only certain alerts:
+   *  - showAlerts={['error']} for only errors.
+   *  - showAlerts={['error', 'info']} for both errors and info.
+   *  - showAlerts={['error', 'success', 'info', 'warning']} is same as showAlerts={true}.
+   *  - showAlerts={[]} is same as showAlerts={false}.
+   */
   showAlerts?: boolean | AlertType[];
+  /**
+   * Props to pass to the Material-UI Snackbar components.
+   * Requires `showAlerts` prop to be `true`.
+   *
+   * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
+   */
   alertSnackbarProps?: SnackbarProps;
+  /**
+   * Props to pass to the Dropzone component.
+   *
+   * @see See [Dropzone props](https://react-dropzone.js.org/#src) for available values.
+   */
   dropzoneProps?: DropzoneProps;
+  /**
+   * Attributes applied to the input element.
+   *
+   * @see See [MDN Input File attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Additional_attributes) for available values.
+   */
   inputProps?: HTMLProps<HTMLInputElement>;
   clearOnUnmount?: boolean;
+  /** Custom CSS class name for dropzone container. */
   dropzoneClass?: string;
+  /** Custom CSS class name for text inside the container. */
   dropzoneParagraphClass?: string;
+  /** Disable feedback effect when dropping rejected files. */
   disableRejectionFeedback?: boolean;
+  /**
+   * Fired when new files are added to dropzone.
+   *
+   * @param {FileObject[]} newFiles The new files added to the dropzone.
+   */
   onAdd?: (newFiles: FileObject[]) => void;
+  /**
+   * Fired when a file is deleted from the previews panel.
+   *
+   * @param {FileObject} deletedFileObject The file that was removed.
+   * @param {number} index The index of the removed file object.
+   */
   onDelete?: (deletedFileObject: FileObject, index: number) => void;
-  onDrop?: (files: File[], event: DropEvent) => void;
-  onDropRejected?: (files: File[], event: DropEvent) => void;
+  /**
+   * Fired when the user drops files into the dropzone.
+   *
+   * @param {File[]} droppedFiles All the files dropped into the dropzone.
+   * @param {Event} event The react-dropzone drop event.
+   */
+  onDrop?: (droppedFiles: File[], event: DropEvent) => void;
+  /**
+   * Fired when a file is rejected because of wrong file type, size or goes beyond the filesLimit.
+   *
+   * @param {File[]} rejectedFiles All the rejected files.
+   * @param {Event} event The react-dropzone drop event.
+   */
+  onDropRejected?: (rejectedFiles: File[], event: DropEvent) => void;
+  /**
+   * Fired when an alert is triggered.
+   *
+   * @param {string} message Alert message.
+   * @param {string} variant One of "error", "info", "success".
+   */
   onAlert?: (message: string, variant: AlertType) => void;
+  /**
+   * Get alert message to display when files limit is exceed.
+   *
+   * *Default*: "Maximum allowed number of files exceeded. Only ${filesLimit} allowed"
+   *
+   * @param {number} filesLimit The `filesLimit` currently set for the component.
+   */
   getFileLimitExceedMessage?: (filesLimit: number) => string;
+  /**
+   * Get alert message to display when a new file is added.
+   *
+   * *Default*: "File ${fileName} successfully added."
+   *
+   * @param {string} fileName The newly added file name.
+   */
   getFileAddedMessage?: (fileName: string) => string;
+  /**
+   * Get alert message to display when a file is removed.
+   *
+   * *Default*: "File ${fileName} removed."
+   *
+   * @param {string} fileName The name of the removed file.
+   */
   getFileRemovedMessage?: (fileName: string) => string;
+  /**
+   * Get alert message to display when a file is rejected onDrop.
+   *
+   * *Default*: "File ${rejectedFile.name} was rejected."
+   *
+   * @param {Object} rejectedFile The file that got rejected
+   * @param {string[]} acceptedFiles The `acceptedFiles` prop currently set for the component
+   * @param {number} maxFileSize The `maxFileSize` prop currently set for the component
+   */
   getDropRejectMessage?: (
     rejectedFile: File,
     acceptedFiles: string[],
     maxFileSize: number
   ) => string;
+  /**
+   * A function which determines which icon to display for a file preview.
+   *
+   * *Default*: If its an image then displays a preview the image, otherwise it will display an attachment icon
+   *
+   * @param {FileObject} fileObject The file which the preview will belong to
+   * @param {Object} classes The classes for the file preview icon, in the default case we use the 'image' className.
+   */
   getPreviewIcon?: PreviewListProps["getPreviewIcon"];
 };
 
@@ -126,166 +256,42 @@ class DropzoneAreaBase extends PureComponent<
   static propTypes = {
     /** @ignore */
     classes: PropTypes.object.isRequired,
-    /** A list of file types to accept.
-     * @see See [here](https://react-dropzone.js.org/#section-accepting-specific-file-types) for more details.
-     */
     acceptedFiles: PropTypes.arrayOf(PropTypes.string),
-    /** Maximum number of files that can be loaded into the dropzone. */
     filesLimit: PropTypes.number,
-    /** Icon to be displayed inside the dropzone area. */
     Icon: PropTypes.elementType,
-    /** Currently loaded files. */
     fileObjects: PropTypes.arrayOf(FileObjectShape),
-    /** Maximum file size (in bytes) that the dropzone will accept. */
     maxFileSize: PropTypes.number,
-    /** Text inside the dropzone. */
     dropzoneText: PropTypes.string,
-    /** Custom CSS class name for dropzone container. */
     dropzoneClass: PropTypes.string,
-    /** Custom CSS class name for text inside the container. */
     dropzoneParagraphClass: PropTypes.string,
-    /** Disable feedback effect when dropping rejected files. */
     disableRejectionFeedback: PropTypes.bool,
-    /** Shows previews **BELOW** the dropzone. */
     showPreviews: PropTypes.bool,
-    /** Shows preview **INSIDE** the dropzone area. */
     showPreviewsInDropzone: PropTypes.bool,
-    /** Shows file name under the dropzone image. */
     showFileNames: PropTypes.bool,
-    /** Shows file name under the image. */
     showFileNamesInPreview: PropTypes.bool,
-    /** Uses deletable Material-UI Chip components to display file names. */
     useChipsForPreview: PropTypes.bool,
-    /**
-     * Props to pass to the Material-UI Chip components.<br/>Requires `useChipsForPreview` prop to be `true`.
-     *
-     * @see See [Material-UI Chip](https://material-ui.com/api/chip/#props) for available values.
-     */
     previewChipProps: PropTypes.object,
-    /**
-     * Custom CSS classNames for preview Grid components.<br/>
-     * Should be in the form {container: string, item: string, image: string}.
-     */
     previewGridClasses: PropTypes.object,
-    /**
-     * Props to pass to the Material-UI Grid components.<br/>
-     * Should be in the form {container: GridProps, item: GridProps}.
-     *
-     * @see See [Material-UI Grid](https://material-ui.com/api/grid/#props) for available GridProps values.
-     */
     previewGridProps: PropTypes.object,
-    /** The label for the file preview section. */
     previewText: PropTypes.string,
-    /**
-     * Shows styled Material-UI Snackbar when files are dropped, deleted or rejected.
-     *
-     * - can be a boolean ("global" `true` or `false` for all alerts).
-     * - can be an array, with values 'error', 'info', 'success', 'warning' to select to view only certain alerts:
-     *  - showAlerts={['error']} for only errors.
-     *  - showAlerts={['error', 'info']} for both errors and info.
-     *  - showAlerts={['error', 'success', 'info', 'warning']} is same as showAlerts={true}.
-     *  - showAlerts={[]} is same as showAlerts={false}.
-     */
     showAlerts: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.arrayOf(
         PropTypes.oneOf(["error", "success", "info", "warning"])
       ),
     ]),
-    /**
-     * Props to pass to the Material-UI Snackbar components.<br/>Requires `showAlerts` prop to be `true`.
-     *
-     * @see See [Material-UI Snackbar](https://material-ui.com/api/snackbar/#props) for available values.
-     */
     alertSnackbarProps: PropTypes.object,
-    /**
-     * Props to pass to the Dropzone component.
-     *
-     * @see See [Dropzone props](https://react-dropzone.js.org/#src) for available values.
-     */
     dropzoneProps: PropTypes.object,
-    /**
-     * Attributes applied to the input element.
-     *
-     * @see See [MDN Input File attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Additional_attributes) for available values.
-     */
     inputProps: PropTypes.object,
-    /**
-     * Get alert message to display when files limit is exceed.
-     *
-     * *Default*: "Maximum allowed number of files exceeded. Only ${filesLimit} allowed"
-     *
-     * @param {number} filesLimit The `filesLimit` currently set for the component.
-     */
     getFileLimitExceedMessage: PropTypes.func,
-    /**
-     * Get alert message to display when a new file is added.
-     *
-     * *Default*: "File ${fileName} successfully added."
-     *
-     * @param {string} fileName The newly added file name.
-     */
     getFileAddedMessage: PropTypes.func,
-    /**
-     * Get alert message to display when a file is removed.
-     *
-     * *Default*: "File ${fileName} removed."
-     *
-     * @param {string} fileName The name of the removed file.
-     */
     getFileRemovedMessage: PropTypes.func,
-    /**
-     * Get alert message to display when a file is rejected onDrop.
-     *
-     * *Default*: "File ${rejectedFile.name} was rejected."
-     *
-     * @param {Object} rejectedFile The file that got rejected
-     * @param {string[]} acceptedFiles The `acceptedFiles` prop currently set for the component
-     * @param {number} maxFileSize The `maxFileSize` prop currently set for the component
-     */
     getDropRejectMessage: PropTypes.func,
-    /**
-     * A function which determines which icon to display for a file preview.
-     *
-     * *Default*: If its an image then displays a preview the image, otherwise it will display an attachment icon
-     *
-     * @param {FileObject} objectFile The file which the preview will belong to
-     * @param {Object} classes The classes for the file preview icon, in the default case we use the 'image' className.
-     */
     getPreviewIcon: PropTypes.func,
-    /**
-     * Fired when new files are added to dropzone.
-     *
-     * @param {FileObject[]} newFiles The new files added to the dropzone.
-     */
     onAdd: PropTypes.func,
-    /**
-     * Fired when a file is deleted from the previews panel.
-     *
-     * @param {FileObject} deletedFileObject The file that was removed.
-     * @param {number} index The index of the removed file object.
-     */
     onDelete: PropTypes.func,
-    /**
-     * Fired when the user drops files into the dropzone.
-     *
-     * @param {File[]} droppedFiles All the files dropped into the dropzone.
-     * @param {Event} event The react-dropzone drop event.
-     */
     onDrop: PropTypes.func,
-    /**
-     * Fired when a file is rejected because of wrong file type, size or goes beyond the filesLimit.
-     *
-     * @param {File[]} rejectedFiles All the rejected files.
-     * @param {Event} event The react-dropzone drop event.
-     */
     onDropRejected: PropTypes.func,
-    /**
-     * Fired when an alert is triggered.
-     *
-     * @param {string} message Alert message.
-     * @param {string} variant One of "error", "info", "success".
-     */
     onAlert: PropTypes.func,
   };
 
