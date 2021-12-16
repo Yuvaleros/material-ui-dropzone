@@ -17,18 +17,18 @@ The file-upload dropzone features some snazzy "File Allowed/Not Allowed" effects
 ## Installation
 
 ```shell
-npm install --save material-ui-dropzone
+npm install --save mui-dropzone
 ```
 
 or
 
 ```shell
-yarn add material-ui-dropzone
+yarn add mui-dropzone
 ```
 
 ## Support
 
-`material-ui-dropzone` complies to the following support matrix.
+`mui-dropzone` complies to the following support matrix.
 
 | version | React            | Material-UI    |
 | ------- | ---------------- | -------------- |
