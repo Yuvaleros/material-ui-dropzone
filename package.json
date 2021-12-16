@@ -18,8 +18,8 @@
     "react upload"
   ],
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
+  "module": "dist/index.js",
+  "jsnext:main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
