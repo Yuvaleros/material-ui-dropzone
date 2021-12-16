@@ -3,3 +3,5 @@
 build/
 node_modules/
 styleguide/
+tsconfig.tsbuildinfo
+/dist

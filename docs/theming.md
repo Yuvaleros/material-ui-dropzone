@@ -28,39 +28,56 @@
 
 **Theme Namespace:** `MuiDropzoneSnackbar`
 
-| Rule name    | Global class                      | Description                                                   |
-| ------------ | --------------------------------- | ------------------------------------------------------------- |
-| infoAlert    | .MuiDropzoneSnackbar-infoAlert    | The class applied to the alert snackbar in case of 'info'.    |
-| successAlert | .MuiDropzoneSnackbar-successAlert | The class applied to the alert snackbar in case of 'success'. |
-| warningAlert | .MuiDropzoneSnackbar-warningAlert | The class applied to the alert snackbar in case of 'warning'. |
-| errorAlert   | .MuiDropzoneSnackbar-errorAlert   | The class applied to the alert snackbar in case of 'error'.   |
-| message      | .MuiDropzoneSnackbar-message      | The class applied to the alert snackbar message.              |
-| icon         | .MuiDropzoneSnackbar-icon         | The class applied to the alert snackbar icon.                 |
-| closeButton  | .MuiDropzoneSnackbar-closeButton  | The class applied to the alert snackbar 'close' button.       |
+| Rule name   | Global class                     | Description                                                   |
+| ----------- | -------------------------------- | ------------------------------------------------------------- |
+| info        | .MuiDropzoneSnackbar-info        | The class applied to the alert snackbar in case of 'info'.    |
+| success     | .MuiDropzoneSnackbar-success     | The class applied to the alert snackbar in case of 'success'. |
+| warning     | .MuiDropzoneSnackbar-warning     | The class applied to the alert snackbar in case of 'warning'. |
+| error       | .MuiDropzoneSnackbar-error       | The class applied to the alert snackbar in case of 'error'.   |
+| message     | .MuiDropzoneSnackbar-message     | The class applied to the alert snackbar message.              |
+| icon        | .MuiDropzoneSnackbar-icon        | The class applied to the alert snackbar icon.                 |
+| closeButton | .MuiDropzoneSnackbar-closeButton | The class applied to the alert snackbar 'close' button.       |
 
 ### Sample theme override
 
 ```jsx
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { CSSInterpolation } from '@mui/system';
 
-import DropzoneArea from '../src/components/DropzoneArea';
+import DropzoneArea from "../src/components/DropzoneArea";
 
-const theme = createMuiTheme({
-  overrides: {
-    MuiDropzoneSnackbar: {
-      errorAlert: {
-        backgroundColor: "#AFA",
-        color: "#000"
-      },
-      successAlert: {
-        backgroundColor: "#FAA",
-        color: "#000"
-      },
-    }
+// if using TypeScript
+declare module '@mui/material' {
+  interface Components {
+    MuiDropzoneSnackbar?: {
+      styleOverrides?: {
+        error?: CSSInterpolation;
+        info?: CSSInterpolation;
+        success?: CSSInterpolation;
+        warning?: CSSInterpolation;
+      };
+    };
   }
+}
+
+const theme = createTheme({
+  components: {
+    MuiDropzoneSnackbar: {
+      styleOverrides: {
+        error: {
+          backgroundColor: "#AFA",
+          color: "#000",
+        },
+        success: {
+          backgroundColor: "#FAA",
+          color: "#000",
+        },
+      },
+    },
+  },
 });
 
-<MuiThemeProvider theme={theme}>
+<ThemeProvider theme={theme}>
   <DropzoneArea maxFileSize={1} />
-</MuiThemeProvider>
+</ThemeProvider>;
 ```

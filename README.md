@@ -2,7 +2,8 @@
 
 > Material-UI-dropzone is a [React](https://github.com/facebook/react) component using [Material-UI](https://github.com/mui-org/material-ui) and is based on the excellent [react-dropzone](https://github.com/react-dropzone/react-dropzone) library.
 
-[![License](https://img.shields.io/github/license/yuvaleros/material-ui-dropzone)](https://github.com/Yuvaleros/material-ui-dropzone/blob/master/LICENSE) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg)](#contributors)
+[![License](https://img.shields.io/github/license/yuvaleros/material-ui-dropzone)](https://github.com/Yuvaleros/material-ui-dropzone/File/master/LICENSE) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg)](#contributors)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Rebuild Dist Workflow Status](https://img.shields.io/github/workflow/status/yuvaleros/material-ui-dropzone/Rebuild%20Dist?label=build)](https://github.com/Yuvaleros/material-ui-dropzone/actions?query=workflow%3A%22Rebuild+Dist%22) [![Update Docs Workflow Status](https://img.shields.io/github/workflow/status/yuvaleros/material-ui-dropzone/Update%20Docs?label=docs)](https://github.com/Yuvaleros/material-ui-dropzone/actions?query=workflow%3A%22Update+Docs%22)
@@ -16,21 +17,22 @@ The file-upload dropzone features some snazzy "File Allowed/Not Allowed" effects
 ## Installation
 
 ```shell
-npm install --save material-ui-dropzone
+npm install --save mui-file-dropzone
 ```
 
 or
 
 ```shell
-yarn add material-ui-dropzone
+yarn add mui-file-dropzone
 ```
 
 ## Support
 
-`material-ui-dropzone` complies to the following support matrix.
+`mui-file-dropzone` complies to the following support matrix.
 
 | version | React            | Material-UI    |
 | ------- | ---------------- | -------------- |
+| `4.x`   | `17.0+`          | `5.x`          |
 | `3.x`   | `16.8+`          | `4.x`          |
 | `2.x`   | `15.x` or `16.x` | `3.x` or `4.x` |
 
@@ -62,27 +64,23 @@ See [https://yuvaleros.github.io/material-ui-dropzone](https://yuvaleros.github.
 This components creates the dropzone, previews and snackbar notifications without a dialog
 
 ```jsx static
-import React, {Component} from 'react'
-import {DropzoneArea} from 'material-ui-dropzone'
+import React, { Component } from "react";
+import { DropzoneArea } from "mui-file-dropzone";
 
-class DropzoneAreaExample extends Component{
-  constructor(props){
+class DropzoneAreaExample extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      files: []
+      files: [],
     };
   }
-  handleChange(files){
+  handleChange(files) {
     this.setState({
-      files: files
+      files: files,
     });
   }
-  render(){
-    return (
-      <DropzoneArea
-        onChange={this.handleChange.bind(this)}
-        />
-    )
+  render() {
+    return <DropzoneArea onChange={this.handleChange.bind(this)} />;
   }
 }
 
@@ -94,56 +92,54 @@ export default DropzoneAreaExample;
 This component provides the DropzoneArea inside of a MaterialUI Dialog.
 
 ```jsx static
-import React, { Component } from 'react'
-import {DropzoneDialog} from 'material-ui-dropzone'
-import Button from '@material-ui/core/Button';
+import React, { Component } from "react";
+import { DropzoneDialog } from "mui-file-dropzone";
+import Button from "@mui/material/Button";
 
 export default class DropzoneDialogExample extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            files: []
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      files: [],
+    };
+  }
 
-    handleClose() {
-        this.setState({
-            open: false
-        });
-    }
+  handleClose() {
+    this.setState({
+      open: false,
+    });
+  }
 
-    handleSave(files) {
-        //Saving files to state for further use and closing Modal.
-        this.setState({
-            files: files,
-            open: false
-        });
-    }
+  handleSave(files) {
+    //Saving files to state for further use and closing Modal.
+    this.setState({
+      files: files,
+      open: false,
+    });
+  }
 
-    handleOpen() {
-        this.setState({
-            open: true,
-        });
-    }
+  handleOpen() {
+    this.setState({
+      open: true,
+    });
+  }
 
-    render() {
-        return (
-            <div>
-                <Button onClick={this.handleOpen.bind(this)}>
-                  Add Image
-                </Button>
-                <DropzoneDialog
-                    open={this.state.open}
-                    onSave={this.handleSave.bind(this)}
-                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-                    showPreviews={true}
-                    maxFileSize={5000000}
-                    onClose={this.handleClose.bind(this)}
-                />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <Button onClick={this.handleOpen.bind(this)}>Add Image</Button>
+        <DropzoneDialog
+          open={this.state.open}
+          onSave={this.handleSave.bind(this)}
+          acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+          showPreviews={true}
+          maxFileSize={5000000}
+          onClose={this.handleClose.bind(this)}
+        />
+      </div>
+    );
+  }
 }
 ```
 
@@ -178,6 +174,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
