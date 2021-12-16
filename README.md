@@ -17,18 +17,18 @@ The file-upload dropzone features some snazzy "File Allowed/Not Allowed" effects
 ## Installation
 
 ```shell
-npm install --save mui-react-dropzone
+npm install --save mui-file-dropzone
 ```
 
 or
 
 ```shell
-yarn add mui-react-dropzone
+yarn add mui-file-dropzone
 ```
 
 ## Support
 
-`mui-react-dropzone` complies to the following support matrix.
+`mui-file-dropzone` complies to the following support matrix.
 
 | version | React            | Material-UI    |
 | ------- | ---------------- | -------------- |
@@ -65,7 +65,7 @@ This components creates the dropzone, previews and snackbar notifications withou
 
 ```jsx static
 import React, { Component } from "react";
-import { DropzoneArea } from "mui-react-dropzone";
+import { DropzoneArea } from "mui-file-dropzone";
 
 class DropzoneAreaExample extends Component {
   constructor(props) {
@@ -93,7 +93,7 @@ This component provides the DropzoneArea inside of a MaterialUI Dialog.
 
 ```jsx static
 import React, { Component } from "react";
-import { DropzoneDialog } from "mui-react-dropzone";
+import { DropzoneDialog } from "mui-file-dropzone";
 import Button from "@mui/material/Button";
 
 export default class DropzoneDialogExample extends Component {
