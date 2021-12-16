@@ -1,18 +1,19 @@
 {
-  "name": "material-ui-dropzone",
-  "version": "3.5.0",
-  "description": "A Material-UI file-upload dropzone",
+  "name": "mui-dropzone",
+  "version": "4.0.0",
+  "description": "A Material-UI file-upload dropzone. Written in TypeScript.",
   "license": "MIT",
   "author": "Yuval",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yuvaleros/material-ui-dropzone.git"
+    "url": "https://github.com/Deckstar/mui-dropzone.git"
   },
   "keywords": [
     "react",
     "react-component",
     "material design",
     "material-ui",
+    "mui",
     "dropzone",
     "upload",
     "react upload"

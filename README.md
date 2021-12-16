@@ -32,6 +32,7 @@ yarn add material-ui-dropzone
 
 | version | React            | Material-UI    |
 | ------- | ---------------- | -------------- |
+| `4.x`   | `17.0+`          | `5.x`          |
 | `3.x`   | `16.8+`          | `4.x`          |
 | `2.x`   | `15.x` or `16.x` | `3.x` or `4.x` |
 
@@ -64,7 +65,7 @@ This components creates the dropzone, previews and snackbar notifications withou
 
 ```jsx static
 import React, { Component } from "react";
-import { DropzoneArea } from "material-ui-dropzone";
+import { DropzoneArea } from "mui-dropzone";
 
 class DropzoneAreaExample extends Component {
   constructor(props) {
@@ -92,7 +93,7 @@ This component provides the DropzoneArea inside of a MaterialUI Dialog.
 
 ```jsx static
 import React, { Component } from "react";
-import { DropzoneDialog } from "material-ui-dropzone";
+import { DropzoneDialog } from "mui-dropzone";
 import Button from "@mui/material/Button";
 
 export default class DropzoneDialogExample extends Component {
