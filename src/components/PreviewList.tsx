@@ -3,7 +3,7 @@ import Chip, { ChipProps } from "@mui/material/Chip";
 import Fab from "@mui/material/Fab";
 import Grid, { GridProps } from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { withStyles } from "@mui/styles";
+import { styled } from "@mui/system";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import React from "react";
@@ -121,8 +121,14 @@ PreviewList.propTypes = {
   useChipsForPreview: PropTypes.bool,
 };
 
-const StyledPreviewList = withStyles(
-  ({ palette, shape, spacing }) => ({
+const StyledPreviewList = styled(PreviewList, {
+  name: "MuiDropzonePreviewList",
+})((combinedProps) => {
+  const {
+    theme: { palette, shape, spacing },
+  } = combinedProps;
+
+  return {
     root: {},
     imageContainer: {
       position: "relative",
@@ -159,8 +165,7 @@ const StyledPreviewList = withStyles(
         opacity: 1,
       },
     },
-  }),
-  { name: "MuiDropzonePreviewList" }
-)(PreviewList);
+  };
+});
 
 export default StyledPreviewList;

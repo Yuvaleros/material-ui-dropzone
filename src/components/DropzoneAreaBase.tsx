@@ -7,7 +7,7 @@ import Snackbar, {
   SnackbarProps,
 } from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
-import { withStyles } from "@mui/styles";
+import { styled } from "@mui/system";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import React, {
@@ -631,8 +631,14 @@ class DropzoneAreaBase extends PureComponent<
   }
 }
 
-const StyledDropzoneAreaBase = withStyles(
-  ({ palette, shape, spacing }) => ({
+const StyledDropzoneAreaBase = styled(DropzoneAreaBase, {
+  name: "MuiDropzoneArea",
+})((combinedProps) => {
+  const {
+    theme: { palette, shape, spacing },
+  } = combinedProps;
+
+  return {
     "@keyframes progress": {
       "0%": {
         backgroundPosition: "0 0",
@@ -678,8 +684,7 @@ const StyledDropzoneAreaBase = withStyles(
       height: 51,
       color: palette.text.primary,
     },
-  }),
-  { name: "MuiDropzoneArea" }
-)(DropzoneAreaBase);
+  };
+});
 
 export default StyledDropzoneAreaBase;

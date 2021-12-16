@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import SnackbarContent, {
   SnackbarContentProps,
 } from "@mui/material/SnackbarContent";
-import { withStyles } from "@mui/styles";
+import { styled } from "@mui/system";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import React from "react";
@@ -71,8 +71,12 @@ SnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(["success", "warning", "error", "info"]),
 };
 
-const StyledSnackbarContentWrapper = withStyles(
-  (theme) => ({
+const StyledSnackbarContentWrapper = styled(SnackbarContentWrapper, {
+  name: "MuiDropzoneSnackbar",
+})((combinedProps) => {
+  const { theme } = combinedProps;
+
+  return {
     successAlert: {
       backgroundColor: theme.palette.success.main,
     },
@@ -97,8 +101,7 @@ const StyledSnackbarContentWrapper = withStyles(
       opacity: 0.9,
     },
     closeButton: {},
-  }),
-  { name: "MuiDropzoneSnackbar" }
-)(SnackbarContentWrapper);
+  };
+});
 
 export default StyledSnackbarContentWrapper;
