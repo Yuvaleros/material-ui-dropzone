@@ -1,6 +1,6 @@
 {
   "projectName": "material-ui-dropzone",
-  "projectOwner": "Yuvaleros",
+  "projectOwner": "ShotSkydiver",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
@@ -11,10 +11,10 @@
   "commitConvention": "gitmoji",
   "contributors": [
     {
-      "login": "Yuvaleros",
-      "name": "Yuvaleros",
+      "login": "ShotSkydiver",
+      "name": "ShotSkydiver",
       "avatar_url": "https://avatars1.githubusercontent.com/u/3898166?v=4",
-      "profile": "https://github.com/Yuvaleros",
+      "profile": "https://github.com/ShotSkydiver",
       "contributions": [
         "ideas",
         "code",

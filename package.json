@@ -1,18 +1,23 @@
 {
-  "name": "material-ui-dropzone",
-  "version": "3.5.0",
-  "description": "A Material-UI file-upload dropzone",
+  "name": "@shotskydiver/material-ui-dropzone",
+  "version": "4.0.2",
+  "description": "React file-upload dropzone component built atop Material-UI v5",
   "license": "MIT",
-  "author": "Yuval",
+  "author": "ShotSkydiver",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yuvaleros/material-ui-dropzone.git"
+    "url": "https://github.com/ShotSkydiver/material-ui-dropzone.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "react",
+    "javascript",
     "react-component",
     "material design",
     "material-ui",
+    "mui",
     "dropzone",
     "upload",
     "react upload"
@@ -24,10 +29,6 @@
   "files": [
     "dist"
   ],
-  "engines": {
-    "node": ">=8",
-    "yarn": ">=1"
-  },
   "scripts": {
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
@@ -41,46 +42,50 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
+    "@mui/lab": "^5.0.0-alpha.72",
     "clsx": "^1.0.2",
     "react-dropzone": "^10.2.1"
   },
   "peerDependencies": {
-    "@material-ui/core": "^4.0.0",
-    "@material-ui/icons": "^4.0.0",
+    "@mui/material": "^5.0.0",
+    "@mui/icons-material": "^5.0.0",
+    "@mui/styles": "^5.0.0",
     "prop-types": "^15.7.2",
-    "react": ">= 16.8",
-    "react-dom": ">= 16.8"
+    "react": ">= 17.0.2",
+    "react-dom": ">= 17.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
-    "@babel/plugin-transform-object-assign": "^7.10.1",
-    "@babel/plugin-transform-react-constant-elements": "^7.10.1",
-    "@babel/plugin-transform-runtime": "^7.10.1",
-    "@babel/preset-env": "^7.10.2",
-    "@babel/preset-react": "^7.10.1",
-    "@material-ui/core": "^4.9.7",
-    "@material-ui/icons": "^4.9.1",
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
+    "@babel/plugin-transform-object-assign": "^7.16.7",
+    "@babel/plugin-transform-react-constant-elements": "^7.17.6",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@mui/material": "^5.0.2",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/styles": "^5.0.1",
+    "@mui/codemod": "^5.0.1",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^7.1.3",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.3",
     "babel-plugin-optimize-clsx": "^2.6.0",
     "babel-plugin-transform-dev-warning": "^0.1.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "eslint": "^6.8.0",
+    "eslint": "^7.27.0",
     "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.27.1",
     "gh-pages": "^1.2.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-styleguidist": "^11.0.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-styleguidist": "^11.2.0",
     "rollup": "^1.32.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-cpy": "^2.0.1",
     "rollup-plugin-peer-deps-external": "2.2.2",
     "rollup-plugin-size-snapshot": "^0.11.0",
-    "webpack": "^4.42.1"
+    "webpack": "^4.46.0"
   }
 }

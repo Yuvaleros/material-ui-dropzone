@@ -1,10 +1,10 @@
 
 ```shell
-npm install --save material-ui-dropzone
+npm install --save @shotskydiver/material-ui-dropzone
 ```
 
 or
 
 ```shell
-yarn add material-ui-dropzone
+yarn add @shotskydiver/material-ui-dropzone
 ```
