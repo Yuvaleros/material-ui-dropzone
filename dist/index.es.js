@@ -1,6 +1,5 @@
 import _extends from '@babel/runtime/helpers/extends';
 import _slicedToArray from '@babel/runtime/helpers/slicedToArray';
-import _regeneratorRuntime from '@babel/runtime/regenerator';
 import _asyncToGenerator from '@babel/runtime/helpers/asyncToGenerator';
 import _classCallCheck from '@babel/runtime/helpers/classCallCheck';
 import _createClass from '@babel/runtime/helpers/createClass';
@@ -8,6 +7,7 @@ import _inherits from '@babel/runtime/helpers/inherits';
 import _possibleConstructorReturn from '@babel/runtime/helpers/possibleConstructorReturn';
 import _getPrototypeOf from '@babel/runtime/helpers/getPrototypeOf';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
+import _regeneratorRuntime from '@babel/runtime/regenerator';
 import PropTypes from 'prop-types';
 import { createElement, Fragment, PureComponent } from 'react';
 import Snackbar from '@mui/material/Snackbar';
@@ -102,6 +102,8 @@ function readFile(file) {
   });
 }
 
+var _DeleteIcon;
+
 var styles = function styles(_ref) {
   var palette = _ref.palette,
       shape = _ref.shape,
@@ -145,8 +147,6 @@ var styles = function styles(_ref) {
     }
   };
 };
-
-var _ref3 = /*#__PURE__*/createElement(DeleteIcon, null);
 
 function PreviewList(_ref2) {
   var fileObjects = _ref2.fileObjects,
@@ -203,7 +203,7 @@ function PreviewList(_ref2) {
       onClick: handleRemove(i),
       "aria-label": "Delete",
       className: classes.removeButton
-    }, _ref3));
+    }, _DeleteIcon || (_DeleteIcon = /*#__PURE__*/createElement(DeleteIcon, null))));
   }));
 }
 
@@ -224,7 +224,7 @@ var PreviewList$1 = withStyles(styles, {
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var styles$1 = function styles(_ref) {
   var palette = _ref.palette,
@@ -838,16 +838,18 @@ var DropzoneAreaBase$1 = withStyles(styles$1, {
   name: 'MuiDropzoneArea'
 })(DropzoneAreaBase);
 
+var _excluded = ["clearOnUnmount", "initialFiles", "onChange", "onDelete"];
+
 function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var splitDropzoneAreaProps = function splitDropzoneAreaProps(props) {
   var clearOnUnmount = props.clearOnUnmount,
       initialFiles = props.initialFiles,
       onChange = props.onChange,
       onDelete = props.onDelete,
-      dropzoneAreaProps = _objectWithoutProperties(props, ["clearOnUnmount", "initialFiles", "onChange", "onDelete"]);
+      dropzoneAreaProps = _objectWithoutProperties(props, _excluded);
 
   return [{
     clearOnUnmount: clearOnUnmount,
@@ -1101,9 +1103,11 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, Dr
   onDelete: PropTypes.func
 }) : void 0;
 
+var _excluded$1 = ["cancelButtonText", "dialogProps", "dialogTitle", "fullWidth", "maxWidth", "onClose", "onSave", "open", "submitButtonText"];
+
 function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function splitDropzoneDialogProps(allProps) {
   var cancelButtonText = allProps.cancelButtonText,
@@ -1115,7 +1119,7 @@ function splitDropzoneDialogProps(allProps) {
       onSave = allProps.onSave,
       open = allProps.open,
       submitButtonText = allProps.submitButtonText,
-      dropzoneAreaProps = _objectWithoutProperties(allProps, ["cancelButtonText", "dialogProps", "dialogTitle", "fullWidth", "maxWidth", "onClose", "onSave", "open", "submitButtonText"]);
+      dropzoneAreaProps = _objectWithoutProperties(allProps, _excluded$1);
 
   return [{
     cancelButtonText: cancelButtonText,
@@ -1255,7 +1259,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
 
 function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * This component provides an uncontrolled version of the DropzoneDialogBase component.
  *
