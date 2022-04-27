@@ -32,7 +32,7 @@ Demonstration of how to customize the preview icon for:
 * Word Documents
 
 ```jsx
-import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@material-ui/icons';
+import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@mui/icons-material';
 
 const handlePreviewIcon = (fileObject, classes) => {
   const {type} = fileObject.file
@@ -78,7 +78,7 @@ const file = new File(["foo"], "foo.txt", {
 Chips use the Grid system as well, so you can customize the way they appears and benefit from the Material-UI grid customizations
 
 ```jsx
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(theme => createStyles({
   previewChip: {

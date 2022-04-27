@@ -41,7 +41,7 @@
 ### Sample theme override
 
 ```jsx
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@mui/styles";
 
 import DropzoneArea from '../src/components/DropzoneArea';
 
