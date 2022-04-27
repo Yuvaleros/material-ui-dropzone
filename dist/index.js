@@ -18,6 +18,7 @@ var PropTypes = _interopDefault(require('prop-types'));
 var React = require('react');
 var Snackbar = _interopDefault(require('@mui/material/Snackbar'));
 var Typography = _interopDefault(require('@mui/material/Typography'));
+var Button = _interopDefault(require('@material-ui/core/Button'));
 var styles$3 = require('@mui/styles');
 var AttachFileIcon = _interopDefault(require('@mui/icons-material/AttachFile'));
 var CloudUploadIcon = _interopDefault(require('@mui/icons-material/CloudUpload'));
@@ -34,7 +35,7 @@ var CloseIcon = _interopDefault(require('@mui/icons-material/Close'));
 var ErrorIcon = _interopDefault(require('@mui/icons-material/Error'));
 var InfoIcon = _interopDefault(require('@mui/icons-material/Info'));
 var WarningIcon = _interopDefault(require('@mui/icons-material/Warning'));
-var Button = _interopDefault(require('@mui/material/Button'));
+var Button$1 = _interopDefault(require('@mui/material/Button'));
 var Dialog = _interopDefault(require('@mui/material/Dialog'));
 var DialogActions = _interopDefault(require('@mui/material/DialogActions'));
 var DialogContent = _interopDefault(require('@mui/material/DialogContent'));
@@ -364,6 +365,10 @@ var styles$2 = function styles(_ref) {
       width: 51,
       height: 51,
       color: palette.text.primary
+    },
+    resetButton: {
+      display: 'block',
+      margin: '10px 0'
     }
   };
 };
@@ -608,7 +613,8 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           showFileNamesInPreview = _this$props4.showFileNamesInPreview,
           showPreviews = _this$props4.showPreviews,
           showPreviewsInDropzone = _this$props4.showPreviewsInDropzone,
-          useChipsForPreview = _this$props4.useChipsForPreview;
+          useChipsForPreview = _this$props4.useChipsForPreview,
+          reset = _this$props4.reset;
       var _this$state2 = this.state,
           openSnackBar = _this$state2.openSnackBar,
           snackbarMessage = _this$state2.snackbarMessage,
@@ -650,7 +656,11 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
           previewGridClasses: previewGridClasses,
           previewGridProps: previewGridProps
         }));
-      }), previewsVisible && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Typography, {
+      }), reset && ( /*#__PURE__*/React.isValidElement(reset) ? reset : /*#__PURE__*/React.createElement(Button, {
+        onClick: reset.onClick,
+        variant: "outlined",
+        className: classes.resetButton
+      }, reset.text || 'reset')), previewsVisible && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Typography, {
         variant: "subtitle1",
         component: "span"
       }, previewText), /*#__PURE__*/React.createElement(PreviewList$1, {
@@ -696,6 +706,7 @@ DropzoneAreaBase.defaultProps = {
   previewChipProps: {},
   previewGridClasses: {},
   previewGridProps: {},
+  reset: undefined,
   showAlerts: true,
   alertSnackbarProps: {
     anchorOrigin: {
@@ -803,6 +814,19 @@ process.env.NODE_ENV !== "production" ? DropzoneAreaBase.propTypes = {
 
   /** The label for the file preview section. */
   previewText: PropTypes.string,
+
+  /**
+   * The node of button to clear dropzone.
+   *
+   * - can be a node to mount in a placeholder.
+   * - can be an object:
+   *  - text (string) - text of the button
+   *  - onClick (function) - callback fired when reset button clicked
+   */
+  reset: PropTypes.oneOfType([PropTypes.node, PropTypes.shape({
+    text: PropTypes.string,
+    onClick: PropTypes.func
+  })]),
 
   /**
    * Shows styled Material-UI Snackbar when files are dropped, deleted or rejected.
@@ -1261,10 +1285,10 @@ var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
         maxWidth: maxWidth,
         onClose: onClose,
         open: open
-      }), /*#__PURE__*/React.createElement(DialogTitle, null, dialogTitle), /*#__PURE__*/React.createElement(DialogContent, null, /*#__PURE__*/React.createElement(DropzoneAreaBase$1, dropzoneAreaProps)), /*#__PURE__*/React.createElement(DialogActions, null, /*#__PURE__*/React.createElement(Button, {
+      }), /*#__PURE__*/React.createElement(DialogTitle, null, dialogTitle), /*#__PURE__*/React.createElement(DialogContent, null, /*#__PURE__*/React.createElement(DropzoneAreaBase$1, dropzoneAreaProps)), /*#__PURE__*/React.createElement(DialogActions, null, /*#__PURE__*/React.createElement(Button$1, {
         color: "primary",
         onClick: onClose
-      }, cancelButtonText), /*#__PURE__*/React.createElement(Button, {
+      }, cancelButtonText), /*#__PURE__*/React.createElement(Button$1, {
         color: "primary",
         disabled: submitDisabled,
         onClick: onSave
