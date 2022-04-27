@@ -1,9 +1,9 @@
-import Chip from '@material-ui/core/Chip';
-import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Chip from '@mui/material/Chip';
+import Fab from '@mui/material/Fab';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import {withStyles} from '@mui/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
 import clsx from 'clsx';
 import * as React from 'react';
 import PropTypes from 'prop-types';

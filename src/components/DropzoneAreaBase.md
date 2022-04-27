@@ -28,7 +28,7 @@ import { DropzoneAreaBase } from 'material-ui-dropzone';
 ### Custom Dropzone Icon
 
 ```jsx
-import { AttachFile } from '@material-ui/icons';
+import { AttachFile } from '@mui/icons-material';
 
 <DropzoneAreaBase
   Icon={AttachFile}
@@ -49,7 +49,7 @@ Demonstration of how to customize the preview icon for:
 
 ```jsx
 import React, { useState } from 'react';
-import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@material-ui/icons';
+import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@mui/icons-material';
 
 const handlePreviewIcon = (fileObject, classes) => {
   const {type} = fileObject.file

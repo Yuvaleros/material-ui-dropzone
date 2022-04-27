@@ -7,9 +7,9 @@ import { DropzoneDialogBase } from 'material-ui-dropzone';
 ### Basic usage
 
 ```jsx
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const [open, setOpen] = React.useState(false);
 const [fileObjects, setFileObjects] = React.useState([]);
