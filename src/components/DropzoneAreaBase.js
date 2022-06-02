@@ -404,7 +404,7 @@ DropzoneAreaBase.propTypes = {
     /** Maximum file size (in bytes) that the dropzone will accept. */
     maxFileSize: PropTypes.number,
     /** Text inside the dropzone. */
-    dropzoneText: PropTypes.string,
+    dropzoneText: PropTypes.node,
     /** Custom CSS class name for dropzone container. */
     dropzoneClass: PropTypes.string,
     /** Custom CSS class name for text inside the container. */
