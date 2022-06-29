@@ -70,10 +70,10 @@ const defaultSnackbarAnchorOrigin = {
     vertical: 'bottom',
 };
 
-const defaultGetPreviewIcon = (fileObject, classes) => {
+const defaultGetPreviewIcon = (fileObject, classes, previewGridClasses) => {
     if (isImage(fileObject.file)) {
         return (<img
-            className={classes.image}
+            className={classes.image + ' ' + previewGridClasses.image}
             role="presentation"
             src={fileObject.data}
         />);
@@ -282,6 +282,7 @@ class DropzoneAreaBase extends React.PureComponent {
                                     previewChipProps={previewChipProps}
                                     previewGridClasses={previewGridClasses}
                                     previewGridProps={previewGridProps}
+                                    classes={classes}
                                 />
                             }
                         </div>
@@ -317,6 +318,7 @@ class DropzoneAreaBase extends React.PureComponent {
                             previewChipProps={previewChipProps}
                             previewGridClasses={previewGridClasses}
                             previewGridProps={previewGridProps}
+                            classes={classes}
                         />
                     </Fragment>
                 }

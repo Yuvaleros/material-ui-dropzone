@@ -104,7 +104,7 @@ function PreviewList({
                         key={`${fileObject.file?.name ?? 'file'}-${i}`}
                         className={clsx(classes.imageContainer, previewGridClasses.item)}
                     >
-                        {getPreviewIcon(fileObject, classes)}
+                        {getPreviewIcon(fileObject, classes, previewGridClasses)}
 
                         {showFileNames && (
                             <Typography variant="body1" component="p">
