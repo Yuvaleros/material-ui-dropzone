@@ -545,9 +545,9 @@ DropzoneAreaBase.propTypes = {
      */
     onDelete: PropTypes.func,
     /**
-     * Fired when the user drops files into the dropzone.
+     * Fired when the user drops files into the dropzone and the files are accepted.
      *
-     * @param {File[]} droppedFiles All the files dropped into the dropzone.
+     * @param {File[]} acceptedFiles All the accepted files dropped into the dropzone.
      * @param {Event} event The react-dropzone drop event.
      */
     onDrop: PropTypes.func,
