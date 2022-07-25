@@ -101,7 +101,7 @@ class DropzoneAreaBase extends React.PureComponent {
     }
 
     handleDropAccepted = async(acceptedFiles, evt) => {
-        const {fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop} = this.props;
+        const {fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop, onFilesLimitExceeded} = this.props;
 
         if (filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit) {
             this.setState({
@@ -109,6 +109,7 @@ class DropzoneAreaBase extends React.PureComponent {
                 snackbarMessage: getFileLimitExceedMessage(filesLimit),
                 snackbarVariant: 'error',
             }, this.notifyAlert);
+            onFilesLimitExceeded(acceptedFiles, evt);
             return;
         }
 
@@ -558,6 +559,13 @@ DropzoneAreaBase.propTypes = {
      * @param {Event} event The react-dropzone drop event.
      */
     onDropRejected: PropTypes.func,
+    /**
+     * Fired when dropped files causes the total file count to exceed the filesLimit.
+     *
+     * @param {File[]} rejectedFiles All the dropped files.
+     * @param {Event} event The react-dropzone drop event.
+     */
+    onFilesLimitExceeded: PropTypes.func,
     /**
      * Fired when an alert is triggered.
      *
