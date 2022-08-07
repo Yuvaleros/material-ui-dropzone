@@ -1,6 +1,6 @@
 {
   "name": "mui-file-dropzone",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "A Material-UI file-upload dropzone. Written in TypeScript.",
   "license": "MIT",
   "author": "Yuval",
@@ -23,7 +23,8 @@
   "jsnext:main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "lint": "eslint src/",
