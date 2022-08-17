@@ -49,7 +49,7 @@ export type DropzoneAreaBaseProps = {
   showFileNamesInPreview?: boolean;
   showFileNames?: boolean;
   useChipsForPreview?: boolean;
-  previewChipProps?: ChipProps;
+  previewChipProps?: ChipProps | ((fileObject: FileObject) => ChipProps);
   previewGridClasses?: {
     container?: string;
     item?: string;

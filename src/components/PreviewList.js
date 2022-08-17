@@ -68,6 +68,10 @@ function PreviewList({
                 className={clsx(classes.root, previewGridClasses.container)}
             >
                 {fileObjects.map((fileObject, i) => {
+                    let chipProps = previewChipProps;
+                    if (typeof previewChipProps === 'function') {
+                        chipProps = previewChipProps(fileObject);
+                    }
                     return (
                         <Grid
                             {...previewGridProps.item}
@@ -77,7 +81,7 @@ function PreviewList({
                         >
                             <Chip
                                 variant="outlined"
-                                {...previewChipProps}
+                                {...chipProps}
                                 label={fileObject.file.name}
                                 onDelete={handleRemove(i)}
                             />
@@ -131,7 +135,7 @@ PreviewList.propTypes = {
     fileObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
     getPreviewIcon: PropTypes.func.isRequired,
     handleRemove: PropTypes.func.isRequired,
-    previewChipProps: PropTypes.object,
+    previewChipProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     previewGridClasses: PropTypes.object,
     previewGridProps: PropTypes.object,
     showFileNames: PropTypes.bool,
